@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_character"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/character_item" />
+
+    <com.futuremind.recyclerviewfastscroll.FastScroller
+        android:id="@+id/fast_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        app:fastscroll__bubbleColor="@color/colorPrimary"
+        app:fastscroll__bubbleTextAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+        app:fastscroll__handleColor="@color/colorPrimary" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Rick &amp; Morty database</string>
+    <string name="bottom_nav_character">Characters</string>
+    <string name="bottom_nav_location">Locations</string>
+    <string name="bottom_nav_episode">Episodes</string>
+
+    //Volley Error managing
+    <string name="timeout_or_no_connection">Request timed out or bad connection, Database might be not up to date</string>
+    <string name="auth_fail">Authentication Failure while performing the request, Database might be not up to date</string>
+    <string name="server_error">Server error, Database might be not up to date</string>
+    <string name="network_error">Network error, Database might be not up to date</string>
+    <string name="parse_error">Server response cannot be parsed, Database might be not up to date</string>
+
+    //Fragment Error managing
+    <string name="fragment_character_list_db_error">Error. Database initialisation failed.</string>
+    <string name="fragment_character_list_no_connection">No internet connection! Database initialisation needed.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

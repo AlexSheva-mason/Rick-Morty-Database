@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/charactersListFragment">
+    <fragment
+        android:id="@+id/charactersListFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment"
+        android:label="List of Characters"
+        tools:layout="@layout/fragment_characters_list">
+        <action
+            android:id="@+id/characterDetailAction"
+            app:destination="@id/characterDetailFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodesListFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodesListFragment"
+        android:label="List of Episodes"
+        tools:layout="@layout/fragment_episodes_list" />
+    <fragment
+        android:id="@+id/locationsListFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.location.LocationsListFragment"
+        android:label="List of Locations"
+        tools:layout="@layout/fragment_locations_list" />
+    <!--set the fragment's title to characters name passed as an argument-->
+    <fragment
+        android:id="@+id/characterDetailFragment2"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterDetailFragment"
+        android:label="{character_name}"
+        tools:layout="@layout/fragment_character_detail">
+        <argument
+            android:name="imageUrl"
+            android:defaultValue="image_url"
+            app:argType="string" />
+        <argument
+            android:name="character_name"
+            android:defaultValue="Name"
+            app:argType="string" />
+    </fragment>
+</navigation>

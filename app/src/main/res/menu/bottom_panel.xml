@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/charactersListFragment"
+        android:icon="@drawable/character_24dp"
+        android:title="@string/bottom_nav_character" />
+    <item
+        android:id="@+id/locationsListFragment"
+        android:icon="@drawable/locations_24dp"
+        android:title="@string/bottom_nav_location" />
+    <item
+        android:id="@+id/episodesListFragment"
+        android:icon="@drawable/episodes_24dp"
+        android:title="@string/bottom_nav_episode" />
+
+</menu>
