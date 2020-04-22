@@ -50,8 +50,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private String searchQuery;
     private int filterListKey;
     private boolean searchIsCommitted;
-    //TODO change this to snack bar
-    //private TextView mErrorMessage;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -230,7 +228,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //TODO null the recyclerView adapter to prevent memory leaks (CodingWithMitch process death video)
+        if (characterAdapter != null) {
+            characterAdapter = null;
+        }
     }
 
     private void listJumpTo0() {

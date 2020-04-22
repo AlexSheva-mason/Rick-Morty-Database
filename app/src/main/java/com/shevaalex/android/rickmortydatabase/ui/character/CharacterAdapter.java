@@ -3,8 +3,6 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.shevaalex.android.rickmortydatabase.database.Character;
 import com.shevaalex.android.rickmortydatabase.R;
+import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemBinding;
 import com.squareup.picasso.Picasso;
 
 
@@ -42,22 +41,23 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
     @NonNull
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View characterView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.character_item, parent, false);
-        return new CharacterViewHolder(characterView, onCharacterListener);
+        //instantiate view binding class and pass it to ViewHolder
+        CharacterItemBinding binding = CharacterItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new CharacterViewHolder(onCharacterListener, binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final CharacterViewHolder holder, int position) {
         Character currentCharacter = getItem(position);
         if (currentCharacter != null) {
+            // using View Binding class to set views without calling findViewById
             Picasso.get().load(currentCharacter.getImgUrl()).error(R.drawable.picasso_placeholder_error)
-                    .fit().centerCrop().into(holder.imageView);
-            holder.nameCharacter.setText(currentCharacter.getName());
-            holder.genderCharacter.setText(currentCharacter.getGender());
-            holder.speciesCharacter.setText(currentCharacter.getSpecies());
-            holder.statusCharacter.setText(currentCharacter.getStatus());
-            holder.lastLocationCharacter.setText(currentCharacter.getLastKnownLocation());
+                    .fit().centerCrop().into(holder.characterItemBinding.characterImage);
+            holder.characterItemBinding.characterName.setText(currentCharacter.getName());
+            holder.characterItemBinding.characterGenderValue.setText(currentCharacter.getGender());
+            holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
+            holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
+            holder.characterItemBinding.characterLastLocationValue.setText(currentCharacter.getLastKnownLocation());
         }
     }
 
@@ -74,24 +74,14 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
     }
 
     static class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageView;
-        private TextView nameCharacter;
-        private TextView genderCharacter;
-        private TextView speciesCharacter;
-        private TextView statusCharacter;
-        private TextView lastLocationCharacter;
         private OnCharacterListener onCharacterListener;
+        private CharacterItemBinding characterItemBinding;
 
-        CharacterViewHolder(@NonNull View itemView, OnCharacterListener onCharacterListener) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.character_image);
-            nameCharacter = itemView.findViewById(R.id.character_name);
-            genderCharacter = itemView.findViewById(R.id.character_gender_value);
-            speciesCharacter = itemView.findViewById(R.id.character_species_value);
-            statusCharacter = itemView.findViewById(R.id.character_status_value);
-            lastLocationCharacter = itemView.findViewById(R.id.character_last_location_value);
+        CharacterViewHolder(OnCharacterListener onCharacterListener, CharacterItemBinding binding) {
+            super(binding.getRoot());
             this.onCharacterListener = onCharacterListener;
             itemView.setOnClickListener(this);
+            characterItemBinding = binding;
         }
 
         @Override

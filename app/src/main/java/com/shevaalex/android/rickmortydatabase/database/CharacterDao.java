@@ -1,14 +1,11 @@
 package com.shevaalex.android.rickmortydatabase.database;
 
-
-import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import java.util.List;
+import androidx.room.RoomWarnings;
 
 
 @Dao
@@ -29,6 +26,7 @@ public interface CharacterDao {
     @Query("SELECT * FROM Character WHERE status LIKE 'alive' OR status LIKE 'unknown' ORDER BY name")
     DataSource.Factory<Integer, Character> showAllCharsNoDead();
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT id FROM Character ORDER BY id DESC LIMIT 1")
     Character showLastInCharacterList();
 

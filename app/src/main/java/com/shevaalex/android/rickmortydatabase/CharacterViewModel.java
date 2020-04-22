@@ -22,7 +22,6 @@ public class CharacterViewModel extends AndroidViewModel {
     public CharacterViewModel(@NonNull Application application) {
         super(application);
         rmRepository = RmRepository.getInstance(application);
-        //filterResultKey.setValue(0);
     }
 
     public void setNameQuery(String name) {

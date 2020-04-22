@@ -11,17 +11,19 @@ import androidx.lifecycle.LiveData;
 
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
     private Context context;
+    private ConnectivityManager connectivityManager;
     private static final int WIFI_DATA = 101;
     private static final int MOBILE_DATA = 1;
 
     public ConnectionLiveData(Context context) {
         this.context = context;
+        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     @Override
     protected void onActive() {
         super.onActive();
-        IntentFilter filter = new    IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         context.registerReceiver(networkReceiver, filter);
     }
 
@@ -32,25 +34,22 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
     }
 
     private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
-        @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getExtras()!=null) {
-                NetworkInfo activeNetwork = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                boolean isConnected = activeNetwork != null &&
-                        activeNetwork.isConnectedOrConnecting();
-                if(isConnected) {
-                    switch (activeNetwork.getType()){
-                        case ConnectivityManager.TYPE_WIFI:
-                            postValue(new ConnectionModel(WIFI_DATA,true));
-                            break;
-                        case ConnectivityManager.TYPE_MOBILE:
-                            postValue(new ConnectionModel(MOBILE_DATA,true));
-                            break;
-                    }
-                } else {
-                    postValue(new ConnectionModel(0,false));
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null &&
+                    activeNetwork.isConnectedOrConnecting();
+            if(isConnected) {
+                switch (activeNetwork.getType()){
+                    case ConnectivityManager.TYPE_WIFI:
+                        postValue(new ConnectionModel(WIFI_DATA,true));
+                        break;
+                    case ConnectivityManager.TYPE_MOBILE:
+                        postValue(new ConnectionModel(MOBILE_DATA,true));
+                        break;
                 }
+            } else {
+                postValue(new ConnectionModel(0,false));
             }
         }
     };
