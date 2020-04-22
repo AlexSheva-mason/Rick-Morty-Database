@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.shevaalex.android.rickmortydatabase.R;
 
-public class EpisodesListFragment extends Fragment {
+class EpisodesListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

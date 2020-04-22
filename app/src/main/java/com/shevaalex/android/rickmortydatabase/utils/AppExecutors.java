@@ -3,6 +3,9 @@ package com.shevaalex.android.rickmortydatabase.utils;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,10 +43,10 @@ public class AppExecutors {
     public Executor MainThreadExecutor() {        return mainThreadExecutor;    }
 
     private static class MainThreadExecutor implements Executor {
-        private Handler handler = new Handler(Looper.getMainLooper());
+        private final Handler handler = new Handler(Looper.getMainLooper());
 
         @Override
-        public void execute(Runnable r) {
+        public void execute(@NonNull Runnable r) {
             handler.post(r);
         }
     }

@@ -16,8 +16,8 @@ import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemBinding;
 import com.squareup.picasso.Picasso;
 
 
-public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> implements SectionTitleProvider {
-    private OnCharacterListener onCharacterListener;
+class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> implements SectionTitleProvider {
+    private final OnCharacterListener onCharacterListener;
 
     CharacterAdapter(OnCharacterListener onClickListener) {
         super(DIFF_CALLBACK);

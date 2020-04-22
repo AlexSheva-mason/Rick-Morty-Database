@@ -2,7 +2,6 @@ package com.shevaalex.android.rickmortydatabase;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViews() {
         bottomNavigationView = findViewById(R.id.bottom_panel);
         // Finding the navigation controller
-       navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         // Setting the nav controller with bottom navigation
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         //Set the action bar to show appropriate titles, set top level destinations

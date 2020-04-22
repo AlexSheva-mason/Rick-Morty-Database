@@ -12,10 +12,6 @@
     <string name="parse_error">Server response cannot be parsed, Database might be not up to date</string>
 
     //Fragment Error managing
-    <string name="fragment_character_list_db_error">Error. Database initialisation failed.</string>
-    <string name="fragment_character_list_no_connection">No internet connection! Database initialisation needed.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_character_list_no_connection">Connect to internet to check for database update</string>
 
 </resources>

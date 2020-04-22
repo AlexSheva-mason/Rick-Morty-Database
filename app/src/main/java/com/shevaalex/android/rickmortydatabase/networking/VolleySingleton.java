@@ -12,7 +12,7 @@ class VolleySingleton {
     private static final String LOG_TAG = VolleySingleton.class.getSimpleName();
     private static VolleySingleton sInstance;
     private RequestQueue mRequestQueue;
-    private Context context;
+    private final Context context;
     private static final Object LOCK = new Object();
     private static final String TAG = "DbRequest";
 

@@ -10,8 +10,8 @@ import android.net.NetworkInfo;
 import androidx.lifecycle.LiveData;
 
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
-    private Context context;
-    private ConnectivityManager connectivityManager;
+    private final Context context;
+    private final ConnectivityManager connectivityManager;
     private static final int WIFI_DATA = 101;
     private static final int MOBILE_DATA = 1;
 
@@ -33,7 +33,7 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
         context.unregisterReceiver(networkReceiver);
     }
 
-    private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver networkReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();

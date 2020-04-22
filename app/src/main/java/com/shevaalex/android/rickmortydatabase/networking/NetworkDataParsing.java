@@ -3,14 +3,12 @@ package com.shevaalex.android.rickmortydatabase.networking;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
@@ -23,7 +21,7 @@ public class NetworkDataParsing {
     private static final Object LOCK = new Object();
     private static NetworkDataParsing sInstance;
     private static VolleySingleton volleyInstance;
-    private Context context;
+    private final Context context;
 
     private NetworkDataParsing (Context context) {
         volleyInstance = VolleySingleton.getInstance(context.getApplicationContext());
@@ -45,66 +43,44 @@ public class NetworkDataParsing {
     // makes a call to get the number of pages containing Characters, and passes it to RmRepo
     public void getCharactersNumberOfPages(final VolleyCallback callback, final String url) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (response != null) {
-                            //get number of pages containing Characters
-                            callback.getJsonDataResponse(response);
-                        }
+                response -> {
+                    if (response != null) {
+                        //get number of pages containing Characters
+                        callback.getJsonDataResponse(response);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                handleVolleyErrors(error);
-                // TODO Delete log
-                Log.d(LOG_TAG, "Volley error: " + error.toString());
-            }
-        });
+                }, error -> {
+                    handleVolleyErrors(error);
+                    error.printStackTrace();
+                });
         volleyInstance.addToRequestQueue(jsonObjectRequest);
     }
 
     public void compareJsonLastCharacterId(final VolleyCallback callback, String url) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if (response != null){
-                    callback.getJsonDataResponse(response);
-                }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
+            if (response != null){
+                callback.getJsonDataResponse(response);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                handleVolleyErrors(error);
-                // TODO Delete log
-                Log.d(LOG_TAG, "Volley error: " + error.toString());
-            }
+        }, error -> {
+            handleVolleyErrors(error);
+            error.printStackTrace();
         });
         volleyInstance.addToRequestQueue(jsonObjectRequest);
     }
 
     public void getJsonCharacterList (final VolleyCallback callback, String url) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (response != null){
-                            callback.getJsonDataResponse(response);
-                        }
+                response -> {
+                    if (response != null){
+                        callback.getJsonDataResponse(response);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                handleVolleyErrors(error);
-                // TODO Delete log
-                Log.d(LOG_TAG, "Volley error: " + error.toString());
-            }
-        });
+                }, error -> {
+                    handleVolleyErrors(error);
+                    error.printStackTrace();
+                });
         volleyInstance.addToRequestQueue(jsonObjectRequest);
     }
 
     private void handleVolleyErrors (VolleyError error) {
-        //TODO later on instead of Toast add it to the top of RecyclerView?
         String errorMessage = "";
         Resources res = context.getResources();
         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
@@ -123,6 +99,7 @@ public class NetworkDataParsing {
             // Indicates that the server response could not be parsed
             errorMessage = res.getString(R.string.parse_error);
         }
+        //TODO use it in snack bar
         Log.d(LOG_TAG, errorMessage);
     }
 

@@ -1,8 +1,8 @@
 package com.shevaalex.android.rickmortydatabase.networking;
 
 public class ConnectionModel {
-    private int type;
-    private boolean isConnected;
+    private final int type;
+    private final boolean isConnected;
 
     ConnectionModel(int type, boolean isConnected) {
         this.type = type;

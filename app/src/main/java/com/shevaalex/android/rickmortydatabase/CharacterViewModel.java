@@ -12,9 +12,9 @@ import com.shevaalex.android.rickmortydatabase.database.Character;
 import com.shevaalex.android.rickmortydatabase.ui.character.FilterLiveData;
 
 public class CharacterViewModel extends AndroidViewModel {
-    private RmRepository rmRepository;
-    private MutableLiveData<String> searchQuery = new MutableLiveData<>();
-    private MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
+    private final RmRepository rmRepository;
+    private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
+    private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
 
 

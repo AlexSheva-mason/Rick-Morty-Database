@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -195,6 +196,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     //monitors internet connection and checks if database is up to date
     private void monitorConnection() {
+        @SuppressLint("UseRequireInsteadOfGet")
         ConnectionLiveData connectionLiveData = new ConnectionLiveData(Objects.requireNonNull(getActivity()).getApplication());
         connectionLiveData.observe(this, connectionModel -> new Handler().postDelayed(() -> {
             if (connectionModel.isConnected() && isAdded()) {
@@ -204,7 +206,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 }
             } else if (!connectionModel.isConnected() && isAdded()) {
                 if (characterViewModel.dbIsNotSynced()) {
-                    Toast.makeText(context, "Connect to internet to check for database update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
                 }
             }
         }, 3000));

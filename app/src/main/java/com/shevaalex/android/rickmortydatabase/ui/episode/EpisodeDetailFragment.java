@@ -13,7 +13,7 @@ import com.shevaalex.android.rickmortydatabase.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EpisodeDetailFragment extends Fragment {
+class EpisodeDetailFragment extends Fragment {
 
     public EpisodeDetailFragment() {
         // Required empty public constructor
