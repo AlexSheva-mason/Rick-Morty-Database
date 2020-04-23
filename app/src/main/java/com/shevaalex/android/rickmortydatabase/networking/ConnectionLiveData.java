@@ -12,8 +12,6 @@ import androidx.lifecycle.LiveData;
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
     private final Context context;
     private final ConnectivityManager connectivityManager;
-    private static final int WIFI_DATA = 101;
-    private static final int MOBILE_DATA = 1;
 
     public ConnectionLiveData(Context context) {
         this.context = context;
@@ -40,16 +38,9 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
             boolean isConnected = activeNetwork != null &&
                     activeNetwork.isConnectedOrConnecting();
             if(isConnected) {
-                switch (activeNetwork.getType()){
-                    case ConnectivityManager.TYPE_WIFI:
-                        postValue(new ConnectionModel(WIFI_DATA,true));
-                        break;
-                    case ConnectivityManager.TYPE_MOBILE:
-                        postValue(new ConnectionModel(MOBILE_DATA,true));
-                        break;
-                }
+                postValue(new ConnectionModel(true));
             } else {
-                postValue(new ConnectionModel(0,false));
+                postValue(new ConnectionModel(false));
             }
         }
     };

@@ -11,7 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import com.shevaalex.android.rickmortydatabase.R;
 
-class LocationsListFragment extends Fragment {
+@SuppressWarnings("WeakerAccess")
+public class LocationsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,40 +12,37 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
 import com.shevaalex.android.rickmortydatabase.ui.BottomNavViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    private BottomNavigationView bottomNavigationView;
+    private ActivityMainBinding binding;
     private NavController navController;
     private boolean backPressedOnce;
     private BottomNavViewModel botNavViewModel;
     private AppBarConfiguration appBarConfiguration;
 
-    // TODO add a progress bar to volley requests?
-    // TODO add a splash screen when loading requests on start?
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
         setupViews();
     }
 
     private void setupViews() {
-        bottomNavigationView = findViewById(R.id.bottom_panel);
         // Finding the navigation controller
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         // Setting the nav controller with bottom navigation
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        NavigationUI.setupWithNavController(binding.bottomPanel, navController);
         //Set the action bar to show appropriate titles, set top level destinations
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.charactersListFragment,
                 R.id.locationsListFragment, R.id.episodesListFragment).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         //setup the ViewModel for lifecycle aware observing bottomNav state
         botNavViewModel = new ViewModelProvider(this).get(BottomNavViewModel.class);
-        botNavViewModel.getBottomNavVisibility().observe(this, integer -> bottomNavigationView.setVisibility(integer));
+        botNavViewModel.getBottomNavVisibility().observe(this, integer -> binding.bottomPanel.setVisibility(integer));
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.characterDetailFragment2) {
                 botNavViewModel.hideBottomNav();

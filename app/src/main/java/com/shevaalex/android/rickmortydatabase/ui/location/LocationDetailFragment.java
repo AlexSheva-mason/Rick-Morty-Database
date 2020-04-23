@@ -13,7 +13,8 @@ import com.shevaalex.android.rickmortydatabase.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-class LocationDetailFragment extends Fragment {
+@SuppressWarnings("WeakerAccess")
+public class LocationDetailFragment extends Fragment {
 
     public LocationDetailFragment() {
         // Required empty public constructor

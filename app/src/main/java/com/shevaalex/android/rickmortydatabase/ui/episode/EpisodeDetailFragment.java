@@ -13,7 +13,9 @@ import com.shevaalex.android.rickmortydatabase.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-class EpisodeDetailFragment extends Fragment {
+
+@SuppressWarnings("WeakerAccess")
+public class EpisodeDetailFragment extends Fragment {
 
     public EpisodeDetailFragment() {
         // Required empty public constructor

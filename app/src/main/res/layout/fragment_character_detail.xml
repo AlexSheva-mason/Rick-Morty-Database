@@ -1,31 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.character.CharacterDetailFragment"
-    android:background="@color/colorPrimaryDark">
+    tools:context=".ui.character.CharacterDetailFragment">
+
+    <ImageView
+        android:id="@+id/character_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/image_view_character_description"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/character_name"
+        android:id="@+id/character_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Character name"
-        android:textColor="@color/colorAccent"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:text="@string/text_view_character_status"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="30sp" />
+        app:layout_constraintTop_toBottomOf="@id/character_image" />
 
     <TextView
-        android:id="@+id/character_img_url"
+        android:id="@+id/character_species"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Character imgurl"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="@string/text_view_character_species"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/character_name"
-        android:textColor="@color/colorAccent" />
+        app:layout_constraintTop_toBottomOf="@id/character_status" />
+
+    <TextView
+        android:id="@+id/character_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_character_gender"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_type_value" />
+
+    <TextView
+        android:id="@+id/character_origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_character_origin"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_gender" />
+
+    <TextView
+        android:id="@+id/character_last_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_character_last_loc"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_origin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/character_status_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Status"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_image" />
+
+    <TextView
+        android:id="@+id/character_species_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Species"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_status_value" />
+
+    <TextView
+        android:id="@+id/character_type_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="TYPE"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_species_value" />
+
+    <TextView
+        android:id="@+id/character_gender_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Gender"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_type_value" />
+
+    <TextView
+        android:id="@+id/character_origin_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Origin location"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_gender_value" />
+
+    <TextView
+        android:id="@+id/character_last_location_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Last location"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_origin_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

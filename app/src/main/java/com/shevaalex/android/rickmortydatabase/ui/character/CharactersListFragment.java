@@ -1,6 +1,5 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,15 +23,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.CharacterViewModel;
 import com.shevaalex.android.rickmortydatabase.database.Character;
+import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.networking.ConnectionLiveData;
-
-import java.util.Objects;
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
 
@@ -42,11 +38,12 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private static final String SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
     private static final int KEY_SHOW_ALL = 0;
+    private FragmentCharactersListBinding binding;
     private CharacterViewModel characterViewModel;
+    private ConnectionLiveData connectionLiveData;
     private CharacterAdapter characterAdapter;
     private Context context;
     private Activity a;
-    private RecyclerView recyclerView;
     private static Bundle savedState;
     private String searchQuery;
     private int filterListKey;
@@ -64,30 +61,30 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        monitorConnection();
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
         if (savedState == null) {
             characterViewModel.setFilter(KEY_SHOW_ALL);
             characterViewModel.setNameQuery(null);
         }
         characterViewModel.getCharacterList().observe(this, characters -> characterAdapter.submitList(characters));
+        connectionLiveData = new ConnectionLiveData(a.getApplication());
+        monitorConnection();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_characters_list, container, false);
-        setHasOptionsMenu(true);
-        recyclerView = view.findViewById(R.id.recyclerview_character);
+        binding = FragmentCharactersListBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
+        binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
+        binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this);
-        recyclerView.setAdapter(characterAdapter);
+        binding.recyclerviewCharacter.setAdapter(characterAdapter);
         //set the fast scroller for recyclerview
-        FastScroller fastScroller = view.findViewById(R.id.fast_scroll);
-        fastScroller.setRecyclerView(recyclerView);
+        binding.fastScroll.setRecyclerView(binding.recyclerviewCharacter);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -105,10 +102,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             }
             characterViewModel.setNameQuery(savedSearchQuery);
             Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
-            if (recyclerView.getLayoutManager() != null) {
+            if (binding.recyclerviewCharacter.getLayoutManager() != null) {
                 new Handler().postDelayed(() -> {
                     Log.d(TAG, "onResume: list position restored");
-                    recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+                    binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState);
                 }, 50);
             }
         }
@@ -144,6 +141,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             public boolean onMenuItemActionExpand(MenuItem item) {
                 return true;
             }
+
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 if (searchIsCommitted) {
@@ -196,8 +194,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     //monitors internet connection and checks if database is up to date
     private void monitorConnection() {
-        @SuppressLint("UseRequireInsteadOfGet")
-        ConnectionLiveData connectionLiveData = new ConnectionLiveData(Objects.requireNonNull(getActivity()).getApplication());
         connectionLiveData.observe(this, connectionModel -> new Handler().postDelayed(() -> {
             if (connectionModel.isConnected() && isAdded()) {
                 if (characterViewModel.dbIsNotSynced()) {
@@ -216,11 +212,12 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         savedState = new Bundle();
         savedState.putString(SAVE_STATE_SEARCH_QUERY, searchQuery);
         savedState.putInt(SAVE_STATE_FILTER_KEY, filterListKey);
-        if (recyclerView != null && recyclerView.getLayoutManager() != null) {
-            savedState.putParcelable(SAVE_STATE_LIST, recyclerView.getLayoutManager().onSaveInstanceState());
+        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
         }
         Log.d(TAG, "saveState: has been saved: " + savedState);
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -233,12 +230,13 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         if (characterAdapter != null) {
             characterAdapter = null;
         }
+        binding = null;
     }
 
     private void listJumpTo0() {
-        if (recyclerView.getLayoutManager() != null) {
+        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
             Log.d(TAG, "onQueryTextSubmit: scrolling to 0");
-            recyclerView.getLayoutManager().scrollToPosition(0);
+            binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
         }
     }
 
