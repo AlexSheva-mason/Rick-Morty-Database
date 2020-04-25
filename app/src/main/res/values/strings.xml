@@ -23,4 +23,7 @@
     <string name="text_view_character_origin">Origin location:</string>
     <string name="text_view_character_last_loc">Last location:</string>
 
+    //Character Detail fragment
+    <string name="character_type_placeholder">(%1$s)</string>
+
 </resources>

@@ -17,14 +17,11 @@ public class Character {
     private final String lastKnownLocation;
     private final String imgUrl;
     private final String episodeList;
-    //TODO delete this?
-    private final String characterUrl;
-    private final String timeCreated;
 
     // TODO originLocation; lastKnownLocation; episodeList; make methods for parsing Strings and extracting only IDs
     public Character (int id, String name, String status, String species, String type,
                       String gender, String originLocation, String lastKnownLocation,
-                      String imgUrl, String episodeList, String characterUrl, String timeCreated) {
+                      String imgUrl, String episodeList) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -35,8 +32,6 @@ public class Character {
         this.lastKnownLocation = lastKnownLocation;
         this.imgUrl = imgUrl;
         this.episodeList = episodeList;
-        this.characterUrl = characterUrl;
-        this.timeCreated = timeCreated;
     }
 
 
@@ -51,7 +46,5 @@ public class Character {
     public String getLastKnownLocation() {        return lastKnownLocation;    }
     public String getImgUrl() {        return imgUrl;    }
     public String getEpisodeList() {        return episodeList;    }
-    public String getCharacterUrl() {        return characterUrl;    }
-    public String getTimeCreated() {        return timeCreated;    }
 
 }

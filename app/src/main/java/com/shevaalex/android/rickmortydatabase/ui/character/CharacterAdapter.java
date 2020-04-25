@@ -34,7 +34,7 @@ class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.Char
 
                 @Override
                 public boolean areContentsTheSame(@NonNull Character oldItem, @NonNull Character newItem) {
-                    return oldItem.getName().equals(newItem.getName()) && oldItem.getTimeCreated().equals(newItem.getTimeCreated());
+                    return oldItem.getName().equals(newItem.getName()) && oldItem.getImgUrl().equals(newItem.getImgUrl());
                 }
             };
 

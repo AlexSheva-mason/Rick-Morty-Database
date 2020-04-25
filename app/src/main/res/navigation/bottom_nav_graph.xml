@@ -41,5 +41,29 @@
             android:name="character_name"
             android:defaultValue="Name"
             app:argType="string" />
+        <argument
+            android:name="character_status"
+            android:defaultValue="Status"
+            app:argType="string" />
+        <argument
+            android:name="character_species"
+            android:defaultValue="Species"
+            app:argType="string" />
+        <argument
+            android:name="character_type"
+            android:defaultValue="zzz"
+            app:argType="string" />
+        <argument
+            android:name="character_gender"
+            android:defaultValue="Status"
+            app:argType="string" />
+        <argument
+            android:name="character_origin"
+            android:defaultValue="Origin"
+            app:argType="string" />
+        <argument
+            android:name="character_last_location"
+            android:defaultValue="Last location"
+            app:argType="string" />
     </fragment>
 </navigation>

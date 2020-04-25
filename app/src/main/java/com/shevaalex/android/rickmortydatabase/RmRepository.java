@@ -137,10 +137,8 @@ class RmRepository {
                     String lastKnownLocation = characterJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
                     String imgUrl = characterJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
                     String episodeList = characterJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST);
-                    String characterUrl = characterJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_URL);
-                    String timeCreated = characterJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TIME_CREATED);
                     final Character newCharacter = new Character(id, name, status, species, type, gender, originLocation,
-                            lastKnownLocation, imgUrl, episodeList, characterUrl, timeCreated);
+                            lastKnownLocation, imgUrl, episodeList);
                     //add new Character to a database
                     appExecutors.diskIO().execute(() -> rmDatabase.getCharacterDao().insertCharacter(newCharacter));
                     if (id == lastNetworkCharacterId) {

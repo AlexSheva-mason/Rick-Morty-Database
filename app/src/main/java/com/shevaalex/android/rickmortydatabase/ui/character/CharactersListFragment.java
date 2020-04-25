@@ -248,7 +248,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             CharactersListFragmentDirections.CharacterDetailAction action =
                     CharactersListFragmentDirections.characterDetailAction();
             if (clickedChar != null) {
-                action.setCharacterName(clickedChar.getName()).setImageUrl(clickedChar.getImgUrl());
+                action.setCharacterName(clickedChar.getName()).setImageUrl(clickedChar.getImgUrl())
+                .setCharacterStatus(clickedChar.getStatus()).setCharacterSpecies(clickedChar.getSpecies())
+                        .setCharacterType(clickedChar.getType()).setCharacterGender(clickedChar.getGender())
+                        .setCharacterOrigin(clickedChar.getOriginLocation()).setCharacterLastLocation(clickedChar.getLastKnownLocation());
                 Navigation.findNavController(v).navigate(action);
             }
         }

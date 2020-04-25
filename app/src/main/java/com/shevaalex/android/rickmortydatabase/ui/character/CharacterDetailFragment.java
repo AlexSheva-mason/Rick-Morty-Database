@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
+import com.squareup.picasso.Picasso;
 
 @SuppressWarnings("WeakerAccess")
 public class CharacterDetailFragment extends Fragment {
@@ -25,11 +27,31 @@ public class CharacterDetailFragment extends Fragment {
         // Set View binding for this fragment
         binding = FragmentCharacterDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        // retrieve data from parent fragment and set it to appropriate views
-        String charName = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterName();
+        // retrieve data from parent fragment
+        /*String charName = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterName();*/
         String imgUrl = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getImageUrl();
-        /*binding.characterName.setText(charName);
-        binding.characterImgUrl.setText(imgUrl);*/
+        String charStatus = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterStatus();
+        String charSpecies = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterSpecies();
+        String charType = "";
+        if (!CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterType().isEmpty()) {
+            charType = getString(R.string.character_type_placeholder, CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterType());
+        }
+        String charGender = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterGender();
+        String charOrigin = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterOrigin();
+        String charLastLoc = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterLastLocation();
+        //set retreived data to appropriate views
+        Picasso.get().load(imgUrl).placeholder(R.drawable.picasso_placeholder_default).error(R.drawable.picasso_placeholder_error).
+                fit().centerInside().into(binding.characterImage);
+        binding.characterStatusValue.setText(charStatus);
+        binding.characterSpeciesValue.setText(charSpecies);
+        if (!charType.isEmpty()) {
+            binding.characterTypeValue.setText(charType);
+        } else {
+            binding.characterTypeValue.setVisibility(View.GONE);
+        }
+        binding.characterGenderValue.setText(charGender);
+        binding.characterOriginValue.setText(charOrigin);
+        binding.characterLastLocationValue.setText(charLastLoc);
         return view;
     }
 
