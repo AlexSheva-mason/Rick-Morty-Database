@@ -37,8 +37,8 @@ public class CharacterDetailFragment extends Fragment {
             charType = getString(R.string.character_type_placeholder, CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterType());
         }
         String charGender = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterGender();
-        String charOrigin = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterOrigin();
-        String charLastLoc = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterLastLocation();
+        int charOrigin = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterOrigin();
+        int charLastLoc = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterLastLocation();
         //set retreived data to appropriate views
         Picasso.get().load(imgUrl).placeholder(R.drawable.picasso_placeholder_default).error(R.drawable.picasso_placeholder_error).
                 fit().centerInside().into(binding.characterImage);
@@ -50,8 +50,8 @@ public class CharacterDetailFragment extends Fragment {
             binding.characterTypeValue.setVisibility(View.GONE);
         }
         binding.characterGenderValue.setText(charGender);
-        binding.characterOriginValue.setText(charOrigin);
-        binding.characterLastLocationValue.setText(charLastLoc);
+        binding.characterOriginValue.setText(String.valueOf(charOrigin));
+        binding.characterLastLocationValue.setText(String.valueOf(charLastLoc));
         return view;
     }
 

@@ -59,11 +59,11 @@
             app:argType="string" />
         <argument
             android:name="character_origin"
-            android:defaultValue="Origin"
-            app:argType="string" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <argument
             android:name="character_last_location"
-            android:defaultValue="Last location"
-            app:argType="string" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 </navigation>

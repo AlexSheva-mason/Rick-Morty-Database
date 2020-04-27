@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
-import com.shevaalex.android.rickmortydatabase.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemBinding;
 import com.squareup.picasso.Picasso;
@@ -34,7 +34,7 @@ class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.Char
 
                 @Override
                 public boolean areContentsTheSame(@NonNull Character oldItem, @NonNull Character newItem) {
-                    return oldItem.getName().equals(newItem.getName()) && oldItem.getImgUrl().equals(newItem.getImgUrl());
+                    return newItem.equals(oldItem);
                 }
             };
 
@@ -57,7 +57,7 @@ class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.Char
             holder.characterItemBinding.characterGenderValue.setText(currentCharacter.getGender());
             holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
-            holder.characterItemBinding.characterLastLocationValue.setText(currentCharacter.getLastKnownLocation());
+            holder.characterItemBinding.characterLastLocationValue.setText(String.valueOf(currentCharacter.getLastKnownLocation()));
         }
     }
 

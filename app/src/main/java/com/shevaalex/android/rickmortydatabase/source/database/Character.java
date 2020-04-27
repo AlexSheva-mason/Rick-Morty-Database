@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.database;
+package com.shevaalex.android.rickmortydatabase.source.database;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -13,14 +13,14 @@ public class Character {
     private final String species;
     private final String type;
     private final String gender;
-    private final String originLocation;
-    private final String lastKnownLocation;
+    private final int originLocation;
+    private final int lastKnownLocation;
     private final String imgUrl;
     private final String episodeList;
 
-    // TODO originLocation; lastKnownLocation; episodeList; make methods for parsing Strings and extracting only IDs
+    // TODO episodeList make methods for parsing Strings and extracting only IDs
     public Character (int id, String name, String status, String species, String type,
-                      String gender, String originLocation, String lastKnownLocation,
+                      String gender, int originLocation, int lastKnownLocation,
                       String imgUrl, String episodeList) {
         this.id = id;
         this.name = name;
@@ -42,9 +42,20 @@ public class Character {
     public String getSpecies() {        return species;    }
     public String getType() {        return type;    }
     public String getGender() {        return gender;    }
-    public String getOriginLocation() {        return originLocation;    }
-    public String getLastKnownLocation() {        return lastKnownLocation;    }
+    public int getOriginLocation() {        return originLocation;    }
+    public int getLastKnownLocation() {        return lastKnownLocation;    }
     public String getImgUrl() {        return imgUrl;    }
     public String getEpisodeList() {        return episodeList;    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Character newChar = (Character) obj;
+        return getId() == newChar.getId() && getStatus().equals(newChar.getStatus()) && getSpecies().equals(newChar.getSpecies())
+                && getType().equals(newChar.getType()) && getGender().equals(newChar.getGender())
+                && getOriginLocation() == newChar.getOriginLocation() && getLastKnownLocation() == newChar.getLastKnownLocation()
+                && getImgUrl().equals(newChar.getImgUrl());
+    }
 }

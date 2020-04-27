@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.networking;
+package com.shevaalex.android.rickmortydatabase.utils.networking;
 
 public class ConnectionModel {
     private final boolean isConnected;

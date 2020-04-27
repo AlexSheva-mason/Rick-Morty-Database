@@ -81,7 +81,7 @@ android:adjustViewBounds="true"-->
         android:id="@+id/character_status_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="10dp"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -94,19 +94,19 @@ android:adjustViewBounds="true"-->
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintEnd_toStartOf="@+id/character_status_value"
-        app:layout_constraintStart_toEndOf="@+id/character_status_value"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="@+id/character_status_value"
         app:layout_constraintTop_toBottomOf="@id/character_status_value"
         tools:text="Species" />
 
     <TextView
         android:id="@+id/character_type_value"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintEnd_toStartOf="@+id/character_species_value"
-        app:layout_constraintStart_toEndOf="@+id/character_species_value"
+        android:maxLines="2"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/character_species_value"
         tools:text="TYPE" />
 
@@ -116,9 +116,8 @@ android:adjustViewBounds="true"-->
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintEnd_toStartOf="@+id/character_type_value"
-        app:layout_constraintStart_toEndOf="@+id/character_type_value"
-        app:layout_constraintTop_toBottomOf="@id/character_type_value"
+        app:layout_constraintStart_toStartOf="@+id/character_species_value"
+        app:layout_constraintTop_toBottomOf="@+id/character_type_value"
         tools:text="Gender" />
 
     <TextView

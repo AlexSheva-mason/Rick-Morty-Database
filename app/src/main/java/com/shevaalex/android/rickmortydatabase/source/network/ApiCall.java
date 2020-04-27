@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.networking;
+package com.shevaalex.android.rickmortydatabase.source.network;
 
 public class ApiCall {
     public static final String BASE_URL = "https://rickandmortyapi.com/api/";
@@ -20,9 +20,9 @@ public class ApiCall {
         public static final String CHARACTER_GENDER = "gender";
         public static final String CHARACTER_ORIGIN_LOCATION = "origin";
         public static final String CHARACTER_LAST_LOCATION = "location";
+        public static final String CHARACTER_LOCATIONS_URL = "url";
+        public static final String CHARACTER_LOCATIONS_SUBSTRING = "location/";
         public static final String CHARACTER_IMAGE_URL = "image";
         public static final String CHARACTER_EPISODE_LIST = "episode";
-        public static final String CHARACTER_URL = "url";
-        public static final String CHARACTER_TIME_CREATED = "created";
     }
 }

@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.database;
+package com.shevaalex.android.rickmortydatabase.source.database;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,7 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Character.class}, version = 1, exportSchema = false)
+@Database(entities = {Character.class, Location.class, Episode.class}, version = 1, exportSchema = false)
 public abstract class RickMortyDatabase extends RoomDatabase {
     private static final String LOG_TAG = RickMortyDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
@@ -32,5 +32,7 @@ public abstract class RickMortyDatabase extends RoomDatabase {
     }
 
     public abstract CharacterDao getCharacterDao();
+    public abstract LocationDao getLocationDao();
+    public abstract EpisodeDao getEpisodeDao();
 
 }

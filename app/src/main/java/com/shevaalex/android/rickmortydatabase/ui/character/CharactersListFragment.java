@@ -25,10 +25,9 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.CharacterViewModel;
-import com.shevaalex.android.rickmortydatabase.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
-import com.shevaalex.android.rickmortydatabase.networking.ConnectionLiveData;
+import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
 
@@ -198,6 +197,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             if (connectionModel.isConnected() && isAdded()) {
                 if (characterViewModel.dbIsNotSynced()) {
                     characterViewModel.syncDb();
+                    listJumpTo0();
                     Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
                 }
             } else if (!connectionModel.isConnected() && isAdded()) {

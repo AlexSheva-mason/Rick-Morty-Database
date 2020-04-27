@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.networking;
+package com.shevaalex.android.rickmortydatabase.source.network;
 
 import org.json.JSONObject;
 

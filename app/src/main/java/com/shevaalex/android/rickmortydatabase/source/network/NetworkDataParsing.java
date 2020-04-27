@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.networking;
+package com.shevaalex.android.rickmortydatabase.source.network;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -41,36 +41,10 @@ public class NetworkDataParsing {
     }
 
     // makes a call to get the number of pages containing Characters, and passes it to RmRepo
-    public void getCharactersNumberOfPages(final VolleyCallback callback, final String url) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(),
-                response -> {
+    public void getVolleyResponce(final VolleyCallback callback, final String url) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
                     if (response != null) {
                         //get number of pages containing Characters
-                        callback.getJsonDataResponse(response);
-                    }
-                }, error -> {
-                    handleVolleyErrors(error);
-                    error.printStackTrace();
-                });
-        volleyInstance.addToRequestQueue(jsonObjectRequest);
-    }
-
-    public void compareJsonLastCharacterId(final VolleyCallback callback, String url) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
-            if (response != null){
-                callback.getJsonDataResponse(response);
-            }
-        }, error -> {
-            handleVolleyErrors(error);
-            error.printStackTrace();
-        });
-        volleyInstance.addToRequestQueue(jsonObjectRequest);
-    }
-
-    public void getJsonCharacterList (final VolleyCallback callback, String url) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(),
-                response -> {
-                    if (response != null){
                         callback.getJsonDataResponse(response);
                     }
                 }, error -> {

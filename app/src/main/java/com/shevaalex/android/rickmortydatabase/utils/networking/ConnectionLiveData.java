@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.networking;
+package com.shevaalex.android.rickmortydatabase.utils.networking;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase;
+package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -8,11 +8,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.paging.PagedList;
 
-import com.shevaalex.android.rickmortydatabase.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.CharacterRepository;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.ui.character.FilterLiveData;
 
 public class CharacterViewModel extends AndroidViewModel {
-    private final RmRepository rmRepository;
+    private final CharacterRepository rmRepository;
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
@@ -21,7 +22,7 @@ public class CharacterViewModel extends AndroidViewModel {
 
     public CharacterViewModel(@NonNull Application application) {
         super(application);
-        rmRepository = RmRepository.getInstance(application);
+        rmRepository = CharacterRepository.getInstance(application);
     }
 
     public void setNameQuery(String name) {
