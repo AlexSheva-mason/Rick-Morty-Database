@@ -29,4 +29,15 @@ public class Episode {
     public String getCode() {        return code;    }
 
     public String getCharactersList() {        return charactersList;    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Episode newEpisode = (Episode) obj;
+        return getId() == newEpisode.getId() && getName().equals(newEpisode.getName()) && getAirDate().equals(newEpisode.getAirDate())
+                && getCode().equals(newEpisode.getCode()) && getCharactersList().equals(newEpisode.getCharactersList());
+    }
+
 }

@@ -18,4 +18,8 @@ public interface EpisodeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertEpisode(Episode episode);
+
+    // gets the entry count to compare databases
+    @Query("SELECT COUNT(id) FROM Episode")
+    int getEpisodeCount();
 }

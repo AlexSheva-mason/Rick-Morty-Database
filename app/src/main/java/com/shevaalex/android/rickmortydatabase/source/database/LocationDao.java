@@ -18,4 +18,8 @@ public interface LocationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertLocation(Location location);
+
+    // gets the entry count to compare databases
+    @Query("SELECT COUNT(id) FROM Location")
+    int getLocationCount();
 }

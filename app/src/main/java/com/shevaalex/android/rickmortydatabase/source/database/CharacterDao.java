@@ -29,6 +29,10 @@ public interface CharacterDao {
     @Query("SELECT * FROM Character ORDER BY id DESC LIMIT 1")
     Character showLastInCharacterList();
 
+    // gets the entry count to compare databases
+    @Query("SELECT COUNT(id) FROM Character")
+    int getCharacterCount();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCharacter(Character character);
 }

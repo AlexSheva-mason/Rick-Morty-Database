@@ -8,12 +8,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.paging.PagedList;
 
-import com.shevaalex.android.rickmortydatabase.source.CharacterRepository;
+import com.shevaalex.android.rickmortydatabase.source.MainRepository;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
-import com.shevaalex.android.rickmortydatabase.ui.character.FilterLiveData;
+
 
 public class CharacterViewModel extends AndroidViewModel {
-    private final CharacterRepository rmRepository;
+    private final MainRepository rmRepository;
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
@@ -22,18 +22,18 @@ public class CharacterViewModel extends AndroidViewModel {
 
     public CharacterViewModel(@NonNull Application application) {
         super(application);
-        rmRepository = CharacterRepository.getInstance(application);
+        rmRepository = MainRepository.getInstance(application);
     }
 
-    public void setNameQuery(String name) {
+    void setNameQuery(String name) {
         this.searchQuery.setValue(name);
     }
 
-    public void setFilter(Integer key) {
+    void setFilter(Integer key) {
         this.filterResultKey.setValue(key);
     }
 
-    public LiveData<PagedList<Character>> getCharacterList() {
+    LiveData<PagedList<Character>> getCharacterList() {
         if (mCharacterList == null) {
             FilterLiveData trigger = new FilterLiveData(searchQuery, filterResultKey);
             mCharacterList = Transformations.switchMap(trigger,
@@ -42,18 +42,18 @@ public class CharacterViewModel extends AndroidViewModel {
         return mCharacterList;
     }
 
-    public boolean dbIsNotSynced() {
+    boolean dbIsNotSynced() {
         return !rmRepository.dbIsUpToDate();
     }
 
-    public void syncDb() {
+    void syncDb() {
         rmRepository.syncDatabase();
     }
 
-    public LiveData<Integer> getFilterResultKey() {
+    LiveData<Integer> getFilterResultKey() {
         return filterResultKey;
     }
 
-    public LiveData<String> getSearchQuery() { return searchQuery;   }
+    LiveData<String> getSearchQuery() { return searchQuery;   }
 
 }

@@ -29,4 +29,14 @@ public class Location {
     public String getDimension() {        return dimension;    }
 
     public String getResidentsList() {        return residentsList;    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Location newLoc = (Location) obj;
+        return getId() == newLoc.getId() && getName().equals(newLoc.getName()) && getType().equals(newLoc.getType())
+                && getDimension().equals(newLoc.getDimension()) && getResidentsList().equals(newLoc.getResidentsList());
+    }
 }

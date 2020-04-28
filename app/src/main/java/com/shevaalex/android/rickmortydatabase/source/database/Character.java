@@ -53,7 +53,7 @@ public class Character {
             return false;
         }
         Character newChar = (Character) obj;
-        return getId() == newChar.getId() && getStatus().equals(newChar.getStatus()) && getSpecies().equals(newChar.getSpecies())
+        return getId() == newChar.getId() && getName().equals(newChar.getName()) && getStatus().equals(newChar.getStatus()) && getSpecies().equals(newChar.getSpecies())
                 && getType().equals(newChar.getType()) && getGender().equals(newChar.getGender())
                 && getOriginLocation() == newChar.getOriginLocation() && getLastKnownLocation() == newChar.getLastKnownLocation()
                 && getImgUrl().equals(newChar.getImgUrl());
