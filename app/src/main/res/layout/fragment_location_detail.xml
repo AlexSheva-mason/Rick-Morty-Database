@@ -1,16 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.location.LocationDetailFragment">
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
 
     <TextView
+        android:id="@+id/location_dimension"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Location Details here"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp" />
+        android:layout_marginTop="4dp"
+        android:padding="3dp"
+        android:text="@string/text_view_location_dimension"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorTextName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/location_dimension_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:padding="3dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorTextName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/location_dimension"
+        app:layout_constraintTop_toTopOf="@+id/location_dimension"
+        tools:text="DIMENSION" />
+
+    <TextView
+        android:id="@+id/location_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:padding="3dp"
+        android:text="@string/text_view_location_type"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorTextName"
+        app:layout_constraintStart_toStartOf="@id/location_dimension"
+        app:layout_constraintTop_toBottomOf="@id/location_dimension" />
+
+    <TextView
+        android:id="@+id/location_type_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:padding="3dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorTextName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/location_type"
+        app:layout_constraintTop_toTopOf="@id/location_type"
+        tools:text="TYPE" />
+
+    <TextView
+        android:id="@+id/location_residents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:padding="3dp"
+        android:text="@string/text_view_location_residents"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorTextName"
+        app:layout_constraintStart_toStartOf="@id/location_type"
+        app:layout_constraintTop_toBottomOf="@id/location_type" />
+
+    <TextView
+        android:id="@+id/location_residents_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:padding="3dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorTextName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/location_residents"
+        app:layout_constraintTop_toTopOf="@id/location_residents"
+        tools:text="RESIDENTS" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

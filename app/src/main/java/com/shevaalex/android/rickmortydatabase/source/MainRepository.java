@@ -3,22 +3,26 @@ package com.shevaalex.android.rickmortydatabase.source;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.LongDef;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
+import com.shevaalex.android.rickmortydatabase.source.database.JoinEntity;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.source.database.RickMortyDatabase;
 import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
 import com.shevaalex.android.rickmortydatabase.utils.AppExecutors;
+import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -118,7 +122,6 @@ public class MainRepository {
                 JSONObject jsonObject = response.getJSONObject(ApiCall.INFO);
                 int numberOfPages = jsonObject.getInt(ApiCall.PAGES);
                 getLastEntries(numberOfPages, url);
-                Log.d(TAG, "networkInitialCall: getLastEntries " +numberOfPages + " / " + url);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -206,6 +209,7 @@ public class MainRepository {
             //adds a new Character to the database
             Character newCharacter = (Character) newEntryObject;
             appExecutors.diskIO().execute(() -> rmDatabase.getCharacterDao().insertCharacter(newCharacter));
+
             if (newCharacter.equals(lastNetworkCharacter) && lastNetworkCharacter.getId() == characterEntriesDbCount) {
                 characterTableIsUpToDate = true;
                 lastDbCharacter = newCharacter;
@@ -254,6 +258,21 @@ public class MainRepository {
                         lastKnownLocId = Integer.parseInt(lastKnownLocString.substring(stringEnd + 9));
                     }
                     String imgUrl = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
+
+                    /*JSONArray episodeArray = entryObjectJson.getJSONArray(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST);
+                    ArrayList<String> episodeArrayList = new ArrayList<>();
+                    for (int x = 0; x < episodeArray.length(); x++) {
+                        episodeArrayList.add(episodeArray.getString(x));
+                    }
+                    String arrayShortened = episodeArray.toString();
+                    //ArrayList<Integer> episodeIds = new ArrayList<>();
+                    for (int x = 0; x < episodeArray.length(); x++) {
+                       int episodeId = StringParsing.parseEpisodeIds(episodeArray.getString(x));
+                       if (episodeId != 0) {
+                           appExecutors.diskIO().execute(() -> rmDatabase.getJoinEntityDao().insert(new JoinEntity(id, 0, episodeId)));
+                       }
+                    }*/
+
                     String episodeList = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST);
                     return new Character(id, name, status, species, type, gender, originLocId,
                             lastKnownLocId, imgUrl, episodeList);
@@ -342,7 +361,7 @@ public class MainRepository {
 
     //LOCATIONS
     //gets all locations
-    private LiveData<PagedList<Location>> getAllLocations() {
+    public LiveData<PagedList<Location>> getAllLocations() {
         return new LivePagedListBuilder<>(rmDatabase.getLocationDao().showAllLocations(), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 

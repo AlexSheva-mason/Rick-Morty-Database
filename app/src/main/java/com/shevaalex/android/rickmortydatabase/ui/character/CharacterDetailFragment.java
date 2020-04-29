@@ -28,7 +28,6 @@ public class CharacterDetailFragment extends Fragment {
         binding = FragmentCharacterDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         // retrieve data from parent fragment
-        /*String charName = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterName();*/
         String imgUrl = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getImageUrl();
         String charStatus = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterStatus();
         String charSpecies = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterSpecies();

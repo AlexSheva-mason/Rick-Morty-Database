@@ -102,10 +102,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             characterViewModel.setNameQuery(savedSearchQuery);
             Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
             if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                new Handler().postDelayed(() -> {
-                    Log.d(TAG, "onResume: list position restored");
-                    binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState);
-                }, 50);
+                new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState), 50);
             }
         }
     }
@@ -215,7 +212,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         if (binding.recyclerviewCharacter.getLayoutManager() != null) {
             savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
         }
-        Log.d(TAG, "saveState: has been saved: " + savedState);
     }
 
     @Override

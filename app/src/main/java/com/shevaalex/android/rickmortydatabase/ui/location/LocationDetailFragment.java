@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.R;
+import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationDetailBinding;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 @SuppressWarnings("WeakerAccess")
 public class LocationDetailFragment extends Fragment {
+    private FragmentLocationDetailBinding binding;
 
     public LocationDetailFragment() {
         // Required empty public constructor
@@ -24,7 +26,23 @@ public class LocationDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location_detail, container, false);
+        // Set View binding for this fragment;
+        binding = FragmentLocationDetailBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        // retrieve data from parent fragment
+        String dimension = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationDimension();
+        String type = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationType();
+        String residents = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationResidents();
+        //set retreived data to appropriate views
+        binding.locationDimensionValue.setText(dimension);
+        binding.locationTypeValue.setText(type);
+        binding.locationResidentsValue.setText(residents);
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

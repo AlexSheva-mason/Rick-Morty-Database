@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
         botNavViewModel = new ViewModelProvider(this).get(BottomNavViewModel.class);
         botNavViewModel.getBottomNavVisibility().observe(this, integer -> binding.bottomPanel.setVisibility(integer));
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.characterDetailFragment2) {
-                botNavViewModel.hideBottomNav();
+            if (destination.getId() == R.id.characterDetailFragment2 || destination.getId() == R.id.locationDetailFragment) {
+                new Handler().postDelayed(() ->
+                        botNavViewModel.hideBottomNav(), 100);
             } else {
                 botNavViewModel.showBottomNav();
             }

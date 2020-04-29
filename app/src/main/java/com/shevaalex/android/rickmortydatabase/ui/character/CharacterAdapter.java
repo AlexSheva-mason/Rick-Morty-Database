@@ -64,7 +64,6 @@ class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.Char
     @Override
     public String getSectionTitle(int position) {
         //this String will be shown in a bubble for specified position
-        //TODO set timing for bubble visibility!
         Character currentChar = getItem(position);
         if (currentChar != null) {
             return currentChar.getName().substring(0, 1);

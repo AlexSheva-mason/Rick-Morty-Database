@@ -22,6 +22,10 @@
     <string name="text_view_character_gender">Gender:</string>
     <string name="text_view_character_origin">Origin location:</string>
     <string name="text_view_character_last_loc">Last location:</string>
+    <string name="image_view_location_description">Location image placeholder</string>
+    <string name="text_view_location_type">Type:</string>
+    <string name="text_view_location_dimension">Dimension:</string>
+    <string name="text_view_location_residents">Residents:</string>
 
     //Character Detail fragment
     <string name="character_type_placeholder">(%1$s)</string>

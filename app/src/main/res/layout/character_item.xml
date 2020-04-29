@@ -12,13 +12,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/character_image"
             android:layout_width="125dp"
             android:layout_height="125dp"
-            android:padding="16dp"
             android:contentDescription="@string/image_view_character_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

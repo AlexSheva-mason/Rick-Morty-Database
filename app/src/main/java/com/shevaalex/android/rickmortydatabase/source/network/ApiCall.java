@@ -1,6 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.network;
 
-public class ApiCall {
+public abstract class ApiCall {
     public static final String INFO = "info";
     public static final String PAGES = "pages";
     public static final String RESULTS_ARRAY = "results";
