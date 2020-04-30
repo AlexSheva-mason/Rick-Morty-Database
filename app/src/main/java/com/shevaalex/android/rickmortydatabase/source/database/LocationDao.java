@@ -6,11 +6,17 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 @Dao
 public interface LocationDao {
     //shows list of all locations
     @Query("SELECT * FROM Location ORDER BY name")
     DataSource.Factory<Integer, Location> showAllLocations();
+
+    //gets list of all locations
+    @Query("SELECT * FROM Location ORDER BY name")
+    List<Location> getAllLocations();
 
     // gets the last location to compare databases
     @Query("SELECT * FROM Location ORDER BY id DESC LIMIT 1")

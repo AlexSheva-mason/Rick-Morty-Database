@@ -7,7 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Character.class, Location.class, Episode.class, JoinEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {Character.class, Location.class, Episode.class, CharacterEpisodeJoin.class, LocationCharacterJoin.class}, version = 1, exportSchema = false)
 public abstract class RickMortyDatabase extends RoomDatabase {
     private static final String LOG_TAG = RickMortyDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
@@ -34,6 +34,7 @@ public abstract class RickMortyDatabase extends RoomDatabase {
     public abstract CharacterDao getCharacterDao();
     public abstract LocationDao getLocationDao();
     public abstract EpisodeDao getEpisodeDao();
-    public abstract JoinEntityDao getJoinEntityDao();
+    public abstract CharacterEpisodeJoinDao getCharacterEpisodeJoinDao();
+    public abstract LocationCharacterJoinDao getLocationCharacterJoinDao();
 
 }

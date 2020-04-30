@@ -3,15 +3,15 @@ package com.shevaalex.android.rickmortydatabase.source;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.LongDef;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
-import com.shevaalex.android.rickmortydatabase.source.database.JoinEntity;
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterEpisodeJoin;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.source.database.LocationCharacterJoin;
 import com.shevaalex.android.rickmortydatabase.source.database.RickMortyDatabase;
 import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -46,6 +47,9 @@ public class MainRepository {
     private boolean characterTableIsUpToDate;
     private boolean locationTableIsUpToDate;
     private boolean episodeTableIsUpToDate;
+    private ArrayList<Character> mCharacterList = new ArrayList<>();
+    private ArrayList<Location> mLocationList = new ArrayList<>();
+    private ArrayList<Episode> mEpisodeList = new ArrayList<>();
 
     private MainRepository(Application application) {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
@@ -196,6 +200,7 @@ public class MainRepository {
                 if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
                     dbIsUpToDate = true;
                     networkDataParsing.cancelVolleyRequests();
+                    addJoinEntries();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -209,8 +214,10 @@ public class MainRepository {
             //adds a new Character to the database
             Character newCharacter = (Character) newEntryObject;
             appExecutors.diskIO().execute(() -> rmDatabase.getCharacterDao().insertCharacter(newCharacter));
-
-            if (newCharacter.equals(lastNetworkCharacter) && lastNetworkCharacter.getId() == characterEntriesDbCount) {
+            if (!mCharacterList.contains(newCharacter)) {
+                mCharacterList.add(newCharacter);
+            }
+            if (lastNetworkCharacter.getId() == mCharacterList.size() && mCharacterList.contains(lastNetworkCharacter)) {
                 characterTableIsUpToDate = true;
                 lastDbCharacter = newCharacter;
             }
@@ -218,7 +225,10 @@ public class MainRepository {
             //adds a new Location to the database
             Location newLocation = (Location) newEntryObject;
             appExecutors.diskIO().execute(() -> rmDatabase.getLocationDao().insertLocation(newLocation));
-            if (newLocation.equals(lastNetworkLocation) && lastNetworkLocation.getId() == locationEntriesDbCount) {
+            if (!mLocationList.contains(newLocation)) {
+                mLocationList.add(newLocation);
+            }
+            if (lastNetworkLocation.getId() == mLocationList.size() && mLocationList.contains(lastNetworkLocation)) {
                 locationTableIsUpToDate = true;
                 lastDbLocation = newLocation;
             }
@@ -226,7 +236,10 @@ public class MainRepository {
             //adds a new Episode to the database
             Episode newEpisode = (Episode) newEntryObject;
             appExecutors.diskIO().execute(() -> rmDatabase.getEpisodeDao().insertEpisode(newEpisode));
-            if (newEpisode.equals(lastNetworkEpisode) && lastNetworkEpisode.getId() == episodeEntriesDbCount) {
+            if (!mEpisodeList.contains(newEpisode)) {
+                mEpisodeList.add(newEpisode);
+            }
+            if (lastNetworkEpisode.getId() == mEpisodeList.size() && mEpisodeList.contains(lastNetworkEpisode)) {
                 episodeTableIsUpToDate = true;
                 lastDbEpisode = newEpisode;
             }
@@ -243,37 +256,16 @@ public class MainRepository {
                     String species = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_SPECIES);
                     String type = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);
                     String gender = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_GENDER);
+                    String imgUrl = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
+                    String episodeList = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST);
+                    // Parse last known and origin locations strings to retreive IDs
                     JSONObject originLocation = entryObjectJson.getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION);
                     String originLocString = originLocation.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
-                    int originLocId = 0;
-                    if (originLocString.contains(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING)) {
-                        int stringEnd = originLocString.lastIndexOf(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING);
-                        originLocId = Integer.parseInt(originLocString.substring(stringEnd + 9));
-                    }
+                    int originLocId = StringParsing.parseLocationId(originLocString);
                     JSONObject lastKnownLoc = entryObjectJson.getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
                     String lastKnownLocString = lastKnownLoc.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
-                    int lastKnownLocId = 0;
-                    if (lastKnownLocString.contains(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING)) {
-                        int stringEnd = lastKnownLocString.lastIndexOf(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING);
-                        lastKnownLocId = Integer.parseInt(lastKnownLocString.substring(stringEnd + 9));
-                    }
-                    String imgUrl = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
-
-                    /*JSONArray episodeArray = entryObjectJson.getJSONArray(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST);
-                    ArrayList<String> episodeArrayList = new ArrayList<>();
-                    for (int x = 0; x < episodeArray.length(); x++) {
-                        episodeArrayList.add(episodeArray.getString(x));
-                    }
-                    String arrayShortened = episodeArray.toString();
-                    //ArrayList<Integer> episodeIds = new ArrayList<>();
-                    for (int x = 0; x < episodeArray.length(); x++) {
-                       int episodeId = StringParsing.parseEpisodeIds(episodeArray.getString(x));
-                       if (episodeId != 0) {
-                           appExecutors.diskIO().execute(() -> rmDatabase.getJoinEntityDao().insert(new JoinEntity(id, 0, episodeId)));
-                       }
-                    }*/
-
-                    String episodeList = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST);
+                    int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
+                    // Return a Character object
                     return new Character(id, name, status, species, type, gender, originLocId,
                             lastKnownLocId, imgUrl, episodeList);
                 } catch (JSONException e) {
@@ -308,9 +300,33 @@ public class MainRepository {
         }
     }
 
-
     public void syncDatabase() {
         initialiseDataBase();
+    }
+
+    private void addJoinEntries() {
+        appExecutors.diskIO().execute(() -> {
+            List<Character> characterList = rmDatabase.getCharacterDao().getAllCharacters();
+            for (Character character : characterList) {
+                ArrayList<Integer> episodeIds = StringParsing.parseIdsFromString(character.getEpisodeList());
+                if (episodeIds.size() > 0) {
+                    for (int episodeID : episodeIds) {
+                        appExecutors.diskIO().execute(() -> rmDatabase.getCharacterEpisodeJoinDao().insert(new CharacterEpisodeJoin(character.getId(), episodeID)));
+                    }
+                }
+            }
+        });
+        appExecutors.diskIO().execute(() -> {
+            List<Location> locationList = rmDatabase.getLocationDao().getAllLocations();
+            for (Location location : locationList) {
+                ArrayList<Integer> residentsIds = StringParsing.parseIdsFromString(location.getResidentsList());
+                if (residentsIds.size() > 0) {
+                    for (int residentId : residentsIds) {
+                        appExecutors.diskIO().execute(() -> rmDatabase.getLocationCharacterJoinDao().insert(new LocationCharacterJoin(residentId, location.getId()))); }
+                    }
+            }
+        });
+
     }
 
     // calls the appropriate method based on search query and filter applied
