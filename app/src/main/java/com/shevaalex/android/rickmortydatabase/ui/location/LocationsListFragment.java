@@ -5,12 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,7 +17,6 @@ import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
@@ -61,7 +58,7 @@ public class LocationsListFragment extends Fragment implements LocationAdapter.O
         //set the fast scroller for recyclerview
         binding.fastScroll.setRecyclerView(binding.recyclerviewLocation);
         //moved from onCreate to prevent adapter list from being null
-        locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> { locationAdapter.submitList(locations);  });
+        locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
         return view;
     }
 
@@ -107,7 +104,6 @@ public class LocationsListFragment extends Fragment implements LocationAdapter.O
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         super.onDestroyView();
         if (locationAdapter != null) {
             locationAdapter = null;

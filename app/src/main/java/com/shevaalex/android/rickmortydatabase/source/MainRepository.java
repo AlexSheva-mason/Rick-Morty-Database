@@ -381,4 +381,10 @@ public class MainRepository {
         return new LivePagedListBuilder<>(rmDatabase.getLocationDao().showAllLocations(), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
+    //EPISODES
+    //gets all episodes
+    public LiveData<PagedList<Episode>> getAllEpisodes() {
+        return new LivePagedListBuilder<>(rmDatabase.getEpisodeDao().showAllEpisodes(), 20).setFetchExecutor(appExecutors.diskIO()).build();
+    }
+
 }

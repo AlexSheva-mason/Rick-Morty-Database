@@ -9,7 +9,7 @@ import androidx.room.Query;
 @Dao
 public interface EpisodeDao {
     //shows list of all episodes
-    @Query("SELECT * FROM Episode ORDER BY name")
+    @Query("SELECT * FROM Episode ORDER BY code")
     DataSource.Factory<Integer, Episode> showAllEpisodes();
 
     // gets the last episode to compare databases
