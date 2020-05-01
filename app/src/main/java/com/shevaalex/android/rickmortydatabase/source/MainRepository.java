@@ -387,4 +387,11 @@ public class MainRepository {
         return new LivePagedListBuilder<>(rmDatabase.getEpisodeDao().showAllEpisodes(), 20).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
+    //JOIN DAOs
+    //gets characters from episode
+    public LiveData<PagedList<Character>> getCharactersFromEpisode(int id) {
+        return new LivePagedListBuilder<>(rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(id), 20)
+                .setFetchExecutor(appExecutors.diskIO()).build();
+    }
+
 }

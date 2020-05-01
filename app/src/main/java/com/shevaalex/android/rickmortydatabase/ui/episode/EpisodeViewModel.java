@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
 public class EpisodeViewModel extends AndroidViewModel {
@@ -23,5 +24,9 @@ public class EpisodeViewModel extends AndroidViewModel {
             mEpisodeList = rmRepository.getAllEpisodes();
         }
         return mEpisodeList;
+    }
+
+    LiveData<PagedList<Character>> getCharactersFromEpisode(int id) {
+        return  rmRepository.getCharactersFromEpisode(id);
     }
 }

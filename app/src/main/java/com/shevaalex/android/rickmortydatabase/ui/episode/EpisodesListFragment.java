@@ -13,9 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding;
+import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
 @SuppressWarnings("WeakerAccess")
 public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnEpisodeClickListener {
@@ -71,7 +74,17 @@ public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnE
 
     @Override
     public void onEpisodeClick(int position, View v) {
-
+        PagedList<Episode> episodeList = episodeAdapter.getCurrentList();
+        if (episodeList != null && !episodeList.isEmpty()) {
+            Episode clickedEpisode = episodeList.get(position);
+            EpisodesListFragmentDirections.ToEpisodeDetailFragmentAction action =
+                    EpisodesListFragmentDirections.toEpisodeDetailFragmentAction();
+            if (clickedEpisode != null) {
+                action.setEpisodeName(clickedEpisode.getName()).setEpisodeAirDate(clickedEpisode.getAirDate())
+                        .setEpisodeCode(clickedEpisode.getCode()).setId(clickedEpisode.getId());
+                Navigation.findNavController(v).navigate(action);
+            }
+        }
     }
 
     private void customSaveState() {

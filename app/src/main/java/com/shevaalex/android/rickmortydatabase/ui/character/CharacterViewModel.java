@@ -55,4 +55,6 @@ public class CharacterViewModel extends AndroidViewModel {
     }
 
     LiveData<String> getSearchQuery() { return searchQuery;   }
+
+
 }

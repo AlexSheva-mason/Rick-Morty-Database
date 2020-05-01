@@ -21,12 +21,20 @@
         android:id="@+id/episodesListFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodesListFragment"
         android:label="List of Episodes"
-        tools:layout="@layout/fragment_episodes_list" />
+        tools:layout="@layout/fragment_episodes_list">
+        <action
+            android:id="@+id/toEpisodeDetailFragmentAction"
+            app:destination="@id/episodeDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/locationsListFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.location.LocationsListFragment"
         android:label="List of Locations"
-        tools:layout="@layout/fragment_locations_list" >
+        tools:layout="@layout/fragment_locations_list">
         <action
             android:id="@+id/toLocationDetailFragmentAction"
             app:destination="@id/locationDetailFragment"
@@ -73,6 +81,9 @@
             android:name="character_last_location"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_characterDetailFragment2_to_episodeDetailFragment"
+            app:destination="@id/episodeDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"
@@ -95,5 +106,33 @@
             android:name="location_residents"
             android:defaultValue="zzz"
             app:argType="string" />
+        <action
+            android:id="@+id/action_locationDetailFragment_to_characterDetailFragment2"
+            app:destination="@id/characterDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetailFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodeDetailFragment"
+        android:label="{episode_code}"
+        tools:layout="@layout/fragment_episode_detail">
+        <argument
+            android:name="episode_name"
+            android:defaultValue="Name"
+            app:argType="string" />
+        <argument
+            android:name="episode_air_date"
+            android:defaultValue="01/01/2020"
+            app:argType="string" />
+        <argument
+            android:name="episode_code"
+            android:defaultValue="Dimension"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_episodeDetailFragment_to_characterDetailFragment2"
+            app:destination="@id/characterDetailFragment2" />
     </fragment>
 </navigation>

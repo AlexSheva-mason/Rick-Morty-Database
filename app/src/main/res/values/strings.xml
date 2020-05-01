@@ -33,4 +33,8 @@
     //Character Detail fragment
     <string name="character_type_placeholder">(%1$s)</string>
 
+    //Episode Detail fragment
+    <string name="episode_characters_seen">Characters, seen in the episode:</string>
+
+
 </resources>
