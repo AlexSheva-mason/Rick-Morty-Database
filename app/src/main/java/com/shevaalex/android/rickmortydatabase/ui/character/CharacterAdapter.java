@@ -13,16 +13,25 @@ import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemBinding;
+import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.squareup.picasso.Picasso;
 
 
 public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> implements SectionTitleProvider {
     private final OnCharacterListener onCharacterListener;
+    private CharacterViewModel viewModel;
+
+    public CharacterAdapter(OnCharacterListener onClickListener, CharacterViewModel viewModel) {
+        super(DIFF_CALLBACK);
+        this.onCharacterListener = onClickListener;
+        this.viewModel = viewModel;
+    }
 
     public CharacterAdapter(OnCharacterListener onClickListener) {
         super(DIFF_CALLBACK);
         this.onCharacterListener = onClickListener;
     }
+
 
     private static final DiffUtil.ItemCallback<Character> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<Character>() {
@@ -57,7 +66,12 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
             holder.characterItemBinding.characterGenderValue.setText(currentCharacter.getGender());
             holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
-            holder.characterItemBinding.characterLastLocationValue.setText(String.valueOf(currentCharacter.getLastKnownLocation()));
+            if (viewModel != null) {
+                Location lastLoc = viewModel.getLocationById(currentCharacter.getLastKnownLocation());
+                if (lastLoc != null) {
+                    holder.characterItemBinding.characterLastLocationValue.setText(lastLoc.getName());
+                }
+            }
         }
     }
 

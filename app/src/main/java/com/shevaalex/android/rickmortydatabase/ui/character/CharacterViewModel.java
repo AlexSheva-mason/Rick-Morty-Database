@@ -10,6 +10,7 @@ import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
 
 public class CharacterViewModel extends AndroidViewModel {
@@ -56,5 +57,6 @@ public class CharacterViewModel extends AndroidViewModel {
 
     LiveData<String> getSearchQuery() { return searchQuery;   }
 
+    Location getLocationById (int id) { return rmRepository.getLocationById(id); }
 
 }

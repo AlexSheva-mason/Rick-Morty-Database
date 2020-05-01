@@ -79,7 +79,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
         binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
-        characterAdapter = new CharacterAdapter(CharactersListFragment.this);
+        characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
         //set the fast scroller for recyclerview
         binding.fastScroll.setRecyclerView(binding.recyclerviewCharacter);

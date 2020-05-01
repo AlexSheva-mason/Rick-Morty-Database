@@ -381,6 +381,21 @@ public class MainRepository {
         return new LivePagedListBuilder<>(rmDatabase.getLocationDao().showAllLocations(), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
+    //gets location by ID
+    public Location getLocationById (int id) {
+        Location location = null;
+        Future<Location> futureLocation = appExecutors.diskIO().submit(() -> {
+            if (rmDatabase.getLocationDao().getLocationById(id) != null) {
+                return rmDatabase.getLocationDao().getLocationById(id);
+            } else { return null; }
+        });
+        try {
+           location = futureLocation.get();
+        }
+        catch (ExecutionException | InterruptedException e) { e.printStackTrace();  }
+        return location;
+    }
+
     //EPISODES
     //gets all episodes
     public LiveData<PagedList<Episode>> getAllEpisodes() {

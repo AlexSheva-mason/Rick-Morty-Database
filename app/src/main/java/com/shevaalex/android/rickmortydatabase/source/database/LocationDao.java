@@ -10,6 +10,9 @@ import java.util.List;
 
 @Dao
 public interface LocationDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertLocation(Location location);
+
     //shows list of all locations
     @Query("SELECT * FROM Location ORDER BY name")
     DataSource.Factory<Integer, Location> showAllLocations();
@@ -22,10 +25,11 @@ public interface LocationDao {
     @Query("SELECT * FROM Location ORDER BY id DESC LIMIT 1")
     Location showLastInLocationList();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertLocation(Location location);
-
     // gets the entry count to compare databases
     @Query("SELECT COUNT(id) FROM Location")
     int getLocationCount();
+
+    // gets the location by id
+    @Query("SELECT * FROM Location WHERE id=:id")
+    Location getLocationById(int id);
 }
