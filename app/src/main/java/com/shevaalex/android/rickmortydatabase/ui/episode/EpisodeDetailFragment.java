@@ -16,12 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodeDetailBinding;
-import com.shevaalex.android.rickmortydatabase.ui.character.CharacterAdapter;
 
-@SuppressWarnings("WeakerAccess")
-public class EpisodeDetailFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
+public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapter.OnCharacterListener {
     private FragmentEpisodeDetailBinding binding;
-    private CharacterAdapter characterAdapter;
+    private CharacterAuxAdapter characterAuxAdapter;
     private EpisodeViewModel viewModel;
     private Activity a;
 
@@ -44,7 +42,7 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAdapter.
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Set View binding for this fragment;
         binding = FragmentEpisodeDetailBinding.inflate(inflater, container, false);
@@ -62,9 +60,9 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAdapter.
         binding.recyclerviewEpisodeDetail.setLayoutManager(layoutManager);
         binding.recyclerviewEpisodeDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        characterAdapter = new CharacterAdapter(this);
-        binding.recyclerviewEpisodeDetail.setAdapter(characterAdapter);
-        viewModel.getCharactersFromEpisode(episodeID).observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
+        characterAuxAdapter = new CharacterAuxAdapter(this);
+        binding.recyclerviewEpisodeDetail.setAdapter(characterAuxAdapter);
+        viewModel.getCharactersFromEpisode(episodeID).observe(getViewLifecycleOwner(), characters -> characterAuxAdapter.setCharacterList(characters));
         return view;
     }
 
@@ -72,8 +70,8 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAdapter.
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        if (characterAdapter != null) {
-            characterAdapter = null;
+        if (characterAuxAdapter != null) {
+            characterAuxAdapter = null;
         }
     }
 

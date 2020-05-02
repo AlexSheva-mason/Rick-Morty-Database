@@ -390,7 +390,7 @@ public class MainRepository {
             } else { return null; }
         });
         try {
-           location = futureLocation.get();
+            location = futureLocation.get();
         }
         catch (ExecutionException | InterruptedException e) { e.printStackTrace();  }
         return location;
@@ -404,9 +404,8 @@ public class MainRepository {
 
     //JOIN DAOs
     //gets characters from episode
-    public LiveData<PagedList<Character>> getCharactersFromEpisode(int id) {
-        return new LivePagedListBuilder<>(rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(id), 20)
-                .setFetchExecutor(appExecutors.diskIO()).build();
+    public LiveData<List<Character>> getCharactersFromEpisode(int id){
+        return rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(id);
     }
 
 }

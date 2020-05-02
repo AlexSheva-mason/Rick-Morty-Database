@@ -9,7 +9,8 @@ import androidx.paging.PagedList;
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
-import com.shevaalex.android.rickmortydatabase.source.database.Location;
+
+import java.util.List;
 
 public class EpisodeViewModel extends AndroidViewModel {
     private final MainRepository rmRepository;
@@ -27,9 +28,8 @@ public class EpisodeViewModel extends AndroidViewModel {
         return mEpisodeList;
     }
 
-    LiveData<PagedList<Character>> getCharactersFromEpisode(int id) {
+    LiveData<List<Character>> getCharactersFromEpisode(int id) {
         return  rmRepository.getCharactersFromEpisode(id);
     }
 
-    Location getLocationById (int id) { return rmRepository.getLocationById(id); }
 }
