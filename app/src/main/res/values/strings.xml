@@ -20,8 +20,9 @@
     <string name="text_view_character_status">Status:</string>
     <string name="text_view_character_species">Species:</string>
     <string name="text_view_character_gender">Gender:</string>
-    <string name="text_view_character_origin">Origin location:</string>
+    <string name="text_view_character_origin">Origin:</string>
     <string name="text_view_character_last_loc">Last location:</string>
+    <string name="text_view_character_location_unknown">unknown</string>
     <string name="image_view_location_description">Location image placeholder</string>
     <string name="image_view_episode_description">Episode image placeholder</string>
     <string name="text_view_location_type">Type:</string>

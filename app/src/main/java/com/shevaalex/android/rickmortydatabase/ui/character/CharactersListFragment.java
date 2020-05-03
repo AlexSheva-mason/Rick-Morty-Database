@@ -241,8 +241,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         PagedList<Character> mCharacterList = characterAdapter.getCurrentList();
         if (mCharacterList != null && !mCharacterList.isEmpty()) {
             Character clickedChar = mCharacterList.get(position);
-            CharactersListFragmentDirections.CharacterDetailAction action =
-                    CharactersListFragmentDirections.characterDetailAction();
+            CharactersListFragmentDirections.ToCharacterDetailFragmentAction action =
+                    CharactersListFragmentDirections.toCharacterDetailFragmentAction();
             if (clickedChar != null) {
                 action.setCharacterName(clickedChar.getName()).setImageUrl(clickedChar.getImgUrl())
                 .setCharacterStatus(clickedChar.getStatus()).setCharacterSpecies(clickedChar.getSpecies())

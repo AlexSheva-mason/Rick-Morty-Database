@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -16,12 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodeDetailBinding;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapter.OnCharacterListener {
     private FragmentEpisodeDetailBinding binding;
     private CharacterAuxAdapter characterAuxAdapter;
     private EpisodeViewModel viewModel;
     private Activity a;
+    private List<Character> characterList = new ArrayList<>();
 
     public EpisodeDetailFragment() {
         // Required empty public constructor
@@ -62,7 +68,10 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
         //get recyclerview Adapter and set data to it using ViewModel
         characterAuxAdapter = new CharacterAuxAdapter(this);
         binding.recyclerviewEpisodeDetail.setAdapter(characterAuxAdapter);
-        viewModel.getCharactersFromEpisode(episodeID).observe(getViewLifecycleOwner(), characters -> characterAuxAdapter.setCharacterList(characters));
+        viewModel.getCharactersFromEpisode(episodeID).observe(getViewLifecycleOwner(), characters -> {
+            characterAuxAdapter.setCharacterList(characters);
+            characterList = characters;
+        });
         return view;
     }
 
@@ -77,6 +86,17 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
 
     @Override
     public void onCharacterClick(int position, View v) {
-
+        if (characterList != null && !characterList.isEmpty()) {
+            Character clickedChar = characterList.get(position);
+            EpisodeDetailFragmentDirections.ToCharacterDetailFragmentAction2 action =
+                    EpisodeDetailFragmentDirections.toCharacterDetailFragmentAction2();
+            if (clickedChar != null) {
+                action.setCharacterName(clickedChar.getName()).setImageUrl(clickedChar.getImgUrl())
+                        .setCharacterStatus(clickedChar.getStatus()).setCharacterSpecies(clickedChar.getSpecies())
+                        .setCharacterType(clickedChar.getType()).setCharacterGender(clickedChar.getGender())
+                        .setCharacterOrigin(clickedChar.getOriginLocation()).setCharacterLastLocation(clickedChar.getLastKnownLocation());
+                Navigation.findNavController(v).navigate(action);
+            }
+        }
     }
 }

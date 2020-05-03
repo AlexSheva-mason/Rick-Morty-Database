@@ -10,7 +10,7 @@
         android:label="List of Characters"
         tools:layout="@layout/fragment_characters_list">
         <action
-            android:id="@+id/characterDetailAction"
+            android:id="@+id/toCharacterDetailFragmentAction"
             app:destination="@id/characterDetailFragment2"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -132,7 +132,7 @@
             android:defaultValue="0"
             app:argType="integer" />
         <action
-            android:id="@+id/action_episodeDetailFragment_to_characterDetailFragment2"
+            android:id="@+id/toCharacterDetailFragmentAction2"
             app:destination="@id/characterDetailFragment2" />
     </fragment>
 </navigation>

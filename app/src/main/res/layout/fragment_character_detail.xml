@@ -55,6 +55,7 @@ android:adjustViewBounds="true"-->
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/text_view_character_origin"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +66,7 @@ android:adjustViewBounds="true"-->
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/text_view_character_last_loc"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +77,7 @@ android:adjustViewBounds="true"-->
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.50121653" />
 
     <TextView
         android:id="@+id/character_status_value"
@@ -103,10 +105,13 @@ android:adjustViewBounds="true"-->
         android:id="@+id/character_type_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="98dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
         android:maxLines="2"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/character_species_value"
         tools:text="TYPE" />
 
@@ -120,25 +125,69 @@ android:adjustViewBounds="true"-->
         app:layout_constraintTop_toBottomOf="@+id/character_type_value"
         tools:text="Gender" />
 
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@id/character_origin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/character_last_location"
+        app:layout_constraintTop_toBottomOf="@id/character_origin">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_origin_location"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:maxLines="1"
+            app:icon="@drawable/locations_24dp"
+            tools:text="Origin location" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/character_origin_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:maxLines="1"
+        android:text="@string/text_view_character_location_unknown"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintStart_toEndOf="@+id/character_origin"
-        app:layout_constraintTop_toBottomOf="@id/character_gender_value"
-        tools:text="Origin location" />
+        app:layout_constraintBottom_toTopOf="@id/character_origin"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/character_origin" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@id/character_last_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/character_last_location"
+        app:layout_constraintTop_toBottomOf="@id/character_last_location">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_last_location"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:maxLines="1"
+            app:icon="@drawable/locations_24dp"
+            tools:text="Last location" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/character_last_location_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
+        android:text="@string/text_view_character_location_unknown"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintBottom_toTopOf="@id/character_last_location"
         app:layout_constraintStart_toStartOf="@id/character_origin_value"
-        app:layout_constraintTop_toBottomOf="@id/character_origin_value"
-        tools:text="Last location" />
+        app:layout_constraintTop_toBottomOf="@id/character_last_location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
