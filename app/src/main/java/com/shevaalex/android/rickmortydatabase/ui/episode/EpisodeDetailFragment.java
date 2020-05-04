@@ -30,7 +30,6 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
     private EpisodeViewModel viewModel;
     private Activity a;
     private List<Character> characterList = new ArrayList<>();
-    private static Bundle savedState;
 
     public EpisodeDetailFragment() {
         // Required empty public constructor
@@ -74,32 +73,22 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
             characterAuxAdapter.setCharacterList(characters);
             characterList = characters;
         });
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (savedState != null) {
-            Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
+        if (savedInstanceState != null) {
+            Parcelable listState = savedInstanceState.getParcelable(SAVE_STATE_LIST);
             if (binding.recyclerviewEpisodeDetail.getLayoutManager() != null) {
                 new Handler().postDelayed(() ->
                         binding.recyclerviewEpisodeDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
             }
         }
-    }
-
-    private void customSaveState() {
-        savedState = new Bundle();
-        if (binding.recyclerviewEpisodeDetail.getLayoutManager() != null) {
-            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewEpisodeDetail.getLayoutManager().onSaveInstanceState());
-        }
+        return view;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        customSaveState();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (binding.recyclerviewEpisodeDetail.getLayoutManager() != null) {
+            outState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewEpisodeDetail.getLayoutManager().onSaveInstanceState());
+        }
     }
 
     @Override
@@ -121,7 +110,8 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
                 action.setCharacterName(clickedChar.getName()).setImageUrl(clickedChar.getImgUrl())
                         .setCharacterStatus(clickedChar.getStatus()).setCharacterSpecies(clickedChar.getSpecies())
                         .setCharacterType(clickedChar.getType()).setCharacterGender(clickedChar.getGender())
-                        .setCharacterOrigin(clickedChar.getOriginLocation()).setCharacterLastLocation(clickedChar.getLastKnownLocation());
+                        .setCharacterOrigin(clickedChar.getOriginLocation()).setCharacterLastLocation(clickedChar.getLastKnownLocation())
+                        .setId(clickedChar.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }

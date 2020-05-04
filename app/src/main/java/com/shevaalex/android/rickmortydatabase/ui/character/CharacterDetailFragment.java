@@ -35,7 +35,6 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
     private Location lastLocation;
     private EpisodeAuxAdapter adapter;
     private List<Episode> episodeList = new ArrayList<>();
-    private static Bundle savedState;
 
     public CharacterDetailFragment() {
         // Required empty public constructor
@@ -86,6 +85,13 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
             adapter.setEpisodeList(episodes);
             episodeList = episodes;
         });
+        if (savedInstanceState != null) {
+            Parcelable listState = savedInstanceState.getParcelable(SAVE_STATE_LIST);
+            if (binding.recyclerviewCharacterDetail.getLayoutManager() != null) {
+                new Handler().postDelayed(() ->
+                        binding.recyclerviewCharacterDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
+            }
+        }
         return view;
     }
 
@@ -122,28 +128,11 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (savedState != null) {
-            Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
-            if (binding.recyclerviewCharacterDetail.getLayoutManager() != null) {
-                new Handler().postDelayed(() ->
-                        binding.recyclerviewCharacterDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
-            }
-        }
-    }
-
-    private void customSaveState() {
-        savedState = new Bundle();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
         if (binding.recyclerviewCharacterDetail.getLayoutManager() != null) {
-            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewCharacterDetail.getLayoutManager().onSaveInstanceState());
+            outState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewCharacterDetail.getLayoutManager().onSaveInstanceState());
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        customSaveState();
     }
 
 
@@ -168,7 +157,8 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
                 CharacterDetailFragmentDirections.toLocationDetailFragmentAction2();
         if (clickedLocation != null) {
             action.setLocationName(clickedLocation.getName()).setLocationDimension(clickedLocation.getDimension())
-                    .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList());
+                    .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList())
+                    .setLocationId(clickedLocation.getId());
             Navigation.findNavController(v).navigate(action);
         }
     }

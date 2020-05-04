@@ -31,7 +31,6 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
     private LocationViewModel viewModel;
     private Activity a;
     private List<Character> mCharacterList = new ArrayList<>();
-    private static Bundle savedState;
 
     public LocationDetailFragment() {
         // Required empty public constructor
@@ -79,32 +78,22 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
                 binding.locationResidentsNone.setVisibility(View.VISIBLE);
             }
         });
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (savedState != null) {
-            Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
+        if (savedInstanceState != null) {
+            Parcelable listState = savedInstanceState.getParcelable(SAVE_STATE_LIST);
             if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
                 new Handler().postDelayed(() ->
                         binding.recyclerviewLocationDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
             }
         }
-    }
-
-    private void customSaveState() {
-        savedState = new Bundle();
-        if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
-            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewLocationDetail.getLayoutManager().onSaveInstanceState());
-        }
+        return view;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        customSaveState();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
+            outState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewLocationDetail.getLayoutManager().onSaveInstanceState());
+        }
     }
 
     @Override
@@ -126,7 +115,8 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
                 action.setCharacterName(clickedChar.getName()).setImageUrl(clickedChar.getImgUrl())
                         .setCharacterStatus(clickedChar.getStatus()).setCharacterSpecies(clickedChar.getSpecies())
                         .setCharacterType(clickedChar.getType()).setCharacterGender(clickedChar.getGender())
-                        .setCharacterOrigin(clickedChar.getOriginLocation()).setCharacterLastLocation(clickedChar.getLastKnownLocation());
+                        .setCharacterOrigin(clickedChar.getOriginLocation()).setCharacterLastLocation(clickedChar.getLastKnownLocation())
+                        .setId(clickedChar.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }
