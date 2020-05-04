@@ -57,7 +57,6 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
         String name = EpisodeDetailFragmentArgs.fromBundle(requireArguments()).getEpisodeName();
         String airDate = EpisodeDetailFragmentArgs.fromBundle(requireArguments()).getEpisodeAirDate();
         int episodeID = EpisodeDetailFragmentArgs.fromBundle(requireArguments()).getId();
-        Log.d("TAG", "onCreateView: epID " + episodeID);
         //set retreived data to appropriate views
         binding.episodeNameValue.setText(name);
         binding.episodeAirDateValue.setText(airDate);

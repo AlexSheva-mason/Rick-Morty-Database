@@ -50,6 +50,10 @@
         android:label="{character_name}"
         tools:layout="@layout/fragment_character_detail">
         <argument
+            android:name="id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
             android:name="imageUrl"
             android:defaultValue="image_url"
             app:argType="string" />
@@ -82,8 +86,11 @@
             android:defaultValue="0"
             app:argType="integer" />
         <action
-            android:id="@+id/action_characterDetailFragment2_to_episodeDetailFragment"
+            android:id="@+id/toEpisodeDetailFragmentAction2"
             app:destination="@id/episodeDetailFragment" />
+        <action
+            android:id="@+id/toLocationDetailFragmentAction2"
+            app:destination="@id/locationDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"

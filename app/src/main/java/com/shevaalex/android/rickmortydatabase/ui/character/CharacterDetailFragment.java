@@ -8,23 +8,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
+import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("WeakerAccess")
-public class CharacterDetailFragment extends Fragment implements View.OnClickListener {
+public class CharacterDetailFragment extends Fragment implements View.OnClickListener, EpisodeAuxAdapter.OnEpisodeListener {
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
     private Activity a;
     private Location originLocation;
     private Location lastLocation;
+    private EpisodeAuxAdapter adapter;
+    private List<Episode> episodeList = new ArrayList<>();
 
     public CharacterDetailFragment() {
         // Required empty public constructor
@@ -45,12 +54,13 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Set View binding for this fragment
         binding = FragmentCharacterDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         // retrieve data from parent fragment
+        int characterId = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getId();
         String imgUrl = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getImageUrl();
         String charStatus = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterStatus();
         String charSpecies = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterSpecies();
@@ -61,9 +71,36 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
         String charGender = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterGender();
         int charOriginID = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterOrigin();
         int charLastLocID = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getCharacterLastLocation();
+        //set views
+        setViews(imgUrl, charStatus, charSpecies, charType, charGender, charOriginID, charLastLocID);
+        //set the recyclerview
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        binding.recyclerviewCharacterDetail.setLayoutManager(layoutManager);
+        binding.recyclerviewCharacterDetail.setHasFixedSize(true);
+        //get recyclerview Adapter and set data to it using ViewModel
+        adapter = new EpisodeAuxAdapter(this);
+        binding.recyclerviewCharacterDetail.setAdapter(adapter);
+        Log.d("onCreateView:", "clicked char ID " + characterId);
+        viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
+            adapter.setEpisodeList(episodes);
+            episodeList = episodes;
+            Log.d("viewModel.getEpisodeLis", episodes.toString());
+        });
+        return view;
+    }
 
-
-
+    //sets retreived data to appropriate views
+    private void setViews(String imgUrl, String charStatus, String charSpecies, String charType, String charGender, int charOriginID, int charLastLocID) {
+        Picasso.get().load(imgUrl).placeholder(R.drawable.picasso_placeholder_default).error(R.drawable.picasso_placeholder_error).
+                fit().centerInside().into(binding.characterImage);
+        binding.characterStatusValue.setText(charStatus);
+        binding.characterSpeciesValue.setText(charSpecies);
+        if (!charType.isEmpty()) {
+            binding.characterTypeValue.setText(charType);
+        } else {
+            binding.characterTypeValue.setVisibility(View.GONE);
+        }
+        binding.characterGenderValue.setText(charGender);
         binding.buttonOriginLocation.setOnClickListener(this);
         binding.buttonLastLocation.setOnClickListener(this);
         if (charOriginID != 0) {
@@ -82,23 +119,6 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
             binding.buttonLastLocation.setVisibility(View.GONE);
             binding.characterLastLocationValue.setVisibility(View.VISIBLE);
         }
-
-
-
-        //set retreived data to appropriate views
-        Picasso.get().load(imgUrl).placeholder(R.drawable.picasso_placeholder_default).error(R.drawable.picasso_placeholder_error).
-                fit().centerInside().into(binding.characterImage);
-        binding.characterStatusValue.setText(charStatus);
-        binding.characterSpeciesValue.setText(charSpecies);
-        if (!charType.isEmpty()) {
-            binding.characterTypeValue.setText(charType);
-        } else {
-            binding.characterTypeValue.setVisibility(View.GONE);
-        }
-        binding.characterGenderValue.setText(charGender);
-        //binding.characterOriginValue.setText(String.valueOf(charOriginID));
-        //binding.characterLastLocationValue.setText(String.valueOf(charLastLocID));
-        return view;
     }
 
 
@@ -106,10 +126,30 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        if (adapter != null) {
+            adapter = null;
+        }
     }
 
     @Override
     public void onClick(View v) {
+        Location clickedLocation = null;
+        if (v.getId() == binding.buttonLastLocation.getId()) {
+            clickedLocation = lastLocation;
+        } else if (v.getId() == binding.buttonOriginLocation.getId()) {
+            clickedLocation = originLocation;
+        }
+        CharacterDetailFragmentDirections.ToLocationDetailFragmentAction2 action =
+                CharacterDetailFragmentDirections.toLocationDetailFragmentAction2();
+        if (clickedLocation != null) {
+            action.setLocationName(clickedLocation.getName()).setLocationDimension(clickedLocation.getDimension())
+                    .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList());
+            Navigation.findNavController(v).navigate(action);
+        }
+    }
+
+    @Override
+    public void onEpisodeClick(int position, View v) {
 
     }
 }

@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             android:id="@+id/location_image"
             android:layout_width="85dp"
             android:layout_height="85dp"
-            android:contentDescription="@string/image_view_location_description"
+            android:contentDescription="@string/img_location_description"
             android:src="@drawable/locations_24dp"
             android:tint="@color/colorPrimaryDark"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:padding="3dp"
-            android:text="@string/text_view_character_name"
+            android:text="@string/tv_character_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorTextName"
             app:layout_constraintStart_toEndOf="@id/location_image"
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:padding="3dp"
-            android:text="@string/text_view_location_dimension"
+            android:text="@string/tv_location_dimension"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorTextName"
             app:layout_constraintStart_toEndOf="@id/location_image"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:padding="3dp"
-            android:text="@string/text_view_location_type"
+            android:text="@string/tv_location_type"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorTextName"
             app:layout_constraintStart_toEndOf="@id/location_image"

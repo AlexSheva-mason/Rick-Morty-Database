@@ -15,27 +15,25 @@
     <string name="fragment_character_list_no_connection">Connect to internet to check for database update</string>
 
     //Layout view names and descriptions
-    <string name="image_view_character_description">Character image</string>
-    <string name="text_view_character_name">Name:</string>
-    <string name="text_view_character_status">Status:</string>
-    <string name="text_view_character_species">Species:</string>
-    <string name="text_view_character_gender">Gender:</string>
-    <string name="text_view_character_origin">Origin:</string>
-    <string name="text_view_character_last_loc">Last location:</string>
-    <string name="text_view_character_location_unknown">unknown</string>
-    <string name="image_view_location_description">Location image placeholder</string>
-    <string name="image_view_episode_description">Episode image placeholder</string>
-    <string name="text_view_location_type">Type:</string>
-    <string name="text_view_location_dimension">Dimension:</string>
-    <string name="text_view_location_residents">Residents:</string>
-    <string name="text_view_episode_code">S01E01</string>
-    <string name="text_view_episode_air_date">Air Date:</string>
+    <string name="img_character_description">Character image</string>
+    <string name="tv_character_name">Name:</string>
+    <string name="tv_character_status">Status:</string>
+    <string name="tv_character_species">Species:</string>
+    <string name="tv_character_gender">Gender:</string>
+    <string name="tv_character_origin">Origin:</string>
+    <string name="tv_character_last_loc">Last location:</string>
+    <string name="tv_character_location_unknown">unknown</string>
+    <string name="tv_character_episode_list">Seen in episodes:</string>
+    <string name="img_location_description">Location image placeholder</string>
+    <string name="img_episode_description">Episode image placeholder</string>
+    <string name="tv_location_type">Type:</string>
+    <string name="tv_location_dimension">Dimension:</string>
+    <string name="tv_location_residents">Residents:</string>
+    <string name="tv_episode_code">S01E01</string>
+    <string name="tv_episode_air_date">Air Date:</string>
+    <string name="tv_episode_characters_list">Characters, seen in the episode:</string>
 
     //Character Detail fragment
     <string name="character_type_placeholder">(%1$s)</string>
-
-    //Episode Detail fragment
-    <string name="episode_characters_seen">Characters, seen in the episode:</string>
-
 
 </resources>

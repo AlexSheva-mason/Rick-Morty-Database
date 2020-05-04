@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,19 +26,19 @@
                 android:id="@+id/character_image"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:contentDescription="@string/image_view_character_description" />
+                android:contentDescription="@string/img_character_description" />
 
             <TextView
                 android:id="@+id/character_name"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:background="#A3C6D5"
                 android:maxLines="2"
                 android:padding="4dp"
-                android:text="@string/text_view_character_name"
+                android:text="@string/tv_character_name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@color/colorTextName"
-                android:layout_gravity="bottom"/>
+                android:textColor="@color/colorTextName" />
 
         </androidx.cardview.widget.CardView>
 
@@ -46,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@string/text_view_character_gender"
+            android:text="@string/tv_character_gender"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toEndOf="@+id/card_view"
             app:layout_constraintTop_toTopOf="@+id/card_view" />
@@ -68,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:text="@string/text_view_character_species"
+            android:text="@string/tv_character_species"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="@id/character_status"
             app:layout_constraintTop_toBottomOf="@+id/character_status" />
@@ -89,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:text="@string/text_view_character_status"
+            android:text="@string/tv_character_status"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="@+id/character_gender"
             app:layout_constraintTop_toBottomOf="@+id/character_gender" />
@@ -111,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:text="@string/text_view_character_last_loc"
+            android:text="@string/tv_character_last_loc"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="@+id/character_species"
             app:layout_constraintTop_toBottomOf="@+id/character_species" />

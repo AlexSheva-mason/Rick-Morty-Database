@@ -404,8 +404,13 @@ public class MainRepository {
 
     //JOIN DAOs
     //gets characters from episode
-    public LiveData<List<Character>> getCharactersFromEpisode(int id){
-        return rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(id);
+    public LiveData<List<Character>> getCharactersFromEpisode(int episodeId){
+        return rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(episodeId);
+    }
+
+    //gets episodes from the character id
+    public LiveData<List<Episode>> getEpisodesFromCharacter (int characterId) {
+        return rmDatabase.getCharacterEpisodeJoinDao().getEpisodesFromCharacters(characterId);
     }
 
 }
