@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
-@SuppressWarnings("WeakerAccess")
 public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnEpisodeClickListener {
     private static final String SAVE_STATE_LIST = "List_state";
     private Activity a;

@@ -20,11 +20,11 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
     private final OnCharacterListener onCharacterListener;
     private List<Character> mCharacterList = new ArrayList<>();
 
-    CharacterAuxAdapter (OnCharacterListener onCharacterListener){
+    public CharacterAuxAdapter(OnCharacterListener onCharacterListener){
         this.onCharacterListener = onCharacterListener;
     }
 
-    void setCharacterList (List<Character> mCharacterList) {
+    public void setCharacterList (List<Character> mCharacterList) {
         this.mCharacterList = mCharacterList;
         notifyDataSetChanged();
     }

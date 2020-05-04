@@ -83,7 +83,8 @@ public class LocationsListFragment extends Fragment implements LocationAdapter.O
                     LocationsListFragmentDirections.toLocationDetailFragmentAction();
             if (clickedLocation != null) {
                 action.setLocationName(clickedLocation.getName()).setLocationDimension(clickedLocation.getDimension())
-                        .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList());
+                        .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList())
+                        .setLocationId(clickedLocation.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }

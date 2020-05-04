@@ -28,7 +28,8 @@
     <string name="img_episode_description">Episode image placeholder</string>
     <string name="tv_location_type">Type:</string>
     <string name="tv_location_dimension">Dimension:</string>
-    <string name="tv_location_residents">Residents:</string>
+    <string name="tv_location_residents">Residents in this location:</string>
+    <string name="tv_location_residents_none">None</string>
     <string name="tv_episode_code">S01E01</string>
     <string name="tv_episode_air_date">Air Date:</string>
     <string name="tv_episode_characters_list">Characters, seen in the episode:</string>

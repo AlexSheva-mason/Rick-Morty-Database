@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="4dp">
 
 
@@ -72,17 +72,24 @@
         app:layout_constraintTop_toBottomOf="@id/location_type" />
 
     <TextView
-        android:id="@+id/location_residents_value"
-        android:layout_width="0dp"
+        android:id="@+id/location_residents_none"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:padding="3dp"
+        android:text="@string/tv_location_residents_none"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorTextName"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/location_residents"
-        app:layout_constraintTop_toTopOf="@id/location_residents"
-        tools:text="RESIDENTS" />
+        app:layout_constraintTop_toTopOf="@id/location_residents" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_location_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_residents"
+        tools:listitem="@layout/character_item_small" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

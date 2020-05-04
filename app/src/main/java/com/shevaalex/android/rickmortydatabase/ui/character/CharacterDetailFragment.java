@@ -24,7 +24,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("WeakerAccess")
 public class CharacterDetailFragment extends Fragment implements View.OnClickListener, EpisodeAuxAdapter.OnEpisodeListener {
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;

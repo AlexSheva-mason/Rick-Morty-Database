@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -13,6 +14,6 @@ public interface LocationCharacterJoinDao {
     void insert(LocationCharacterJoin locationCharacterJoin);
 
     @Query("SELECT * FROM Character INNER JOIN LocationCharacterJoin ON Character.id = LocationCharacterJoin.characterId WHERE LocationCharacterJoin.locationId=:locationID")
-    List<Character> getCharactersFromLocations(int locationID);
+    LiveData<List<Character>> getCharactersFromLocations(int locationID);
 
 }

@@ -98,6 +98,10 @@
         android:label="{location_name}"
         tools:layout="@layout/fragment_location_detail">
         <argument
+            android:name="location_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
             android:name="location_name"
             android:defaultValue="Name"
             app:argType="string" />
@@ -114,7 +118,7 @@
             android:defaultValue="zzz"
             app:argType="string" />
         <action
-            android:id="@+id/action_locationDetailFragment_to_characterDetailFragment2"
+            android:id="@+id/toCharacterDetailFragmentAction3"
             app:destination="@id/characterDetailFragment2" />
     </fragment>
     <fragment

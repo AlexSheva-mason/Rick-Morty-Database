@@ -408,6 +408,11 @@ public class MainRepository {
         return rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(episodeId);
     }
 
+    //gets characters from location
+    public LiveData<List<Character>> getCharactersFromLocation(int locationId) {
+        return rmDatabase.getLocationCharacterJoinDao().getCharactersFromLocations(locationId);
+    }
+
     //gets episodes from the character id
     public LiveData<List<Episode>> getEpisodesFromCharacter (int characterId) {
         return rmDatabase.getCharacterEpisodeJoinDao().getEpisodesFromCharacters(characterId);
