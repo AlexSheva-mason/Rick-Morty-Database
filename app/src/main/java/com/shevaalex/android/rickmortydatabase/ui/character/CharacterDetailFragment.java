@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterDetailFragment extends Fragment implements View.OnClickListener, EpisodeAuxAdapter.OnEpisodeListener {
+    private static final String SAVE_STATE_LIST = "List_state";
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
     private Activity a;
@@ -32,6 +35,7 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
     private Location lastLocation;
     private EpisodeAuxAdapter adapter;
     private List<Episode> episodeList = new ArrayList<>();
+    private static Bundle savedState;
 
     public CharacterDetailFragment() {
         // Required empty public constructor
@@ -115,6 +119,31 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
             binding.buttonLastLocation.setVisibility(View.GONE);
             binding.characterLastLocationValue.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (savedState != null) {
+            Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
+            if (binding.recyclerviewCharacterDetail.getLayoutManager() != null) {
+                new Handler().postDelayed(() ->
+                        binding.recyclerviewCharacterDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
+            }
+        }
+    }
+
+    private void customSaveState() {
+        savedState = new Bundle();
+        if (binding.recyclerviewCharacterDetail.getLayoutManager() != null) {
+            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewCharacterDetail.getLayoutManager().onSaveInstanceState());
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        customSaveState();
     }
 
 

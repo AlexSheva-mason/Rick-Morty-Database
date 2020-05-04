@@ -85,7 +85,6 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
     @Override
     public void onResume() {
         super.onResume();
-        super.onResume();
         if (savedState != null) {
             Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
             if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
@@ -93,6 +92,19 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
                         binding.recyclerviewLocationDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
             }
         }
+    }
+
+    private void customSaveState() {
+        savedState = new Bundle();
+        if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
+            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewLocationDetail.getLayoutManager().onSaveInstanceState());
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        customSaveState();
     }
 
     @Override
@@ -118,18 +130,5 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
                 Navigation.findNavController(v).navigate(action);
             }
         }
-    }
-
-    private void customSaveState() {
-        savedState = new Bundle();
-        if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
-            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewLocationDetail.getLayoutManager().onSaveInstanceState());
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        customSaveState();
     }
 }

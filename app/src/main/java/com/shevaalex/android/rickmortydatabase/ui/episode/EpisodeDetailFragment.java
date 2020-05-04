@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapter.OnCharacterListener {
+    private static final String SAVE_STATE_LIST = "List_state";
     private FragmentEpisodeDetailBinding binding;
     private CharacterAuxAdapter characterAuxAdapter;
     private EpisodeViewModel viewModel;
     private Activity a;
     private List<Character> characterList = new ArrayList<>();
+    private static Bundle savedState;
 
     public EpisodeDetailFragment() {
         // Required empty public constructor
@@ -71,6 +75,31 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
             characterList = characters;
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (savedState != null) {
+            Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
+            if (binding.recyclerviewEpisodeDetail.getLayoutManager() != null) {
+                new Handler().postDelayed(() ->
+                        binding.recyclerviewEpisodeDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
+            }
+        }
+    }
+
+    private void customSaveState() {
+        savedState = new Bundle();
+        if (binding.recyclerviewEpisodeDetail.getLayoutManager() != null) {
+            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewEpisodeDetail.getLayoutManager().onSaveInstanceState());
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        customSaveState();
     }
 
     @Override
