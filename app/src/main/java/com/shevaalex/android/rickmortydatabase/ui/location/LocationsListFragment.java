@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
@@ -55,6 +56,9 @@ public class LocationsListFragment extends Fragment implements LocationAdapter.O
         //instantiate an adapter and set this fragment as a listener for onClick
         locationAdapter = new LocationAdapter(LocationsListFragment.this);
         binding.recyclerviewLocation.setAdapter(locationAdapter);
+        if (binding.recyclerviewLocation.getAdapter() != null) {
+            binding.recyclerviewLocation.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        }
         //set the fast scroller for recyclerview
         binding.fastScroll.setRecyclerView(binding.recyclerviewLocation);
         //moved from onCreate to prevent adapter list from being null
@@ -69,7 +73,7 @@ public class LocationsListFragment extends Fragment implements LocationAdapter.O
             Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
             if (binding.recyclerviewLocation.getLayoutManager() != null) {
                 new Handler().postDelayed(() ->
-                        binding.recyclerviewLocation.getLayoutManager().onRestoreInstanceState(listState), 50);
+                binding.recyclerviewLocation.getLayoutManager().onRestoreInstanceState(listState), 50);
             }
         }
     }

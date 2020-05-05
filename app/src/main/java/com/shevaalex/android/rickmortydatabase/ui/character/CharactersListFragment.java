@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
@@ -65,7 +66,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             characterViewModel.setFilter(KEY_SHOW_ALL);
             characterViewModel.setNameQuery(null);
         }
-        characterViewModel.getCharacterList().observe(this, characters -> characterAdapter.submitList(characters));
+        characterViewModel.getCharacterList().observe(this, characters -> characterAdapter.submitList(characters)
+        );
         connectionLiveData = new ConnectionLiveData(a.getApplication());
         monitorConnection();
     }
@@ -81,6 +83,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         //instantiate an adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
+        if (binding.recyclerviewCharacter.getAdapter() != null) {
+            binding.recyclerviewCharacter.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        }
         //set the fast scroller for recyclerview
         binding.fastScroll.setRecyclerView(binding.recyclerviewCharacter);
         setHasOptionsMenu(true);
@@ -102,7 +107,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             characterViewModel.setNameQuery(savedSearchQuery);
             Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
             if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState), 50);
+                new Handler().postDelayed(() ->
+                binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState), 50);
             }
         }
     }

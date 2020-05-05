@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
@@ -53,6 +54,9 @@ public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnE
         //instantiate an adapter and set this fragment as a listener for onClick
         episodeAdapter = new EpisodeAdapter(this);
         binding.recyclerviewEpisode.setAdapter(episodeAdapter);
+        if (binding.recyclerviewEpisode.getAdapter() != null) {
+            binding.recyclerviewEpisode.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        }
         //set the fast scroller for recyclerview
         binding.fastScroll.setRecyclerView(binding.recyclerviewEpisode);
         episodeViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> episodeAdapter.submitList(episodes) );

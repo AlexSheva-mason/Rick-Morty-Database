@@ -18,7 +18,7 @@ public class Character {
     private final String imgUrl;
     private final String episodeList;
 
-    // TODO episodeList make methods for parsing Strings and extracting only IDs
+
     public Character (int id, String name, String status, String species, String type,
                       String gender, int originLocation, int lastKnownLocation,
                       String imgUrl, String episodeList) {

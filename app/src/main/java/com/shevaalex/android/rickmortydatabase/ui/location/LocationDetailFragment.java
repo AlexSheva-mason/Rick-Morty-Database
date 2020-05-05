@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Parcelable;
@@ -70,6 +71,9 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
         //get recyclerview Adapter and set data to it using ViewModel
         characterAuxAdapter = new CharacterAuxAdapter(this);
         binding.recyclerviewLocationDetail.setAdapter(characterAuxAdapter);
+        if (binding.recyclerviewLocationDetail.getAdapter() != null) {
+            binding.recyclerviewLocationDetail.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        }
         viewModel.getCharactersFromLocation(locationId).observe(getViewLifecycleOwner(), characters -> {
             if (!characters.isEmpty()) {
                 characterAuxAdapter.setCharacterList(characters);

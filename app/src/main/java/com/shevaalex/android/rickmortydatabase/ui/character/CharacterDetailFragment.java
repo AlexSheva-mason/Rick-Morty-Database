@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Parcelable;
@@ -81,6 +82,9 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
         //get recyclerview Adapter and set data to it using ViewModel
         adapter = new EpisodeAuxAdapter(this);
         binding.recyclerviewCharacterDetail.setAdapter(adapter);
+        if (binding.recyclerviewCharacterDetail.getAdapter() != null) {
+            binding.recyclerviewCharacterDetail.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        }
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             adapter.setEpisodeList(episodes);
             episodeList = episodes;

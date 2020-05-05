@@ -5,7 +5,6 @@ public abstract class ApiCall {
     public static final String PAGES = "pages";
     public static final String RESULTS_ARRAY = "results";
 
-    //TODO add subclasses for Locations, Episodes and separate api urls and keys for calls
     public static class ApiCallCharacterKeys {
         public static final String BASE_URL_CHARACTER_PAGES = "https://rickandmortyapi.com/api/character/?page=";
 

@@ -73,7 +73,6 @@ public class NetworkDataParsing {
             // Indicates that the server response could not be parsed
             errorMessage = res.getString(R.string.parse_error);
         }
-        //TODO use it in snack bar
         Log.d(LOG_TAG, errorMessage);
     }
 
