@@ -12,8 +12,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocationDetailFragment extends Fragment implements CharacterAuxAdapter.OnCharacterListener {
-    private static final String SAVE_STATE_LIST = "List_state";
     private FragmentLocationDetailBinding binding;
     private CharacterAuxAdapter characterAuxAdapter;
     private LocationViewModel viewModel;
@@ -70,10 +67,8 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
         binding.recyclerviewLocationDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
         characterAuxAdapter = new CharacterAuxAdapter(this);
+        characterAuxAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocationDetail.setAdapter(characterAuxAdapter);
-        if (binding.recyclerviewLocationDetail.getAdapter() != null) {
-            binding.recyclerviewLocationDetail.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        }
         viewModel.getCharactersFromLocation(locationId).observe(getViewLifecycleOwner(), characters -> {
             if (!characters.isEmpty()) {
                 characterAuxAdapter.setCharacterList(characters);
@@ -82,22 +77,7 @@ public class LocationDetailFragment extends Fragment implements CharacterAuxAdap
                 binding.locationResidentsNone.setVisibility(View.VISIBLE);
             }
         });
-        if (savedInstanceState != null) {
-            Parcelable listState = savedInstanceState.getParcelable(SAVE_STATE_LIST);
-            if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
-                new Handler().postDelayed(() ->
-                        binding.recyclerviewLocationDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
-            }
-        }
         return view;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (binding.recyclerviewLocationDetail.getLayoutManager() != null) {
-            outState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewLocationDetail.getLayoutManager().onSaveInstanceState());
-        }
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,9 +30,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersLis
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
-
     private static final String TAG = "CharactersListFragment";
-    private static final String SAVE_STATE_LIST = "List_state";
     private static final String SAVE_STATE_SEARCH_QUERY = "Query_name";
     private static final String SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
@@ -82,10 +79,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
+        characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
-        if (binding.recyclerviewCharacter.getAdapter() != null) {
-            binding.recyclerviewCharacter.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        }
         //set the fast scroller for recyclerview
         binding.fastScroll.setRecyclerView(binding.recyclerviewCharacter);
         setHasOptionsMenu(true);
@@ -105,11 +100,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 characterViewModel.setFilter(KEY_SHOW_ALL);
             }
             characterViewModel.setNameQuery(savedSearchQuery);
-            Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
-            if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                new Handler().postDelayed(() ->
-                binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState), 50);
-            }
         }
     }
 
@@ -215,9 +205,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         savedState = new Bundle();
         savedState.putString(SAVE_STATE_SEARCH_QUERY, searchQuery);
         savedState.putInt(SAVE_STATE_FILTER_KEY, filterListKey);
-        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
-        }
     }
 
     @Override

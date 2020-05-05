@@ -3,8 +3,6 @@ package com.shevaalex.android.rickmortydatabase.ui.episode;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +20,10 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListB
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
 public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnEpisodeClickListener {
-    private static final String SAVE_STATE_LIST = "List_state";
     private Activity a;
     private EpisodeViewModel episodeViewModel;
     private FragmentEpisodesListBinding binding;
     private EpisodeAdapter episodeAdapter;
-    private static Bundle savedState;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -53,26 +49,12 @@ public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnE
         binding.recyclerviewEpisode.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
         episodeAdapter = new EpisodeAdapter(this);
+        episodeAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewEpisode.setAdapter(episodeAdapter);
-        if (binding.recyclerviewEpisode.getAdapter() != null) {
-            binding.recyclerviewEpisode.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        }
         //set the fast scroller for recyclerview
         binding.fastScroll.setRecyclerView(binding.recyclerviewEpisode);
         episodeViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> episodeAdapter.submitList(episodes) );
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (savedState != null) {
-            Parcelable listState = savedState.getParcelable(SAVE_STATE_LIST);
-            if (binding.recyclerviewEpisode.getLayoutManager() != null) {
-                new Handler().postDelayed(() ->
-                        binding.recyclerviewEpisode.getLayoutManager().onRestoreInstanceState(listState), 50);
-            }
-        }
     }
 
     @Override
@@ -88,19 +70,6 @@ public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnE
                 Navigation.findNavController(v).navigate(action);
             }
         }
-    }
-
-    private void customSaveState() {
-        savedState = new Bundle();
-        if (binding.recyclerviewEpisode.getLayoutManager() != null) {
-            savedState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewEpisode.getLayoutManager().onSaveInstanceState());
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        customSaveState();
     }
 
     @Override

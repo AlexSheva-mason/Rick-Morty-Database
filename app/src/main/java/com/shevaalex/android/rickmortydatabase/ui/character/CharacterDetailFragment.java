@@ -12,8 +12,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterDetailFragment extends Fragment implements View.OnClickListener, EpisodeAuxAdapter.OnEpisodeListener {
-    private static final String SAVE_STATE_LIST = "List_state";
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
     private Activity a;
@@ -81,21 +78,12 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
         binding.recyclerviewCharacterDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
         adapter = new EpisodeAuxAdapter(this);
+        adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacterDetail.setAdapter(adapter);
-        if (binding.recyclerviewCharacterDetail.getAdapter() != null) {
-            binding.recyclerviewCharacterDetail.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        }
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             adapter.setEpisodeList(episodes);
             episodeList = episodes;
         });
-        if (savedInstanceState != null) {
-            Parcelable listState = savedInstanceState.getParcelable(SAVE_STATE_LIST);
-            if (binding.recyclerviewCharacterDetail.getLayoutManager() != null) {
-                new Handler().postDelayed(() ->
-                        binding.recyclerviewCharacterDetail.getLayoutManager().onRestoreInstanceState(listState), 50);
-            }
-        }
         return view;
     }
 
@@ -130,15 +118,6 @@ public class CharacterDetailFragment extends Fragment implements View.OnClickLis
             binding.characterLastLocationValue.setVisibility(View.VISIBLE);
         }
     }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (binding.recyclerviewCharacterDetail.getLayoutManager() != null) {
-            outState.putParcelable(SAVE_STATE_LIST, binding.recyclerviewCharacterDetail.getLayoutManager().onSaveInstanceState());
-        }
-    }
-
 
     @Override
     public void onDestroyView() {
