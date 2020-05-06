@@ -21,17 +21,11 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
     private final OnCharacterListener onCharacterListener;
     private CharacterViewModel viewModel;
 
-    public CharacterAdapter(OnCharacterListener onClickListener, CharacterViewModel viewModel) {
+    CharacterAdapter(OnCharacterListener onClickListener, CharacterViewModel viewModel) {
         super(DIFF_CALLBACK);
         this.onCharacterListener = onClickListener;
         this.viewModel = viewModel;
     }
-
-    public CharacterAdapter(OnCharacterListener onClickListener) {
-        super(DIFF_CALLBACK);
-        this.onCharacterListener = onClickListener;
-    }
-
 
     private static final DiffUtil.ItemCallback<Character> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<Character>() {
@@ -99,8 +93,8 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
 
         @Override
         public void onClick(View v) {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                onCharacterListener.onCharacterClick(getAdapterPosition(), v);
+            if (getAbsoluteAdapterPosition() != RecyclerView.NO_POSITION) {
+                onCharacterListener.onCharacterClick(getAbsoluteAdapterPosition(), v);
             }
         }
     }

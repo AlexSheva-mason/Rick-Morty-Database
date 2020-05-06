@@ -14,6 +14,10 @@
     //Fragment Error managing
     <string name="fragment_character_list_no_connection">Connect to internet to check for database update</string>
 
+    //App Bar
+    <string name="item_search">Search</string>
+    <string name="item_filter">Do not show dead</string>
+
     //Layout view names and descriptions
     <string name="img_character_description">Character image</string>
     <string name="tv_character_name">Name:</string>

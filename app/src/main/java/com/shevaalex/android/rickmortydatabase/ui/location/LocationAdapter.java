@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
-import androidx.recyclerview.widget.AsyncDifferConfig;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -70,8 +69,8 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
 
         @Override
         public void onClick(View v) {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                onLocationClickListener.onLocationClick(getAdapterPosition(), v);
+            if (getAbsoluteAdapterPosition() != RecyclerView.NO_POSITION) {
+                onLocationClickListener.onLocationClick(getAbsoluteAdapterPosition(), v);
             }
         }
     }

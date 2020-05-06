@@ -3,8 +3,10 @@ package com.shevaalex.android.rickmortydatabase.source.database;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 
-@Entity (primaryKeys = {"characterId", "locationId"},
+@Entity (indices = {@Index("locationId")},
+            primaryKeys = {"characterId", "locationId"},
             foreignKeys = {
                         @ForeignKey(entity = Character.class,
                             parentColumns = "id",

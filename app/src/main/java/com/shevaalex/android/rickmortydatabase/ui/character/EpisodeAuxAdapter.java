@@ -7,12 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemSmallBinding;
 import com.shevaalex.android.rickmortydatabase.databinding.EpisodeItemBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +61,8 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<EpisodeAuxAdapter.Ep
 
         @Override
         public void onClick(View v) {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                onEpisodeListener.onEpisodeClick(getAdapterPosition(), v);
+            if (getAbsoluteAdapterPosition() != RecyclerView.NO_POSITION) {
+                onEpisodeListener.onEpisodeClick(getAbsoluteAdapterPosition(), v);
             }
         }
     }

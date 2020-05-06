@@ -15,10 +15,6 @@ public interface CharacterDao {
     @Query("SELECT * FROM Character WHERE name LIKE :name ORDER BY name")
     DataSource.Factory<Integer, Character> searchInCharacterList(String name);
 
-    //returns a Character with a given id
-    @Query("SELECT * FROM Character WHERE id == :id")
-    Character returnCharacterById(int id);
-
     //perform a search by character's name in the database, excluding Dead
     @Query("SELECT * FROM Character WHERE name LIKE :name AND (status LIKE 'alive' OR status LIKE 'unknown') ORDER BY name")
     DataSource.Factory<Integer, Character> searchInCharacterListNoDead(String name);

@@ -66,8 +66,8 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
 
         @Override
         public void onClick(View v) {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                onCharacterListener.onCharacterClick(getAdapterPosition(), v);
+            if (getAbsoluteAdapterPosition() != RecyclerView.NO_POSITION) {
+                onCharacterListener.onCharacterClick(getAbsoluteAdapterPosition(), v);
             }
         }
     }

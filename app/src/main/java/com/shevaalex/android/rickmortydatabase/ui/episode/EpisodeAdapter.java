@@ -73,8 +73,8 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
 
         @Override
         public void onClick(View v) {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                clickListener.onEpisodeClick(getAdapterPosition(), v);
+            if (getAbsoluteAdapterPosition() != RecyclerView.NO_POSITION) {
+                clickListener.onEpisodeClick(getAbsoluteAdapterPosition(), v);
             }
         }
     }

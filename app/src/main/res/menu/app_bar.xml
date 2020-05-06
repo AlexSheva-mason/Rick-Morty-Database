@@ -7,13 +7,13 @@
         android:id="@+id/search_button"
         android:icon="@drawable/ic_search"
         android:orderInCategory="1"
-        android:title="Search"
+        android:title="@string/item_search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         tools:ignore="AlwaysShowAction" />
     <item
         android:id="@+id/filter_button"
-        android:title="Do not show dead"
+        android:title="@string/item_filter"
         android:checkable="true"
         android:orderInCategory="2"
         app:showAsAction="never|withText"/>
