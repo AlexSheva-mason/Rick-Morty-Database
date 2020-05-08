@@ -39,6 +39,10 @@ public interface CharacterDao {
     @Query("SELECT COUNT(id) FROM Character")
     int getCharacterCount();
 
+    //gets the character by ID
+    @Query("SELECT * FROM Character WHERE id LIKE :id")
+    Character getCharacterById(int id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCharacter(Character character);
 }

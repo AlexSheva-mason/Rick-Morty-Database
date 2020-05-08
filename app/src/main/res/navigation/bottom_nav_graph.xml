@@ -54,37 +54,9 @@
             android:defaultValue="0"
             app:argType="integer" />
         <argument
-            android:name="imageUrl"
-            android:defaultValue="image_url"
-            app:argType="string" />
-        <argument
             android:name="character_name"
             android:defaultValue="Name"
             app:argType="string" />
-        <argument
-            android:name="character_status"
-            android:defaultValue="Status"
-            app:argType="string" />
-        <argument
-            android:name="character_species"
-            android:defaultValue="Species"
-            app:argType="string" />
-        <argument
-            android:name="character_type"
-            android:defaultValue="zzz"
-            app:argType="string" />
-        <argument
-            android:name="character_gender"
-            android:defaultValue="Status"
-            app:argType="string" />
-        <argument
-            android:name="character_origin"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="character_last_location"
-            android:defaultValue="0"
-            app:argType="integer" />
         <action
             android:id="@+id/toEpisodeDetailFragmentAction2"
             app:destination="@id/episodeDetailFragment" />

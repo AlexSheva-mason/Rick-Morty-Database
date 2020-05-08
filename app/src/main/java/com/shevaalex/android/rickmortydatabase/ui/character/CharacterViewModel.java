@@ -62,6 +62,8 @@ public class CharacterViewModel extends AndroidViewModel {
 
     Location getLocationById (int id) { return rmRepository.getLocationById(id); }
 
+    Character getCharacterById (int id) { return rmRepository.getCharacterById(id); }
+
     LiveData<List<Episode>> getEpisodeList(int characterId) {
         return rmRepository.getEpisodesFromCharacter(characterId);
     }

@@ -375,6 +375,21 @@ public class MainRepository {
         return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().searchInCharacterListNoDead("%" + query + "%"), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
+    //gets a character by id
+    public Character getCharacterById (int id) {
+        Character character = null;
+        Future<Character> futureCharacter = appExecutors.diskIO().submit(() -> {
+            if (rmDatabase.getCharacterDao().getCharacterById(id) != null) {
+                return rmDatabase.getCharacterDao().getCharacterById(id);
+            } else { return null; }
+        });
+        try {
+            character = futureCharacter.get();
+        }
+        catch (ExecutionException | InterruptedException e) { e.printStackTrace();  }
+        return character;
+    }
+
     //LOCATIONS
     //gets all locations
     public LiveData<PagedList<Location>> getAllLocations() {

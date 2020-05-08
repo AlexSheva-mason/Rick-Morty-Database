@@ -91,11 +91,7 @@ public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapt
             EpisodeDetailFragmentDirections.ToCharacterDetailFragmentAction2 action =
                     EpisodeDetailFragmentDirections.toCharacterDetailFragmentAction2();
             if (clickedChar != null) {
-                action.setCharacterName(clickedChar.getName()).setImageUrl(clickedChar.getImgUrl())
-                        .setCharacterStatus(clickedChar.getStatus()).setCharacterSpecies(clickedChar.getSpecies())
-                        .setCharacterType(clickedChar.getType()).setCharacterGender(clickedChar.getGender())
-                        .setCharacterOrigin(clickedChar.getOriginLocation()).setCharacterLastLocation(clickedChar.getLastKnownLocation())
-                        .setId(clickedChar.getId());
+                action.setCharacterName(clickedChar.getName()).setId(clickedChar.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }
