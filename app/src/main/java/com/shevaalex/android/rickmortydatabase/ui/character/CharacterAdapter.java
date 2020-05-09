@@ -46,7 +46,7 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
         CharacterItemBinding binding = CharacterItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new CharacterViewHolder(onCharacterListener, binding);
+        return new CharacterViewHolder(binding);
     }
 
     @Override
@@ -80,13 +80,11 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
         }
     }
 
-    static class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private OnCharacterListener onCharacterListener;
+    class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CharacterItemBinding characterItemBinding;
 
-        CharacterViewHolder(OnCharacterListener onCharacterListener, CharacterItemBinding binding) {
+        CharacterViewHolder(CharacterItemBinding binding) {
             super(binding.getRoot());
-            this.onCharacterListener = onCharacterListener;
             itemView.setOnClickListener(this);
             characterItemBinding = binding;
         }

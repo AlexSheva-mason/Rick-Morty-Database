@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="3dp"
-        android:text="@string/tv_location_residents_none"
+        android:text="@string/tv_location_residents_unknown"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorTextName"
         android:visibility="gone"

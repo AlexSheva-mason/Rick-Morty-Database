@@ -33,7 +33,7 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
         LocationItemBinding binding = LocationItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new LocationViewHolder(onLocationClickListener, binding);
+        return new LocationViewHolder(binding);
     }
 
     @Override
@@ -56,13 +56,11 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
         }
     }
 
-    static class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final OnLocationClickListener onLocationClickListener;
+    class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private LocationItemBinding binding;
 
-        LocationViewHolder(OnLocationClickListener clickListener, LocationItemBinding binding) {
+        LocationViewHolder(LocationItemBinding binding) {
             super(binding.getRoot());
-            this.onLocationClickListener = clickListener;
             itemView.setOnClickListener(this);
             this.binding = binding;
         }

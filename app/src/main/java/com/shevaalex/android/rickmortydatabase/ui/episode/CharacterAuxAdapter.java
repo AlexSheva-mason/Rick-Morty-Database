@@ -33,7 +33,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CharacterItemSmallBinding binding = CharacterItemSmallBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new CharacterViewHolder(onCharacterListener, binding);
+        return new CharacterViewHolder(binding);
     }
 
     @Override
@@ -53,13 +53,11 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
         holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
     }
 
-    static class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private OnCharacterListener onCharacterListener;
+    class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CharacterItemSmallBinding binding;
 
-        CharacterViewHolder(OnCharacterListener onCharacterListener, CharacterItemSmallBinding binding) {
+        CharacterViewHolder(CharacterItemSmallBinding binding) {
             super(binding.getRoot());
-            this.onCharacterListener = onCharacterListener;
             itemView.setOnClickListener(this);
             this.binding = binding;
         }

@@ -1,2 +1,2 @@
-rootProject.name='Rick & Morty database'
+rootProject.name='Rickypedia'
 include ':app'

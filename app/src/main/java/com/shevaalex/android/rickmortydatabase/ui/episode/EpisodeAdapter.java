@@ -37,7 +37,7 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
     public EpisodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
         EpisodeItemBinding binding = EpisodeItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new EpisodeViewHolder(clickListener, binding);
+        return new EpisodeViewHolder(binding);
     }
 
     @Override
@@ -60,14 +60,12 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
         }
     }
 
-    static class EpisodeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private OnEpisodeClickListener clickListener;
+    class EpisodeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private EpisodeItemBinding binding;
 
-        EpisodeViewHolder (OnEpisodeClickListener clickListener, EpisodeItemBinding binding) {
+        EpisodeViewHolder (EpisodeItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            this.clickListener = clickListener;
             itemView.setOnClickListener(this);
         }
 

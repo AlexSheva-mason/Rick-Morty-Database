@@ -12,6 +12,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapter.OnEpisodeListener {
+    private static final String SAVE_STATE_KEY = "list_state";
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
     private Activity a;
     private EpisodeAuxAdapter adapter;
+    private LinearLayoutManager layoutManager;
     private List<Episode> episodeList = new ArrayList<>();
 
     public CharacterDetailFragment() {
@@ -57,12 +61,11 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
         // retrieve data from parent fragment
         int characterId = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getId();
         //set the recyclerview
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        layoutManager = new LinearLayoutManager(this.getActivity());
         binding.recyclerviewCharacterDetail.setLayoutManager(layoutManager);
         binding.recyclerviewCharacterDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
         adapter = new EpisodeAuxAdapter(this);
-        adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
         binding.recyclerviewCharacterDetail.setAdapter(adapter);
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             episodeList = episodes;
@@ -75,8 +78,36 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
                 adapter.setLastLocation(viewModel.getLocationById(headerCharacter.getLastKnownLocation()));
             }
             adapter.setEpisodeList(episodes);
+            if (savedInstanceState != null) {
+                Parcelable savedState = savedInstanceState.getParcelable(SAVE_STATE_KEY);
+                if (layoutManager != null) {
+                    layoutManager.onRestoreInstanceState(savedState);
+                }
+                Log.d("onViewStateRestored", "state restored");
+            }
         });
         return view;
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            Parcelable savedState = savedInstanceState.getParcelable(SAVE_STATE_KEY);
+            if (layoutManager != null) {
+                layoutManager.onRestoreInstanceState(savedState);
+            }
+            Log.d("onViewStateRestored", "state restored");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (layoutManager != null) {
+            outState.putParcelable(SAVE_STATE_KEY, layoutManager.onSaveInstanceState());
+        }
+        Log.d("onSaveInstanceState", "state saved");
     }
 
     @Override

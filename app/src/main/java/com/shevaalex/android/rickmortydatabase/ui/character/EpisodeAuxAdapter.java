@@ -56,10 +56,10 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (viewType == TYPE_HEADER) {
             // inflating Header view
             RvCharacterDetailHeaderBinding binding = RvCharacterDetailHeaderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new HeaderViewHolder(binding, originLocation, lastLocation);
+            return new HeaderViewHolder(binding);
         } else {
             EpisodeItemBinding binding = EpisodeItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new EpisodeViewHolder(onEpisodeListener, binding);
+            return new EpisodeViewHolder(binding);
         }
     }
 
@@ -119,13 +119,11 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
 
-    static class EpisodeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private OnEpisodeListener onEpisodeListener;
+    class EpisodeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private EpisodeItemBinding binding;
 
-        EpisodeViewHolder(OnEpisodeListener onEpisodeListener, EpisodeItemBinding binding) {
+        EpisodeViewHolder(EpisodeItemBinding binding) {
             super(binding.getRoot());
-            this.onEpisodeListener = onEpisodeListener;
             itemView.setOnClickListener(this);
             this.binding = binding;
         }
@@ -138,16 +136,11 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    static class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RvCharacterDetailHeaderBinding binding;
-        private Location originLocation;
-        private Location lastLocation;
-
-        HeaderViewHolder (RvCharacterDetailHeaderBinding binding, Location originLocation, Location lastLocation) {
+        HeaderViewHolder (RvCharacterDetailHeaderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            this.originLocation = originLocation;
-            this.lastLocation = lastLocation;
             binding.buttonOriginLocation.setOnClickListener(this);
             binding.buttonLastLocation.setOnClickListener(this);
         }
