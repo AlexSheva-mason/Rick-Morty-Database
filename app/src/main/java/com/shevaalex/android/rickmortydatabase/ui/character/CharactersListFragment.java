@@ -82,7 +82,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
         //set the fast scroller for recyclerview
-        binding.fastScroll.setRecyclerView(binding.recyclerviewCharacter);
         setHasOptionsMenu(true);
         return view;
     }

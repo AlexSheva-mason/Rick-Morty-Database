@@ -9,15 +9,17 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
+import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 
-public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> implements SectionTitleProvider {
+
+public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> implements RecyclerViewFastScroller.OnPopupTextUpdate {
     private final OnCharacterListener onCharacterListener;
     private CharacterViewModel viewModel;
 
@@ -69,10 +71,10 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
         }
     }
 
+    @NotNull
     @Override
-    public String getSectionTitle(int position) {
-        //this String will be shown in a bubble for specified position
-        Character currentChar = getItem(position);
+    public CharSequence onChange(int i) {
+        Character currentChar = getItem(i);
         if (currentChar != null) {
             return currentChar.getName().substring(0, 1);
         } else {
