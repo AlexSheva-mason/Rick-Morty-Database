@@ -10,10 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +31,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
     private EpisodeAuxAdapter adapter;
     private LinearLayoutManager layoutManager;
     private List<Episode> episodeList = new ArrayList<>();
+    private Context context;
 
     public CharacterDetailFragment() {
         // Required empty public constructor
@@ -41,6 +40,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this.context = context;
         if (context instanceof Activity) {
             a = (Activity) context;
         }
@@ -65,7 +65,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
         binding.recyclerviewCharacterDetail.setLayoutManager(layoutManager);
         binding.recyclerviewCharacterDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        adapter = new EpisodeAuxAdapter(this);
+        adapter = new EpisodeAuxAdapter(this, context);
         binding.recyclerviewCharacterDetail.setAdapter(adapter);
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             episodeList = episodes;
@@ -83,7 +83,6 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
                 if (layoutManager != null) {
                     layoutManager.onRestoreInstanceState(savedState);
                 }
-                Log.d("onViewStateRestored", "state restored");
             }
         });
         return view;
@@ -97,7 +96,6 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
             if (layoutManager != null) {
                 layoutManager.onRestoreInstanceState(savedState);
             }
-            Log.d("onViewStateRestored", "state restored");
         }
     }
 
@@ -107,7 +105,6 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
         if (layoutManager != null) {
             outState.putParcelable(SAVE_STATE_KEY, layoutManager.onSaveInstanceState());
         }
-        Log.d("onSaveInstanceState", "state saved");
     }
 
     @Override

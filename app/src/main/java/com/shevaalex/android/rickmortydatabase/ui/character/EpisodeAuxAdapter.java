@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +29,11 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Location lastLocation;
     private final OnEpisodeListener onEpisodeListener;
     private List<Episode> mEpisodeList = new ArrayList<>();
+    private Context context;
 
-    EpisodeAuxAdapter(OnEpisodeListener onEpisodeListener){
+    EpisodeAuxAdapter(OnEpisodeListener onEpisodeListener, Context context){
         this.onEpisodeListener = onEpisodeListener;
+        this.context = context;
     }
 
     void setEpisodeList (List<Episode> mEpisodeList) {
@@ -73,7 +76,8 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 headerViewHolder.binding.characterStatusValue.setText(headerCharacter.getStatus());
                 headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
                 if (!headerCharacter.getType().isEmpty()) {
-                    headerViewHolder.binding.characterTypeValue.setText(headerCharacter.getType());
+                    headerViewHolder.binding.characterTypeValue.setText(context.getResources()
+                            .getString(R.string.character_type_placeholder, headerCharacter.getType()));
                 } else {
                     headerViewHolder.binding.characterTypeValue.setVisibility(View.GONE);
                 }

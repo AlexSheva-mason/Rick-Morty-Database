@@ -98,7 +98,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             } else {
                 characterViewModel.setFilter(KEY_SHOW_ALL);
             }
-            characterViewModel.setNameQuery(savedSearchQuery);
+            if (searchQuery == null && savedSearchQuery != null) {
+                characterViewModel.setNameQuery(savedSearchQuery);
+            }
         }
     }
 
@@ -122,9 +124,11 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             searchQuery = string;
             if (string != null) {
                 searchMenuItem.expandActionView();
-                searchView.setQuery(searchQuery, false);
                 searchView.clearFocus();
+                searchView.setQuery(searchQuery, false);
                 searchIsCommitted = true;
+            } else {
+                searchIsCommitted = false;
             }
         });
         searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
@@ -137,7 +141,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 if (searchIsCommitted) {
                     listJumpTo0();
-                    searchIsCommitted = false;
                     characterViewModel.setNameQuery(null);
                 }
                 return true;
@@ -148,8 +151,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             public boolean onQueryTextSubmit(String query) {
                 listJumpTo0();
                 characterViewModel.setNameQuery(query.trim().toLowerCase());
-                // set search flag to true to enable X and Back button press to reset list position
-                searchIsCommitted = true;
                 return false;
             }
 
@@ -161,7 +162,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         closeButton.setOnClickListener(v -> {
             if (searchIsCommitted) {
                 listJumpTo0();
-                searchIsCommitted = false;
                 characterViewModel.setNameQuery(null);
             }
             searchView.clearFocus();
@@ -223,7 +223,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void listJumpTo0() {
         if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            Log.d(TAG, "onQueryTextSubmit: scrolling to 0");
+            Log.d(TAG, "list scrolling to 0");
             binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
         }
     }

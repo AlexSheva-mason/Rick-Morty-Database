@@ -38,7 +38,7 @@
     <string name="tv_episode_air_date">Air Date:</string>
     <string name="tv_episode_characters_list">Characters, seen in the episode:</string>
 
-    //Character Detail fragment
+    //Episode Aux Adapter
     <string name="character_type_placeholder">(%1$s)</string>
 
 </resources>
