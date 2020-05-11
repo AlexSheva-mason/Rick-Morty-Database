@@ -59,10 +59,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
-        if (savedState == null) {
-            characterViewModel.setFilter(KEY_SHOW_ALL);
-            characterViewModel.setNameQuery(null);
-        }
         characterViewModel.getCharacterList().observe(this, characters -> characterAdapter.submitList(characters)
         );
         connectionLiveData = new ConnectionLiveData(a.getApplication());
@@ -72,6 +68,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (savedState == null) {
+            characterViewModel.setFilter(KEY_SHOW_ALL);
+            characterViewModel.setNameQuery(null);
+        }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
@@ -86,12 +86,31 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         return view;
     }
 
-    // Restore saved state in this method
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            String savedSearchQuery = savedInstanceState.getString(SAVE_STATE_SEARCH_QUERY);
+            Log.d(TAG, "savedSearchQuery " + savedSearchQuery);
+            int savedFilterKey = savedInstanceState.getInt(SAVE_STATE_FILTER_KEY);
+            if (savedFilterKey == KEY_FILTER_APPLIED) {
+                characterViewModel.setFilter(KEY_FILTER_APPLIED);
+            } else {
+                characterViewModel.setFilter(KEY_SHOW_ALL);
+            }
+            if (searchQuery == null && savedSearchQuery != null) {
+                characterViewModel.setNameQuery(savedSearchQuery);
+            }
+        }
+    }
+
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
         if (savedState != null) {
             String savedSearchQuery = savedState.getString(SAVE_STATE_SEARCH_QUERY);
+            Log.d(TAG, "savedSearchQuery " + savedSearchQuery);
             int savedFilterKey = savedState.getInt(SAVE_STATE_FILTER_KEY);
             if (savedFilterKey == KEY_FILTER_APPLIED) {
                 characterViewModel.setFilter(KEY_FILTER_APPLIED);
@@ -128,6 +147,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 searchView.setQuery(searchQuery, false);
                 searchIsCommitted = true;
             } else {
+                searchView.setIconified(true);
                 searchIsCommitted = false;
             }
         });
@@ -200,16 +220,17 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }, 3000));
     }
 
+    @Override
+    public void onPause() {
+        Log.d(TAG, "onPause: ");
+        super.onPause();
+        customSaveState();
+    }
+
     private void customSaveState() {
         savedState = new Bundle();
         savedState.putString(SAVE_STATE_SEARCH_QUERY, searchQuery);
         savedState.putInt(SAVE_STATE_FILTER_KEY, filterListKey);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        customSaveState();
     }
 
     @Override

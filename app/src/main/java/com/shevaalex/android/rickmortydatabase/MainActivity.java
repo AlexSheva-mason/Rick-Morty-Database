@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         //setup the ViewModel for lifecycle aware observing bottomNav state
         botNavViewModel = new ViewModelProvider(this).get(BottomNavViewModel.class);
         botNavViewModel.getBottomNavVisibility().observe(this, integer -> binding.bottomPanel.setVisibility(integer));
+        // monitor navigation and remove BottomNavigationView in Detail fragments
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.characterDetailFragment2 || destination.getId() == R.id.locationDetailFragment
                 || destination.getId() == R.id.episodeDetailFragment) {
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 botNavViewModel.showBottomNav();
             }
+        });
+        // add bottom menu listener to prevent posibbility of double clicking the same item and refreshing or backing up the old search
+        binding.bottomPanel.setOnNavigationItemSelectedListener(item -> {
+            if (navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() != item.getItemId()){
+                NavigationUI.onNavDestinationSelected(item, navController);
+                return true;
+            }
+            return true;
         });
     }
 
