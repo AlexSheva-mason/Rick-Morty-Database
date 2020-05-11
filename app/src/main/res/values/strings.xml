@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rickypedia</string>
+    <string name="app_name">Rick &amp; Morty Database</string>
     <string name="bottom_nav_character">Characters</string>
     <string name="bottom_nav_location">Locations</string>
     <string name="bottom_nav_episode">Episodes</string>
