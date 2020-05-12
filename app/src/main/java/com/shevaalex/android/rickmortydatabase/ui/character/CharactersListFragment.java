@@ -62,7 +62,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterViewModel.getCharacterList().observe(this, characters -> characterAdapter.submitList(characters)
         );
         connectionLiveData = new ConnectionLiveData(a.getApplication());
-        monitorConnection();
     }
 
     @Nullable
@@ -83,6 +82,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
         //set the fast scroller for recyclerview
         setHasOptionsMenu(true);
+        monitorConnection();
         return view;
     }
 
@@ -205,12 +205,16 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     //monitors internet connection and checks if database is up to date
     private void monitorConnection() {
-        connectionLiveData.observe(this, connectionModel -> new Handler().postDelayed(() -> {
+        binding.progressBar.setVisibility(View.GONE);
+        connectionLiveData.observe(getViewLifecycleOwner(), connectionModel -> new Handler().postDelayed(() -> {
             if (connectionModel.isConnected() && isAdded()) {
                 if (characterViewModel.dbIsNotSynced()) {
+                    binding.progressBar.setVisibility(View.VISIBLE);
                     characterViewModel.syncDb();
                     listJumpTo0();
                     Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
+                } else if (!characterViewModel.dbIsNotSynced()) {
+                    binding.progressBar.setVisibility(View.GONE);
                 }
             } else if (!connectionModel.isConnected() && isAdded()) {
                 if (characterViewModel.dbIsNotSynced()) {

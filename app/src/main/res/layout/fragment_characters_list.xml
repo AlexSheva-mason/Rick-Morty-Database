@@ -10,6 +10,15 @@
         android:id="@+id/fast_scroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_character"
             android:layout_width="match_parent"
