@@ -3,7 +3,6 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,8 +58,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
-        characterViewModel.getCharacterList().observe(this, characters -> characterAdapter.submitList(characters)
-        );
         connectionLiveData = new ConnectionLiveData(a.getApplication());
     }
 
@@ -73,44 +70,30 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        binding.progressBar.setVisibility(View.GONE);
+        //set LinearLayout and RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
         binding.recyclerviewCharacter.setHasFixedSize(true);
-        //instantiate an adapter and set this fragment as a listener for onClick
+        //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
-        //set the fast scroller for recyclerview
+        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters)
+        );
         setHasOptionsMenu(true);
         monitorConnection();
+        //TODO fix progressbar visibility
+        //observe if Volley requests are still running and update visual state of progressBar accordingly
+        characterViewModel.getProgressBarVisibility().observe(getViewLifecycleOwner(), integer -> binding.progressBar.setVisibility(integer));
         return view;
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            String savedSearchQuery = savedInstanceState.getString(SAVE_STATE_SEARCH_QUERY);
-            Log.d(TAG, "savedSearchQuery " + savedSearchQuery);
-            int savedFilterKey = savedInstanceState.getInt(SAVE_STATE_FILTER_KEY);
-            if (savedFilterKey == KEY_FILTER_APPLIED) {
-                characterViewModel.setFilter(KEY_FILTER_APPLIED);
-            } else {
-                characterViewModel.setFilter(KEY_SHOW_ALL);
-            }
-            if (searchQuery == null && savedSearchQuery != null) {
-                characterViewModel.setNameQuery(savedSearchQuery);
-            }
-        }
-    }
-
-    @Override
     public void onResume() {
-        Log.d(TAG, "onResume: ");
         super.onResume();
         if (savedState != null) {
             String savedSearchQuery = savedState.getString(SAVE_STATE_SEARCH_QUERY);
-            Log.d(TAG, "savedSearchQuery " + savedSearchQuery);
             int savedFilterKey = savedState.getInt(SAVE_STATE_FILTER_KEY);
             if (savedFilterKey == KEY_FILTER_APPLIED) {
                 characterViewModel.setFilter(KEY_FILTER_APPLIED);
@@ -131,7 +114,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setQueryHint("Enter your query...");
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
-        characterViewModel.getFilterResultKey().observe(this, integer -> {
+        characterViewModel.getFilterResultKey().observe(getViewLifecycleOwner(), integer -> {
             filterListKey = integer;
             if (integer == KEY_FILTER_APPLIED) {
                 filterCheckBox.setChecked(true);
@@ -139,7 +122,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 filterCheckBox.setChecked(false);
             }
         });
-        characterViewModel.getSearchQuery().observe(this, string -> {
+        characterViewModel.getSearchQuery().observe(getViewLifecycleOwner(), string -> {
             searchQuery = string;
             if (string != null) {
                 searchMenuItem.expandActionView();
@@ -203,30 +186,37 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         return super.onOptionsItemSelected(item);
     }
 
-    //monitors internet connection and checks if database is up to date
+    //monitors internet connection, checks if database is up to date
     private void monitorConnection() {
-        binding.progressBar.setVisibility(View.GONE);
-        connectionLiveData.observe(getViewLifecycleOwner(), connectionModel -> new Handler().postDelayed(() -> {
+        connectionLiveData.observe(getViewLifecycleOwner(), connectionModel -> {
             if (connectionModel.isConnected() && isAdded()) {
-                if (characterViewModel.dbIsNotSynced()) {
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    characterViewModel.syncDb();
-                    listJumpTo0();
-                    Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
-                } else if (!characterViewModel.dbIsNotSynced()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                }
+                //observe datbase sync status
+                characterViewModel.getDbIsSynced().observe(getViewLifecycleOwner(), dbSynced -> {
+                    if (dbSynced) {
+                        Toast.makeText(context, "Database synced!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        characterViewModel.rmRepository.initialiseDataBase();
+                        listJumpTo0();
+                        Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else if (!connectionModel.isConnected() && isAdded()) {
-                if (characterViewModel.dbIsNotSynced()) {
-                    Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
-                }
+                //observe datbase sync status
+                characterViewModel.getDbIsSynced().observe(getViewLifecycleOwner(), dbSynced -> {
+                    if (dbSynced) {
+                        Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        }, 2000));
+        });
     }
+
+
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause: ");
         super.onPause();
         customSaveState();
     }

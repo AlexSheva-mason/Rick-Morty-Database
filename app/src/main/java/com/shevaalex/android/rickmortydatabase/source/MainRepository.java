@@ -50,6 +50,7 @@ public class MainRepository {
     private ArrayList<Character> mCharacterList = new ArrayList<>();
     private ArrayList<Location> mLocationList = new ArrayList<>();
     private ArrayList<Episode> mEpisodeList = new ArrayList<>();
+    private boolean volleyRequestsAreCancelled;
 
     private MainRepository(Application application) {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
@@ -70,10 +71,14 @@ public class MainRepository {
         return sInstance;
     }
 
+    public boolean getVolleyRequestsAreCancelled() {
+        return volleyRequestsAreCancelled;
+    }
+
     public boolean dbIsUpToDate() {   return dbIsUpToDate;    }
 
     // calls a method to check if database sync/initialisation is needed and fetch data if necessary
-    private void initialiseDataBase() {
+    public void initialiseDataBase() {
         fetchLastDbEntries();
         String [] baseUrlArray = {ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES,
                 ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES, ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES};
@@ -121,6 +126,7 @@ public class MainRepository {
     }
 
     private void networkInitialCall (String url) {
+        volleyRequestsAreCancelled = false;
         appExecutors.networkIO().execute(() -> networkDataParsing.getVolleyResponce(response -> {
             try {
                 JSONObject jsonObject = response.getJSONObject(ApiCall.INFO);
@@ -182,6 +188,7 @@ public class MainRepository {
         if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
             dbIsUpToDate = true;
             networkDataParsing.cancelVolleyRequests();
+            volleyRequestsAreCancelled = true;
         }
     }
 
@@ -201,6 +208,7 @@ public class MainRepository {
                     dbIsUpToDate = true;
                     networkDataParsing.cancelVolleyRequests();
                     addJoinEntries();
+                    volleyRequestsAreCancelled = true;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -298,10 +306,6 @@ public class MainRepository {
                 }
             default: return  null;
         }
-    }
-
-    public void syncDatabase() {
-        initialiseDataBase();
     }
 
     private void addJoinEntries() {
