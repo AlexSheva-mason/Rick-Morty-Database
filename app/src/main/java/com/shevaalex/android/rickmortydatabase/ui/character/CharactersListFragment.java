@@ -221,7 +221,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                     Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
                 }
             }
-        }, 3000));
+        }, 2000));
     }
 
     @Override
