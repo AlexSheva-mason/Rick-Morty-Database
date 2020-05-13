@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -43,19 +44,19 @@ public class MainRepository {
     private int characterEntriesDbCount;
     private int locationEntriesDbCount;
     private int episodeEntriesDbCount;
-    private boolean dbIsUpToDate;
     private boolean characterTableIsUpToDate;
     private boolean locationTableIsUpToDate;
     private boolean episodeTableIsUpToDate;
     private ArrayList<Character> mCharacterList = new ArrayList<>();
     private ArrayList<Location> mLocationList = new ArrayList<>();
     private ArrayList<Episode> mEpisodeList = new ArrayList<>();
-    private boolean volleyRequestsAreCancelled;
+    private MutableLiveData<Boolean> dbIsUpToDate = new MutableLiveData<>();
 
     private MainRepository(Application application) {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
         this.rmDatabase = RickMortyDatabase.getInstance(application);
         this.appExecutors = AppExecutors.getInstance();
+        dbIsUpToDate.setValue(false);
         initialiseDataBase();
     }
 
@@ -71,11 +72,9 @@ public class MainRepository {
         return sInstance;
     }
 
-    public boolean getVolleyRequestsAreCancelled() {
-        return volleyRequestsAreCancelled;
+    public LiveData<Boolean> getDatabaseIsUpToDate() {
+        return dbIsUpToDate;
     }
-
-    public boolean dbIsUpToDate() {   return dbIsUpToDate;    }
 
     // calls a method to check if database sync/initialisation is needed and fetch data if necessary
     public void initialiseDataBase() {
@@ -86,8 +85,6 @@ public class MainRepository {
             networkInitialCall(url);
         }
     }
-
-
 
     // gets last objects from SQLite database
     private void fetchLastDbEntries() {
@@ -126,7 +123,6 @@ public class MainRepository {
     }
 
     private void networkInitialCall (String url) {
-        volleyRequestsAreCancelled = false;
         appExecutors.networkIO().execute(() -> networkDataParsing.getVolleyResponce(response -> {
             try {
                 JSONObject jsonObject = response.getJSONObject(ApiCall.INFO);
@@ -186,9 +182,8 @@ public class MainRepository {
             }
         }
         if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-            dbIsUpToDate = true;
+            dbIsUpToDate.postValue(true);
             networkDataParsing.cancelVolleyRequests();
-            volleyRequestsAreCancelled = true;
         }
     }
 
@@ -205,10 +200,9 @@ public class MainRepository {
                     }
                 }
                 if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-                    dbIsUpToDate = true;
+                    dbIsUpToDate.postValue(true);
                     networkDataParsing.cancelVolleyRequests();
                     addJoinEntries();
-                    volleyRequestsAreCancelled = true;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

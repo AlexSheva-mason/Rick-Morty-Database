@@ -1,8 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.app.Application;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -15,6 +13,7 @@ import com.shevaalex.android.rickmortydatabase.source.MainRepository;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
 import java.util.List;
 
@@ -24,12 +23,12 @@ public class CharacterViewModel extends AndroidViewModel {
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
-    private MutableLiveData<Boolean> dbIsSynced = new MutableLiveData<>();
-    private MutableLiveData<Integer> progressBarVisibility = new MutableLiveData<>();
+    private ConnectionLiveData connectionLiveData;
 
     public CharacterViewModel(@NonNull Application application) {
         super(application);
         rmRepository = MainRepository.getInstance(application);
+        connectionLiveData = new ConnectionLiveData(application);
     }
 
     void setNameQuery(String name) {
@@ -49,9 +48,7 @@ public class CharacterViewModel extends AndroidViewModel {
         return mCharacterList;
     }
 
-    LiveData<Integer> getFilterResultKey() {
-        return filterResultKey;
-    }
+    LiveData<Integer> getFilterResultKey() {  return filterResultKey;  }
 
     LiveData<String> getSearchQuery() { return searchQuery;   }
 
@@ -63,22 +60,12 @@ public class CharacterViewModel extends AndroidViewModel {
         return rmRepository.getEpisodesFromCharacter(characterId);
     }
 
-    LiveData<Boolean> getDbIsSynced() {
-        if (rmRepository.dbIsUpToDate()) {
-            dbIsSynced.postValue(true);
-        } else {
-            dbIsSynced.postValue(false);
-        }
-        return dbIsSynced;
+    LiveData<Boolean> getIsConnected() {
+        return connectionLiveData;
     }
 
-    LiveData<Integer> getProgressBarVisibility() {
-        if (rmRepository.getVolleyRequestsAreCancelled()){
-            progressBarVisibility.postValue(View.GONE);
-        } else {
-            progressBarVisibility.postValue(View.VISIBLE);
-        }
-        return progressBarVisibility;
+    LiveData<Boolean> getdbIsUpToDate() {
+        return rmRepository.getDatabaseIsUpToDate();
     }
 
 }

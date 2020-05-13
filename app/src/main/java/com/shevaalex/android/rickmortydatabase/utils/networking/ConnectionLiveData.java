@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 
 import androidx.lifecycle.LiveData;
 
-public class ConnectionLiveData extends LiveData<ConnectionModel> {
+public class ConnectionLiveData extends LiveData<Boolean> {
     private final Context context;
     private final ConnectivityManager connectivityManager;
 
@@ -38,9 +38,9 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
             boolean isConnected = activeNetwork != null &&
                     activeNetwork.isConnectedOrConnecting();
             if(isConnected) {
-                postValue(new ConnectionModel(true));
+                postValue(true);
             } else {
-                postValue(new ConnectionModel(false));
+                postValue(false);
             }
         }
     };

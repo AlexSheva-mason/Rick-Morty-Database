@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
-import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
     private static final String TAG = "CharactersListFragment";
@@ -36,7 +35,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private static final int KEY_SHOW_ALL = 0;
     private FragmentCharactersListBinding binding;
     private CharacterViewModel characterViewModel;
-    private ConnectionLiveData connectionLiveData;
     private CharacterAdapter characterAdapter;
     private Context context;
     private Activity a;
@@ -58,7 +56,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
-        connectionLiveData = new ConnectionLiveData(a.getApplication());
     }
 
     @Nullable
@@ -79,14 +76,39 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
-        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters)
-        );
+        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters) );
         setHasOptionsMenu(true);
-        monitorConnection();
-        //TODO fix progressbar visibility
-        //observe if Volley requests are still running and update visual state of progressBar accordingly
-        characterViewModel.getProgressBarVisibility().observe(getViewLifecycleOwner(), integer -> binding.progressBar.setVisibility(integer));
+        monitorConnectionAndDatabase();
         return view;
+    }
+
+    //monitors internet connection, checks if database is up to date
+    private void monitorConnectionAndDatabase() {
+        characterViewModel.getIsConnected().observe(getViewLifecycleOwner(), isConnected -> {
+            if (isConnected) {
+                characterViewModel.getdbIsUpToDate().removeObservers(getViewLifecycleOwner());
+                characterViewModel.getdbIsUpToDate().observe(getViewLifecycleOwner(), isUpToDate -> {
+                    if (isUpToDate) {
+                        binding.progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(context, "Database synced!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        binding.progressBar.setVisibility(View.VISIBLE);
+                        characterViewModel.rmRepository.initialiseDataBase();
+                        listJumpTo0();
+                        Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                characterViewModel.getdbIsUpToDate().removeObservers(getViewLifecycleOwner());
+                characterViewModel.getdbIsUpToDate().observe(getViewLifecycleOwner(), isUpToDate -> {
+                    if (isUpToDate) {
+                        Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -185,35 +207,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         return super.onOptionsItemSelected(item);
     }
-
-    //monitors internet connection, checks if database is up to date
-    private void monitorConnection() {
-        connectionLiveData.observe(getViewLifecycleOwner(), connectionModel -> {
-            if (connectionModel.isConnected() && isAdded()) {
-                //observe datbase sync status
-                characterViewModel.getDbIsSynced().observe(getViewLifecycleOwner(), dbSynced -> {
-                    if (dbSynced) {
-                        Toast.makeText(context, "Database synced!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        characterViewModel.rmRepository.initialiseDataBase();
-                        listJumpTo0();
-                        Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else if (!connectionModel.isConnected() && isAdded()) {
-                //observe datbase sync status
-                characterViewModel.getDbIsSynced().observe(getViewLifecycleOwner(), dbSynced -> {
-                    if (dbSynced) {
-                        Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-    }
-
-
 
     @Override
     public void onPause() {
