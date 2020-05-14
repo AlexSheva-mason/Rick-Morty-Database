@@ -8,7 +8,6 @@ import androidx.lifecycle.MediatorLiveData;
 
 class StatusMediatorLiveData extends MediatorLiveData<Pair<Boolean, Boolean>> {
     StatusMediatorLiveData(LiveData<Boolean> dbIsUpToDate, LiveData<Boolean> isConnected) {
-
         addSource(dbIsUpToDate, first -> {
             if (first != null && isConnected.getValue() != null) {
                 setValue(Pair.create(first, isConnected.getValue()));

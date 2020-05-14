@@ -49,8 +49,6 @@ dependencies {
 
     //RecyclerView Fast scroll
     implementation 'com.futuremind.recyclerfastscroll:fastscroll:0.2.5'
-    //testing
-    implementation 'com.quiph.ui:recyclerviewfastscroller:0.1.3'
 
     // CardView, Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'

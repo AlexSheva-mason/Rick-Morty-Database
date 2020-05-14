@@ -97,6 +97,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             } else if (pair.first) {
                 Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
             } else {
+                Log.d(TAG, "else");
+                binding.progressBar.setVisibility(View.VISIBLE);
                 Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
             }
         });

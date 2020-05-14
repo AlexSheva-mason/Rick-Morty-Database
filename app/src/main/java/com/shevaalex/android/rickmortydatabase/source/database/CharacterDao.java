@@ -12,15 +12,15 @@ import java.util.List;
 @Dao
 public interface CharacterDao {
     //perform a search by character's name in the database, shows all results
-    @Query("SELECT * FROM Character WHERE name LIKE :name ORDER BY name")
+    @Query("SELECT * FROM Character WHERE name LIKE :name ORDER BY LENGTH(episodeList) DESC, name")
     DataSource.Factory<Integer, Character> searchInCharacterList(String name);
 
     //perform a search by character's name in the database, excluding Dead
-    @Query("SELECT * FROM Character WHERE name LIKE :name AND (status LIKE 'alive' OR status LIKE 'unknown') ORDER BY name")
+    @Query("SELECT * FROM Character WHERE name LIKE :name AND (status LIKE 'alive' OR status LIKE 'unknown') ORDER BY LENGTH(episodeList) DESC, name")
     DataSource.Factory<Integer, Character> searchInCharacterListNoDead(String name);
 
     //shows list of all characters
-    @Query("SELECT * FROM Character ORDER BY name")
+    @Query("SELECT * FROM Character ORDER BY LENGTH(episodeList) DESC, name")
     DataSource.Factory<Integer, Character> showAllCharacters();
 
     //returns list of all characters
@@ -28,7 +28,7 @@ public interface CharacterDao {
     List<Character> getAllCharacters();
 
     //shows list of all characters with status Alive or Unknown
-    @Query("SELECT * FROM Character WHERE status LIKE 'alive' OR status LIKE 'unknown' ORDER BY name")
+    @Query("SELECT * FROM Character WHERE status LIKE 'alive' OR status LIKE 'unknown' ORDER BY LENGTH(episodeList) DESC, name")
     DataSource.Factory<Integer, Character> showAllCharsNoDead();
 
     // gets the last character to compare databases

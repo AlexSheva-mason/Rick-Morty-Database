@@ -1,7 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -64,11 +63,8 @@ public class MainRepository {
     public static synchronized MainRepository getInstance(Application application) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                Log.d(TAG, "Creating a new repository instance");
                 sInstance = new MainRepository(application);
             }
-        } else {
-            Log.d(TAG, "Getting previous repository object");
         }
         return sInstance;
     }
