@@ -25,11 +25,15 @@ public class CharacterViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
     private StatusMediatorLiveData statusLiveData;
+    private FilterLiveData trigger;
 
     public CharacterViewModel(@NonNull Application application) {
         super(application);
         rmRepository = MainRepository.getInstance(application);
         ConnectionLiveData connectionLiveData = new ConnectionLiveData(application);
+        trigger = new FilterLiveData(searchQuery, filterResultKey);
+        mCharacterList = Transformations.switchMap(trigger,
+                value -> rmRepository.getCharacterListFiltered(value.first, value.second));
         statusLiveData = new StatusMediatorLiveData(rmRepository.getDatabaseIsUpToDate(), connectionLiveData);
     }
 
@@ -43,7 +47,6 @@ public class CharacterViewModel extends AndroidViewModel {
 
     LiveData<PagedList<Character>> getCharacterList() {
         if (mCharacterList == null) {
-            FilterLiveData trigger = new FilterLiveData(searchQuery, filterResultKey);
             mCharacterList = Transformations.switchMap(trigger,
                     value -> rmRepository.getCharacterListFiltered(value.first, value.second));
         }

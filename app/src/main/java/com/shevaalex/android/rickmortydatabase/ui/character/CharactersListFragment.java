@@ -93,7 +93,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 binding.progressBar.setVisibility(View.VISIBLE);
                 characterViewModel.rmRepository.initialiseDataBase();
                 Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(this::listJumpTo0, 500);
+                new Handler().postDelayed(this::listJumpTo0, 1000);
             } else if (pair.first) {
                 Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
             } else {

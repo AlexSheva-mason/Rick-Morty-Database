@@ -19,6 +19,7 @@ public class EpisodeViewModel extends AndroidViewModel {
     public EpisodeViewModel(Application application) {
         super(application);
         rmRepository = MainRepository.getInstance(application);
+        mEpisodeList = rmRepository.getAllEpisodes();
     }
 
     LiveData<PagedList<Episode>> getEpisodeList () {

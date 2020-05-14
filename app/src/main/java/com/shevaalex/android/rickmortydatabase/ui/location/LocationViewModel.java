@@ -19,6 +19,7 @@ public class LocationViewModel extends AndroidViewModel {
     public LocationViewModel (Application application) {
         super(application);
         rmRepository = MainRepository.getInstance(application);
+        mLocationList = rmRepository.getAllLocations();
     }
 
     LiveData<PagedList<Location>> getLocationList() {
