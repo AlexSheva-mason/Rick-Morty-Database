@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
                 || destination.getId() == R.id.episodeDetailFragment) {
                 new Handler().postDelayed(() ->
                         botNavViewModel.hideBottomNav(), 100);
-            } else {
+            } else if (destination.getId() == R.id.splashFragment){
+                botNavViewModel.hideBottomNav();
+            }else {
                 botNavViewModel.showBottomNav();
             }
         });
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Check if the current destination is actually the start destination (Home screen)
         if (navController.getCurrentDestination() != null
-                && navController.getGraph().getStartDestination() == navController.getCurrentDestination().getId()){
+                && navController.getCurrentDestination().getId() == R.id.charactersListFragment){
             if(backPressedOnce){
                 super.onBackPressed();
                 return;

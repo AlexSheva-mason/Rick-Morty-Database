@@ -68,7 +68,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        binding.progressBar.setVisibility(View.GONE);
+        binding.progressBar.progressBar.setVisibility(View.GONE);
         //set LinearLayout and RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
@@ -87,10 +87,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private void monitorConnectionAndDatabase() {
         characterViewModel.getStatusLiveData().observe(getViewLifecycleOwner(), pair -> {
             if (pair.first && pair.second) {
-                binding.progressBar.setVisibility(View.INVISIBLE);
+                binding.progressBar.progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(context, "Database synced!", Toast.LENGTH_SHORT).show();
             } else if (!pair.first && pair.second){
-                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 characterViewModel.rmRepository.initialiseDataBase();
                 Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(this::listJumpTo0, 1000);
@@ -98,7 +98,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
             } else {
                 Log.d(TAG, "else");
-                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
             }
         });

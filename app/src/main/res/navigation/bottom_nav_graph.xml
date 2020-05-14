@@ -3,7 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/charactersListFragment">
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/toCharactersListFragment"
+            app:destination="@id/charactersListFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
     <fragment
         android:id="@+id/charactersListFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment"
@@ -92,30 +104,30 @@
         <action
             android:id="@+id/toCharacterDetailFragmentAction3"
             app:destination="@id/characterDetailFragment2" />
-    </fragment>
-    <fragment
+        </fragment>
+        <fragment
         android:id="@+id/episodeDetailFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodeDetailFragment"
         android:label="{episode_code}"
         tools:layout="@layout/fragment_episode_detail">
-        <argument
+            <argument
             android:name="episode_name"
             android:defaultValue="Name"
             app:argType="string" />
-        <argument
+            <argument
             android:name="episode_air_date"
             android:defaultValue="01/01/2020"
             app:argType="string" />
-        <argument
+            <argument
             android:name="episode_code"
             android:defaultValue="Dimension"
             app:argType="string" />
-        <argument
+            <argument
             android:name="id"
             android:defaultValue="0"
             app:argType="integer" />
-        <action
+            <action
             android:id="@+id/toCharacterDetailFragmentAction2"
             app:destination="@id/characterDetailFragment2" />
-    </fragment>
+        </fragment>
 </navigation>

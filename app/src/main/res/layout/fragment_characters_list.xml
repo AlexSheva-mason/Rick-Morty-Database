@@ -12,29 +12,11 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/character_item" />
 
-    <RelativeLayout
+    <include layout="@layout/progress_bar"
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <ProgressBar
-            android:id="@+id/pb"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/pb"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp"
-            android:text="@string/tv_character_list_pb"
-            android:textColor="@color/colorAccent" />
-    </RelativeLayout>
+        android:layout_gravity="center"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
