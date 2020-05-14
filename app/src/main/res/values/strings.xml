@@ -28,6 +28,7 @@
     <string name="tv_character_last_loc">Last location:</string>
     <string name="tv_character_location_unknown">unknown</string>
     <string name="tv_character_episode_list">Seen in episodes:</string>
+    <string name="tv_character_list_pb">Aw Jeez…</string>
     <string name="img_location_description">Location image placeholder</string>
     <string name="img_episode_description">Episode image placeholder</string>
     <string name="tv_location_type">Type:</string>
