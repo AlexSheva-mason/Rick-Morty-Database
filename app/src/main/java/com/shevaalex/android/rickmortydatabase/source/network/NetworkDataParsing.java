@@ -3,7 +3,6 @@ package com.shevaalex.android.rickmortydatabase.source.network;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -75,7 +74,6 @@ public class NetworkDataParsing {
             errorMessage = res.getString(R.string.parse_error);
         }
         Log.d(LOG_TAG, errorMessage);
-        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     public void cancelVolleyRequests (){

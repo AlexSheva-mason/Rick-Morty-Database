@@ -1,6 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.app.Application;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -23,12 +24,13 @@ public class CharacterViewModel extends AndroidViewModel {
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
-    private ConnectionLiveData connectionLiveData;
+    private StatusMediatorLiveData statusLiveData;
 
     public CharacterViewModel(@NonNull Application application) {
         super(application);
         rmRepository = MainRepository.getInstance(application);
-        connectionLiveData = new ConnectionLiveData(application);
+        ConnectionLiveData connectionLiveData = new ConnectionLiveData(application);
+        statusLiveData = new StatusMediatorLiveData(rmRepository.getDatabaseIsUpToDate(), connectionLiveData);
     }
 
     void setNameQuery(String name) {
@@ -60,12 +62,8 @@ public class CharacterViewModel extends AndroidViewModel {
         return rmRepository.getEpisodesFromCharacter(characterId);
     }
 
-    LiveData<Boolean> getIsConnected() {
-        return connectionLiveData;
-    }
-
-    LiveData<Boolean> getdbIsUpToDate() {
-        return rmRepository.getDatabaseIsUpToDate();
+    LiveData<Pair<Boolean, Boolean>> getStatusLiveData() {
+        return statusLiveData;
     }
 
 }

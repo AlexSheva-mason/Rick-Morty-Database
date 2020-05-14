@@ -50,13 +50,14 @@ public class MainRepository {
     private ArrayList<Character> mCharacterList = new ArrayList<>();
     private ArrayList<Location> mLocationList = new ArrayList<>();
     private ArrayList<Episode> mEpisodeList = new ArrayList<>();
+    //set LiveData to monitor database sync status via ViewModel
     private MutableLiveData<Boolean> dbIsUpToDate = new MutableLiveData<>();
 
     private MainRepository(Application application) {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
         this.rmDatabase = RickMortyDatabase.getInstance(application);
         this.appExecutors = AppExecutors.getInstance();
-        dbIsUpToDate.setValue(false);
+        dbIsUpToDate.postValue(false);
         initialiseDataBase();
     }
 

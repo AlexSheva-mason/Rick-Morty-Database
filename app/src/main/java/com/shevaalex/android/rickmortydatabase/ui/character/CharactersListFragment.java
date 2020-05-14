@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -84,29 +85,19 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     //monitors internet connection, checks if database is up to date
     private void monitorConnectionAndDatabase() {
-        characterViewModel.getIsConnected().observe(getViewLifecycleOwner(), isConnected -> {
-            if (isConnected) {
-                characterViewModel.getdbIsUpToDate().removeObservers(getViewLifecycleOwner());
-                characterViewModel.getdbIsUpToDate().observe(getViewLifecycleOwner(), isUpToDate -> {
-                    if (isUpToDate) {
-                        binding.progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(context, "Database synced!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        binding.progressBar.setVisibility(View.VISIBLE);
-                        characterViewModel.rmRepository.initialiseDataBase();
-                        listJumpTo0();
-                        Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        characterViewModel.getStatusLiveData().observe(getViewLifecycleOwner(), pair -> {
+            if (pair.first && pair.second) {
+                binding.progressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(context, "Database synced!", Toast.LENGTH_SHORT).show();
+            } else if (!pair.first && pair.second){
+                binding.progressBar.setVisibility(View.VISIBLE);
+                characterViewModel.rmRepository.initialiseDataBase();
+                Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(this::listJumpTo0, 500);
+            } else if (pair.first) {
+                Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
             } else {
-                characterViewModel.getdbIsUpToDate().removeObservers(getViewLifecycleOwner());
-                characterViewModel.getdbIsUpToDate().observe(getViewLifecycleOwner(), isUpToDate -> {
-                    if (isUpToDate) {
-                        Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
             }
         });
     }
