@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Check if the current destination is actually the start destination (Home screen)
         if (navController.getCurrentDestination() != null
-                && navController.getCurrentDestination().getId() == R.id.charactersListFragment){
+                && R.id.charactersListFragment == navController.getCurrentDestination().getId()){
             if(backPressedOnce){
                 super.onBackPressed();
                 return;

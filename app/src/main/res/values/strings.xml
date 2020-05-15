@@ -20,6 +20,7 @@
 
     //Layout view names and descriptions
     <string name="img_character_description">Character image</string>
+    <string name="img_splash_description">Splash screen image</string>
     <string name="tv_character_name">Name:</string>
     <string name="tv_character_status">Status:</string>
     <string name="tv_character_species">Species:</string>
