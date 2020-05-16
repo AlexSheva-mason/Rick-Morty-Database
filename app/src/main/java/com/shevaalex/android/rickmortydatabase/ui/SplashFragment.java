@@ -50,11 +50,11 @@ public class SplashFragment extends Fragment {
         }
         View view = binding.getRoot();
         new Handler().postDelayed(() -> {
-            Navigation.findNavController(view).navigate(SplashFragmentDirections.toCharactersListFragment());
+            a.onBackPressed();
             if (actionBar != null) {
                 actionBar.show();
             }
-        }, 2000);
+        }, 1500);
         return view;
     }
 }

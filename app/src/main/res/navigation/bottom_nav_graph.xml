@@ -3,23 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/splashFragment">
+    app:startDestination="@+id/charactersListFragment">
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash_screen">
-        <action
-            android:id="@+id/toCharactersListFragment"
-            app:destination="@id/charactersListFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_splash_screen"/>
     <fragment
         android:id="@+id/charactersListFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment"
@@ -32,6 +21,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/toSplashFragment"
+            app:destination="@id/splashFragment" />
     </fragment>
     <fragment
         android:id="@+id/episodesListFragment"

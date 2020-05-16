@@ -43,6 +43,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private String searchQuery;
     private int filterListKey;
     private boolean searchIsCommitted;
+    private static boolean splashScreenShown;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -81,6 +82,15 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         setHasOptionsMenu(true);
         monitorConnectionAndDatabase();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (!splashScreenShown) {
+            Navigation.findNavController(view).navigate(R.id.toSplashFragment);
+            splashScreenShown = true;
+        }
     }
 
     //monitors internet connection, checks if database is up to date
