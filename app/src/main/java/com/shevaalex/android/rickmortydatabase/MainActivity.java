@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean backPressedOnce;
     private BottomNavViewModel botNavViewModel;
     private AppBarConfiguration appBarConfiguration;
+    private static boolean uiIsShown;
+    private View decorView;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        decorView = getWindow().getDecorView();
+        actionBar = getSupportActionBar();
         setupViews();
     }
 
@@ -50,8 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(() ->
                         botNavViewModel.hideBottomNav(), 100);
             } else if (destination.getId() == R.id.splashFragment){
+                if (uiIsShown) {
+                    hideUi();
+                }
                 botNavViewModel.hideBottomNav();
-            }else {
+            } else {
+                if (!uiIsShown) {
+                    showUi();
+                }
                 botNavViewModel.showBottomNav();
             }
         });
@@ -63,6 +75,31 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    private void hideUi() {
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        uiIsShown = false;
+    }
+
+    private void showUi() {
+        decorView.setSystemUiVisibility( View.SYSTEM_UI_FLAG_VISIBLE);
+        if (actionBar != null) {
+            actionBar.show();
+        }
+        uiIsShown = true;
     }
 
     @Override

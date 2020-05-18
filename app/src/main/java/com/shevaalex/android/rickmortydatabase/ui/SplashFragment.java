@@ -5,16 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentSplashScreenBinding;
 
@@ -41,20 +37,9 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         FragmentSplashScreenBinding binding = FragmentSplashScreenBinding.inflate(inflater, container, false);
-        ActionBar actionBar = ((AppCompatActivity) a).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
         View view = binding.getRoot();
-        new Handler().postDelayed(() -> {
-            a.onBackPressed();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-        }, 1500);
+        new Handler().postDelayed(() -> a.onBackPressed(), 1500);
         return view;
     }
 }
