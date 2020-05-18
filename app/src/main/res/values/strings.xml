@@ -11,8 +11,10 @@
     <string name="network_error">Network error, Database might be not up to date</string>
     <string name="parse_error">Server response cannot be parsed, Database might be not up to date</string>
 
-    //Fragment Error managing
-    <string name="fragment_character_list_no_connection">Connect to internet to check for database update</string>
+    //Fragment CharacterListFragment Error managing
+    <string name="fragment_character_list_no_connection">No network connection</string>
+    <string name="fragment_character_list_database_up_to_date">Database is up to date</string>
+    <string name="fragment_character_list_database_sync">Updating Database</string>
 
     //App Bar
     <string name="item_search">Search</string>

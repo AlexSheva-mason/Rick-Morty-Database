@@ -1,6 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.source;
 
 import android.app.Application;
+import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -28,7 +29,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class MainRepository {
-    private static final String TAG = "MainRepo";
     private static final Object LOCK = new Object();
     private final NetworkDataParsing networkDataParsing;
     private final RickMortyDatabase rmDatabase;
@@ -179,7 +179,7 @@ public class MainRepository {
             }
         }
         if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-            dbIsUpToDate.postValue(true);
+            new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 4000);
             networkDataParsing.cancelVolleyRequests();
         }
     }
@@ -197,7 +197,7 @@ public class MainRepository {
                     }
                 }
                 if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-                    dbIsUpToDate.postValue(true);
+                    new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 4000);
                     networkDataParsing.cancelVolleyRequests();
                     addJoinEntries();
                 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,12 +22,15 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 
+import java.util.ArrayList;
+
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
-    private static final String TAG = "CharactersListFragment";
     private static final String BUNDLE_SAVE_STATE_SEARCH_QUERY = "Query_name";
     private static final String BUNDLE_SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
@@ -37,18 +38,17 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private FragmentCharactersListBinding binding;
     private CharacterViewModel characterViewModel;
     private CharacterAdapter characterAdapter;
-    private Context context;
     private Activity a;
     private static Bundle savedState;
     private String searchQuery;
     private int filterListKey;
     private boolean searchIsCommitted;
     private static boolean splashScreenShown;
+    private static ArrayList<String> snackMessages = new ArrayList<>();
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context = context;
         if (context instanceof Activity) {
             a = (Activity) context;
         }
@@ -78,7 +78,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
-        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters) );
+        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
         setHasOptionsMenu(true);
         monitorConnectionAndDatabase();
         return view;
@@ -96,21 +96,22 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     //monitors internet connection, checks if database is up to date
     private void monitorConnectionAndDatabase() {
         characterViewModel.getStatusLiveData().observe(getViewLifecycleOwner(), pair -> {
+            String text;
             if (pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(context, "Database synced!", Toast.LENGTH_SHORT).show();
-            } else if (!pair.first && pair.second){
+                text = getString(R.string.fragment_character_list_database_up_to_date);
+            } else if (!pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 characterViewModel.rmRepository.initialiseDataBase();
-                Toast.makeText(context, "Updating Database", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(this::listJumpTo0, 1000);
+                text = getString(R.string.fragment_character_list_database_sync);
             } else if (pair.first) {
-                Toast.makeText(context, "Database up to date!", Toast.LENGTH_SHORT).show();
+                text = getString(R.string.fragment_character_list_database_up_to_date);
             } else {
-                Log.d(TAG, "else");
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                Toast.makeText(context, getString(R.string.fragment_character_list_no_connection), Toast.LENGTH_SHORT).show();
+                text = getString(R.string.fragment_character_list_no_connection);
             }
+            showSnackBar(text);
         });
     }
 
@@ -234,7 +235,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void listJumpTo0() {
         if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            Log.d(TAG, "list scrolling to 0");
             binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
         }
     }
@@ -250,6 +250,15 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 action.setCharacterName(clickedChar.getName()).setId(clickedChar.getId());
                 Navigation.findNavController(v).navigate(action);
             }
+        }
+    }
+
+    private void showSnackBar(String text) {
+        if (!text.isEmpty() && !snackMessages.contains(text)) {
+            Snackbar mySnackbar = Snackbar.make(binding.fragmentCharacterListLayout, text, BaseTransientBottomBar.LENGTH_LONG);
+            mySnackbar.setAnchorView(a.findViewById(R.id.bottom_panel));
+            mySnackbar.show();
+            snackMessages.add(text);
         }
     }
 
