@@ -9,7 +9,7 @@
         android:id="@+id/recyclerview_episode"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/episode_item" />
+        tools:listitem="@layout/item_episode" />
 
     <com.futuremind.recyclerviewfastscroll.FastScroller
         android:id="@+id/fast_scroll"

@@ -30,8 +30,8 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersLis
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
     private static final String TAG = "CharactersListFragment";
-    private static final String SAVE_STATE_SEARCH_QUERY = "Query_name";
-    private static final String SAVE_STATE_FILTER_KEY = "Filter_key";
+    private static final String BUNDLE_SAVE_STATE_SEARCH_QUERY = "Query_name";
+    private static final String BUNDLE_SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
     private static final int KEY_SHOW_ALL = 0;
     private FragmentCharactersListBinding binding;
@@ -118,8 +118,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onResume() {
         super.onResume();
         if (savedState != null) {
-            String savedSearchQuery = savedState.getString(SAVE_STATE_SEARCH_QUERY);
-            int savedFilterKey = savedState.getInt(SAVE_STATE_FILTER_KEY);
+            String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
+            int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
             if (savedFilterKey == KEY_FILTER_APPLIED) {
                 characterViewModel.setFilter(KEY_FILTER_APPLIED);
             } else {
@@ -133,7 +133,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.app_bar, menu);
+        inflater.inflate(R.menu.app_bar_fragment_character_detail, menu);
         MenuItem filterCheckBox = menu.findItem(R.id.filter_button);
         MenuItem searchMenuItem = menu.findItem(R.id.search_button);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
@@ -219,8 +219,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void customSaveState() {
         savedState = new Bundle();
-        savedState.putString(SAVE_STATE_SEARCH_QUERY, searchQuery);
-        savedState.putInt(SAVE_STATE_FILTER_KEY, filterListKey);
+        savedState.putString(BUNDLE_SAVE_STATE_SEARCH_QUERY, searchQuery);
+        savedState.putInt(BUNDLE_SAVE_STATE_FILTER_KEY, filterListKey);
     }
 
     @Override

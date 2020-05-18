@@ -10,9 +10,9 @@
         android:id="@+id/recyclerview_character"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/character_item" />
+        tools:listitem="@layout/item_character" />
 
-    <include layout="@layout/progress_bar"
+    <include layout="@layout/partial_progress_bar"
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

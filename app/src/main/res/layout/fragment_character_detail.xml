@@ -8,6 +8,6 @@
         android:id="@+id/recyclerview_character_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/rv_character_detail_header" />
+        tools:listitem="@layout/item_header_rv_character_detail" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

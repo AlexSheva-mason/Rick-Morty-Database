@@ -9,9 +9,10 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemBinding;
+
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.squareup.picasso.Picasso;
 
@@ -44,7 +45,7 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
-        CharacterItemBinding binding = CharacterItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemCharacterBinding binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new CharacterViewHolder(binding);
     }
 
@@ -69,9 +70,9 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
     }
 
     class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private CharacterItemBinding characterItemBinding;
+        private ItemCharacterBinding characterItemBinding;
 
-        CharacterViewHolder(CharacterItemBinding binding) {
+        CharacterViewHolder(ItemCharacterBinding binding) {
             super(binding.getRoot());
             itemView.setOnClickListener(this);
             characterItemBinding = binding;

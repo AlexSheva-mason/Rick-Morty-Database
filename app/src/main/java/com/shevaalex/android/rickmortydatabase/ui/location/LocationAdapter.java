@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
-import com.shevaalex.android.rickmortydatabase.databinding.LocationItemBinding;
+import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
 public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder> implements SectionTitleProvider {
@@ -32,7 +32,7 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
     @Override
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
-        LocationItemBinding binding = LocationItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemLocationBinding binding = ItemLocationBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new LocationViewHolder(binding);
     }
 
@@ -57,9 +57,9 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
     }
 
     class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private LocationItemBinding binding;
+        private ItemLocationBinding binding;
 
-        LocationViewHolder(LocationItemBinding binding) {
+        LocationViewHolder(ItemLocationBinding binding) {
             super(binding.getRoot());
             itemView.setOnClickListener(this);
             this.binding = binding;

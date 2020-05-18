@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
-import com.shevaalex.android.rickmortydatabase.databinding.EpisodeItemBinding;
+import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
 public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> implements SectionTitleProvider {
@@ -36,7 +36,7 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
     @Override
     public EpisodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
-        EpisodeItemBinding binding = EpisodeItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemEpisodeBinding binding = ItemEpisodeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new EpisodeViewHolder(binding);
     }
 
@@ -61,9 +61,9 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
     }
 
     class EpisodeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private EpisodeItemBinding binding;
+        private ItemEpisodeBinding binding;
 
-        EpisodeViewHolder (EpisodeItemBinding binding) {
+        EpisodeViewHolder (ItemEpisodeBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             itemView.setOnClickListener(this);

@@ -10,8 +10,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.databinding.EpisodeItemBinding;
-import com.shevaalex.android.rickmortydatabase.databinding.RvCharacterDetailHeaderBinding;
+import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
+import com.shevaalex.android.rickmortydatabase.databinding.ItemHeaderRvCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
@@ -58,10 +58,10 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
             // inflating Header view
-            RvCharacterDetailHeaderBinding binding = RvCharacterDetailHeaderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            ItemHeaderRvCharacterDetailBinding binding = ItemHeaderRvCharacterDetailBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new HeaderViewHolder(binding);
         } else {
-            EpisodeItemBinding binding = EpisodeItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            ItemEpisodeBinding binding = ItemEpisodeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new EpisodeViewHolder(binding);
         }
     }
@@ -124,9 +124,9 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     class EpisodeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private EpisodeItemBinding binding;
+        private ItemEpisodeBinding binding;
 
-        EpisodeViewHolder(EpisodeItemBinding binding) {
+        EpisodeViewHolder(ItemEpisodeBinding binding) {
             super(binding.getRoot());
             itemView.setOnClickListener(this);
             this.binding = binding;
@@ -141,8 +141,8 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private RvCharacterDetailHeaderBinding binding;
-        HeaderViewHolder (RvCharacterDetailHeaderBinding binding) {
+        private ItemHeaderRvCharacterDetailBinding binding;
+        HeaderViewHolder (ItemHeaderRvCharacterDetailBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.buttonOriginLocation.setOnClickListener(this);

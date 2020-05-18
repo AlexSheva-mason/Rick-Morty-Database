@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapter.OnEpisodeListener {
-    private static final String SAVE_STATE_KEY = "list_state";
+    private static final String BUNDLE_SAVE_STATE_KEY = "list_state";
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
     private Activity a;
@@ -79,7 +79,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
             }
             adapter.setEpisodeList(episodes);
             if (savedInstanceState != null) {
-                Parcelable savedState = savedInstanceState.getParcelable(SAVE_STATE_KEY);
+                Parcelable savedState = savedInstanceState.getParcelable(BUNDLE_SAVE_STATE_KEY);
                 if (layoutManager != null) {
                     layoutManager.onRestoreInstanceState(savedState);
                 }
@@ -92,7 +92,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            Parcelable savedState = savedInstanceState.getParcelable(SAVE_STATE_KEY);
+            Parcelable savedState = savedInstanceState.getParcelable(BUNDLE_SAVE_STATE_KEY);
             if (layoutManager != null) {
                 layoutManager.onRestoreInstanceState(savedState);
             }
@@ -103,7 +103,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (layoutManager != null) {
-            outState.putParcelable(SAVE_STATE_KEY, layoutManager.onSaveInstanceState());
+            outState.putParcelable(BUNDLE_SAVE_STATE_KEY, layoutManager.onSaveInstanceState());
         }
     }
 

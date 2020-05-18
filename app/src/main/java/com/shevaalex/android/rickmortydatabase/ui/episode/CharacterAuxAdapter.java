@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.databinding.CharacterItemSmallBinding;
+import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterSmallBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +32,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
     @NonNull
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CharacterItemSmallBinding binding = CharacterItemSmallBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemCharacterSmallBinding binding = ItemCharacterSmallBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new CharacterViewHolder(binding);
     }
 
@@ -54,9 +54,9 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
     }
 
     class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private CharacterItemSmallBinding binding;
+        private ItemCharacterSmallBinding binding;
 
-        CharacterViewHolder(CharacterItemSmallBinding binding) {
+        CharacterViewHolder(ItemCharacterSmallBinding binding) {
             super(binding.getRoot());
             itemView.setOnClickListener(this);
             this.binding = binding;
