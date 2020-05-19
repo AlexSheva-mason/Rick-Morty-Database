@@ -15,7 +15,6 @@
         android:padding="3dp"
         android:text="@string/tv_location_dimension"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorTextName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +26,6 @@
         android:maxLines="1"
         android:padding="3dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorTextName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/location_dimension"
         app:layout_constraintTop_toTopOf="@+id/location_dimension"
@@ -41,7 +39,6 @@
         android:padding="3dp"
         android:text="@string/tv_location_type"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorTextName"
         app:layout_constraintStart_toStartOf="@id/location_dimension"
         app:layout_constraintTop_toBottomOf="@id/location_dimension" />
 
@@ -53,7 +50,6 @@
         android:maxLines="1"
         android:padding="3dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorTextName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/location_type"
         app:layout_constraintTop_toTopOf="@id/location_type"
@@ -67,7 +63,6 @@
         android:padding="3dp"
         android:text="@string/tv_location_residents"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorTextName"
         app:layout_constraintStart_toStartOf="@id/location_type"
         app:layout_constraintTop_toBottomOf="@id/location_type" />
 
@@ -78,7 +73,6 @@
         android:padding="3dp"
         android:text="@string/tv_location_residents_unknown"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorTextName"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/location_residents"
         app:layout_constraintTop_toTopOf="@id/location_residents" />

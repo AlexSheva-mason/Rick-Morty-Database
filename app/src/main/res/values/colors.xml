@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="colorTextName">#000000</color>
+    <color name="rm_green_600">#29a850</color>
+    <color name="rm_green_500">#32B759</color>
+    <color name="rm_green_400">#56c273</color>
+    <color name="rm_yellow_500">#f3e43e</color>
+    <color name="rm_yellow_400">#f3e758</color>
 </resources>

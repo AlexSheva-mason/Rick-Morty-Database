@@ -1,23 +1,24 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:actionOverflowButtonStyle">@style/OverFlow</item>
-        <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
-        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
-    </style>
-
-    <style name="OverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+    <!--ActionBar overflow button style-->
+    <style name="Widget.RM.ActionButton.OverFlow.Filter" parent="@android:style/Widget.Holo.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_filter_list</item>
     </style>
 
-    <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+    <!--ActionBar popup menu style-->
+    <style name="Widget.RM.PopupMenu.Overflow" parent="Widget.MaterialComponents.PopupMenu.Overflow">
         <item name="android:overlapAnchor">false</item>
         <item name="android:dropDownVerticalOffset">4.0dip</item>
+    </style>
+
+    <!--Bottom navigation toolbar style-->
+    <style
+        name="Widget.RM.BottomNavigationView"
+        parent="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="labelVisibilityMode">selected</item>
+        <item name="itemIconTint">@color/bottom_nav_element</item>
+        <item name="itemTextColor">@color/bottom_nav_element</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.MaterialComponents.Caption</item>
     </style>
 
 </resources>

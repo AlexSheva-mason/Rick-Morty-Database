@@ -17,9 +17,9 @@
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical"
-        app:fastscroll__bubbleColor="@color/colorPrimary"
+        app:fastscroll__bubbleColor="?attr/colorSecondary"
         app:fastscroll__bubbleTextAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-        app:fastscroll__handleColor="@color/colorPrimary" />
+        app:fastscroll__handleColor="?attr/colorSecondary" />
 
    
 

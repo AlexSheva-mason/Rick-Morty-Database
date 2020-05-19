@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme-->
+    <style name="Theme.Base.RM" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimaryDark">@color/rm_green_600</item>
+        <item name="colorPrimary">@color/rm_green_500</item>
+        <item name="colorPrimaryVariant">@color/rm_green_400</item>
+        <item name="colorSecondary">@color/rm_yellow_500</item>
+        <item name="colorSecondaryVariant">@color/rm_yellow_400</item>
+        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.RM.ActionButton.OverFlow.Filter</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.RM.PopupMenu.Overflow</item>
+
+        <!--Material text attributes-->
+
+        <!--Platform attributes-->
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">?attr/colorPrimaryDark</item>
+
+        <!--Default styles-->
+        <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
+
+    </style>
+
+
+</resources>

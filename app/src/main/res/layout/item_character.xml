@@ -37,8 +37,7 @@
                 android:maxLines="2"
                 android:padding="4dp"
                 android:text="@string/tv_character_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@color/colorTextName" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         </androidx.cardview.widget.CardView>
 

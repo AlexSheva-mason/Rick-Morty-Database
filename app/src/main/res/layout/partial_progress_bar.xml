@@ -20,6 +20,6 @@
         android:layout_below="@+id/pb"
         android:layout_centerHorizontal="true"
         android:text="@string/tv_character_list_pb"
-        android:textColor="@color/colorAccent" />
+        android:textColor="?attr/colorSecondary" />
 
 </RelativeLayout>
