@@ -2,7 +2,20 @@
 <resources>
     <color name="rm_green_600">#29a850</color>
     <color name="rm_green_500">#32B759</color>
-    <color name="rm_green_400">#56c273</color>
-    <color name="rm_yellow_500">#f3e43e</color>
-    <color name="rm_yellow_400">#f3e758</color>
+    <color name="rm_green_100">#c5e9cd</color>
+
+    <color name="rm_grey_blue_900_alpha_95">#95263238</color>
+    <color name="rm_grey_blue_900">#263238</color>
+    <color name="rm_white_50">#FFFFFF</color>
+    <color name="rm_grey_900">#212121</color>
+
+
+    <!--TODO these are not being used (yet):-->
+    <color name="rm_grey_blue_200">#b0bec5</color>
+    <color name="rm_grey_blue_500">#607d8b</color>
+    <color name="rm_grey_blue_800">#37474f</color>
+
+    <color name="rm_grey_medium">#757575</color>
+    <color name="rm_grey_light">#BDBDBD</color>
+
 </resources>

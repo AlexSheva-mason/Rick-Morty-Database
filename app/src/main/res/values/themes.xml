@@ -3,16 +3,28 @@
 
     <!-- Base application theme-->
     <style name="Theme.Base.RM" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!--Colour theme-->
         <item name="colorPrimaryDark">@color/rm_green_600</item>
         <item name="colorPrimary">@color/rm_green_500</item>
-        <item name="colorPrimaryVariant">@color/rm_green_400</item>
-        <item name="colorSecondary">@color/rm_yellow_500</item>
-        <item name="colorSecondaryVariant">@color/rm_yellow_400</item>
-        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
-        <item name="android:actionOverflowButtonStyle">@style/Widget.RM.ActionButton.OverFlow.Filter</item>
-        <item name="actionOverflowMenuStyle">@style/Widget.RM.PopupMenu.Overflow</item>
+        <item name="colorPrimaryVariant">@color/rm_green_100</item>
+        <item name="colorSecondary">@color/rm_grey_blue_900</item>
+        <item name="colorOnPrimary">@color/rm_white_50</item>
+        <item name="colorOnBackground">@color/rm_grey_900</item>
 
         <!--Material text attributes-->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.RM.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.RM.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.RM.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.RM.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.RM.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.RM.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.RM.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.RM.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.RM.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.RM.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.RM.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.RM.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.RM.Overline</item>
 
         <!--Platform attributes-->
         <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
@@ -20,6 +32,9 @@
 
         <!--Default styles-->
         <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
+        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.RM.ActionButton.OverFlow.Filter</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.RM.PopupMenu.Overflow</item>
 
     </style>
 

@@ -12,34 +12,29 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/character_image"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:contentDescription="@string/img_character_description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/character_image"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:contentDescription="@string/img_character_description" />
+        <TextView
+            android:id="@+id/character_name"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:background="@color/rm_grey_blue_900_alpha_95"
+            android:textColor="?attr/colorOnPrimary"
+            android:maxLines="2"
+            android:padding="2dp"
+            android:text="@string/tv_character_name"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="@id/character_image"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/character_name"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="#A3C6D5"
-                android:maxLines="2"
-                android:padding="4dp"
-                android:text="@string/tv_character_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/character_gender"
@@ -47,9 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/tv_character_gender"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            app:layout_constraintStart_toEndOf="@+id/card_view"
-            app:layout_constraintTop_toTopOf="@+id/card_view" />
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintStart_toEndOf="@+id/character_image"
+            app:layout_constraintTop_toTopOf="@+id/character_image" />
 
         <TextView
             android:id="@+id/character_gender_value"
@@ -57,9 +52,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="?attr/textAppearanceBody2"
             app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/card_view"
+            app:layout_constraintStart_toEndOf="@+id/character_image"
             app:layout_constraintTop_toBottomOf="@+id/character_gender"
             tools:text="gender" />
 
@@ -67,9 +62,8 @@
             android:id="@+id/character_species"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:text="@string/tv_character_species"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintStart_toStartOf="@id/character_status"
             app:layout_constraintTop_toBottomOf="@+id/character_status" />
 
@@ -78,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="?attr/textAppearanceBody2"
             app:layout_constraintBottom_toTopOf="@+id/character_species"
             app:layout_constraintStart_toStartOf="@+id/character_status_value"
             app:layout_constraintTop_toBottomOf="@+id/character_species"
@@ -88,9 +82,8 @@
             android:id="@+id/character_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:text="@string/tv_character_status"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintStart_toStartOf="@+id/character_gender"
             app:layout_constraintTop_toBottomOf="@+id/character_gender" />
 
@@ -99,7 +92,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="?attr/textAppearanceBody2"
             app:layout_constraintBottom_toTopOf="@+id/character_status"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/character_gender_value"
@@ -110,9 +103,8 @@
             android:id="@+id/character_last_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:text="@string/tv_character_last_loc"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintStart_toStartOf="@+id/character_species"
             app:layout_constraintTop_toBottomOf="@+id/character_species" />
 
@@ -122,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="?attr/textAppearanceBody2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/character_last_location"
             app:layout_constraintTop_toBottomOf="@+id/character_last_location"

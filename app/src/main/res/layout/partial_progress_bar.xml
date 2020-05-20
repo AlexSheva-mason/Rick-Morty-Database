@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/progress_bar"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="?attr/colorPrimaryVariant"
+    android:alpha=".9">
 
-    <ProgressBar
-        android:id="@+id/pb"
-        style="@style/Widget.AppCompat.ProgressBar"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:padding="8dp" />
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:orientation="vertical">
 
-    <TextView
-        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pb"
-        android:layout_centerHorizontal="true"
-        android:text="@string/tv_character_list_pb"
-        android:textColor="?attr/colorSecondary" />
+        <ProgressBar
+            android:id="@+id/pb"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:padding="8dp" />
 
-</RelativeLayout>
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="-10dp"
+            android:text="@string/tv_character_list_pb"
+            android:textColor="?attr/colorSecondary" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
