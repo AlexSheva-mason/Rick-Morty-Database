@@ -18,7 +18,7 @@
         <item name="labelVisibilityMode">selected</item>
         <item name="itemIconTint">@color/bottom_nav_element</item>
         <item name="itemTextColor">@color/bottom_nav_element</item>
-        <item name="itemTextAppearanceActive">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.RM.BottomNavigation</item>
     </style>
 
 </resources>

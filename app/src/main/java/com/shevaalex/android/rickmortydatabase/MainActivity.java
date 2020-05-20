@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
@@ -21,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private boolean backPressedOnce;
     private BottomNavViewModel botNavViewModel;
-    private AppBarConfiguration appBarConfiguration;
     private static boolean uiIsShown;
     private View decorView;
     private ActionBar actionBar;
@@ -42,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         // Setting the nav controller with bottom navigation
         NavigationUI.setupWithNavController(binding.bottomPanel, navController);
-        //Set the action bar to show appropriate titles, set top level destinations
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.charactersListFragment,
-                R.id.locationsListFragment, R.id.episodesListFragment).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         //setup the ViewModel for lifecycle aware observing bottomNav state
         botNavViewModel = new ViewModelProvider(this).get(BottomNavViewModel.class);
         botNavViewModel.getBottomNavVisibility().observe(this, integer -> binding.bottomPanel.setVisibility(integer));
@@ -100,12 +94,6 @@ public class MainActivity extends AppCompatActivity {
             actionBar.show();
         }
         uiIsShown = true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(navController, appBarConfiguration) ||
-                super.onSupportNavigateUp();
     }
 
     @Override

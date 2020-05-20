@@ -14,10 +14,15 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +62,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //this fragment has a menu
+        setHasOptionsMenu(true);
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
     }
 
@@ -79,16 +86,23 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
-        setHasOptionsMenu(true);
         monitorConnectionAndDatabase();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        NavController navController = Navigation.findNavController(view);
+        //Set the action bar to show appropriate title, set top level destinations
+        AppBarConfiguration appBarConfiguration =
+                new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
+        Toolbar toolbar = binding.toolbarFragmentCharacterList;
+        ((AppCompatActivity)a).setSupportActionBar(toolbar);
+        NavigationUI.setupWithNavController(
+                toolbar, navController, appBarConfiguration);
+        //Show splash frgament on app start only
         if (!splashScreenShown) {
-            Navigation.findNavController(view).navigate(R.id.toSplashFragment);
+            navController.navigate(R.id.toSplashFragment);
             splashScreenShown = true;
         }
     }
@@ -131,6 +145,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             }
         }
     }
+
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

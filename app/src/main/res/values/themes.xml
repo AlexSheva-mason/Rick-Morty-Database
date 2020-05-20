@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme-->
-    <style name="Theme.Base.RM" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.Base.RM" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimaryDark">@color/rm_green_600</item>
         <item name="colorPrimary">@color/rm_green_500</item>
         <item name="colorPrimaryVariant">@color/rm_green_400</item>
