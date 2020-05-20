@@ -5,16 +5,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -63,7 +61,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //this fragment has a menu
-        setHasOptionsMenu(true);
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
     }
 
@@ -97,7 +94,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
         Toolbar toolbar = binding.toolbarFragmentCharacterList;
-        ((AppCompatActivity)a).setSupportActionBar(toolbar);
+        createOptionsMenu(toolbar);
         NavigationUI.setupWithNavController(
                 toolbar, navController, appBarConfiguration);
         //Show splash frgament on app start only
@@ -107,54 +104,14 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
     }
 
-    //monitors internet connection, checks if database is up to date
-    private void monitorConnectionAndDatabase() {
-        characterViewModel.getStatusLiveData().observe(getViewLifecycleOwner(), pair -> {
-            String text;
-            if (pair.first && pair.second) {
-                binding.progressBar.progressBar.setVisibility(View.INVISIBLE);
-                text = getString(R.string.fragment_character_list_database_up_to_date);
-            } else if (!pair.first && pair.second) {
-                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                characterViewModel.rmRepository.initialiseDataBase();
-                new Handler().postDelayed(this::listJumpTo0, 1000);
-                text = getString(R.string.fragment_character_list_database_sync);
-            } else if (pair.first) {
-                text = getString(R.string.fragment_character_list_database_up_to_date);
-            } else {
-                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                text = getString(R.string.fragment_character_list_no_connection);
-            }
-            showSnackBar(text);
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (savedState != null) {
-            String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
-            int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
-            if (savedFilterKey == KEY_FILTER_APPLIED) {
-                characterViewModel.setFilter(KEY_FILTER_APPLIED);
-            } else {
-                characterViewModel.setFilter(KEY_SHOW_ALL);
-            }
-            if (searchQuery == null && savedSearchQuery != null) {
-                characterViewModel.setNameQuery(savedSearchQuery);
-            }
-        }
-    }
-
-
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.app_bar_fragment_character_detail, menu);
-        MenuItem filterCheckBox = menu.findItem(R.id.filter_button);
-        MenuItem searchMenuItem = menu.findItem(R.id.search_button);
+    private void createOptionsMenu(Toolbar toolbar) {
+        toolbar.inflateMenu(R.menu.toolbar_fragment_character_detail);
+        MenuItem filterCheckBox = toolbar.getMenu().findItem(R.id.filter_button);
+        MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.search_button);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setQueryHint("Enter your query...");
+        AutoCompleteTextView searchText = searchView.findViewById(R.id.search_src_text);
+        searchText.setTextAppearance(getContext(), R.style.TextAppearance_RM_SearchView_Hint);
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
         characterViewModel.getFilterResultKey().observe(getViewLifecycleOwner(), integer -> {
             filterListKey = integer;
@@ -213,19 +170,56 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             searchMenuItem.collapseActionView();
             searchView.setIconified(true);
         });
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.filter_button) {
+                if (item.isChecked()) {
+                    characterViewModel.setFilter(KEY_SHOW_ALL);
+                } else {
+                    characterViewModel.setFilter(KEY_FILTER_APPLIED);
+                }
+                return true;
+            }
+            return false;
+        });
+    }
+
+    //monitors internet connection, checks if database is up to date
+    private void monitorConnectionAndDatabase() {
+        characterViewModel.getStatusLiveData().observe(getViewLifecycleOwner(), pair -> {
+            String text;
+            if (pair.first && pair.second) {
+                binding.progressBar.progressBar.setVisibility(View.INVISIBLE);
+                text = getString(R.string.fragment_character_list_database_up_to_date);
+            } else if (!pair.first && pair.second) {
+                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
+                characterViewModel.rmRepository.initialiseDataBase();
+                new Handler().postDelayed(this::listJumpTo0, 1000);
+                text = getString(R.string.fragment_character_list_database_sync);
+            } else if (pair.first) {
+                text = getString(R.string.fragment_character_list_database_up_to_date);
+            } else {
+                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
+                text = getString(R.string.fragment_character_list_no_connection);
+            }
+            showSnackBar(text);
+        });
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.filter_button) {
-            if (item.isChecked()) {
-                characterViewModel.setFilter(KEY_SHOW_ALL);
-            } else {
+    public void onResume() {
+        super.onResume();
+        if (savedState != null) {
+            String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
+            int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
+            if (savedFilterKey == KEY_FILTER_APPLIED) {
                 characterViewModel.setFilter(KEY_FILTER_APPLIED);
+            } else {
+                characterViewModel.setFilter(KEY_SHOW_ALL);
             }
-            return true;
+            if (searchQuery == null && savedSearchQuery != null) {
+                characterViewModel.setNameQuery(savedSearchQuery);
+            }
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
