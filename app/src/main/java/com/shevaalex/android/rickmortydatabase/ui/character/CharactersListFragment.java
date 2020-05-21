@@ -38,16 +38,18 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private static final String BUNDLE_SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
     private static final int KEY_SHOW_ALL = 0;
+    private static boolean splashScreenShown;
+    private static ArrayList<String> snackMessages = new ArrayList<>();
+    private static Bundle savedState;
+    private Activity a;
     private FragmentCharactersListBinding binding;
     private CharacterViewModel characterViewModel;
     private CharacterAdapter characterAdapter;
-    private Activity a;
-    private static Bundle savedState;
     private String searchQuery;
     private int filterListKey;
     private boolean searchIsCommitted;
-    private static boolean splashScreenShown;
-    private static ArrayList<String> snackMessages = new ArrayList<>();
+    private RecyclerView rvCharacterList;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -60,7 +62,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this fragment has a menu
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
     }
 
@@ -76,12 +77,13 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         binding.progressBar.progressBar.setVisibility(View.GONE);
         //set LinearLayout and RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
-        binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
-        binding.recyclerviewCharacter.setHasFixedSize(true);
+        rvCharacterList = binding.recyclerviewCharacter;
+        rvCharacterList.setLayoutManager(linearLayoutManager);
+        rvCharacterList.setHasFixedSize(true);
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        binding.recyclerviewCharacter.setAdapter(characterAdapter);
+        rvCharacterList.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
         monitorConnectionAndDatabase();
         return view;
@@ -244,8 +246,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     }
 
     private void listJumpTo0() {
-        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
+        if (rvCharacterList != null && rvCharacterList.getLayoutManager() != null) {
+            rvCharacterList.getLayoutManager().scrollToPosition(0);
         }
     }
 

@@ -29,6 +29,7 @@
     <string name="tv_character_gender">Gender:</string>
     <string name="tv_character_origin">Origin:</string>
     <string name="tv_character_last_loc">Last location:</string>
+    <string name="tv_character_last_loc_unknown_value">Unknown</string>
     <string name="tv_character_location_unknown">unknown</string>
     <string name="tv_character_episode_list">Seen in episodes:</string>
     <string name="tv_character_list_pb">Aw Jeez…</string>

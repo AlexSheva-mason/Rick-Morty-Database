@@ -14,27 +14,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/character_image"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:contentDescription="@string/img_character_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/character_name"
-            android:layout_width="125dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/character_image_holder"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/rm_grey_blue_900_alpha_95"
-            android:textColor="?attr/colorOnPrimary"
-            android:maxLines="2"
-            android:padding="2dp"
-            android:text="@string/tv_character_name"
-            android:textAppearance="?attr/textAppearanceBody1"
-            app:layout_constraintBottom_toBottomOf="@id/character_image"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/character_image"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:contentDescription="@string/img_character_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/character_name"
+                style="@style/Widget.RM.TextView.Name.Title"
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:text="@string/tv_character_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/character_gender"
@@ -42,19 +46,23 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/tv_character_gender"
-            android:textAppearance="?attr/textAppearanceBody1"
-            app:layout_constraintStart_toEndOf="@+id/character_image"
-            app:layout_constraintTop_toTopOf="@+id/character_image" />
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintStart_toEndOf="@+id/character_image_holder"
+            app:layout_constraintTop_toTopOf="@+id/character_image_holder" />
 
         <TextView
             android:id="@+id/character_gender_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceBody2"
+            android:textAllCaps="true"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/character_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/character_image_holder"
             app:layout_constraintTop_toBottomOf="@+id/character_gender"
             tools:text="gender" />
 
@@ -63,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_character_species"
-            android:textAppearance="?attr/textAppearanceBody1"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
             app:layout_constraintStart_toStartOf="@id/character_status"
             app:layout_constraintTop_toBottomOf="@+id/character_status" />
 
@@ -71,10 +79,14 @@
             android:id="@+id/character_species_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceBody2"
+            android:textAllCaps="true"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="@+id/character_species"
-            app:layout_constraintStart_toStartOf="@+id/character_status_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/character_gender_value"
             app:layout_constraintTop_toBottomOf="@+id/character_species"
             tools:text="species" />
 
@@ -83,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_character_status"
-            android:textAppearance="?attr/textAppearanceBody1"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
             app:layout_constraintStart_toStartOf="@+id/character_gender"
             app:layout_constraintTop_toBottomOf="@+id/character_gender" />
 
@@ -91,8 +103,11 @@
             android:id="@+id/character_status_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceBody2"
+            android:textAllCaps="true"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="@+id/character_status"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/character_gender_value"
@@ -104,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_character_last_loc"
-            android:textAppearance="?attr/textAppearanceBody1"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
             app:layout_constraintStart_toStartOf="@+id/character_species"
             app:layout_constraintTop_toBottomOf="@+id/character_species" />
 
@@ -113,8 +128,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceBody2"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/character_last_location"
             app:layout_constraintTop_toBottomOf="@+id/character_last_location"

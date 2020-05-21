@@ -6,9 +6,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Parcelable;
@@ -16,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +76,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             episodeList = episodes;
             Character headerCharacter = viewModel.getCharacterById(characterId);
+            setToolbarImage(headerCharacter);
             adapter.setHeaderCharacter(headerCharacter);
             if (headerCharacter.getOriginLocation() != 0) {
                 adapter.setOriginLocation(viewModel.getLocationById(headerCharacter.getOriginLocation()));
@@ -86,6 +93,24 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
             }
         });
         return view;
+    }
+
+    private void setToolbarImage(Character headerCharacter) {
+        if (headerCharacter != null) {
+            Picasso.get().load(headerCharacter.getImgUrl()).error(R.drawable.picasso_placeholder_error)
+                    .fit().centerCrop().into(binding.imageCharacterToolbar);
+        }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        NavController navController = Navigation.findNavController(view);
+        //Set the action bar to show appropriate title, set top level destinations
+        AppBarConfiguration appBarConfiguration =
+                new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
+        Toolbar toolbar = binding.toolbarFragmentCharacterDetail;
+        NavigationUI.setupWithNavController(
+                toolbar, navController, appBarConfiguration);
     }
 
     @Override
