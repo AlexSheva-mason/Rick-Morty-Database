@@ -24,6 +24,7 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -98,7 +99,15 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
     private void setToolbarImage(Character headerCharacter) {
         if (headerCharacter != null) {
             Picasso.get().load(headerCharacter.getImgUrl()).error(R.drawable.picasso_placeholder_error)
-                    .fit().centerCrop().into(binding.imageCharacterToolbar);
+                    .fit().centerCrop().into(binding.imageCharacterToolbar, new Callback() {
+                @Override
+                public void onSuccess() {
+                }
+                @Override
+                public void onError(Exception e) {
+                    binding.appbarLayout.setExpanded(false);
+                }
+            });
         }
     }
 
