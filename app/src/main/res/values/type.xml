@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="TextAppearance.RM.Toolbar.Collapsed.Title.Small" parent="TextAppearance.RM.Toolbar.Collapsed.Title">
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="TextAppearance.RM.Toolbar.Expanded.Title" parent="TextAppearance.RM.Toolbar.Collapsed.Title">
         <item name="android:textSize">40sp</item>
         <item name="android:shadowDy">0</item>

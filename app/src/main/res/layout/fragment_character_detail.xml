@@ -12,6 +12,7 @@
         style="@style/Widget.MaterialComponents.Toolbar.Primary">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:expandedTitleGravity="bottom"
