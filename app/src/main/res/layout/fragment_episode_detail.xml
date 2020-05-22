@@ -1,66 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.episode.EpisodeDetailFragment">
 
-    <TextView
-        android:id="@+id/episode_name_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="3dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="NAME" />
-
-    <TextView
-        android:id="@+id/episode_air_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:padding="3dp"
-        android:text="@string/tv_episode_air_date"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintStart_toStartOf="@id/episode_name_value"
-        app:layout_constraintTop_toBottomOf="@id/episode_name_value" />
-
-    <TextView
-        android:id="@+id/episode_air_date_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:padding="3dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintStart_toEndOf="@id/episode_air_date"
-        app:layout_constraintTop_toTopOf="@id/episode_air_date"
-        tools:text="December 2, 2013" />
-
-    <TextView
-        android:id="@+id/episode_character_list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="3dp"
-        android:background="?attr/colorPrimaryVariant"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/episode_air_date"
-        app:layout_constraintTop_toBottomOf="@+id/episode_air_date_value"
-        android:text="@string/tv_episode_characters_list" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_episode_detail"
+    <include
+        layout="@layout/partial_toolbar_simple"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/episode_character_list"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_character_small" />
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_info"
+            android:background="?attr/colorPrimaryVariant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/episode_name_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:padding="3dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="NAME" />
+
+            <TextView
+                android:id="@+id/episode_air_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:padding="3dp"
+                android:text="@string/tv_episode_air_date"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintStart_toStartOf="@id/episode_name_value"
+                app:layout_constraintTop_toBottomOf="@id/episode_name_value" />
+
+            <TextView
+                android:id="@+id/episode_air_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:padding="3dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintStart_toEndOf="@id/episode_air_date"
+                app:layout_constraintTop_toTopOf="@id/episode_air_date"
+                tools:text="December 2, 2013" />
+
+            <TextView
+                android:id="@+id/episode_character_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/colorPrimary"
+                android:padding="3dp"
+                android:text="@string/tv_episode_characters_list"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/episode_air_date"
+                app:layout_constraintTop_toBottomOf="@+id/episode_air_date_value" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_episode_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_character_small" />
+
+    </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,6 +5,7 @@
     <color name="rm_green_100">#c5e9cd</color>
 
     <color name="rm_green_100_alpha_75">#BFc5e9cd</color>
+    <color name="rm_grey_blue_500">#607d8b</color>
     <color name="rm_grey_blue_900_alpha_60">#99263238</color>
     <color name="rm_grey_blue_900">#263238</color>
     <color name="rm_white_50">#FFFFFF</color>
@@ -13,7 +14,6 @@
 
     <!--TODO these are not being used (yet):-->
     <color name="rm_grey_blue_200">#b0bec5</color>
-    <color name="rm_grey_blue_500">#607d8b</color>
     <color name="rm_grey_blue_800">#37474f</color>
 
     <color name="rm_grey_medium">#757575</color>

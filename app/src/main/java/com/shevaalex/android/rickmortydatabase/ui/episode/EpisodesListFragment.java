@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
@@ -18,8 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
+import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 
-public class EpisodesListFragment extends Fragment implements EpisodeAdapter.OnEpisodeClickListener {
+public class EpisodesListFragment extends FragmentToolbarSimple implements EpisodeAdapter.OnEpisodeClickListener {
     private Activity a;
     private EpisodeViewModel episodeViewModel;
     private FragmentEpisodesListBinding binding;

@@ -8,6 +8,7 @@
         <item name="colorPrimary">@color/rm_green_500</item>
         <item name="colorPrimaryVariant">@color/rm_green_100</item>
         <item name="colorSecondary">@color/rm_grey_blue_900</item>
+        <item name="colorSecondaryVariant">@color/rm_grey_blue_500</item>
         <item name="colorOnPrimary">@color/rm_white_50</item>
         <item name="colorOnBackground">@color/rm_grey_900</item>
 

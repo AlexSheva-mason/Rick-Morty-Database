@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
@@ -18,9 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 
 
-public class LocationsListFragment extends Fragment implements LocationAdapter.OnLocationClickListener {
+public class LocationsListFragment extends FragmentToolbarSimple implements LocationAdapter.OnLocationClickListener {
     private Activity a;
     private FragmentLocationsListBinding binding;
     private LocationViewModel locationViewModel;

@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,11 +17,12 @@ import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodeDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EpisodeDetailFragment extends Fragment implements CharacterAuxAdapter.OnCharacterListener {
+public class EpisodeDetailFragment extends FragmentToolbarSimple implements CharacterAuxAdapter.OnCharacterListener {
     private FragmentEpisodeDetailBinding binding;
     private CharacterAuxAdapter characterAuxAdapter;
     private EpisodeViewModel viewModel;
