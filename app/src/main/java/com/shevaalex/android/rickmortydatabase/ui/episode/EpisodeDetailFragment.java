@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodeDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
+import com.shevaalex.android.rickmortydatabase.ui.character.CharacterAuxAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
     private EpisodeViewModel viewModel;
     private Activity a;
     private List<Character> characterList = new ArrayList<>();
+    private Context context;
 
     public EpisodeDetailFragment() {
         // Required empty public constructor
@@ -36,6 +38,7 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this.context = context;
         if (context instanceof Activity) {
             a = (Activity) context;
         }
@@ -65,7 +68,7 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
         binding.recyclerviewEpisodeDetail.setLayoutManager(layoutManager);
         binding.recyclerviewEpisodeDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        characterAuxAdapter = new CharacterAuxAdapter(this);
+        characterAuxAdapter = new CharacterAuxAdapter(this, context);
         characterAuxAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewEpisodeDetail.setAdapter(characterAuxAdapter);
         viewModel.getCharactersFromEpisode(episodeID).observe(getViewLifecycleOwner(), characters -> {

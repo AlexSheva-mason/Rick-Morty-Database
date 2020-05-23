@@ -19,7 +19,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationDetai
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
-import com.shevaalex.android.rickmortydatabase.ui.episode.CharacterAuxAdapter;
+import com.shevaalex.android.rickmortydatabase.ui.character.CharacterAuxAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +30,7 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
     private LocationViewModel viewModel;
     private Activity a;
     private List<Character> mCharacterList = new ArrayList<>();
+    private Context context;
 
     public LocationDetailFragment() {
         // Required empty public constructor
@@ -38,6 +39,7 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this.context = context;
         if (context instanceof Activity) {
             a = (Activity) context;
         }
@@ -71,7 +73,7 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
         binding.recyclerviewLocationDetail.setLayoutManager(layoutManager);
         binding.recyclerviewLocationDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        characterAuxAdapter = new CharacterAuxAdapter(this);
+        characterAuxAdapter = new CharacterAuxAdapter(this, context);
         characterAuxAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocationDetail.setAdapter(characterAuxAdapter);
         viewModel.getCharactersFromLocation(locationId).observe(getViewLifecycleOwner(), characters -> {

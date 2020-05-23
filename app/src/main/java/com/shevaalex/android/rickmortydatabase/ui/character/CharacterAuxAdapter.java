@@ -1,5 +1,6 @@
-package com.shevaalex.android.rickmortydatabase.ui.episode;
+package com.shevaalex.android.rickmortydatabase.ui.character;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,10 @@ import java.util.List;
 public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
     private List<Character> mCharacterList = new ArrayList<>();
+    private Context context;
 
-    public CharacterAuxAdapter(OnCharacterListener onCharacterListener){
+    public CharacterAuxAdapter(OnCharacterListener onCharacterListener, Context context){
+        this.context = context;
         this.onCharacterListener = onCharacterListener;
     }
 
@@ -51,6 +54,8 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
         holder.binding.characterGenderValue.setText(currentCharacter.getGender());
         holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
         holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
+        int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
+        holder.binding.characterStatusValue.setTextColor(color);
     }
 
     class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
