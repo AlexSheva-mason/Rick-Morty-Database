@@ -20,8 +20,9 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="TextAppearance.RM.BottomNavigation" parent="@style/TextAppearance.MaterialComponents.Caption">
+    <style name="TextAppearance.RM.BottomNavigation" parent="@style/TextAppearance.RM.Caption">
         <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.RM.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
