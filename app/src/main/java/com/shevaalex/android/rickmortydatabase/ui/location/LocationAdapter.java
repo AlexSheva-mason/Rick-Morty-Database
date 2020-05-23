@@ -13,7 +13,7 @@ import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
-public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder> implements SectionTitleProvider {
+public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder> {
     private final OnLocationClickListener onLocationClickListener;
 
     LocationAdapter(OnLocationClickListener clickListener) {
@@ -43,16 +43,6 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
             holder.binding.locationNameValue.setText(currentLocation.getName());
             holder.binding.locationDimensionValue.setText(currentLocation.getDimension());
             holder.binding.locationTypeValue.setText(currentLocation.getType());
-        }
-    }
-
-    @Override
-    public String getSectionTitle(int position) {
-        Location currentLocation = getItem(position);
-        if (currentLocation != null) {
-            return currentLocation.getName().substring(0, 1);
-        } else {
-            return "";
         }
     }
 

@@ -17,18 +17,4 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_episode" />
 
-    <com.futuremind.recyclerviewfastscroll.FastScroller
-        android:id="@+id/fast_scroll"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:orientation="vertical"
-        app:fastscroll__bubbleColor="?attr/colorSecondaryVariant"
-        app:fastscroll__bubbleTextAppearance="@style/TextAppearance.RM.Toolbar.Collapsed.Title"
-        app:fastscroll__handleColor="?attr/colorSecondaryVariant"
-        app:layout_anchor="@+id/recyclerview_episode"
-        app:layout_anchorGravity="end"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

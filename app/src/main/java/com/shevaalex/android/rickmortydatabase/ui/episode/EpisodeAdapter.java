@@ -13,7 +13,7 @@ import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
-public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> implements SectionTitleProvider {
+public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> {
     private OnEpisodeClickListener clickListener;
 
     EpisodeAdapter (OnEpisodeClickListener clickListener) {
@@ -47,16 +47,6 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
             holder.binding.episodeNameValue.setText(currentEpisode.getName());
             holder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
             holder.binding.episodeCodeValue.setText(currentEpisode.getCode());
-        }
-    }
-
-    @Override
-    public String getSectionTitle(int position) {
-        Episode currentEpisode = getItem(position);
-        if (currentEpisode != null) {
-            return "s" + currentEpisode.getCode().substring(2,3) + "e" + currentEpisode.getCode().substring(4);
-        } else {
-            return "";
         }
     }
 

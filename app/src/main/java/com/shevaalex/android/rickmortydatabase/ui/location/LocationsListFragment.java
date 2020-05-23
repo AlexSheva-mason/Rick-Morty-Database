@@ -52,8 +52,6 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
         locationAdapter = new LocationAdapter(LocationsListFragment.this);
         locationAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocation.setAdapter(locationAdapter);
-        //set the fast scroller for recyclerview
-        binding.fastScroll.setRecyclerView(binding.recyclerviewLocation);
         //moved from onCreate to prevent adapter list from being null
         locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
         return view;

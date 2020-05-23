@@ -51,8 +51,6 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
         episodeAdapter = new EpisodeAdapter(this);
         episodeAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewEpisode.setAdapter(episodeAdapter);
-        //set the fast scroller for recyclerview
-        binding.fastScroll.setRecyclerView(binding.recyclerviewEpisode);
         episodeViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> episodeAdapter.submitList(episodes) );
         return view;
     }
