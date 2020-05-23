@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,12 @@ import com.squareup.picasso.Picasso;
 public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
     private CharacterViewModel viewModel;
-
-    CharacterAdapter(OnCharacterListener onClickListener, CharacterViewModel viewModel) {
+    private Context context;
+    CharacterAdapter(OnCharacterListener onClickListener, CharacterViewModel viewModel, Context context) {
         super(DIFF_CALLBACK);
         this.onCharacterListener = onClickListener;
         this.viewModel = viewModel;
+        this.context = context;
     }
 
     private static final DiffUtil.ItemCallback<Character> DIFF_CALLBACK =
@@ -60,6 +62,8 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
             holder.characterItemBinding.characterGenderValue.setText(currentCharacter.getGender());
             holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
+            int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
+            holder.characterItemBinding.characterStatusValue.setTextColor(color);
             if (viewModel != null) {
                 Location lastLoc = viewModel.getLocationById(currentCharacter.getLastKnownLocation());
                 if (lastLoc != null) {

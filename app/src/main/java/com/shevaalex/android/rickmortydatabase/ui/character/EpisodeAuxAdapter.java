@@ -15,7 +15,6 @@ import com.shevaalex.android.rickmortydatabase.databinding.ItemHeaderRvCharacter
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +70,9 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (headerCharacter != null) {
-                Picasso.get().load(headerCharacter.getImgUrl()).placeholder(R.drawable.picasso_placeholder_default).error(R.drawable.picasso_placeholder_error).
-                        fit().centerInside().into(headerViewHolder.binding.characterImage);
                 headerViewHolder.binding.characterStatusValue.setText(headerCharacter.getStatus());
+                int color = CharacterAdapterUtil.getStatusColour(headerCharacter.getStatus(), context);
+                headerViewHolder.binding.characterStatusValue.setTextColor(color);
                 headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
                 if (!headerCharacter.getType().isEmpty()) {
                     headerViewHolder.binding.characterTypeValue.setText(context.getResources()

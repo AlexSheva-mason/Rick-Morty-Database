@@ -81,7 +81,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         rvCharacterList.setLayoutManager(linearLayoutManager);
         rvCharacterList.setHasFixedSize(true);
         //instantiate the adapter and set this fragment as a listener for onClick
-        characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel);
+        characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel, getContext());
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         rvCharacterList.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
