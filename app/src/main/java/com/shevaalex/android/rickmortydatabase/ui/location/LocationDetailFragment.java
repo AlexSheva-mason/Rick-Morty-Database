@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationDetailBinding;
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 import com.shevaalex.android.rickmortydatabase.ui.episode.CharacterAuxAdapter;
@@ -57,6 +58,10 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
         // retrieve data from parent fragment
         String dimension = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationDimension();
         String type = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationType();
+        String name = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationName();
+        if (name.length() >= 30) {
+            binding.partialToolbarSimple.toolbarFragmentSimple.setTitleTextAppearance(a.getApplication().getApplicationContext(), R.style.TextAppearance_RM_Toolbar_Collapsed_Title_Small);
+        }
         int locationId = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationId();
         //set retreived data to appropriate views
         binding.locationDimensionValue.setText(dimension);

@@ -19,8 +19,6 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
@@ -101,7 +99,6 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
         if (headerCharacter != null) {
             int stringLength = headerCharacter.getName().length();
             if (stringLength >= 30) {
-                Toast.makeText(context, Integer.toString(stringLength), Toast.LENGTH_SHORT).show();
                 binding.collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.TextAppearance_RM_Toolbar_Collapsed_Title_Small);
             }
             Picasso.get().load(headerCharacter.getImgUrl()).error(R.drawable.picasso_placeholder_error)

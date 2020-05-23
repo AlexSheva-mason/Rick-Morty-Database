@@ -91,7 +91,7 @@
                 android:id="@+id/character_type_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="98dp"
+                android:layout_marginStart="88dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:maxLines="2"
@@ -185,7 +185,7 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
+                android:layout_marginStart="170dp"
                 android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/character_origin"
@@ -193,7 +193,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_origin_location"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="?attr/buttonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"
@@ -246,7 +246,7 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
+                android:layout_marginStart="170dp"
                 android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/character_last_location"
@@ -254,7 +254,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_last_location"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="?attr/buttonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"

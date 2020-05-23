@@ -36,4 +36,10 @@
         <item name="itemTextAppearanceActive">@style/TextAppearance.RM.BottomNavigation</item>
     </style>
 
+    <!--Button style-->
+    <style name="Widget.RM.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconPadding">1dp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>

@@ -10,24 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_location"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_location" />
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.futuremind.recyclerviewfastscroll.FastScroller
-        android:id="@+id/fast_scroll"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:orientation="vertical"
-        app:fastscroll__bubbleColor="?attr/colorSecondaryVariant"
-        app:fastscroll__bubbleTextAppearance="@style/TextAppearance.RM.Toolbar.Collapsed.Title"
-        app:fastscroll__handleColor="?attr/colorSecondaryVariant"
-        app:layout_anchor="@+id/recyclerview_location"
-        app:layout_anchorGravity="end"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/item_location" />
+
+        <com.futuremind.recyclerviewfastscroll.FastScroller
+            android:id="@+id/fast_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:fastscroll__bubbleColor="?attr/colorSecondaryVariant"
+            app:fastscroll__bubbleTextAppearance="@style/TextAppearance.RM.Toolbar.Collapsed.Title"
+            app:fastscroll__handleColor="?attr/colorSecondaryVariant" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,21 +5,21 @@ import android.content.Context;
 import com.shevaalex.android.rickmortydatabase.R;
 
 abstract class CharacterAdapterUtil {
-    private static final String stringAliveValue = "Alive";
-    private static final String stringDeadValue = "Dead";
-    private static final String stringUnknownValue = "unknown";
+    private static final String VALUE_ALIVE = "Alive";
+    private static final String VALUE_DEAD = "Dead";
+    private static final String VALUE_UNKNOWN = "unknown";
 
     //returns color to set TextView color depending on Character's status
     static int getStatusColour(String status, Context context) {
-        int color = 0;
+        int color = context.getResources().getColor(R.color.rm_grey_900);
         switch (status) {
-            case stringAliveValue:
+            case VALUE_ALIVE:
                 color = context.getResources().getColor(R.color.rm_green_add_500);
                 break;
-            case stringDeadValue:
+            case VALUE_DEAD:
                 color = context.getResources().getColor(R.color.rm_red_add_900);
                 break;
-            case stringUnknownValue:
+            case VALUE_UNKNOWN:
                 color = context.getResources().getColor(R.color.rm_grey_900);
                 break;
         }
