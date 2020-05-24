@@ -20,6 +20,8 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListB
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 
+import java.util.Objects;
+
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
 public class EpisodesListFragment extends FragmentToolbarSimple implements EpisodeAdapter.OnEpisodeClickListener {
@@ -57,7 +59,7 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
         episodeViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> episodeAdapter.submitList(episodes) );
         //set fast scroller
         new FastScrollerBuilder(binding.recyclerviewEpisode)
-                .setTrackDrawable(a.getApplicationContext().getResources().getDrawable(R.drawable.track_drawable))
+                .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
                 .build();
         return view;
     }

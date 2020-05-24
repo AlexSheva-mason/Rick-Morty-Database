@@ -20,6 +20,8 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsList
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 
+import java.util.Objects;
+
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
 
@@ -58,7 +60,7 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
         locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
         //set fast scroller
         new FastScrollerBuilder(binding.recyclerviewLocation)
-                .setTrackDrawable(a.getApplicationContext().getResources().getDrawable(R.drawable.track_drawable))
+                .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
                 .build();
         return view;
     }
