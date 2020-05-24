@@ -15,9 +15,12 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
+
+import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
 
 public class LocationsListFragment extends FragmentToolbarSimple implements LocationAdapter.OnLocationClickListener {
@@ -53,6 +56,10 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
         locationAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocation.setAdapter(locationAdapter);
         locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
+        //set fast scroller
+        new FastScrollerBuilder(binding.recyclerviewLocation)
+                .setTrackDrawable(a.getApplicationContext().getResources().getDrawable(R.drawable.track_drawable))
+                .build();
         return view;
     }
 

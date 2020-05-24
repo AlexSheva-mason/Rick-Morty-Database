@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
-public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder> {
+import me.zhanghai.android.fastscroll.PopupTextProvider;
+
+public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder> implements PopupTextProvider {
     private final OnLocationClickListener onLocationClickListener;
 
     LocationAdapter(OnLocationClickListener clickListener) {
@@ -45,6 +47,17 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
             holder.binding.locationNameValue.setText(currentLocation.getName());
             holder.binding.locationDimensionValue.setText(currentLocation.getDimension());
             holder.binding.locationTypeValue.setText(currentLocation.getType());
+        }
+    }
+
+    @NonNull
+    @Override
+    public String getPopupText(int position) {
+        Location currentLocation = getItem(position);
+        if (currentLocation != null) {
+            return currentLocation.getName().substring(0, 1);
+        } else {
+            return "";
         }
     }
 

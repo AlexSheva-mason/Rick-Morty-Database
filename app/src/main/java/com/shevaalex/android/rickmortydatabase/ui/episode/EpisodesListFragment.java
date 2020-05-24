@@ -15,9 +15,12 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
+
+import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
 public class EpisodesListFragment extends FragmentToolbarSimple implements EpisodeAdapter.OnEpisodeClickListener {
     private Activity a;
@@ -52,6 +55,10 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
         episodeAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewEpisode.setAdapter(episodeAdapter);
         episodeViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> episodeAdapter.submitList(episodes) );
+        //set fast scroller
+        new FastScrollerBuilder(binding.recyclerviewEpisode)
+                .setTrackDrawable(a.getApplicationContext().getResources().getDrawable(R.drawable.track_drawable))
+                .build();
         return view;
     }
 

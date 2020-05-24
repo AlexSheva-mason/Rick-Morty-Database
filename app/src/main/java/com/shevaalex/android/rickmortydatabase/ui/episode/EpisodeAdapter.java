@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
-public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> {
+import me.zhanghai.android.fastscroll.PopupTextProvider;
+
+public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> implements PopupTextProvider {
     private OnEpisodeClickListener clickListener;
 
     EpisodeAdapter (OnEpisodeClickListener clickListener) {
@@ -45,6 +47,17 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
             holder.binding.episodeNameValue.setText(currentEpisode.getName());
             holder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
             holder.binding.episodeCodeValue.setText(currentEpisode.getCode());
+        }
+    }
+
+    @NonNull
+    @Override
+    public String getPopupText(int position) {
+        Episode currentEpisode = getItem(position);
+        if (currentEpisode != null) {
+            return "s" + currentEpisode.getCode().substring(2,3) + "e" + currentEpisode.getCode().substring(4);
+        } else {
+            return "";
         }
     }
 
