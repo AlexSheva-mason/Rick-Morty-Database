@@ -19,6 +19,8 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.appbar.AppBarLayout;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
@@ -96,6 +98,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
     }
 
     private void setToolbarImage(Character headerCharacter) {
+        AppBarLayout appBarLayout = binding.appbarLayout;
         if (headerCharacter != null) {
             int stringLength = headerCharacter.getName().length();
             if (stringLength >= 30) {
@@ -108,7 +111,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
                 }
                 @Override
                 public void onError(Exception e) {
-                    binding.appbarLayout.setExpanded(false);
+                    appBarLayout.setExpanded(false);
                 }
             });
         }
