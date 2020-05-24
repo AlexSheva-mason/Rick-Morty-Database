@@ -12,8 +12,8 @@
         android:id="@+id/card_view_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -177,6 +177,7 @@
                 android:layout_marginStart="180dp"
                 android:maxLines="1"
                 android:text="@string/tv_character_location_unknown"
+                android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/character_origin"
@@ -238,6 +239,7 @@
                 android:layout_marginStart="180dp"
                 android:maxLines="1"
                 android:text="@string/tv_character_location_unknown"
+                android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/character_last_location"
@@ -272,12 +274,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="4dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_5"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/card_view_5">
 
         <TextView
             android:id="@+id/character_episodes"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextAppearance.RM.Toolbar.Collapsed.Title.Small" parent="TextAppearance.RM.Toolbar.Collapsed.Title">
         <item name="android:textSize">15sp</item>
     </style>
@@ -12,7 +13,7 @@
         <item name="android:shadowColor">@android:color/black</item>
     </style>
 
-    <style name="TextAppearance.RM.Toolbar.Collapsed.Title" parent="TextAppearance.RM.Headline6">
+    <style name="TextAppearance.RM.Toolbar.Collapsed.Title" parent="TextAppearance.RM.Headline5">
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
@@ -53,6 +54,7 @@
         <item name="fontFamily">@font/coming_soon_regular</item>
         <item name="android:fontFamily">@font/coming_soon_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.RM.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
