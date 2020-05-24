@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
@@ -23,9 +21,13 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
 
     private static final DiffUtil.ItemCallback<Location> DIFF_CALLBACK = new DiffUtil.ItemCallback<Location>() {
         @Override
-        public boolean areItemsTheSame(@NonNull Location oldItem, @NonNull Location newItem) { return oldItem.getId() == newItem.getId();  }
+        public boolean areItemsTheSame(@NonNull Location oldItem, @NonNull Location newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
         @Override
-        public boolean areContentsTheSame(@NonNull Location oldItem, @NonNull Location newItem) { return newItem.equals(oldItem);      }
+        public boolean areContentsTheSame(@NonNull Location oldItem, @NonNull Location newItem) {
+            return newItem.equals(oldItem);
+        }
     };
 
     @NonNull
@@ -51,8 +53,8 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
 
         LocationViewHolder(ItemLocationBinding binding) {
             super(binding.getRoot());
-            itemView.setOnClickListener(this);
             this.binding = binding;
+            itemView.setOnClickListener(this);
         }
 
         @Override

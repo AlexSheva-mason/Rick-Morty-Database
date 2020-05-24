@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
@@ -24,11 +22,11 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
     private static final DiffUtil.ItemCallback<Episode> DIFF_CALLBACK = new DiffUtil.ItemCallback<Episode>() {
         @Override
         public boolean areItemsTheSame(@NonNull Episode oldItem, @NonNull Episode newItem) {
-            return false;
+            return oldItem.getId() == newItem.getId();
         }
         @Override
         public boolean areContentsTheSame(@NonNull Episode oldItem, @NonNull Episode newItem) {
-            return false;
+            return newItem.equals(oldItem);
         }
     };
 

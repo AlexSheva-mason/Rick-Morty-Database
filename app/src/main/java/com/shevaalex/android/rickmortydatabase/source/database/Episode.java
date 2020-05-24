@@ -28,7 +28,7 @@ public class Episode {
 
     public String getCode() {        return code;    }
 
-    public String getCharactersList() {        return charactersList;    }
+    String getCharactersList() {        return charactersList;    }
 
     @Override
     public boolean equals(Object obj) {

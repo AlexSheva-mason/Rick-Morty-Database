@@ -49,10 +49,9 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
         binding.recyclerviewLocation.setLayoutManager(linearLayoutManager);
         binding.recyclerviewLocation.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
-        locationAdapter = new LocationAdapter(LocationsListFragment.this);
+        locationAdapter = new LocationAdapter(this);
         locationAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocation.setAdapter(locationAdapter);
-        //moved from onCreate to prevent adapter list from being null
         locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
         return view;
     }
