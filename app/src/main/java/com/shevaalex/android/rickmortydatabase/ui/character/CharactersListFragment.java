@@ -268,6 +268,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private void showSnackBar(String text) {
         if (!text.isEmpty() && !snackMessages.contains(text)) {
             Snackbar mySnackbar = Snackbar.make(binding.fragmentCharacterListLayout, text, BaseTransientBottomBar.LENGTH_SHORT);
+            mySnackbar.setTextColor(getResources().getColor(R.color.rm_white_50));
             mySnackbar.setAnchorView(a.findViewById(R.id.bottom_panel));
             mySnackbar.show();
             snackMessages.add(text);

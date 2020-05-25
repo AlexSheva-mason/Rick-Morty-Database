@@ -1,6 +1,8 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
 
 import com.shevaalex.android.rickmortydatabase.R;
 
@@ -10,15 +12,24 @@ abstract class CharacterAdapterUtil {
 
     //returns color to set TextView color depending on Character's status
     static int getStatusColour(String status, Context context) {
-        int color = context.getResources().getColor(R.color.rm_grey_900);
+        int color = fetchThemeColor(R.attr.colorOnBackground, context);
         switch (status) {
             case VALUE_ALIVE:
-                color = context.getResources().getColor(R.color.rm_green_add_500);
+                color = fetchThemeColor(R.attr.colorPrimary, context);
                 break;
             case VALUE_DEAD:
-                color = context.getResources().getColor(R.color.rm_red_add_900);
+                color = context.getResources().getColor(R.color.rm_red_add);
                 break;
         }
+        return color;
+    }
+
+    //returns theme attribute color
+    private static int fetchThemeColor(int colorId, Context context) {
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { colorId });
+        int color = a.getColor(0, 0);
+        a.recycle();
         return color;
     }
 }

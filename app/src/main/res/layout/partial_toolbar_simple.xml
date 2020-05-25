@@ -7,7 +7,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_fragment_simple"
-        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:titleTextAppearance="?attr/textAppearanceHeadline5" />

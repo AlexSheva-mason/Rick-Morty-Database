@@ -14,12 +14,19 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_fragment_character_list"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextAppearance="?attr/textAppearanceHeadline5" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        android:id="@+id/progress_bar"
+        layout="@layout/partial_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_character"
@@ -32,13 +39,5 @@
         app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_character" />
-
-    <include
-        android:id="@+id/progress_bar"
-        layout="@layout/partial_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

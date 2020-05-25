@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -98,6 +99,11 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
     }
 
     private void setToolbarImage(Character headerCharacter) {
+        //check if app is currently in dark theme and set the contentScrimColor of collapsing toolbar to surface color
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            binding.collapsingToolbarLayout.setContentScrimColor(context.getResources().getColor(R.color.rm_grey_900));
+        }
         AppBarLayout appBarLayout = binding.appbarLayout;
         if (headerCharacter != null) {
             int stringLength = headerCharacter.getName().length();
