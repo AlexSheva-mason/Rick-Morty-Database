@@ -75,4 +75,7 @@ dependencies {
     //paging
     def paging_version = "2.1.2"
     implementation "androidx.paging:paging-runtime:$paging_version"
+
+    //androidx preference library
+    implementation "androidx.preference:preference:1.1.1"
 }

@@ -5,19 +5,30 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceFragmentCompat;
 import android.view.View;
 
 import com.shevaalex.android.rickmortydatabase.R;
 
 
-public abstract class FragmentToolbarSimple extends Fragment {
+public class SettingsFragment extends PreferenceFragmentCompat {
+
+    public SettingsFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.settings, rootKey);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         NavController navController = Navigation.findNavController(view);
         //Set the action bar to show appropriate title, set top level destinations
         AppBarConfiguration appBarConfiguration =

@@ -49,6 +49,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private int filterListKey;
     private boolean searchIsCommitted;
     private RecyclerView rvCharacterList;
+    private NavController navController;
 
 
     @Override
@@ -91,7 +92,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        NavController navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
         //Set the action bar to show appropriate title, set top level destinations
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
@@ -180,6 +181,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                     characterViewModel.setFilter(KEY_FILTER_APPLIED);
                 }
                 return true;
+            }
+            if (item.getItemId() == R.id.settingsFragment) {
+                return NavigationUI.onNavDestinationSelected(item, navController);
             }
             return false;
         });

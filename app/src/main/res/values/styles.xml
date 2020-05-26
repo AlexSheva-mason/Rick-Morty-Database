@@ -1,5 +1,9 @@
 <resources>
 
+    <style name="RM.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
+        <item name="android:layout">@layout/fragment_settings</item>
+    </style>
+
     <!--TextView style for character item name-->
     <style name="Widget.RM.TextView.Name.Title" parent="Widget.MaterialComponents.TextView">
         <item name="android:background">@color/rm_grey_blue_900_alpha_60</item>

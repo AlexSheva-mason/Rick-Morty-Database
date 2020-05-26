@@ -25,11 +25,10 @@
         <!--Default styles-->
         <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
-        <item name="android:actionOverflowButtonStyle">
-            @style/Widget.RM.ActionButton.OverFlow.Filter
-        </item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.RM.ActionButton.OverFlow.Filter</item>
         <item name="actionOverflowMenuStyle">@style/Widget.RM.PopupMenu.Overflow</item>
         <item name="buttonStyle">@style/Widget.RM.Button.TextButton</item>
+        <item name="preferenceTheme">@style/RM.PreferenceThemeOverlay</item>
 
     </style>
 

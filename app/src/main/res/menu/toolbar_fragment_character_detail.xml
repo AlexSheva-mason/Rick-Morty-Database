@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/search_button"
         android:icon="@drawable/ic_search"
         android:orderInCategory="1"
         android:title="@string/item_search"
-        app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView"
         tools:ignore="AlwaysShowAction" />
     <item
-        android:id="@+id/filter_button"
-        android:title="@string/item_filter"
-        android:checkable="true"
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings"
         android:orderInCategory="2"
-        app:showAsAction="never|withText"/>
+        android:title="@string/item_settings"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/filter_button"
+        android:checkable="true"
+        android:orderInCategory="3"
+        android:title="@string/item_filter"
+        app:showAsAction="never|withText" />
 
 </menu>
