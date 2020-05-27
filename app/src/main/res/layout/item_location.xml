@@ -21,7 +21,7 @@
             android:layout_height="85dp"
             android:contentDescription="@string/img_location_description"
             android:src="@drawable/locations_24dp"
-            android:tint="?attr/colorAccent"
+            android:tint="?attr/colorSecondaryVariant"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

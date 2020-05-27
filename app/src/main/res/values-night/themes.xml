@@ -3,9 +3,8 @@
 
     <style name="RM.GreenGrey">
         <item name="colorPrimary">@color/rm_green_300</item>
-        <item name="colorSecondary">@color/rm_grey_blue_300</item>
-        <item name="colorSurface">@color/rm_grey_900</item>
-        <item name="colorOnSurface">@color/rm_white_50</item>
+        <item name="colorSecondary">@color/rm_green_200</item>
+        <item name="colorSecondaryVariant">@color/rm_grey_500</item>
     </style>
 
 </resources>

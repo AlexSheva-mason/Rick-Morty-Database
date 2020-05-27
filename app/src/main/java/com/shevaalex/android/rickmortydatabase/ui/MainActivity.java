@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // monitor navigation and remove BottomNavigationView in Detail fragments
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.characterDetailFragment2 || destination.getId() == R.id.locationDetailFragment
-                || destination.getId() == R.id.episodeDetailFragment) {
+                || destination.getId() == R.id.episodeDetailFragment || destination.getId() == R.id.settingsFragment) {
                 new Handler().postDelayed(() ->
                         botNavViewModel.hideBottomNav(), 100);
             } else if (destination.getId() == R.id.splashFragment){

@@ -3,9 +3,9 @@
     <color name="rm_green_600">#29a850</color>
     <color name="rm_green_500">#32B759</color>
     <color name="rm_green_300">#76cd8c</color>
+    <color name="rm_green_200">#9fdaad</color>
 
-    <color name="rm_grey_blue_300">#90a4ae</color>
-    <color name="rm_grey_blue_500">#607d8b</color>
+    <color name="rm_grey_500">#9e9e9e</color>
     <color name="rm_grey_blue_900_alpha_60">#99263238</color>
     <color name="rm_grey_blue_900">#263238</color>
     <color name="rm_white_50">#FFFFFF</color>
