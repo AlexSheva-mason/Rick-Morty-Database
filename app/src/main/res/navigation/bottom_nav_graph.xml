@@ -26,7 +26,11 @@
             app:destination="@id/splashFragment" />
         <action
             android:id="@+id/toSettingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/episodesListFragment"
@@ -70,10 +74,18 @@
             app:argType="string" />
         <action
             android:id="@+id/toEpisodeDetailFragmentAction2"
-            app:destination="@id/episodeDetailFragment" />
+            app:destination="@id/episodeDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/toLocationDetailFragmentAction2"
-            app:destination="@id/locationDetailFragment" />
+            app:destination="@id/locationDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"
@@ -102,7 +114,11 @@
             app:argType="string" />
         <action
             android:id="@+id/toCharacterDetailFragmentAction3"
-            app:destination="@id/characterDetailFragment2" />
+            app:destination="@id/characterDetailFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/episodeDetailFragment"
@@ -127,7 +143,11 @@
             app:argType="integer" />
         <action
             android:id="@+id/toCharacterDetailFragmentAction2"
-            app:destination="@id/characterDetailFragment2" />
+            app:destination="@id/characterDetailFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

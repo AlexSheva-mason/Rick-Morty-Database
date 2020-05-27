@@ -183,7 +183,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 return true;
             }
             if (item.getItemId() == R.id.settingsFragment) {
-                return NavigationUI.onNavDestinationSelected(item, navController);
+                navController.navigate(CharactersListFragmentDirections.toSettingsFragment());
+                return true;
             }
             return false;
         });
