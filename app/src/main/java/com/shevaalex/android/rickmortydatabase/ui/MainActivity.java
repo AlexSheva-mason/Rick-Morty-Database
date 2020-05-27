@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase;
+package com.shevaalex.android.rickmortydatabase.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,8 +12,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
-import com.shevaalex.android.rickmortydatabase.ui.BottomNavViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;

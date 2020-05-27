@@ -4,18 +4,24 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 import android.view.View;
 
+import com.shevaalex.android.rickmortydatabase.BuildConfig;
 import com.shevaalex.android.rickmortydatabase.R;
 
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
+    private final static String KEY_THEME_SWITCH = "theme_switch";
+    private final static String KEY_VERSION = "version";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -24,6 +30,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
+        SwitchPreferenceCompat switchPreference = findPreference(KEY_THEME_SWITCH);
+        if (switchPreference != null) {
+            switchPreference.setOnPreferenceChangeListener(this);
+        }
+        Preference versionPreference = findPreference(KEY_VERSION);
+        if (versionPreference != null) {
+            versionPreference.setSummary(getString(R.string.fragment_Setiings_version) + BuildConfig.VERSION_NAME);
+        }
     }
 
     @Override
@@ -38,5 +52,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             NavigationUI.setupWithNavController(
                     toolbar, navController, appBarConfiguration);
         }
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        boolean nightModeOn = (Boolean) newValue;
+        if (nightModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        return true;
     }
 }

@@ -15,7 +15,7 @@
         android:theme="@style/RM.GreenGrey"
         >
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

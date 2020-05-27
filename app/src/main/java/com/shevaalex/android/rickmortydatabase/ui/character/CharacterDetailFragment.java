@@ -32,12 +32,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapter.OnEpisodeListener {
+public class CharacterDetailFragment extends Fragment implements CharacterDetailAdapter.OnEpisodeListener {
     private static final String BUNDLE_SAVE_STATE_KEY = "list_state";
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
     private Activity a;
-    private EpisodeAuxAdapter adapter;
+    private CharacterDetailAdapter adapter;
     private LinearLayoutManager layoutManager;
     private List<Episode> episodeList = new ArrayList<>();
     private Context context;
@@ -74,7 +74,7 @@ public class CharacterDetailFragment extends Fragment implements EpisodeAuxAdapt
         binding.recyclerviewCharacterDetail.setLayoutManager(layoutManager);
         binding.recyclerviewCharacterDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        adapter = new EpisodeAuxAdapter(this, context);
+        adapter = new CharacterDetailAdapter(this, context);
         binding.recyclerviewCharacterDetail.setAdapter(adapter);
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             episodeList = episodes;

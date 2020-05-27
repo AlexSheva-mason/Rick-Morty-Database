@@ -72,8 +72,6 @@
     </style>
 
     <style name="TextAppearance.RM.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="fontFamily">@font/coming_soon_regular</item>
-        <item name="android:fontFamily">@font/coming_soon_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
 

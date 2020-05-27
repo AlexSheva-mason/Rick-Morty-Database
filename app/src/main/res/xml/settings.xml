@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="notifications"
-        app:title="Enable message notifications" />
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        app:key="theme_styles"
+        app:title="Theming">
 
-    <Preference
-        app:key="feedback"
-        app:summary="Report technical issues or suggest new features"
-        app:title="Send feedback" />
+        <SwitchPreferenceCompat
+            app:key="theme_switch"
+            app:title="Enable dark theme" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        app:key="help_category"
+        app:title="About">
+
+        <Preference
+            app:key="version"
+            app:summary="version here"
+            app:title="Version" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

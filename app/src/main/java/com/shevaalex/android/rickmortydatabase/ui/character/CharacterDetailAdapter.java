@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private Character headerCharacter;
@@ -30,7 +30,7 @@ public class EpisodeAuxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<Episode> mEpisodeList = new ArrayList<>();
     private Context context;
 
-    EpisodeAuxAdapter(OnEpisodeListener onEpisodeListener, Context context){
+    CharacterDetailAdapter(OnEpisodeListener onEpisodeListener, Context context){
         this.onEpisodeListener = onEpisodeListener;
         this.context = context;
     }
