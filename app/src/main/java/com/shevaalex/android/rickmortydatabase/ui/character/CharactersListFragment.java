@@ -38,7 +38,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private static final String BUNDLE_SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
     private static final int KEY_SHOW_ALL = 0;
-    private static boolean splashScreenShown;
     private static ArrayList<String> snackMessages = new ArrayList<>();
     private static Bundle savedState;
     private Activity a;
@@ -100,11 +99,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         createOptionsMenu(toolbar);
         NavigationUI.setupWithNavController(
                 toolbar, navController, appBarConfiguration);
-        //Show splash frgament on app start only
-        if (!splashScreenShown) {
-            navController.navigate(R.id.toSplashFragment);
-            splashScreenShown = true;
-        }
     }
 
     private void createOptionsMenu(Toolbar toolbar) {

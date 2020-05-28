@@ -5,11 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@+id/charactersListFragment">
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.SplashFragment"
-        android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash_screen" />
-    <fragment
         android:id="@+id/charactersListFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment"
         android:label="List of Characters"
@@ -21,9 +16,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/toSplashFragment"
-            app:destination="@id/splashFragment" />
         <action
             android:id="@+id/toSettingsFragment"
             app:destination="@id/settingsFragment"
