@@ -23,6 +23,7 @@
     <string name="item_search">Search</string>
     <string name="item_settings">Settings</string>
     <string name="item_filter">Do not show dead</string>
+    <string name="item_overflow">Overflow</string>
 
     //Layout view names and descriptions
     <string name="img_character_description">Character image</string>

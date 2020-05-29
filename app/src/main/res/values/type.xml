@@ -14,7 +14,7 @@
     </style>
 
     <style name="TextAppearance.RM.Toolbar.Collapsed.Title" parent="TextAppearance.RM.Headline5">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
     <style name="TextAppearance.RM.SearchView.Hint" parent="Widget.AppCompat.AutoCompleteTextView">

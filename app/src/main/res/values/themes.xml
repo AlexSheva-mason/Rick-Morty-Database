@@ -25,7 +25,6 @@
         <!--Default styles-->
         <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
-        <item name="android:actionOverflowButtonStyle">@style/Widget.RM.ActionButton.OverFlow.Filter</item>
         <item name="actionOverflowMenuStyle">@style/Widget.RM.PopupMenu.Overflow</item>
         <item name="buttonStyle">@style/Widget.RM.Button.TextButton</item>
         <item name="preferenceTheme">@style/RM.PreferenceThemeOverlay</item>
@@ -41,7 +40,6 @@
         <item name="colorSecondary">@color/rm_grey_blue_900</item>
         <item name="colorSecondaryVariant">@color/rm_grey_blue_900</item>
         <item name="colorOnPrimary">@color/rm_white_50</item>
-        <item name="colorOnSurface">@color/rm_white_50</item>
         <item name="colorOnBackground">@color/rm_grey_900</item>
     </style>
 

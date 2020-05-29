@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/rm_green_300</item>
         <item name="colorSecondary">@color/rm_green_200</item>
         <item name="colorSecondaryVariant">@color/rm_grey_500</item>
+        <item name="colorOnPrimary">@color/rm_white_50</item>
     </style>
 
 </resources>

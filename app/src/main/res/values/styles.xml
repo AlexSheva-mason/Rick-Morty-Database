@@ -7,7 +7,7 @@
     <!--TextView style for character item name-->
     <style name="Widget.RM.TextView.Name.Title" parent="Widget.MaterialComponents.TextView">
         <item name="android:background">@color/rm_grey_blue_900_alpha_60</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:paddingStart">4dp</item>
         <item name="android:paddingEnd">2dp</item>
         <item name="android:maxLines">1</item>
@@ -18,11 +18,6 @@
         <item name="autoSizeStepGranularity">1sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <!--ActionBar overflow button style-->
-    <style name="Widget.RM.ActionButton.OverFlow.Filter" parent="@android:style/Widget.Holo.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_filter_list</item>
     </style>
 
     <!--ActionBar popup menu style-->

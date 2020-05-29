@@ -102,7 +102,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     }
 
     private void createOptionsMenu(Toolbar toolbar) {
-        toolbar.inflateMenu(R.menu.toolbar_fragment_character_detail);
+        toolbar.inflateMenu(R.menu.toolbar_fragment_character_list);
         MenuItem filterCheckBox = toolbar.getMenu().findItem(R.id.filter_button);
         MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.search_button);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
@@ -242,6 +242,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             characterAdapter = null;
         }
         binding = null;
+        rvCharacterList = null;
     }
 
     private void listJumpTo0() {

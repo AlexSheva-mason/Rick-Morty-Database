@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemHeaderRvCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
@@ -74,12 +73,6 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int color = CharacterAdapterUtil.getStatusColour(headerCharacter.getStatus(), context);
                 headerViewHolder.binding.characterStatusValue.setTextColor(color);
                 headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
-                if (!headerCharacter.getType().isEmpty()) {
-                    headerViewHolder.binding.characterTypeValue.setText(context.getResources()
-                            .getString(R.string.character_type_placeholder, headerCharacter.getType()));
-                } else {
-                    headerViewHolder.binding.characterTypeValue.setVisibility(View.GONE);
-                }
                 headerViewHolder.binding.characterGenderValue.setText(headerCharacter.getGender());
                 if (originLocation != null) {
                     headerViewHolder.binding.characterOriginValue.setVisibility(View.GONE);
