@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.view.View;
+import android.widget.TextView;
 
 import com.shevaalex.android.rickmortydatabase.R;
 
@@ -26,6 +27,8 @@ public abstract class FragmentToolbarSimple extends Fragment {
         if (toolbar != null) {
             NavigationUI.setupWithNavController(
                     toolbar, navController, appBarConfiguration);
+            TextView titleTextView = view.findViewById(R.id.toolbar_title);
+            titleTextView.setText(toolbar.getTitle());
         }
     }
 }

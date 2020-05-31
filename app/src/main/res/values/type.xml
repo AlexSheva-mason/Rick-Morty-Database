@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="TextAppearance.RM.Toolbar.Collapsed.Title.Small" parent="TextAppearance.RM.Toolbar.Collapsed.Title">
-        <item name="android:textSize">15sp</item>
-    </style>
-
-    <style name="TextAppearance.RM.Toolbar.Expanded.Title" parent="TextAppearance.RM.Toolbar.Collapsed.Title">
-        <item name="android:textSize">40sp</item>
+    <style name="TextAppearance.RM.Toolbar.Title.Character.Detail" parent="TextAppearance.RM.Headline5">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:shadowDy">0</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowRadius">16</item>
         <item name="android:shadowColor">@android:color/black</item>
-    </style>
-
-    <style name="TextAppearance.RM.Toolbar.Collapsed.Title" parent="TextAppearance.RM.Headline5">
-        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
     <style name="TextAppearance.RM.SearchView.Hint" parent="Widget.AppCompat.AutoCompleteTextView">

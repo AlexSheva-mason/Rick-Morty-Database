@@ -33,37 +33,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/character_status_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="@dimen/item_header_values_left_margin"
-                android:layout_marginEnd="8dp"
-                android:maxLines="1"
-                android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/character_status"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Status" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_1">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
                 android:id="@+id/character_species"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,38 +40,7 @@
                 android:text="@string/tv_character_species"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/character_species_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_header_values_left_margin"
-                android:layout_marginEnd="8dp"
-                android:maxLines="1"
-                android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/character_species"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Species" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_2">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                app:layout_constraintTop_toBottomOf="@id/character_status" />
 
             <TextView
                 android:id="@+id/character_gender"
@@ -112,38 +50,7 @@
                 android:text="@string/tv_character_gender"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/character_gender_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_header_values_left_margin"
-                android:layout_marginEnd="8dp"
-                android:maxLines="1"
-                android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/character_gender"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Gender" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_3">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                app:layout_constraintTop_toBottomOf="@+id/character_species" />
 
             <TextView
                 android:id="@+id/character_origin"
@@ -152,60 +59,9 @@
                 android:layout_marginStart="@dimen/item_header_names_left_margin"
                 android:text="@string/tv_character_origin"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/barrier_origin_bottom"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/character_origin_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_header_values_left_margin"
-                android:maxLines="1"
-                android:text="@string/tv_character_location_unknown"
-                android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/character_origin"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_header_button_left_margin"
-                android:layout_marginEnd="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/character_origin"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_origin_location"
-                    style="?attr/buttonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:maxLines="1"
-                    android:textAlignment="viewStart"
-                    app:icon="@drawable/locations_24dp"
-                    tools:text="Origin location" />
-            </FrameLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_4">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                app:layout_constraintTop_toTopOf="@id/barrier_origin_top" />
 
             <TextView
                 android:id="@+id/character_last_location"
@@ -216,47 +72,132 @@
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/barrier_origin_bottom" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_text_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50" />
+
+            <TextView
+                android:id="@+id/character_status_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline_text_value"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="unknown" />
+
+            <TextView
+                android:id="@+id/character_species_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/character_status_value"
+                app:layout_constraintTop_toBottomOf="@+id/character_status_value"
+                tools:text="humanoid" />
+
+            <TextView
+                android:id="@+id/character_gender_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/character_status_value"
+                app:layout_constraintTop_toBottomOf="@+id/character_species_value"
+                tools:text="Genderless" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_origin_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="character_origin_value,button_origin_location" />
+
+            <TextView
+                android:id="@+id/character_origin_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="@string/tv_character_location_unknown"
+                android:textAllCaps="true"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintBottom_toTopOf="@id/barrier_origin_bottom"
+                app:layout_constraintStart_toStartOf="@id/character_status_value"
+                app:layout_constraintTop_toBottomOf="@id/character_gender_value" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_origin_location"
+                style="?attr/buttonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                app:icon="@drawable/locations_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/character_last_location"
+                app:layout_constraintTop_toBottomOf="@id/character_gender_value"
+                tools:text="Origin location" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_origin_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="character_origin_value,button_origin_location" />
 
             <TextView
                 android:id="@+id/character_last_location_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_header_values_left_margin"
                 android:maxLines="1"
                 android:text="@string/tv_character_location_unknown"
                 android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/character_last_location"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@id/character_status_value"
+                app:layout_constraintTop_toBottomOf="@id/barrier_origin_bottom" />
 
-            <FrameLayout
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_last_location"
+                style="?attr/buttonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_header_button_left_margin"
-                android:layout_marginEnd="4dp"
+                android:layout_gravity="start|center_vertical"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                app:icon="@drawable/locations_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/character_last_location"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_last_location"
-                    style="?attr/buttonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:maxLines="1"
-                    android:textAlignment="viewStart"
-                    app:icon="@drawable/locations_24dp"
-                    tools:text="Last location" />
-            </FrameLayout>
+                app:layout_constraintStart_toEndOf="@id/character_last_location"
+                app:layout_constraintTop_toBottomOf="@id/barrier_origin_bottom"
+                tools:text="Last location" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_6"
+        android:id="@+id/card_view_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -265,19 +206,19 @@
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_5">
+        app:layout_constraintTop_toBottomOf="@id/card_view_1">
 
         <TextView
             android:id="@+id/character_episodes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/item_header_names_left_margin"
-            android:layout_marginTop="4dp"
             android:maxLines="1"
             android:text="@string/tv_character_episode_list"
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    //CharacterDetailFragment
+    //CharacterDetailFragment header item
     <dimen name="item_header_names_left_margin">8dp</dimen>
-    <dimen name="item_header_values_left_margin">175dp</dimen>
-    <dimen name="item_header_button_left_margin">150dp</dimen>
 </resources>

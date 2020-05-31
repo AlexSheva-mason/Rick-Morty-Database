@@ -20,6 +20,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.shevaalex.android.rickmortydatabase.R;
@@ -41,6 +42,8 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
     private LinearLayoutManager layoutManager;
     private List<Episode> episodeList = new ArrayList<>();
     private Context context;
+    private AppBarLayout appBarLayout;
+    private ImageView toolbarImageView;
 
     public CharacterDetailFragment() {
         // Required empty public constructor
@@ -104,14 +107,13 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
             binding.collapsingToolbarLayout.setContentScrimColor(context.getResources().getColor(R.color.rm_grey_900));
         }
-        AppBarLayout appBarLayout = binding.appbarLayout;
+        appBarLayout = binding.appbarLayout;
+        toolbarImageView = binding.imageCharacterToolbar;
         if (headerCharacter != null) {
-            int stringLength = headerCharacter.getName().length();
-            if (stringLength >= 30) {
-                binding.collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.TextAppearance_RM_Toolbar_Collapsed_Title_Small);
-            }
-            Picasso.get().load(headerCharacter.getImgUrl()).error(R.drawable.picasso_placeholder_error)
-                    .fit().centerCrop().into(binding.imageCharacterToolbar, new Callback() {
+            Picasso.get()
+                    .load(headerCharacter.getImgUrl())
+                    .error(R.drawable.picasso_placeholder_error)
+                    .into(toolbarImageView, new Callback() {
                 @Override
                 public void onSuccess() {
                 }
@@ -123,15 +125,16 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         }
     }
 
+    //set the toolbar and it's title
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         NavController navController = Navigation.findNavController(view);
-        //Set the action bar to show appropriate title, set top level destinations
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
         Toolbar toolbar = binding.toolbarFragmentCharacterDetail;
         NavigationUI.setupWithNavController(
                 toolbar, navController, appBarConfiguration);
+        binding.toolbarTitle.setText(toolbar.getTitle());
     }
 
     @Override
@@ -159,6 +162,16 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         binding = null;
         if (adapter != null) {
             adapter = null;
+        }
+        if (layoutManager != null) {
+            layoutManager = null;
+        }
+        if (appBarLayout != null) {
+            appBarLayout = null;
+        }
+        if (toolbarImageView != null) {
+            Picasso.get().cancelRequest(toolbarImageView);
+            toolbarImageView = null;
         }
     }
 

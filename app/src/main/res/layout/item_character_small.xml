@@ -17,10 +17,14 @@
 
         <ImageView
             android:id="@+id/character_image"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/img_character_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/picasso_placeholder_error"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_small_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,16 +33,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="1dp"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintBottom_toTopOf="@+id/character_gender"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/character_image"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
             tools:text="name" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_small_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.30" />
 
         <TextView
             android:id="@+id/character_gender"
@@ -47,22 +60,29 @@
             android:layout_marginStart="8dp"
             android:text="@string/tv_character_gender"
             android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintBottom_toTopOf="@+id/character_status"
             app:layout_constraintStart_toEndOf="@+id/character_image"
             app:layout_constraintTop_toBottomOf="@+id/character_name_value" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_text_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
 
         <TextView
             android:id="@+id/character_gender_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:layout_marginEnd="8dp"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="@+id/character_gender"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/character_gender"
+            app:layout_constraintStart_toEndOf="@+id/guideline_text_value"
             app:layout_constraintTop_toBottomOf="@+id/character_gender"
-            tools:text="gender" />
+            tools:text="genderless" />
 
         <TextView
             android:id="@+id/character_species"
@@ -80,13 +100,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="@+id/character_species"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/character_status_value"
+            app:layout_constraintStart_toStartOf="@+id/guideline_text_value"
             app:layout_constraintTop_toBottomOf="@+id/character_species"
-            tools:text="species" />
+            tools:text="poopybutthole" />
 
         <TextView
             android:id="@+id/character_status"
@@ -94,6 +115,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tv_character_status"
             android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintBottom_toTopOf="@+id/character_species"
             app:layout_constraintStart_toStartOf="@+id/character_gender"
             app:layout_constraintTop_toBottomOf="@+id/character_gender" />
 
@@ -106,9 +128,9 @@
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="@+id/character_status"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/character_gender_value"
+            app:layout_constraintStart_toStartOf="@+id/guideline_text_value"
             app:layout_constraintTop_toBottomOf="@+id/character_status"
-            tools:text="status" />
+            tools:text="unknown" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

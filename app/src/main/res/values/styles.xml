@@ -1,7 +1,19 @@
 <resources>
+    <!--TextView style for toolbar title (Character Detail)-->
+    <style name="Widget.RM.TextView.Toolbar.Title.Character.Detail" parent="Widget.RM.TextView.Toolbar.Title">
+        <item name="android:textAppearance">@style/TextAppearance.RM.Toolbar.Title.Character.Detail</item>
+    </style>
 
-    <style name="RM.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
-        <item name="android:layout">@layout/fragment_settings</item>
+    <!--TextView style for simple toolbar title-->
+    <style name="Widget.RM.TextView.Toolbar.Title" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeMinTextSize">10sp</item>
+        <item name="autoSizeMaxTextSize">24sp</item>
+        <item name="autoSizeStepGranularity">1sp</item>
+        <item name="android:gravity">start|center_vertical</item>
     </style>
 
     <!--TextView style for character item name-->

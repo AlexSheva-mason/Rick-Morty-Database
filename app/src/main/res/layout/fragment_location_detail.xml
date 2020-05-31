@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_marginEnd="8dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textAppearance="?attr/textAppearanceBody1"
                     app:autoSizeMaxTextSize="16sp"

@@ -48,8 +48,10 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
         Character currentCharacter = mCharacterList.get(position);
         // using View Binding class to set views without calling findViewById
-        Picasso.get().load(currentCharacter.getImgUrl()).error(R.drawable.picasso_placeholder_error)
-                .fit().centerCrop().into(holder.binding.characterImage);
+        Picasso.get()
+                .load(currentCharacter.getImgUrl())
+                .error(R.drawable.picasso_placeholder_error)
+                .into(holder.binding.characterImage);
         holder.binding.characterNameValue.setText(currentCharacter.getName());
         holder.binding.characterGenderValue.setText(currentCharacter.getGender());
         holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
