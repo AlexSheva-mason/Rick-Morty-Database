@@ -49,6 +49,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private boolean searchIsCommitted;
     private RecyclerView rvCharacterList;
     private NavController navController;
+    private MenuItem filterCheckBox;
+    private MenuItem searchMenuItem;
+    private SearchView searchView;
 
 
     @Override
@@ -103,9 +106,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void createOptionsMenu(Toolbar toolbar) {
         toolbar.inflateMenu(R.menu.toolbar_fragment_character_list);
-        MenuItem filterCheckBox = toolbar.getMenu().findItem(R.id.filter_button);
-        MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.search_button);
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        filterCheckBox = toolbar.getMenu().findItem(R.id.filter_button);
+        searchMenuItem = toolbar.getMenu().findItem(R.id.search_button);
+        searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setQueryHint("Enter your query...");
         AutoCompleteTextView searchText = searchView.findViewById(R.id.search_src_text);
         searchText.setTextAppearance(getContext(), R.style.TextAppearance_RM_SearchView_Hint);
@@ -241,8 +244,21 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         if (characterAdapter != null) {
             characterAdapter = null;
         }
-        binding = null;
-        rvCharacterList = null;
+        if (binding != null) {
+            binding = null;
+        }
+        if (rvCharacterList != null) {
+            rvCharacterList = null;
+        }
+        if (filterCheckBox != null) {
+            filterCheckBox = null;
+        }
+        if (searchMenuItem != null) {
+            searchMenuItem = null;
+        }
+        if (searchView != null) {
+            searchView = null;
+        }
     }
 
     private void listJumpTo0() {
