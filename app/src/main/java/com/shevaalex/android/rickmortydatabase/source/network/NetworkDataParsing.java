@@ -31,11 +31,8 @@ public class NetworkDataParsing {
     public static synchronized NetworkDataParsing getInstance(final Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                Log.d(LOG_TAG, "Creating a new NetworkDataParsing instance");
                 sInstance = new NetworkDataParsing(context);
             }
-        } else {
-            Log.d(LOG_TAG, "Getting previous NetworkDataParsing object");
         }
         return sInstance;
     }

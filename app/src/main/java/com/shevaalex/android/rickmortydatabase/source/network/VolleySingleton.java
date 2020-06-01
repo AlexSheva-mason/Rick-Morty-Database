@@ -1,15 +1,12 @@
 package com.shevaalex.android.rickmortydatabase.source.network;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 class VolleySingleton {
-
-    private static final String LOG_TAG = VolleySingleton.class.getSimpleName();
     private static VolleySingleton sInstance;
     private RequestQueue mRequestQueue;
     private final Context context;
@@ -25,10 +22,7 @@ class VolleySingleton {
     static synchronized VolleySingleton getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                Log.d(LOG_TAG, "Creating a new Volley instance");
                 sInstance = new VolleySingleton(context); }
-        } else {
-            Log.d(LOG_TAG, "Returning previous Volley instance");
         }
         return sInstance;
     }
@@ -41,7 +35,6 @@ class VolleySingleton {
     }
 
     void cancelRequests () {
-        Log.d(LOG_TAG, "Cancelling requests");
         mRequestQueue.cancelAll(TAG);
     }
 
@@ -49,7 +42,6 @@ class VolleySingleton {
         Adds the specified request to the global queue
      */
     <T> void addToRequestQueue (Request<T> request){
-        Log.d(LOG_TAG, "Adding request to queue: " + request.getUrl());
         request.setTag(TAG);
         getRequestQueue().add(request);
     }
