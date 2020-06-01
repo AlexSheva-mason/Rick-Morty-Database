@@ -27,7 +27,7 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Location lastLocation;
     private final OnEpisodeListener onEpisodeListener;
     private List<Episode> mEpisodeList = new ArrayList<>();
-    private Context context;
+    private final Context context;
 
     CharacterDetailAdapter(OnEpisodeListener onEpisodeListener, Context context){
         this.onEpisodeListener = onEpisodeListener;

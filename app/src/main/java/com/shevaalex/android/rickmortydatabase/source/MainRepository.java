@@ -46,11 +46,11 @@ public class MainRepository {
     private boolean characterTableIsUpToDate;
     private boolean locationTableIsUpToDate;
     private boolean episodeTableIsUpToDate;
-    private ArrayList<Character> mCharacterList = new ArrayList<>();
-    private ArrayList<Location> mLocationList = new ArrayList<>();
-    private ArrayList<Episode> mEpisodeList = new ArrayList<>();
+    private final ArrayList<Character> mCharacterList = new ArrayList<>();
+    private final ArrayList<Location> mLocationList = new ArrayList<>();
+    private final ArrayList<Episode> mEpisodeList = new ArrayList<>();
     //set LiveData to monitor database sync status via ViewModel
-    private MutableLiveData<Boolean> dbIsUpToDate = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> dbIsUpToDate = new MutableLiveData<>();
 
     private MainRepository(Application application) {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);

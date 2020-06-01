@@ -20,7 +20,7 @@ import java.util.List;
 public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
     private List<Character> mCharacterList = new ArrayList<>();
-    private Context context;
+    private final Context context;
 
     public CharacterAuxAdapter(OnCharacterListener onCharacterListener, Context context){
         this.context = context;

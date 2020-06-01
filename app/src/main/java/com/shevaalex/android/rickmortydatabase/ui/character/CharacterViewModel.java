@@ -24,8 +24,8 @@ public class CharacterViewModel extends AndroidViewModel {
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
-    private StatusMediatorLiveData statusLiveData;
-    private FilterLiveData trigger;
+    private final StatusMediatorLiveData statusLiveData;
+    private final FilterLiveData trigger;
 
     public CharacterViewModel(@NonNull Application application) {
         super(application);

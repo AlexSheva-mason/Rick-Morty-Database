@@ -4,7 +4,7 @@ ext.versionMajor = 1
 ext.versionMinor = 0
 ext.versionPatch = 0
 ext.versionClassifier = "beta"
-ext.isSnapshot = true
+ext.isSnapshot = false
 ext.minimumSdkVersion = 21
 
 android {
@@ -27,8 +27,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
     compileOptions {

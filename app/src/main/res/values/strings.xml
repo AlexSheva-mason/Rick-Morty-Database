@@ -27,7 +27,6 @@
 
     //Layout view names and descriptions
     <string name="img_character_description">Character image</string>
-    <string name="img_splash_description">Splash screen image</string>
     <string name="tv_character_name">Name:</string>
     <string name="tv_character_status">Status:</string>
     <string name="tv_character_species">Species:</string>
@@ -47,8 +46,4 @@
     <string name="tv_episode_code">S03E09</string>
     <string name="tv_episode_air_date">Air Date:</string>
     <string name="tv_episode_characters_list">Characters, seen in the episode:</string>
-
-    //Episode Aux Adapter
-    <string name="character_type_placeholder">(%1$s)</string>
-
 </resources>

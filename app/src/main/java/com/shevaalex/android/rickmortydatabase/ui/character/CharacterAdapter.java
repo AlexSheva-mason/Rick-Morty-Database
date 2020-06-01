@@ -20,8 +20,8 @@ import com.squareup.picasso.Picasso;
 
 public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
-    private CharacterViewModel viewModel;
-    private Context context;
+    private final CharacterViewModel viewModel;
+    private final Context context;
     CharacterAdapter(OnCharacterListener onClickListener, CharacterViewModel viewModel, Context context) {
         super(DIFF_CALLBACK);
         this.onCharacterListener = onClickListener;

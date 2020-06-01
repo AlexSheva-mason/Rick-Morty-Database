@@ -14,7 +14,7 @@ import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import me.zhanghai.android.fastscroll.PopupTextProvider;
 
 public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> implements PopupTextProvider {
-    private OnEpisodeClickListener clickListener;
+    private final OnEpisodeClickListener clickListener;
 
     EpisodeAdapter (OnEpisodeClickListener clickListener) {
         super(DIFF_CALLBACK);
