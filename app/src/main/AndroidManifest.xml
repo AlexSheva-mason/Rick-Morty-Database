@@ -14,7 +14,12 @@
         android:name=".RmApplication"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
+        android:largestWidthLimitDp="599"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="false"
         android:theme="@style/RM.GreenGrey"
         tools:targetApi="n">
         <activity
