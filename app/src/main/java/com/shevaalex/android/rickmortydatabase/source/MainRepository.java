@@ -120,7 +120,7 @@ public class MainRepository {
     }
 
     private void networkInitialCall (String url) {
-        appExecutors.networkIO().execute(() -> networkDataParsing.getVolleyResponce(response -> {
+        networkDataParsing.getVolleyResponce(response -> {
             try {
                 JSONObject jsonObject = response.getJSONObject(ApiCall.INFO);
                 int numberOfPages = jsonObject.getInt(ApiCall.PAGES);
@@ -128,11 +128,11 @@ public class MainRepository {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, url));
+        }, url);
     }
 
     private void getLastEntries(final int numberOfPages, String url) {
-        appExecutors.networkIO().execute(() -> networkDataParsing.getVolleyResponce(response -> {
+        networkDataParsing.getVolleyResponce(response -> {
             //get a JSONArray from the last page and fetch the last entry object
             try {
                 JSONArray jsonArray = response.getJSONArray(ApiCall.RESULTS_ARRAY);
@@ -146,7 +146,7 @@ public class MainRepository {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, url + numberOfPages));
+        }, url + numberOfPages);
     }
 
     private void compareLastEntries(Object lastEntryObject, String url, int numberOfPages) {
@@ -186,7 +186,7 @@ public class MainRepository {
 
     // loops through all pages and uses data to populate Database
     private void updateDataBaseEntries(final int pageNumber, String url) {
-        appExecutors.networkIO().execute(() -> networkDataParsing.getVolleyResponce(response -> {
+        networkDataParsing.getVolleyResponce(response -> {
             try {
                 JSONArray jsonArray = response.getJSONArray(ApiCall.RESULTS_ARRAY);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -204,7 +204,7 @@ public class MainRepository {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, url + pageNumber));
+        }, url + pageNumber);
     }
 
     // add a new entry to the database
