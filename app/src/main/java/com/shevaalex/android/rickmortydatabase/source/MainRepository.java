@@ -179,7 +179,7 @@ public class MainRepository {
             }
         }
         if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-            new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 4000);
+            new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 2000);
             networkDataParsing.cancelVolleyRequests();
         }
     }
@@ -197,7 +197,7 @@ public class MainRepository {
                     }
                 }
                 if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-                    new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 4000);
+                    new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 2000);
                     networkDataParsing.cancelVolleyRequests();
                     addJoinEntries();
                 }
