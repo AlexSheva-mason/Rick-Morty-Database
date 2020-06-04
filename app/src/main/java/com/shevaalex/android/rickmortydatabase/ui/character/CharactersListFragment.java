@@ -190,18 +190,25 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     //monitors internet connection, checks if database is up to date
     private void monitorConnectionAndDatabase() {
         characterViewModel.getStatusLiveData().observe(getViewLifecycleOwner(), pair -> {
-            String text;
+            @NonNull String text;
+            // database is up to date and device is connected to network
             if (pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.INVISIBLE);
                 text = getString(R.string.fragment_character_list_database_up_to_date);
-            } else if (!pair.first && pair.second) {
+            }
+            // database is _not_ up to date and device is connected to network
+            else if (!pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 characterViewModel.rmRepository.initialiseDataBase();
                 new Handler().postDelayed(this::listJumpTo0, 1000);
                 text = getString(R.string.fragment_character_list_database_sync);
-            } else if (pair.first) {
+            }
+            // database is up to date and device is disconnected from network
+            else if (pair.first) {
                 text = getString(R.string.fragment_character_list_database_up_to_date);
-            } else {
+            }
+            // database is _not_ up to date and device is disconnected from network
+            else {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 text = getString(R.string.fragment_character_list_no_connection);
             }
