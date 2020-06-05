@@ -20,10 +20,13 @@ public class NetworkDataParsing {
     private static final String LOG_TAG = NetworkDataParsing.class.getSimpleName();
     private static final Object LOCK = new Object();
     private static NetworkDataParsing sInstance;
-    private static VolleySingleton volleyInstance;
+    private static volatile VolleySingleton volleyInstance;
     private final Context context;
 
     private NetworkDataParsing (Context context) {
+        if (sInstance != null) {
+            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+        }
         volleyInstance = VolleySingleton.getInstance(context.getApplicationContext());
         this.context = context.getApplicationContext();
     }
@@ -31,7 +34,9 @@ public class NetworkDataParsing {
     public static synchronized NetworkDataParsing getInstance(final Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new NetworkDataParsing(context);
+                if (sInstance == null) {
+                    sInstance = new NetworkDataParsing(context);
+                }
             }
         }
         return sInstance;

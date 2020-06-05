@@ -7,13 +7,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 class VolleySingleton {
-    private static VolleySingleton sInstance;
+    private static volatile VolleySingleton sInstance;
     private RequestQueue mRequestQueue;
     private final Context context;
     private static final Object LOCK = new Object();
     private static final String TAG = "DbRequest";
 
     private VolleySingleton (Context context) {
+        if (sInstance != null) {
+            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+        }
         this.context = context.getApplicationContext();
         mRequestQueue = getRequestQueue();
     }
@@ -22,7 +25,10 @@ class VolleySingleton {
     static synchronized VolleySingleton getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new VolleySingleton(context); }
+                if (sInstance == null) {
+                    sInstance = new VolleySingleton(context);
+                }
+            }
         }
         return sInstance;
     }

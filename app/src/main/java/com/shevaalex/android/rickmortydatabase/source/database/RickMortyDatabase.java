@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 public abstract class RickMortyDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "rmdatabase";
-    private static RickMortyDatabase sInstance;
+    private static volatile RickMortyDatabase sInstance;
 
     // return a database object using Singleton pattern
     public static RickMortyDatabase getInstance(Context context){
@@ -19,8 +19,10 @@ public abstract class RickMortyDatabase extends RoomDatabase {
               Synchronized statement specifies the object that provides the intrinsic lock (LOCK)
             */
                 synchronized (LOCK) {
-                    sInstance = Room.databaseBuilder(context.getApplicationContext(), RickMortyDatabase.class,
-                            DATABASE_NAME).build();
+                    if (sInstance == null) {
+                        sInstance = Room.databaseBuilder(context.getApplicationContext(), RickMortyDatabase.class,
+                                DATABASE_NAME).build();
+                    }
                 }
         }
         return sInstance;

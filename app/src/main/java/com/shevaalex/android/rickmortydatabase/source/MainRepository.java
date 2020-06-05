@@ -33,7 +33,7 @@ public class MainRepository {
     private final NetworkDataParsing networkDataParsing;
     private final RickMortyDatabase rmDatabase;
     private final AppExecutors appExecutors;
-    private static MainRepository sInstance;
+    private static volatile MainRepository sInstance;
     private Character lastDbCharacter;
     private Character lastNetworkCharacter;
     private Location lastDbLocation;
@@ -53,6 +53,9 @@ public class MainRepository {
     private final MutableLiveData<Boolean> dbIsUpToDate = new MutableLiveData<>();
 
     private MainRepository(Application application) {
+        if (sInstance != null) {
+            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+        }
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
         this.rmDatabase = RickMortyDatabase.getInstance(application);
         this.appExecutors = AppExecutors.getInstance();
@@ -63,7 +66,9 @@ public class MainRepository {
     public static synchronized MainRepository getInstance(Application application) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new MainRepository(application);
+                if (sInstance == null) {
+                    sInstance = new MainRepository(application);
+                }
             }
         }
         return sInstance;

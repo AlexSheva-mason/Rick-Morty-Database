@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -193,6 +194,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             @NonNull String text;
             // database is up to date and device is connected to network
             if (pair.first && pair.second) {
+                Toast.makeText(a.getApplicationContext(), "gotta jump to 0", Toast.LENGTH_SHORT).show();
                 binding.progressBar.progressBar.setVisibility(View.INVISIBLE);
                 text = getString(R.string.fragment_character_list_database_up_to_date);
             }

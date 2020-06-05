@@ -160,19 +160,19 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        if (adapter != null) {
-            adapter = null;
-        }
-        if (layoutManager != null) {
-            layoutManager = null;
-        }
-        if (appBarLayout != null) {
-            appBarLayout = null;
-        }
+        adapter = null;
+        layoutManager = null;
+        appBarLayout = null;
         if (toolbarImageView != null) {
             Picasso.get().cancelRequest(toolbarImageView);
             toolbarImageView = null;
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        a = null;
     }
 
     @Override
