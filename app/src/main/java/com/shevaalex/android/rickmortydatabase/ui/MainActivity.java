@@ -37,13 +37,17 @@ public class MainActivity extends AppCompatActivity {
         //setup the ViewModel for lifecycle aware observing bottomNav state
         botNavViewModel = new ViewModelProvider(this).get(BottomNavViewModel.class);
         botNavViewModel.getBottomNavVisibility().observe(this, integer -> binding.bottomPanel.setVisibility(integer));
+        botNavViewModel.getBottomNavLabelStatus().observe(this, integer -> binding.bottomPanel.setLabelVisibilityMode(integer));
         // monitor navigation and remove BottomNavigationView in Detail fragments
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.characterDetailFragment2 || destination.getId() == R.id.locationDetailFragment
-                || destination.getId() == R.id.episodeDetailFragment || destination.getId() == R.id.settingsFragment) {
+            if (destination.getId() == R.id.settingsFragment) {
                 new Handler().postDelayed(() ->
                         botNavViewModel.hideBottomNav(), 100);
+            } else if(destination.getId() == R.id.characterDetailFragment2 || destination.getId() == R.id.locationDetailFragment
+                    || destination.getId() == R.id.episodeDetailFragment) {
+                botNavViewModel.setUnlabeled();
             } else {
+                botNavViewModel.setLabelSelected();
                 botNavViewModel.showBottomNav();
             }
         });

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Characters database for Rick&amp;Morty</string>
+    <string name="app_name">Characters database: Rick and Morty</string>
     <string name="bottom_nav_character">Characters</string>
     <string name="bottom_nav_location">Locations</string>
     <string name="bottom_nav_episode">Episodes</string>
