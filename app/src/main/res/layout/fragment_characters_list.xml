@@ -32,12 +32,11 @@
         android:id="@+id/recyclerview_character"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        app:fastScrollEnabled="true"
-        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
+        android:fadeScrollbars="true"
+        android:scrollbarDefaultDelayBeforeFade="2000"
+        android:scrollbarThumbVertical="@drawable/thumb"
+        android:scrollbarTrackVertical="@drawable/track_drawable"
+        android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_character" />
 
