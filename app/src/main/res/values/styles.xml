@@ -1,9 +1,4 @@
 <resources>
-    <!--TextView style for toolbar title (Character Detail)-->
-    <style name="Widget.RM.TextView.Toolbar.Title.Character.Detail" parent="Widget.RM.TextView.Toolbar.Title">
-        <item name="android:textAppearance">@style/TextAppearance.RM.Toolbar.Title.Character.Detail</item>
-    </style>
-
     <!--TextView style for simple toolbar title-->
     <style name="Widget.RM.TextView.Toolbar.Title" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">?attr/colorOnPrimary</item>

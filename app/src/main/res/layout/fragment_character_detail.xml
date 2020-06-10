@@ -4,18 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_fragment_character_detail"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.RM.Toolbar.Collapsed.Title"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="300">
@@ -26,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/img_character_description"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:src="@drawable/picasso_placeholder_error"
                 app:layout_collapseMode="parallax" />
 
@@ -34,12 +38,8 @@
                 android:id="@+id/toolbar_fragment_character_detail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:text="some_text_to_delete_title" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -51,17 +51,22 @@
 
                 <TextView
                     android:id="@+id/toolbar_title"
-                    style="@style/Widget.RM.TextView.Toolbar.Title.Character.Detail"
                     android:layout_width="0dp"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="0dp"
                     android:layout_marginStart="40dp"
-                    android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:gravity="bottom"
+                    android:lineSpacingExtra="-15dp"
+                    android:maxLines="3"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
+                    android:paddingBottom="8dp"
+                    android:textAppearance="@style/TextAppearance.RM.Toolbar.Expanded.Title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="SOME TITLE" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="HOLE IN THE WALL WHERE ALL MEN CAN SEE IT ALL" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

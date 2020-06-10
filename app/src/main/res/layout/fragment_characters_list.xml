@@ -5,6 +5,7 @@
     android:id="@+id/fragment_character_list_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment">
 
     <com.google.android.material.appbar.AppBarLayout

@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,6 +111,9 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         appBarLayout = binding.appbarLayout;
         toolbarImageView = binding.imageCharacterToolbar;
         if (headerCharacter != null) {
+            //set expandet title and ImageView
+            binding.toolbarTitle.setVisibility(View.GONE);
+            binding.toolbarTitle.setText(headerCharacter.getName());
             Picasso.get()
                     .load(headerCharacter.getImgUrl())
                     .error(R.drawable.picasso_placeholder_error)
@@ -123,6 +127,28 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 }
             });
         }
+        // manage custom collapsed/expanded title state
+        appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
+                //  Collapsed
+                if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
+                    binding.toolbarTitle.setVisibility(View.GONE);
+                }
+                binding.collapsingToolbarLayout.setTitleEnabled(true);
+            } else if (verticalOffset == 0) {
+                // Fully expanded
+                binding.toolbarFragmentCharacterDetail.setTitle(null);
+                binding.collapsingToolbarLayout.setTitleEnabled(false);
+                binding.toolbarTitle.setVisibility(View.VISIBLE);
+            } else {
+                // Not fully expanded not collapsed
+                if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
+                    new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),500);
+                }
+                binding.toolbarFragmentCharacterDetail.setTitle(null);
+                binding.collapsingToolbarLayout.setTitleEnabled(false);
+            }
+        });
     }
 
     //set the toolbar and it's title
@@ -134,7 +160,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         Toolbar toolbar = binding.toolbarFragmentCharacterDetail;
         NavigationUI.setupWithNavController(
                 toolbar, navController, appBarConfiguration);
-        binding.toolbarTitle.setText(toolbar.getTitle());
+        //binding.toolbarTitleExpanded.setText(toolbar.getTitle());
     }
 
     @Override
