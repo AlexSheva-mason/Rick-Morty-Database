@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -74,6 +75,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         View view = binding.getRoot();
         //set LinearLayout and RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        }
         rvCharacterList = binding.recyclerviewCharacter;
         rvCharacterList.setLayoutManager(linearLayoutManager);
         rvCharacterList.setHasFixedSize(true);

@@ -15,13 +15,13 @@
     <style name="Widget.RM.TextView.Name.Title" parent="Widget.MaterialComponents.TextView">
         <item name="android:background">@color/rm_grey_blue_900_alpha_60</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">2dp</item>
+        <item name="android:paddingStart">@dimen/item_character_name_padding_start</item>
+        <item name="android:paddingEnd">@dimen/item_character_name_padding_end</item>
         <item name="android:maxLines">1</item>
         <item name="android:textAppearance">?attr/textAppearanceSubtitle1</item>
         <item name="autoSizeTextType">uniform</item>
-        <item name="autoSizeMinTextSize">14sp</item>
-        <item name="autoSizeMaxTextSize">17sp</item>
+        <item name="autoSizeMinTextSize">@dimen/item_character_name_min_text_size</item>
+        <item name="autoSizeMaxTextSize">@dimen/item_character_name_max_text_size</item>
         <item name="autoSizeStepGranularity">1sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>

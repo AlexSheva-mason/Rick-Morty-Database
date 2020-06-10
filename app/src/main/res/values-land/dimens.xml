@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //CharacterDetailFragment header item
+    <dimen name="item_header_names_left_margin">8dp</dimen>
+
+    //CharacterDetailFragment item
+    <dimen name="item_character_name_padding_start">8dp</dimen>
+    <dimen name="item_character_name_padding_end">4dp</dimen>
+    <dimen name="item_character_name_min_text_size">17dp</dimen>
+    <dimen name="item_character_name_max_text_size">20dp</dimen>
+</resources>

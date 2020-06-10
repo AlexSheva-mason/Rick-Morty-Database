@@ -61,12 +61,14 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
                     .error(R.drawable.picasso_placeholder_error)
                     .into(holder.characterItemBinding.characterImage);
             holder.characterItemBinding.characterName.setText(currentCharacter.getName());
-            holder.characterItemBinding.characterGenderValue.setText(currentCharacter.getGender());
+            if (holder.characterItemBinding.characterGenderValue != null) {
+                holder.characterItemBinding.characterGenderValue.setText(currentCharacter.getGender());
+            }
             holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
             int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
             holder.characterItemBinding.characterStatusValue.setTextColor(color);
-            if (viewModel != null) {
+            if (viewModel != null && holder.characterItemBinding.characterLastLocationValue != null) {
                 Location lastLoc = viewModel.getLocationById(currentCharacter.getLastKnownLocation());
                 if (lastLoc != null) {
                     holder.characterItemBinding.characterLastLocationValue.setText(lastLoc.getName());

@@ -30,7 +30,7 @@
         android:scrollbarDefaultDelayBeforeFade="2000"
         android:scrollbarThumbVertical="@drawable/thumb"
         android:scrollbarTrackVertical="@drawable/track_drawable"
-        android:scrollbars="vertical"
+        android:scrollbars="vertical|horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_character" />
 

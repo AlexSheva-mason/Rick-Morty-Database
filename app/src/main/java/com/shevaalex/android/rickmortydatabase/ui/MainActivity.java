@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         monitorConnectionAndDatabase();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
+
     private void setupViews() {
         // Finding the navigation controller
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
