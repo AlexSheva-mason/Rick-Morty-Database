@@ -3,7 +3,6 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,20 +24,16 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 
-import java.util.ArrayList;
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
     private static final String BUNDLE_SAVE_STATE_SEARCH_QUERY = "Query_name";
     private static final String BUNDLE_SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
     private static final int KEY_SHOW_ALL = 0;
-    private static ArrayList<String> snackMessages = new ArrayList<>();
     private static Bundle savedState;
     private Activity a;
     private FragmentCharactersListBinding binding;
@@ -77,7 +72,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        binding.progressBar.progressBar.setVisibility(View.GONE);
         //set LinearLayout and RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         rvCharacterList = binding.recyclerviewCharacter;
@@ -88,7 +82,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         rvCharacterList.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
-        monitorConnectionAndDatabase();
         return view;
     }
 
@@ -187,35 +180,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         });
     }
 
-    //monitors internet connection, checks if database is up to date
-    private void monitorConnectionAndDatabase() {
-        characterViewModel.getStatusLiveData().observe(getViewLifecycleOwner(), pair -> {
-            @NonNull String text;
-            // database is up to date and device is connected to network
-            if (pair.first && pair.second) {
-                binding.progressBar.progressBar.setVisibility(View.INVISIBLE);
-                text = getString(R.string.fragment_character_list_database_up_to_date);
-            }
-            // database is _not_ up to date and device is connected to network
-            else if (!pair.first && pair.second) {
-                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                characterViewModel.rmRepository.initialiseDataBase();
-                new Handler().postDelayed(this::listJumpTo0, 1000);
-                text = getString(R.string.fragment_character_list_database_sync);
-            }
-            // database is up to date and device is disconnected from network
-            else if (pair.first) {
-                text = getString(R.string.fragment_character_list_database_up_to_date);
-            }
-            // database is _not_ up to date and device is disconnected from network
-            else {
-                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                text = getString(R.string.fragment_character_list_no_connection);
-            }
-            showSnackBar(text);
-        });
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -285,16 +249,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 action.setCharacterName(clickedChar.getName()).setId(clickedChar.getId());
                 Navigation.findNavController(v).navigate(action);
             }
-        }
-    }
-
-    private void showSnackBar(String text) {
-        if (!text.isEmpty() && !snackMessages.contains(text)) {
-            Snackbar mySnackbar = Snackbar.make(binding.fragmentCharacterListLayout, text, BaseTransientBottomBar.LENGTH_SHORT);
-            mySnackbar.setTextColor(getResources().getColor(R.color.rm_white_50));
-            mySnackbar.setAnchorView(a.findViewById(R.id.bottom_panel));
-            mySnackbar.show();
-            snackMessages.add(text);
         }
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class CharacterViewModel extends AndroidViewModel {
-    final MainRepository rmRepository;
+    public final MainRepository rmRepository;
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
     private LiveData<PagedList<Character>> mCharacterList;
@@ -65,7 +65,7 @@ public class CharacterViewModel extends AndroidViewModel {
         return rmRepository.getEpisodesFromCharacter(characterId);
     }
 
-    LiveData<Pair<Boolean, Boolean>> getStatusLiveData() {
+    public LiveData<Pair<Boolean, Boolean>> getStatusLiveData() {
         return statusLiveData;
     }
 

@@ -28,7 +28,6 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -111,21 +110,13 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         appBarLayout = binding.appbarLayout;
         toolbarImageView = binding.imageCharacterToolbar;
         if (headerCharacter != null) {
-            //set expandet title and ImageView
+            //set expanded title and ImageView
             binding.toolbarTitle.setVisibility(View.GONE);
             binding.toolbarTitle.setText(headerCharacter.getName());
             Picasso.get()
                     .load(headerCharacter.getImgUrl())
                     .error(R.drawable.picasso_placeholder_error)
-                    .into(toolbarImageView, new Callback() {
-                @Override
-                public void onSuccess() {
-                }
-                @Override
-                public void onError(Exception e) {
-                    appBarLayout.setExpanded(false);
-                }
-            });
+                    .into(toolbarImageView);
         }
         // manage custom collapsed/expanded title state
         appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
