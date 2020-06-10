@@ -38,6 +38,7 @@
                 android:id="@+id/toolbar_fragment_character_detail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_marginEnd="8dp"
                 app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin">
 
@@ -57,10 +58,9 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:lineSpacingExtra="-15dp"
-                    android:maxLines="3"
+                    android:maxLines="5"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
+                    android:paddingEnd="4dp"
                     android:textAppearance="@style/TextAppearance.RM.Toolbar.Expanded.Title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

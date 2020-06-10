@@ -143,7 +143,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
             } else {
                 // Not fully expanded not collapsed
                 if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
-                    new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),500);
+                    new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),250);
                 }
                 binding.toolbarFragmentCharacterDetail.setTitle(null);
                 binding.collapsingToolbarLayout.setTitleEnabled(false);
