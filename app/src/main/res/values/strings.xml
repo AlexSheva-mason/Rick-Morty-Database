@@ -20,6 +20,10 @@
     //Setiings Fragment version prefrence
     <string name="fragment_Setiings_version">Rick&amp;Morty Database: v</string>
 
+    //CharacterImageFragment
+    <string name="share_description">Share</string>
+    <string name="error_share_no_network">Sharing failed, please check your internet connection</string>
+
     //App Bar
     <string name="item_search">Search</string>
     <string name="item_settings">Settings</string>

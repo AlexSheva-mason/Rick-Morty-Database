@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterImageBinding;
@@ -43,7 +44,7 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
         if (!imageUrl.equals("none")) {
             setCharacterImage(imageUrl);
         }
-        binding.imageCharacter.setOnClickListener(this);
+        binding.shareButton.setOnClickListener(this);
         return view;
     }
 
@@ -75,7 +76,9 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
                         startActivity(Intent.createChooser(shareIntent, "Share image with..."));
                     }
                     @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {                    }
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                        Toast.makeText(requireContext(), requireContext().getResources().getString(R.string.error_share_no_network), Toast.LENGTH_LONG).show();
+                    }
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {                    }
                 });

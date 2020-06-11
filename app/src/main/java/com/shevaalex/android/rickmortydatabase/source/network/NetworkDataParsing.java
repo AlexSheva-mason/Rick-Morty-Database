@@ -13,6 +13,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.shevaalex.android.rickmortydatabase.BuildConfig;
 import com.shevaalex.android.rickmortydatabase.R;
 import org.json.JSONObject;
 
@@ -75,7 +76,9 @@ public class NetworkDataParsing {
             // Indicates that the server response could not be parsed
             errorMessage = res.getString(R.string.parse_error);
         }
-        Log.d(LOG_TAG, errorMessage);
+        if (BuildConfig.DEBUG) {
+            Log.d(LOG_TAG, errorMessage);
+        }
     }
 
     public void cancelVolleyRequests (){

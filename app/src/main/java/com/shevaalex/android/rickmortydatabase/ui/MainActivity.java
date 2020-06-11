@@ -2,7 +2,6 @@ package com.shevaalex.android.rickmortydatabase.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE;
                 text = getString(R.string.fragment_character_list_database_not_synced);
             }
-            Log.d("mainAct", "snackbar text: " + text);
             showSnackBar(text, snackBarDuration);
         });
     }
