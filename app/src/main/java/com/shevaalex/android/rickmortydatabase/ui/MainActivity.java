@@ -57,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
         botNavViewModel.getBottomNavLabelStatus().observe(this, integer -> binding.bottomPanel.setLabelVisibilityMode(integer));
         // monitor navigation and remove BottomNavigationView in Detail fragments
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.settingsFragment) {
+            if (destination.getId() == R.id.settingsFragment || destination.getId() == R.id.characterImageFragment) {
                 new Handler().postDelayed(() ->
                         botNavViewModel.hideBottomNav(), 100);
             } else if(destination.getId() == R.id.characterDetailFragment2 || destination.getId() == R.id.locationDetailFragment
                     || destination.getId() == R.id.episodeDetailFragment) {
+                botNavViewModel.showBottomNav();
                 botNavViewModel.setUnlabeled();
             } else {
                 botNavViewModel.setLabelSelected();

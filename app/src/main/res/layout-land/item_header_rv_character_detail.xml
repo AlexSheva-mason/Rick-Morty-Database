@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@id/guideline_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image_character_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/img_character_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/picasso_placeholder_error" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="5"
+        android:paddingStart="8dp"
+        android:paddingEnd="4dp"
+        android:textAppearance="@style/TextAppearance.RM.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="HOLE IN THE WALL WHERE ALL MEN CAN SEE IT ALL" />
+
+    <TextView
+        android:id="@+id/character_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_header_names_left_margin"
+        android:text="@string/tv_character_status"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toStartOf="@id/guideline_image"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_title" />
+
+    <TextView
+        android:id="@+id/character_species"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_character_species"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toStartOf="@+id/character_status"
+        app:layout_constraintTop_toBottomOf="@+id/character_status" />
+
+    <TextView
+        android:id="@+id/character_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_character_gender"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toStartOf="@+id/character_species"
+        app:layout_constraintTop_toBottomOf="@+id/character_species" />
+
+    <TextView
+        android:id="@+id/character_origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_character_origin"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintBottom_toTopOf="@id/barrier_origin_bottom"
+        app:layout_constraintStart_toStartOf="@+id/character_gender"
+        app:layout_constraintTop_toTopOf="@id/barrier_origin_top" />
+
+    <TextView
+        android:id="@+id/character_last_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_character_last_loc"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintBottom_toBottomOf="@id/barrier_lastloc_bottom"
+        app:layout_constraintStart_toStartOf="@+id/character_origin"
+        app:layout_constraintTop_toBottomOf="@id/barrier_origin_bottom" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_text_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.72" />
+
+    <TextView
+        android:id="@+id/character_status_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_text_value"
+        app:layout_constraintTop_toTopOf="@id/character_status"
+        tools:text="unknown" />
+
+    <TextView
+        android:id="@+id/character_species_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:autoSizeMaxTextSize="20sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/character_status_value"
+        app:layout_constraintTop_toBottomOf="@+id/character_status_value"
+        tools:text="poopybutthole" />
+
+    <TextView
+        android:id="@+id/character_gender_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/character_status_value"
+        app:layout_constraintTop_toBottomOf="@+id/character_species_value"
+        tools:text="Genderless" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_origin_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="character_origin_value,button_origin_location" />
+
+    <TextView
+        android:id="@+id/character_origin_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="@string/tv_character_location_unknown"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintBottom_toTopOf="@id/barrier_origin_bottom"
+        app:layout_constraintStart_toStartOf="@id/character_status_value"
+        app:layout_constraintTop_toBottomOf="@id/character_gender_value" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_origin_location"
+        style="?attr/buttonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="@dimen/item_character_name_padding_start"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        app:icon="@drawable/locations_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/character_last_location"
+        app:layout_constraintTop_toBottomOf="@id/character_gender_value"
+        tools:text="Origin location" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_origin_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="character_origin_value,button_origin_location" />
+
+    <TextView
+        android:id="@+id/character_last_location_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="@string/tv_character_location_unknown"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toStartOf="@id/character_status_value"
+        app:layout_constraintTop_toBottomOf="@id/barrier_origin_bottom" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_last_location"
+        style="?attr/buttonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="@dimen/item_character_name_padding_start"
+        android:layout_marginBottom="4dp"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        app:icon="@drawable/locations_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/character_last_location"
+        app:layout_constraintTop_toBottomOf="@id/barrier_origin_bottom"
+        tools:text="Last location" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_lastloc_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="character_last_location_value,button_last_location" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_image_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="character_last_location_value,button_last_location" />
+
+    <TextView
+        android:id="@+id/character_episodes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="@string/tv_character_episode_list"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toStartOf="@id/character_last_location"
+        app:layout_constraintTop_toBottomOf="@id/barrier_image_bottom" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

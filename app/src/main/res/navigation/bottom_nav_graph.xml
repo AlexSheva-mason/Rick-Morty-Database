@@ -78,6 +78,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/toCharacterImageFragment"
+            app:destination="@id/characterImageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"
@@ -146,4 +153,14 @@
         android:name="com.shevaalex.android.rickmortydatabase.ui.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/characterImageFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterImageFragment"
+        android:label="fragment_character_image"
+        tools:layout="@layout/fragment_character_image">
+        <argument
+            android:name="character_image_url"
+            android:defaultValue="none"
+            app:argType="string" />
+    </fragment>
 </navigation>

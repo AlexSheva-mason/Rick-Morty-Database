@@ -72,22 +72,11 @@
                 android:paddingEnd="4dp"
                 android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/character_image"
                 tools:text="unknown" />
 
-            <!--<TextView
-                android:id="@+id/character_last_location_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="Last location" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

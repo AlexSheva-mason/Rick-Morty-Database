@@ -1,7 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.util.TypedValue;
 
@@ -13,10 +12,7 @@ abstract class CharacterAdapterUtil {
 
     //returns color to set TextView color depending on Character's status
     static int getStatusColour(String status, Context context) {
-        int color = fetchThemeColor(R.attr.colorOnBackground, context);
-        if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            color = fetchThemeColor(R.attr.colorOnPrimary, context);
-        }
+        int color = fetchThemeColor(R.attr.colorSecondary, context);
         switch (status) {
             case VALUE_ALIVE:
                 color = fetchThemeColor(R.attr.colorPrimary, context);

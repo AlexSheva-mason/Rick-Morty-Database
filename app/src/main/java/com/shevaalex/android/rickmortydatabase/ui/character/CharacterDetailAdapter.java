@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemHeaderRvCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +28,13 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Location originLocation;
     private Location lastLocation;
     private final OnEpisodeListener onEpisodeListener;
+    private final View.OnClickListener viewOnClickListener;
     private List<Episode> mEpisodeList = new ArrayList<>();
     private final Context context;
 
-    CharacterDetailAdapter(OnEpisodeListener onEpisodeListener, Context context){
+    CharacterDetailAdapter(OnEpisodeListener onEpisodeListener, View.OnClickListener viewOnClickListener, Context context){
         this.onEpisodeListener = onEpisodeListener;
+        this.viewOnClickListener = viewOnClickListener;
         this.context = context;
     }
 
@@ -69,9 +73,20 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (headerCharacter != null) {
+                if (headerViewHolder.binding.toolbarTitle != null
+                        && headerViewHolder.binding.imageCharacterToolbar != null) {
+                    headerViewHolder.binding.toolbarTitle.setText(headerCharacter.getName());
+                    Picasso.get()
+                            .load(headerCharacter.getImgUrl())
+                            .error(R.drawable.picasso_placeholder_error)
+                            .into(headerViewHolder.binding.imageCharacterToolbar);
+                    headerViewHolder.binding.imageCharacterToolbar.setOnClickListener(viewOnClickListener);
+                }
                 headerViewHolder.binding.characterStatusValue.setText(headerCharacter.getStatus());
-                int color = CharacterAdapterUtil.getStatusColour(headerCharacter.getStatus(), context);
-                headerViewHolder.binding.characterStatusValue.setTextColor(color);
+                if (!headerCharacter.getStatus().equals("unknown")) {
+                    int color = CharacterAdapterUtil.getStatusColour(headerCharacter.getStatus(), context);
+                    headerViewHolder.binding.characterStatusValue.setTextColor(color);
+                }
                 headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
                 headerViewHolder.binding.characterGenderValue.setText(headerCharacter.getGender());
                 if (originLocation != null) {

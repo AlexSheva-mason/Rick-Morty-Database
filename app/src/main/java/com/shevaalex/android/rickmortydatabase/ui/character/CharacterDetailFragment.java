@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -21,9 +20,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
@@ -33,7 +30,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterDetailFragment extends Fragment implements CharacterDetailAdapter.OnEpisodeListener {
+public class CharacterDetailFragment extends Fragment implements CharacterDetailAdapter.OnEpisodeListener, View.OnClickListener{
     private static final String BUNDLE_SAVE_STATE_KEY = "list_state";
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
@@ -41,9 +38,8 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
     private CharacterDetailAdapter adapter;
     private LinearLayoutManager layoutManager;
     private List<Episode> episodeList = new ArrayList<>();
+    private Character headerCharacter;
     private Context context;
-    private AppBarLayout appBarLayout;
-    private ImageView toolbarImageView;
 
     public CharacterDetailFragment() {
         // Required empty public constructor
@@ -77,18 +73,26 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         binding.recyclerviewCharacterDetail.setLayoutManager(layoutManager);
         binding.recyclerviewCharacterDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        adapter = new CharacterDetailAdapter(this, context);
+        adapter = new CharacterDetailAdapter(this, this, context);
         binding.recyclerviewCharacterDetail.setAdapter(adapter);
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             episodeList = episodes;
-            Character headerCharacter = viewModel.getCharacterById(characterId);
-            setToolbarImage(headerCharacter);
-            adapter.setHeaderCharacter(headerCharacter);
-            if (headerCharacter.getOriginLocation() != 0) {
-                adapter.setOriginLocation(viewModel.getLocationById(headerCharacter.getOriginLocation()));
-            }
-            if (headerCharacter.getLastKnownLocation() != 0) {
-                adapter.setLastLocation(viewModel.getLocationById(headerCharacter.getLastKnownLocation()));
+            headerCharacter = viewModel.getCharacterById(characterId);
+            if (headerCharacter != null) {
+                if (binding.collapsingToolbarLayout != null) {
+                    binding.collapsingToolbarLayout.setOnClickListener(this);
+                    setToolbar(headerCharacter);
+                    if (binding.imageCharacterToolbar != null) {
+                        setCharacterImage(headerCharacter);
+                    }
+                }
+                adapter.setHeaderCharacter(headerCharacter);
+                if (headerCharacter.getOriginLocation() != 0) {
+                    adapter.setOriginLocation(viewModel.getLocationById(headerCharacter.getOriginLocation()));
+                }
+                if (headerCharacter.getLastKnownLocation() != 0) {
+                    adapter.setLastLocation(viewModel.getLocationById(headerCharacter.getLastKnownLocation()));
+                }
             }
             adapter.setEpisodeList(episodes);
             if (savedInstanceState != null) {
@@ -101,58 +105,62 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         return view;
     }
 
-    private void setToolbarImage(Character headerCharacter) {
-        //check if app is currently in dark theme and set the contentScrimColor of collapsing toolbar to surface color
-        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-            binding.collapsingToolbarLayout.setContentScrimColor(context.getResources().getColor(R.color.rm_grey_900));
-        }
-        appBarLayout = binding.appbarLayout;
-        toolbarImageView = binding.imageCharacterToolbar;
-        if (headerCharacter != null) {
-            //set expanded title and ImageView
-            binding.toolbarTitle.setVisibility(View.GONE);
-            binding.toolbarTitle.setText(headerCharacter.getName());
-            Picasso.get()
-                    .load(headerCharacter.getImgUrl())
-                    .error(R.drawable.picasso_placeholder_error)
-                    .into(toolbarImageView);
-        }
-        // manage custom collapsed/expanded title state
-        appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
-                //  Collapsed
-                if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
-                    binding.toolbarTitle.setVisibility(View.GONE);
-                }
-                binding.collapsingToolbarLayout.setTitleEnabled(true);
-            } else if (verticalOffset == 0) {
-                // Fully expanded
-                binding.toolbarFragmentCharacterDetail.setTitle(null);
-                binding.collapsingToolbarLayout.setTitleEnabled(false);
-                binding.toolbarTitle.setVisibility(View.VISIBLE);
-            } else {
-                // Not fully expanded not collapsed
-                if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
-                    new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),250);
-                }
-                binding.toolbarFragmentCharacterDetail.setTitle(null);
-                binding.collapsingToolbarLayout.setTitleEnabled(false);
-            }
-        });
-    }
-
-    //set the toolbar and it's title
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        NavController navController = Navigation.findNavController(view);
-        AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
-        Toolbar toolbar = binding.toolbarFragmentCharacterDetail;
-        NavigationUI.setupWithNavController(
-                toolbar, navController, appBarConfiguration);
-        //binding.toolbarTitleExpanded.setText(toolbar.getTitle());
+        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE
+                && binding.toolbarFragmentCharacterDetail != null) {
+            NavController navController = Navigation.findNavController(view);
+            AppBarConfiguration appBarConfiguration =
+                    new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
+            NavigationUI.setupWithNavController(
+                    binding.toolbarFragmentCharacterDetail, navController, appBarConfiguration);
+        }
     }
+
+    private void setCharacterImage(Character headerCharacter) {
+        Picasso.get()
+                .load(headerCharacter.getImgUrl())
+                .error(R.drawable.picasso_placeholder_error)
+                .into(binding.imageCharacterToolbar);
+    }
+
+    private void setToolbar(Character headerCharacter) {
+        //check if app is currently in dark theme and set the contentScrimColor of collapsing toolbar to surface color
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_YES && binding.collapsingToolbarLayout != null) {
+            binding.collapsingToolbarLayout.setContentScrimColor(context.getResources().getColor(R.color.rm_grey_900));
+        }
+        //set expanded title
+        if (binding.toolbarTitle != null) {
+            binding.toolbarTitle.setVisibility(View.GONE);
+            binding.toolbarTitle.setText(headerCharacter.getName());
+        }
+        // manage custom collapsed/expanded title state
+        if (binding.appbarLayout != null && binding.collapsingToolbarLayout!= null && binding.toolbarFragmentCharacterDetail != null) {
+            binding.appbarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+                if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
+                    //  Collapsed
+                    if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
+                        binding.toolbarTitle.setVisibility(View.GONE);
+                    }
+                    binding.collapsingToolbarLayout.setTitleEnabled(true);
+                } else if (verticalOffset == 0) {
+                    // Fully expanded
+                    binding.toolbarFragmentCharacterDetail.setTitle(null);
+                    binding.collapsingToolbarLayout.setTitleEnabled(false);
+                    binding.toolbarTitle.setVisibility(View.VISIBLE);
+                } else {
+                    // Not fully expanded not collapsed
+                    if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
+                        new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),250);
+                    }
+                    binding.toolbarFragmentCharacterDetail.setTitle(null);
+                    binding.collapsingToolbarLayout.setTitleEnabled(false);
+                }
+            });
+        }
+    }
+    //set the toolbar and it's title
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
@@ -176,14 +184,9 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
         adapter = null;
         layoutManager = null;
-        appBarLayout = null;
-        if (toolbarImageView != null) {
-            Picasso.get().cancelRequest(toolbarImageView);
-            toolbarImageView = null;
-        }
+        binding = null;
     }
 
     @Override
@@ -197,6 +200,15 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         super.onPause();
     }
 
+    public void openImageFragment(View v) {
+        if (headerCharacter != null) {
+            CharacterDetailFragmentDirections.ToCharacterImageFragment action =
+                    CharacterDetailFragmentDirections.toCharacterImageFragment();
+            action.setCharacterImageUrl(headerCharacter.getImgUrl());
+            Navigation.findNavController(v).navigate(action);
+        }
+    }
+
     @Override
     public void onEpisodeClick(int position, View v) {
             Episode clickedEpisode = episodeList.get(position);
@@ -207,5 +219,10 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                         .setEpisodeCode(clickedEpisode.getCode()).setId(clickedEpisode.getId());
                 Navigation.findNavController(v).navigate(action);
             }
+    }
+
+    @Override
+    public void onClick(View v) {
+        openImageFragment(v);
     }
 }
