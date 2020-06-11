@@ -162,5 +162,9 @@
             android:name="character_image_url"
             android:defaultValue="none"
             app:argType="string" />
+        <argument
+            android:name="character_name"
+            android:defaultValue="none"
+            app:argType="string" />
     </fragment>
 </navigation>

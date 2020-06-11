@@ -15,6 +15,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.ItemHeaderRvCharacter
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.utils.CharacterAdapterUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

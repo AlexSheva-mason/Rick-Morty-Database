@@ -1,7 +1,8 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +14,15 @@ import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterImageBinding;
+import com.shevaalex.android.rickmortydatabase.utils.ImageParsingUtil;
+import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class CharacterImageFragment extends Fragment implements View.OnClickListener {
     private FragmentCharacterImageBinding binding;
     private String imageUrl;
+    private String characterName;
 
     public CharacterImageFragment() {
         // Required empty public constructor
@@ -34,6 +39,7 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
         binding = FragmentCharacterImageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         imageUrl = CharacterImageFragmentArgs.fromBundle(requireArguments()).getCharacterImageUrl();
+        characterName = CharacterImageFragmentArgs.fromBundle(requireArguments()).getCharacterName();
         if (!imageUrl.equals("none")) {
             setCharacterImage(imageUrl);
         }
@@ -56,12 +62,22 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        Uri umageUri = Uri.parse(imageUrl);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, umageUri);
-        shareIntent.putExtra(Intent.EXTRA_TITLE, "Character name");
-        shareIntent.setType("image/jpeg");
-        startActivity(Intent.createChooser(shareIntent, "Share image with..."));
+        String parsedName = StringParsing.parseCharacterName(characterName);
+        Picasso.get()
+                .load(imageUrl)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        Intent shareIntent = new Intent();
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.setType("image/*");
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, ImageParsingUtil.parseBitmapToUri(bitmap, parsedName, requireContext()));
+                        startActivity(Intent.createChooser(shareIntent, "Share image with..."));
+                    }
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {                    }
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {                    }
+                });
     }
 }

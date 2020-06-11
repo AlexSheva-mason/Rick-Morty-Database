@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterSmallBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.utils.CharacterAdapterUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

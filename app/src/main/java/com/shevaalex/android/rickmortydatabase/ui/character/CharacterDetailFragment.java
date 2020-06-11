@@ -204,7 +204,8 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         if (headerCharacter != null) {
             CharacterDetailFragmentDirections.ToCharacterImageFragment action =
                     CharacterDetailFragmentDirections.toCharacterImageFragment();
-            action.setCharacterImageUrl(headerCharacter.getImgUrl());
+            action.setCharacterImageUrl(headerCharacter.getImgUrl())
+                    .setCharacterName(headerCharacter.getName());
             Navigation.findNavController(v).navigate(action);
         }
     }

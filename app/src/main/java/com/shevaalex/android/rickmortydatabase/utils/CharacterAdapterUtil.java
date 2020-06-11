@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.character;
+package com.shevaalex.android.rickmortydatabase.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,12 +6,12 @@ import android.util.TypedValue;
 
 import com.shevaalex.android.rickmortydatabase.R;
 
-abstract class CharacterAdapterUtil {
+public abstract class CharacterAdapterUtil {
     private static final String VALUE_ALIVE = "Alive";
     private static final String VALUE_DEAD = "Dead";
 
     //returns color to set TextView color depending on Character's status
-    static int getStatusColour(String status, Context context) {
+    public static int getStatusColour(String status, Context context) {
         int color = fetchThemeColor(R.attr.colorSecondary, context);
         switch (status) {
             case VALUE_ALIVE:

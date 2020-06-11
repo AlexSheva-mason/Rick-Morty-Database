@@ -1,5 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.utils;
 
+import android.util.Log;
+
 import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
 
 import java.util.ArrayList;
@@ -32,4 +34,11 @@ public abstract class StringParsing {
         }
         return lastKnownLocId;
     }
+
+    public static String parseCharacterName (String characterName) {
+        String parsedName = characterName.trim().replace(" ", "_") + "_";
+        Log.d("TAG", "parseCharacterName: " + parsedName);
+        return parsedName;
+    }
 }
+
