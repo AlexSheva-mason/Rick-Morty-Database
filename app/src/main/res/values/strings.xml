@@ -17,6 +17,9 @@
     <string name="fragment_character_list_database_sync">Updating Database</string>
     <string name="fragment_character_list_database_not_synced">Please connect to internet for database update</string>
 
+    //EpisodeAdapter
+    <string name="episode_name_placeholder">\"%1$s\"</string>
+
     //Setiings Fragment version prefrence
     <string name="fragment_Setiings_version">Rick&amp;Morty Database: v</string>
 

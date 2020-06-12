@@ -110,9 +110,12 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             Episode currentEpisode = mEpisodeList.get(position - 1);
             // using View Binding class to set views
             if (currentEpisode != null) {
-                episodeHolder.binding.episodeNameValue.setText(currentEpisode.getName());
+                episodeHolder.binding.episodeNameValue
+                        .setText(String.format(context.getResources().getString(R.string.episode_name_placeholder), currentEpisode.getName()));
                 episodeHolder.binding.episodeCodeValue.setText(currentEpisode.getCode());
-                episodeHolder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
+                if (episodeHolder.binding.episodeAirDateValue != null) {
+                    episodeHolder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
+                }
             }
         }
     }

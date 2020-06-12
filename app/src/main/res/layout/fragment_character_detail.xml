@@ -77,6 +77,8 @@
         android:id="@+id/recyclerview_character_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="true"
         android:scrollbars="none"
         app:fastScrollEnabled="true"
         app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"

@@ -13,10 +13,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +26,17 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
+import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterDetailFragment extends Fragment implements CharacterDetailAdapter.OnEpisodeListener, View.OnClickListener{
-    private static final String BUNDLE_SAVE_STATE_KEY = "list_state";
     private FragmentCharacterDetailBinding binding;
     private CharacterViewModel viewModel;
     private Activity a;
     private CharacterDetailAdapter adapter;
-    private LinearLayoutManager layoutManager;
     private List<Episode> episodeList = new ArrayList<>();
     private Character headerCharacter;
     private Context context;
@@ -69,11 +69,28 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         // retrieve data from parent fragment
         int characterId = CharacterDetailFragmentArgs.fromBundle(requireArguments()).getId();
         //set the recyclerview
-        layoutManager = new LinearLayoutManager(this.getActivity());
-        binding.recyclerviewCharacterDetail.setLayoutManager(layoutManager);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            int spanCount = a.getApplicationContext().getResources().getInteger(R.integer.grid_span_count);
+            GridLayoutManager gridLayoutManager =
+                    new GridLayoutManager(a.getApplicationContext(), spanCount);
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return position == 0 ? spanCount : 1;
+                }
+            });
+            binding.recyclerviewCharacterDetail.setLayoutManager(gridLayoutManager);
+            // apply spacing to gridlayout
+            CustomItemDecoration itemDecoration = new CustomItemDecoration(a, true);
+            binding.recyclerviewCharacterDetail.addItemDecoration(itemDecoration);
+        } else {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+            binding.recyclerviewCharacterDetail.setLayoutManager(layoutManager);
+        }
         binding.recyclerviewCharacterDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
         adapter = new CharacterDetailAdapter(this, this, context);
+        adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacterDetail.setAdapter(adapter);
         viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             episodeList = episodes;
@@ -95,12 +112,6 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 }
             }
             adapter.setEpisodeList(episodes);
-            if (savedInstanceState != null) {
-                Parcelable savedState = savedInstanceState.getParcelable(BUNDLE_SAVE_STATE_KEY);
-                if (layoutManager != null) {
-                    layoutManager.onRestoreInstanceState(savedState);
-                }
-            }
         });
         return view;
     }
@@ -124,6 +135,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 .into(binding.imageCharacterToolbar);
     }
 
+    //set the toolbar and it's title
     private void setToolbar(Character headerCharacter) {
         //check if app is currently in dark theme and set the contentScrimColor of collapsing toolbar to surface color
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -160,32 +172,11 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
             });
         }
     }
-    //set the toolbar and it's title
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            Parcelable savedState = savedInstanceState.getParcelable(BUNDLE_SAVE_STATE_KEY);
-            if (layoutManager != null) {
-                layoutManager.onRestoreInstanceState(savedState);
-            }
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (layoutManager != null) {
-            outState.putParcelable(BUNDLE_SAVE_STATE_KEY, layoutManager.onSaveInstanceState());
-        }
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         adapter = null;
-        layoutManager = null;
         binding = null;
     }
 

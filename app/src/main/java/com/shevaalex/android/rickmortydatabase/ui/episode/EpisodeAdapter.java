@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.episode;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
@@ -15,10 +18,12 @@ import me.zhanghai.android.fastscroll.PopupTextProvider;
 
 public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> implements PopupTextProvider {
     private final OnEpisodeClickListener clickListener;
+    private Context context;
 
-    EpisodeAdapter (OnEpisodeClickListener clickListener) {
+    EpisodeAdapter (OnEpisodeClickListener clickListener, Context context) {
         super(DIFF_CALLBACK);
         this.clickListener = clickListener;
+        this.context = context;
     }
 
     private static final DiffUtil.ItemCallback<Episode> DIFF_CALLBACK = new DiffUtil.ItemCallback<Episode>() {
@@ -44,8 +49,11 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
     public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
         Episode currentEpisode = getItem(position);
         if (currentEpisode != null) {
-            holder.binding.episodeNameValue.setText(currentEpisode.getName());
-            holder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
+            holder.binding.episodeNameValue
+                    .setText(String.format(context.getResources().getString(R.string.episode_name_placeholder), currentEpisode.getName()));
+            if (holder.binding.episodeAirDateValue != null) {
+                holder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
+            }
             holder.binding.episodeCodeValue.setText(currentEpisode.getCode());
         }
     }
