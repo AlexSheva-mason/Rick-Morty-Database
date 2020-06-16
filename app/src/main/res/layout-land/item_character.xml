@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/character_item"
@@ -8,77 +8,71 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="4dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="8dp"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/character_image"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/img_character_description"
+            android:scaleType="fitCenter"
+            android:background="@drawable/picasso_placeholder_error"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/character_image"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/img_character_description"
-                android:scaleType="fitCenter"
-                android:src="@drawable/picasso_placeholder_error"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/character_name"
+            style="@style/Widget.RM.TextView.Name.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tv_character_name"
+            app:layout_constraintBottom_toTopOf="@+id/character_species_value"
+            app:layout_constraintEnd_toEndOf="@id/character_image"
+            app:layout_constraintStart_toStartOf="@id/character_image" />
 
-            <TextView
-                android:id="@+id/character_name"
-                style="@style/Widget.RM.TextView.Name.Title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/tv_character_name"
-                app:layout_constraintBottom_toTopOf="@+id/character_species_value"
-                app:layout_constraintEnd_toEndOf="@id/character_image"
-                app:layout_constraintStart_toStartOf="@id/character_image" />
+        <TextView
+            android:id="@+id/character_species_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/rm_grey_blue_900_alpha_60"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:paddingStart="2dp"
+            android:paddingEnd="4dp"
+            android:textAllCaps="true"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/character_image"
+            app:layout_constraintEnd_toEndOf="@id/character_image"
+            app:layout_constraintStart_toEndOf="@id/character_status_value"
+            tools:text="poopybutthole" />
 
-            <TextView
-                android:id="@+id/character_species_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/rm_grey_blue_900_alpha_60"
-                android:ellipsize="end"
-                android:gravity="end"
-                android:maxLines="1"
-                android:paddingStart="2dp"
-                android:paddingEnd="4dp"
-                android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintBottom_toBottomOf="@id/character_image"
-                app:layout_constraintEnd_toEndOf="@id/character_image"
-                app:layout_constraintStart_toEndOf="@id/character_status_value"
-                tools:text="poopybutthole" />
+        <TextView
+            android:id="@+id/character_status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/rm_grey_blue_900_alpha_60"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:textAllCaps="true"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/character_image"
+            app:layout_constraintStart_toStartOf="@id/character_image"
+            tools:text="unknown" />
 
-            <TextView
-                android:id="@+id/character_status_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/rm_grey_blue_900_alpha_60"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/character_image"
-                tools:text="unknown" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.cardview.widget.CardView>

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.R;
 
 public class CustomItemDecoration extends RecyclerView.ItemDecoration {
-    private Activity a;
+    private final Activity a;
     private boolean isOffsetLayout;
 
     public CustomItemDecoration (Activity a, boolean isOffsetLayout) {

@@ -1,6 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,8 +68,16 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
             }
             holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
-            int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
-            holder.characterItemBinding.characterStatusValue.setTextColor(color);
+            if (!currentCharacter.getStatus().equals("unknown")) {
+                int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
+                holder.characterItemBinding.characterStatusValue.setTextColor(color);
+            } else {
+                if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    holder.characterItemBinding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+                } else {
+                    holder.characterItemBinding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnPrimary, context));
+                }
+            }
             if (viewModel != null && holder.characterItemBinding.characterLastLocationValue != null) {
                 Location lastLoc = viewModel.getLocationById(currentCharacter.getLastKnownLocation());
                 if (lastLoc != null) {

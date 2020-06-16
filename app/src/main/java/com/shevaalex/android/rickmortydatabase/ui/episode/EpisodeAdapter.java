@@ -18,7 +18,7 @@ import me.zhanghai.android.fastscroll.PopupTextProvider;
 
 public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> implements PopupTextProvider {
     private final OnEpisodeClickListener clickListener;
-    private Context context;
+    private final Context context;
 
     EpisodeAdapter (OnEpisodeClickListener clickListener, Context context) {
         super(DIFF_CALLBACK);

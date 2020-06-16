@@ -43,7 +43,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private String searchQuery;
     private int filterListKey;
     private boolean searchIsCommitted;
-    private RecyclerView rvCharacterList;
     private NavController navController;
     private MenuItem filterCheckBox;
     private MenuItem searchMenuItem;
@@ -73,18 +72,19 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        //set LinearLayout and RecyclerView
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+        //set layout manager and RecyclerView
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), RecyclerView.HORIZONTAL, false);
+            binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
+        } else {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), RecyclerView.VERTICAL, false);
+            binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
         }
-        rvCharacterList = binding.recyclerviewCharacter;
-        rvCharacterList.setLayoutManager(linearLayoutManager);
-        rvCharacterList.setHasFixedSize(true);
+        binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel, getContext());
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        rvCharacterList.setAdapter(characterAdapter);
+        binding.recyclerviewCharacter.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
         return view;
     }
@@ -222,9 +222,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         if (binding != null) {
             binding = null;
         }
-        if (rvCharacterList != null) {
-            rvCharacterList = null;
-        }
         if (filterCheckBox != null) {
             filterCheckBox = null;
         }
@@ -237,8 +234,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     }
 
     private void listJumpTo0() {
-        if (rvCharacterList != null && rvCharacterList.getLayoutManager() != null) {
-            rvCharacterList.getLayoutManager().scrollToPosition(0);
+        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+            binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
         }
     }
 

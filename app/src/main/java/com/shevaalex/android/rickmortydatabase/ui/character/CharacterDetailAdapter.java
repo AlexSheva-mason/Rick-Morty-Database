@@ -87,6 +87,8 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (!headerCharacter.getStatus().equals("unknown")) {
                     int color = CharacterAdapterUtil.getStatusColour(headerCharacter.getStatus(), context);
                     headerViewHolder.binding.characterStatusValue.setTextColor(color);
+                } else {
+                    headerViewHolder.binding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
                 }
                 headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
                 headerViewHolder.binding.characterGenderValue.setText(headerCharacter.getGender());

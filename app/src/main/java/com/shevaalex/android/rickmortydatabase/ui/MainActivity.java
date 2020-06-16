@@ -94,11 +94,11 @@ public class MainActivity extends AppCompatActivity {
                 characterViewModel.rmRepository.initialiseDataBase();
                 text = getString(R.string.fragment_character_list_database_sync);
             }
-            // database is up to date and device is disconnected from network
+            // database is up to date and device is _disconnected_ from network
             else if (pair.first) {
                 text = getString(R.string.fragment_character_list_database_up_to_date);
             }
-            // database is _not_ up to date and device is disconnected from network
+            // database is _not_ up to date and device is _disconnected_ from network
             else {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE;

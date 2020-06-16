@@ -28,9 +28,9 @@
         android:layout_height="match_parent"
         android:fadeScrollbars="true"
         android:scrollbarDefaultDelayBeforeFade="500"
-        android:scrollbarThumbVertical="@drawable/thumb"
-        android:scrollbarTrackVertical="@drawable/track_drawable"
-        android:scrollbars="vertical"
+        android:scrollbarThumbHorizontal="@drawable/thumb"
+        android:scrollbarTrackHorizontal="@drawable/track_drawable"
+        android:scrollbars="horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_character" />
 

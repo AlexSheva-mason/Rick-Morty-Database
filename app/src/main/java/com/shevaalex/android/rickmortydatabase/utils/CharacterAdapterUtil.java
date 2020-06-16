@@ -25,7 +25,7 @@ public abstract class CharacterAdapterUtil {
     }
 
     //returns theme attribute color
-    private static int fetchThemeColor(int colorId, Context context) {
+    public static int fetchThemeColor(int colorId, Context context) {
         TypedValue typedValue = new TypedValue();
         TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { colorId });
         int color = a.getColor(0, 0);
