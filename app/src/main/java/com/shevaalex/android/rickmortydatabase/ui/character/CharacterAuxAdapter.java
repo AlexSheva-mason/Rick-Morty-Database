@@ -51,6 +51,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
         // using View Binding class to set views without calling findViewById
         Picasso.get()
                 .load(currentCharacter.getImgUrl())
+                .placeholder(R.drawable.picasso_placeholder_error)
                 .error(R.drawable.picasso_placeholder_error)
                 .into(holder.binding.characterImage);
         holder.binding.characterNameValue.setText(currentCharacter.getName());

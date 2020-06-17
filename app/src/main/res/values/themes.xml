@@ -18,10 +18,6 @@
         <item name="textAppearanceCaption">@style/TextAppearance.RM.Caption</item>
         <item name="textAppearanceOverline">@style/TextAppearance.RM.Overline</item>
 
-        <!--Platform attributes-->
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">?attr/colorPrimaryDark</item>
-
         <!--Default styles-->
         <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>

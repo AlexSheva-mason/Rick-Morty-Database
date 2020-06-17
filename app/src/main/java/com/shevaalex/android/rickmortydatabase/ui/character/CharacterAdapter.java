@@ -60,6 +60,7 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
             // using View Binding class to set views without calling findViewById
             Picasso.get()
                     .load(currentCharacter.getImgUrl())
+                    .placeholder(R.drawable.picasso_placeholder_error)
                     .error(R.drawable.picasso_placeholder_error)
                     .into(holder.characterItemBinding.characterImage);
             holder.characterItemBinding.characterName.setText(currentCharacter.getName());
