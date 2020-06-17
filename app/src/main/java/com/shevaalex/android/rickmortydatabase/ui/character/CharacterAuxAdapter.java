@@ -55,14 +55,18 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
                 .error(R.drawable.picasso_placeholder_error)
                 .into(holder.binding.characterImage);
         holder.binding.characterNameValue.setText(currentCharacter.getName());
-        holder.binding.characterGenderValue.setText(currentCharacter.getGender());
-        holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
-        holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
-        if (!currentCharacter.getStatus().equals("unknown")) {
-            int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
-            holder.binding.characterStatusValue.setTextColor(color);
-        } else {
-            holder.binding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+        if (holder.binding.characterGenderValue != null
+        && holder.binding.characterSpeciesValue != null
+        && holder.binding.characterStatusValue != null) {
+            holder.binding.characterGenderValue.setText(currentCharacter.getGender());
+            holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
+            holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
+            if (!currentCharacter.getStatus().equals("unknown")) {
+                int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
+                holder.binding.characterStatusValue.setTextColor(color);
+            } else {
+                holder.binding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+            }
         }
     }
 

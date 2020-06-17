@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.ui.location;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
+import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
 
 import java.util.Objects;
 
@@ -50,18 +53,29 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLocationsListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
-        binding.recyclerviewLocation.setLayoutManager(linearLayoutManager);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            int spanCount = a.getApplicationContext().getResources().getInteger(R.integer.grid_span_count);
+            GridLayoutManager gridLayoutManager =
+                    new GridLayoutManager(a.getApplicationContext(), spanCount, RecyclerView.HORIZONTAL, false);
+            binding.recyclerviewLocation.setLayoutManager(gridLayoutManager);
+            // apply spacing to gridlayout
+            CustomItemDecoration itemDecoration = new CustomItemDecoration(a, false);
+            binding.recyclerviewLocation.addItemDecoration(itemDecoration);
+        } else {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+            binding.recyclerviewLocation.setLayoutManager(linearLayoutManager);
+            //set fast scroller
+            new FastScrollerBuilder(binding.recyclerviewLocation)
+                    .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
+                    .build();
+        }
         binding.recyclerviewLocation.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
         locationAdapter = new LocationAdapter(this);
         locationAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocation.setAdapter(locationAdapter);
         locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
-        //set fast scroller
-        new FastScrollerBuilder(binding.recyclerviewLocation)
-                .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
-                .build();
         return view;
     }
 

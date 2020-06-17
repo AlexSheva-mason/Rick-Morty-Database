@@ -45,8 +45,10 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
         Location currentLocation = getItem(position);
         if (currentLocation != null) {
             holder.binding.locationNameValue.setText(currentLocation.getName());
-            holder.binding.locationDimensionValue.setText(currentLocation.getDimension());
-            holder.binding.locationTypeValue.setText(currentLocation.getType());
+            if (holder.binding.locationDimensionValue != null &&  holder.binding.locationTypeValue != null) {
+                holder.binding.locationDimensionValue.setText(currentLocation.getDimension());
+                holder.binding.locationTypeValue.setText(currentLocation.getType());
+            }
         }
     }
 

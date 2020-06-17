@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
             // database is up to date and device is _disconnected_ from network
             else if (pair.first) {
+                binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 text = getString(R.string.fragment_character_list_database_up_to_date);
             }
             // database is _not_ up to date and device is _disconnected_ from network

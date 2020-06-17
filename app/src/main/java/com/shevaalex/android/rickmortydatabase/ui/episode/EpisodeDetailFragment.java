@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.ui.episode;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -65,6 +66,9 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
         binding.episodeAirDateValue.setText(airDate);
         //set the recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        }
         binding.recyclerviewEpisodeDetail.setLayoutManager(layoutManager);
         binding.recyclerviewEpisodeDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel

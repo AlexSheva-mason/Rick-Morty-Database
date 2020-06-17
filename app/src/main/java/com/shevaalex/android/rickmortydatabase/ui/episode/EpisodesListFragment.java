@@ -55,7 +55,7 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             int spanCount = a.getApplicationContext().getResources().getInteger(R.integer.grid_span_count);
             GridLayoutManager gridLayoutManager =
-                    new GridLayoutManager(a.getApplicationContext(), spanCount);
+                    new GridLayoutManager(a.getApplicationContext(), spanCount, RecyclerView.HORIZONTAL, false);
             binding.recyclerviewEpisode.setLayoutManager(gridLayoutManager);
             // apply spacing to gridlayout
             CustomItemDecoration itemDecoration = new CustomItemDecoration(a, false);
@@ -63,6 +63,10 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
         } else {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
             binding.recyclerviewEpisode.setLayoutManager(linearLayoutManager);
+            //set fast scroller
+            new FastScrollerBuilder(binding.recyclerviewEpisode)
+                    .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
+                    .build();
         }
         binding.recyclerviewEpisode.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
@@ -70,10 +74,6 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
         episodeAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewEpisode.setAdapter(episodeAdapter);
         episodeViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> episodeAdapter.submitList(episodes) );
-        //set fast scroller
-        new FastScrollerBuilder(binding.recyclerviewEpisode)
-                .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
-                .build();
         return view;
     }
 

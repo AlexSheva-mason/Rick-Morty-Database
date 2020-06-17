@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.ui.location;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -57,14 +58,21 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
         binding = FragmentLocationDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         // retrieve data from parent fragment
+        String name = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationName();
         String dimension = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationDimension();
         String type = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationType();
         int locationId = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationId();
         //set retreived data to appropriate views
+        if (binding.locationNameValue != null) {
+            binding.locationNameValue.setText(name);
+        }
         binding.locationDimensionValue.setText(dimension);
         binding.locationTypeValue.setText(type);
         //set the recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        }
         binding.recyclerviewLocationDetail.setLayoutManager(layoutManager);
         binding.recyclerviewLocationDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel

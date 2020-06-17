@@ -22,7 +22,6 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/img_character_description"
             android:scaleType="fitCenter"
-
             android:src="@drawable/picasso_placeholder_error"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
