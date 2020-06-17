@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class LocationViewModel extends AndroidViewModel {
         return mLocationList;
     }
 
-    LiveData<List<Character>> getCharactersFromLocation(int locationId) {
+    LiveData<List<CharacterSmall>> getCharactersFromLocation(int locationId) {
         return rmRepository.getCharactersFromLocation(locationId);
     }
 }

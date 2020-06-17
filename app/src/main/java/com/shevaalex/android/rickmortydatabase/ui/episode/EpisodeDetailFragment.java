@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodeDetailBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 import com.shevaalex.android.rickmortydatabase.ui.character.CharacterAuxAdapter;
 
@@ -28,7 +28,7 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
     private CharacterAuxAdapter characterAuxAdapter;
     private EpisodeViewModel viewModel;
     private Activity a;
-    private List<Character> characterList = new ArrayList<>();
+    private List<CharacterSmall> characterList = new ArrayList<>();
     private Context context;
 
     public EpisodeDetailFragment() {
@@ -90,7 +90,7 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
     @Override
     public void onCharacterClick(int position, View v) {
         if (characterList != null && !characterList.isEmpty()) {
-            Character clickedChar = characterList.get(position);
+            CharacterSmall clickedChar = characterList.get(position);
             EpisodeDetailFragmentDirections.ToCharacterDetailFragmentAction2 action =
                     EpisodeDetailFragmentDirections.toCharacterDetailFragmentAction2();
             if (clickedChar != null) {

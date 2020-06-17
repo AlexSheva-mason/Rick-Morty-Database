@@ -12,6 +12,7 @@ import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
@@ -23,7 +24,7 @@ public class CharacterViewModel extends AndroidViewModel {
     public final MainRepository rmRepository;
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
     private final MutableLiveData<Integer> filterResultKey = new MutableLiveData<>();
-    private LiveData<PagedList<Character>> mCharacterList;
+    private LiveData<PagedList<CharacterSmall>> mCharacterList;
     private final StatusMediatorLiveData statusLiveData;
     private final FilterLiveData trigger;
 
@@ -45,7 +46,7 @@ public class CharacterViewModel extends AndroidViewModel {
         this.filterResultKey.setValue(key);
     }
 
-    LiveData<PagedList<Character>> getCharacterList() {
+    LiveData<PagedList<CharacterSmall>> getCharacterList() {
         if (mCharacterList == null) {
             mCharacterList = Transformations.switchMap(trigger,
                     value -> rmRepository.getCharacterListFiltered(value.first, value.second));

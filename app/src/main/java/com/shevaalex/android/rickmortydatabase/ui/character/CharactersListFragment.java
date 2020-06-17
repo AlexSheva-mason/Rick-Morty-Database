@@ -26,8 +26,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
@@ -241,9 +241,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     @Override
     public void onCharacterClick(int position, @NonNull View v) {
-        PagedList<Character> mCharacterList = characterAdapter.getCurrentList();
+        PagedList<CharacterSmall> mCharacterList = characterAdapter.getCurrentList();
         if (mCharacterList != null && !mCharacterList.isEmpty()) {
-            Character clickedChar = mCharacterList.get(position);
+            CharacterSmall clickedChar = mCharacterList.get(position);
             CharactersListFragmentDirections.ToCharacterDetailFragmentAction action =
                     CharactersListFragmentDirections.toCharacterDetailFragmentAction();
             if (clickedChar != null) {

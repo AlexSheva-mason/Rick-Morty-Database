@@ -12,20 +12,20 @@ import java.util.List;
 @Dao
 public interface CharacterDao {
     //perform a search by character's name in the database, shows all results
-    @Query("SELECT * FROM Character WHERE name LIKE :name ORDER BY LENGTH(episodeList) DESC, name")
-    DataSource.Factory<Integer, Character> searchInCharacterList(String name);
+    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character WHERE name LIKE :name ORDER BY LENGTH(episodeList) DESC, name")
+    DataSource.Factory<Integer, CharacterSmall> searchInCharacterList(String name);
 
     //perform a search by character's name in the database, excluding Dead
-    @Query("SELECT * FROM Character WHERE name LIKE :name AND (status LIKE 'alive' OR status LIKE 'unknown') ORDER BY LENGTH(episodeList) DESC, name")
-    DataSource.Factory<Integer, Character> searchInCharacterListNoDead(String name);
+    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character WHERE name LIKE :name AND (status LIKE 'alive' OR status LIKE 'unknown') ORDER BY LENGTH(episodeList) DESC, name")
+    DataSource.Factory<Integer, CharacterSmall> searchInCharacterListNoDead(String name);
 
     //shows list of all characters
-    @Query("SELECT * FROM Character ORDER BY LENGTH(episodeList) DESC, name")
-    DataSource.Factory<Integer, Character> showAllCharacters();
+    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character ORDER BY LENGTH(episodeList) DESC, name")
+    DataSource.Factory<Integer, CharacterSmall> showAllCharacters();
 
     //shows list of all characters with status Alive or Unknown
-    @Query("SELECT * FROM Character WHERE status LIKE 'alive' OR status LIKE 'unknown' ORDER BY LENGTH(episodeList) DESC, name")
-    DataSource.Factory<Integer, Character> showAllCharsNoDead();
+    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character WHERE status LIKE 'alive' OR status LIKE 'unknown' ORDER BY LENGTH(episodeList) DESC, name")
+    DataSource.Factory<Integer, CharacterSmall> showAllCharsNoDead();
 
     // gets the last character to compare databases
     @Query("SELECT * FROM Character ORDER BY id DESC LIMIT 1")

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterSmallBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.utils.CharacterAdapterUtil;
 import com.squareup.picasso.Picasso;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
-    private List<Character> mCharacterList = new ArrayList<>();
+    private List<CharacterSmall> mCharacterList = new ArrayList<>();
     private final Context context;
 
     public CharacterAuxAdapter(OnCharacterListener onCharacterListener, Context context){
@@ -28,7 +28,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
         this.onCharacterListener = onCharacterListener;
     }
 
-    public void setCharacterList (List<Character> mCharacterList) {
+    public void setCharacterList (List<CharacterSmall> mCharacterList) {
         this.mCharacterList = mCharacterList;
         notifyDataSetChanged();
     }
@@ -47,7 +47,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
-        Character currentCharacter = mCharacterList.get(position);
+        CharacterSmall currentCharacter = mCharacterList.get(position);
         // using View Binding class to set views without calling findViewById
         Picasso.get()
                 .load(currentCharacter.getImgUrl())
@@ -58,8 +58,12 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
         holder.binding.characterGenderValue.setText(currentCharacter.getGender());
         holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
         holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
-        int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
-        holder.binding.characterStatusValue.setTextColor(color);
+        if (!currentCharacter.getStatus().equals("unknown")) {
+            int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
+            holder.binding.characterStatusValue.setTextColor(color);
+        } else {
+            holder.binding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+        }
     }
 
     class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

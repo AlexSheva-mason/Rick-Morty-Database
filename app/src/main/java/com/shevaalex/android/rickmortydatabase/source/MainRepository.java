@@ -9,6 +9,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterEpisodeJoin;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
@@ -328,8 +329,8 @@ public class MainRepository {
     }
 
     // calls the appropriate method based on search query and filter applied
-    public LiveData<PagedList<Character>> getCharacterListFiltered(String query, int filter) {
-        LiveData<PagedList<Character>> mCharacterList = new LiveData<PagedList<Character>>() {};
+    public LiveData<PagedList<CharacterSmall>> getCharacterListFiltered(String query, int filter) {
+        LiveData<PagedList<CharacterSmall>> mCharacterList = new LiveData<PagedList<CharacterSmall>>() {};
         if (query == null || query.equals("")) {
             switch (filter) {
                 case 0:
@@ -354,22 +355,22 @@ public class MainRepository {
 
     //CHARACTERS
     //gets all characters
-    private LiveData<PagedList<Character>> getAllCharacters() {
+    private LiveData<PagedList<CharacterSmall>> getAllCharacters() {
         return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().showAllCharacters(), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
     //gets all characters, excludes Dead
-    private LiveData<PagedList<Character>> getAllCharsNoDead() {
+    private LiveData<PagedList<CharacterSmall>> getAllCharsNoDead() {
         return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().showAllCharsNoDead(), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
     //performs search by name in database, shows all
-    private LiveData<PagedList<Character>> searchInCharacters(String query) {
+    private LiveData<PagedList<CharacterSmall>> searchInCharacters(String query) {
         return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().searchInCharacterList("%" + query + "%"), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
     //performs search by name in database, excludes Dead
-    private LiveData<PagedList<Character>> searchInCharactersNoDead(String query) {
+    private LiveData<PagedList<CharacterSmall>> searchInCharactersNoDead(String query) {
         return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().searchInCharacterListNoDead("%" + query + "%"), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
@@ -417,12 +418,12 @@ public class MainRepository {
 
     //JOIN DAOs
     //gets characters from episode
-    public LiveData<List<Character>> getCharactersFromEpisode(int episodeId){
+    public LiveData<List<CharacterSmall>> getCharactersFromEpisode(int episodeId){
         return rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(episodeId);
     }
 
     //gets characters from location
-    public LiveData<List<Character>> getCharactersFromLocation(int locationId) {
+    public LiveData<List<CharacterSmall>> getCharactersFromLocation(int locationId) {
         return rmDatabase.getLocationCharacterJoinDao().getCharactersFromLocations(locationId);
     }
 

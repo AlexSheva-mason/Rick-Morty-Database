@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.R;
 
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.utils.CharacterAdapterUtil;
 import com.squareup.picasso.Picasso;
 
 
-public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> {
+public class CharacterAdapter extends PagedListAdapter<CharacterSmall, CharacterAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
     private final CharacterViewModel viewModel;
     private final Context context;
@@ -31,16 +31,16 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
         this.context = context;
     }
 
-    private static final DiffUtil.ItemCallback<Character> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<Character>() {
+    private static final DiffUtil.ItemCallback<CharacterSmall> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<CharacterSmall>() {
 
                 @Override
-                public boolean areItemsTheSame(@NonNull Character oldItem, @NonNull Character newItem) {
+                public boolean areItemsTheSame(@NonNull CharacterSmall oldItem, @NonNull CharacterSmall newItem) {
                     return oldItem.getId() == newItem.getId();
                 }
 
                 @Override
-                public boolean areContentsTheSame(@NonNull Character oldItem, @NonNull Character newItem) {
+                public boolean areContentsTheSame(@NonNull CharacterSmall oldItem, @NonNull CharacterSmall newItem) {
                     return newItem.equals(oldItem);
                 }
             };
@@ -55,7 +55,7 @@ public class CharacterAdapter extends PagedListAdapter<Character, CharacterAdapt
 
     @Override
     public void onBindViewHolder(@NonNull final CharacterViewHolder holder, int position) {
-        Character currentCharacter = getItem(position);
+        CharacterSmall currentCharacter = getItem(position);
         if (currentCharacter != null) {
             // using View Binding class to set views without calling findViewById
             Picasso.get()
