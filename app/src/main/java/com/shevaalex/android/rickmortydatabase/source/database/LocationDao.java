@@ -10,9 +10,6 @@ import java.util.List;
 
 @Dao
 public interface LocationDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertLocation(Location location);
-
     //shows list of all locations
     @Query("SELECT * FROM Location ORDER BY name")
     DataSource.Factory<Integer, Location> showAllLocations();
@@ -32,4 +29,7 @@ public interface LocationDao {
     // gets the location by id
     @Query("SELECT * FROM Location WHERE id=:id")
     Location getLocationById(int id);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertLocationList(List<Location> characters);
 }

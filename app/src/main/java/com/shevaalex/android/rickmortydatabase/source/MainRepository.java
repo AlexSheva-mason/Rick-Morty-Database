@@ -217,35 +217,35 @@ public class MainRepository {
         if (newEntryObject.getClass() == Character.class) {
             //adds a new Character to the database
             Character newCharacter = (Character) newEntryObject;
-            appExecutors.diskIO().execute(() -> rmDatabase.getCharacterDao().insertCharacter(newCharacter));
             if (!mCharacterList.contains(newCharacter)) {
                 mCharacterList.add(newCharacter);
             }
-            if (lastNetworkCharacter.getId() == mCharacterList.size() && mCharacterList.contains(lastNetworkCharacter)) {
+            if (!characterTableIsUpToDate && lastNetworkCharacter.getId() == mCharacterList.size() && mCharacterList.contains(lastNetworkCharacter)) {
                 characterTableIsUpToDate = true;
                 lastDbCharacter = newCharacter;
+                appExecutors.diskIO().execute(() -> rmDatabase.getCharacterDao().insertCharacterList(mCharacterList));
             }
         } else if (newEntryObject.getClass() == Location.class) {
             //adds a new Location to the database
             Location newLocation = (Location) newEntryObject;
-            appExecutors.diskIO().execute(() -> rmDatabase.getLocationDao().insertLocation(newLocation));
             if (!mLocationList.contains(newLocation)) {
                 mLocationList.add(newLocation);
             }
-            if (lastNetworkLocation.getId() == mLocationList.size() && mLocationList.contains(lastNetworkLocation)) {
+            if (!locationTableIsUpToDate && lastNetworkLocation.getId() == mLocationList.size() && mLocationList.contains(lastNetworkLocation)) {
                 locationTableIsUpToDate = true;
                 lastDbLocation = newLocation;
+                appExecutors.diskIO().execute(() -> rmDatabase.getLocationDao().insertLocationList(mLocationList));
             }
         } else if (newEntryObject.getClass() == Episode.class) {
             //adds a new Episode to the database
             Episode newEpisode = (Episode) newEntryObject;
-            appExecutors.diskIO().execute(() -> rmDatabase.getEpisodeDao().insertEpisode(newEpisode));
             if (!mEpisodeList.contains(newEpisode)) {
                 mEpisodeList.add(newEpisode);
             }
-            if (lastNetworkEpisode.getId() == mEpisodeList.size() && mEpisodeList.contains(lastNetworkEpisode)) {
+            if (!episodeTableIsUpToDate && lastNetworkEpisode.getId() == mEpisodeList.size() && mEpisodeList.contains(lastNetworkEpisode)) {
                 episodeTableIsUpToDate = true;
                 lastDbEpisode = newEpisode;
+                appExecutors.diskIO().execute(() -> rmDatabase.getEpisodeDao().insertEpisodeList(mEpisodeList));
             }
         }
     }

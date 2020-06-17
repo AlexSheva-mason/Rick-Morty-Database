@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 @Dao
 public interface EpisodeDao {
     //shows list of all episodes
@@ -16,10 +18,10 @@ public interface EpisodeDao {
     @Query("SELECT * FROM Episode ORDER BY id DESC LIMIT 1")
     Episode showLastInEpisodeList();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertEpisode(Episode episode);
-
     // gets the entry count to compare databases
     @Query("SELECT COUNT(id) FROM Episode")
     int getEpisodeCount();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertEpisodeList(List<Episode> characters);
 }
