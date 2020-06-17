@@ -305,28 +305,26 @@ public class MainRepository {
     }
 
     private void addJoinEntries() {
-        appExecutors.diskIO().execute(() -> {
-            List<Character> characterList = rmDatabase.getCharacterDao().getAllCharacters();
-            for (Character character : characterList) {
-                ArrayList<Integer> episodeIds = StringParsing.parseIdsFromString(character.getEpisodeList());
-                if (episodeIds.size() > 0) {
-                    for (int episodeID : episodeIds) {
-                        appExecutors.diskIO().execute(() -> rmDatabase.getCharacterEpisodeJoinDao().insert(new CharacterEpisodeJoin(character.getId(), episodeID)));
-                    }
+        ArrayList<CharacterEpisodeJoin> characterEpisodeJoins = new ArrayList<>();
+        ArrayList<LocationCharacterJoin> locationCharacterJoins = new ArrayList<>();
+        for (Character character : mCharacterList) {
+            ArrayList<Integer> episodeIds = StringParsing.parseIdsFromString(character.getEpisodeList());
+            if (episodeIds.size() > 0) {
+                for (int episodeID : episodeIds) {
+                    characterEpisodeJoins.add(new CharacterEpisodeJoin(character.getId(), episodeID));
                 }
             }
-        });
-        appExecutors.diskIO().execute(() -> {
-            List<Location> locationList = rmDatabase.getLocationDao().getAllLocations();
-            for (Location location : locationList) {
-                ArrayList<Integer> residentsIds = StringParsing.parseIdsFromString(location.getResidentsList());
-                if (residentsIds.size() > 0) {
-                    for (int residentId : residentsIds) {
-                        appExecutors.diskIO().execute(() -> rmDatabase.getLocationCharacterJoinDao().insert(new LocationCharacterJoin(residentId, location.getId()))); }
-                    }
+        }
+        for (Location location : mLocationList) {
+            ArrayList<Integer> residentsIds = StringParsing.parseIdsFromString(location.getResidentsList());
+            if (residentsIds.size() > 0) {
+                for (int residentId : residentsIds) {
+                    locationCharacterJoins.add(new LocationCharacterJoin(residentId, location.getId()));
+                }
             }
-        });
-
+        }
+        appExecutors.diskIO().execute(() -> rmDatabase.getCharacterEpisodeJoinDao().insertCharacterEpisodeJoinList(characterEpisodeJoins));
+        appExecutors.diskIO().execute(() -> rmDatabase.getLocationCharacterJoinDao().insertLocationCharacterJoinList(locationCharacterJoins));
     }
 
     // calls the appropriate method based on search query and filter applied

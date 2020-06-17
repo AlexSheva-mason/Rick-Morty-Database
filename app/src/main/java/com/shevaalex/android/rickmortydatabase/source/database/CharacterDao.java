@@ -23,10 +23,6 @@ public interface CharacterDao {
     @Query("SELECT * FROM Character ORDER BY LENGTH(episodeList) DESC, name")
     DataSource.Factory<Integer, Character> showAllCharacters();
 
-    //returns list of all characters
-    @Query("SELECT * FROM Character ORDER BY name")
-    List<Character> getAllCharacters();
-
     //shows list of all characters with status Alive or Unknown
     @Query("SELECT * FROM Character WHERE status LIKE 'alive' OR status LIKE 'unknown' ORDER BY LENGTH(episodeList) DESC, name")
     DataSource.Factory<Integer, Character> showAllCharsNoDead();

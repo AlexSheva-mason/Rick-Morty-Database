@@ -10,8 +10,9 @@ import java.util.List;
 
 @Dao
 public interface CharacterEpisodeJoinDao {
+
     @Insert (onConflict = OnConflictStrategy.REPLACE)
-    void insert (CharacterEpisodeJoin characterEpisodeJoin);
+    void insertCharacterEpisodeJoinList (List<CharacterEpisodeJoin> characterEpisodeJoins);
 
     @Query("SELECT id, name, status, species, type, gender, originLocation, lastKnownLocation, imgUrl, episodeList FROM Character INNER JOIN CharacterEpisodeJoin ON Character.id = CharacterEpisodeJoin.characterId WHERE CharacterEpisodeJoin.episodeId=:episodeID")
     LiveData<List<Character>> getCharactersFromEpisode(int episodeID);
