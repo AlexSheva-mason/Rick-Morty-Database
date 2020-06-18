@@ -11,11 +11,14 @@
     <string name="network_error">Network error, Database might be not up to date</string>
     <string name="parse_error">Server response cannot be parsed, Database might be not up to date</string>
 
-    //Fragment CharacterListFragment Error managing
-    <string name="fragment_character_list_no_connection">No network connection</string>
-    <string name="fragment_character_list_database_up_to_date">Database is up to date</string>
-    <string name="fragment_character_list_database_sync">Updating Database</string>
-    <string name="fragment_character_list_database_not_synced">Please connect to internet for database update</string>
+    //MainActivity Error managing
+    <string name="ma_snack_no_connection">No network connection</string>
+    <string name="ma_snack_database_up_to_date">Database is up to date</string>
+    <string name="ma_snack_database_sync">Updating Database</string>
+    <string name="ma_snack_database_not_synced">Please connect to internet for database update</string>
+
+    //CharacterListFragment
+    <string name="clf_toast_no_results_query">Ooops, nothing there :(</string>
 
     //EpisodeAdapter
     <string name="episode_name_placeholder">\"%1$s\"</string>

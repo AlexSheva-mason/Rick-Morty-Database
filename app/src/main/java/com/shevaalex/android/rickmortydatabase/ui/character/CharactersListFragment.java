@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -85,7 +86,12 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel, getContext());
         characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
-        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> characterAdapter.submitList(characters));
+        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
+            characterAdapter.submitList(characters);
+            if (characters.isEmpty() && searchQuery != null) {
+                Toast.makeText(a.getApplicationContext(), R.string.clf_toast_no_results_query, Toast.LENGTH_LONG).show();
+            }
+        });
         return view;
     }
 

@@ -86,24 +86,24 @@ public class MainActivity extends AppCompatActivity {
             // database is up to date and device is connected to network
             if (pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.GONE);
-                text = getString(R.string.fragment_character_list_database_up_to_date);
+                text = getString(R.string.ma_snack_database_up_to_date);
             }
             // database is _not_ up to date and device is connected to network
             else if (!pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 characterViewModel.rmRepository.initialiseDataBase();
-                text = getString(R.string.fragment_character_list_database_sync);
+                text = getString(R.string.ma_snack_database_sync);
             }
             // database is up to date and device is _disconnected_ from network
             else if (pair.first) {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                text = getString(R.string.fragment_character_list_database_up_to_date);
+                text = getString(R.string.ma_snack_database_up_to_date);
             }
             // database is _not_ up to date and device is _disconnected_ from network
             else {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
                 snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE;
-                text = getString(R.string.fragment_character_list_database_not_synced);
+                text = getString(R.string.ma_snack_database_not_synced);
             }
             showSnackBar(text, snackBarDuration);
         });
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             mySnackbar.setTextColor(getResources().getColor(R.color.rm_white_50));
             mySnackbar.setAnchorView(binding.bottomPanel);
             mySnackbar.show();
-            if (!text.equals(getString(R.string.fragment_character_list_database_not_synced))) {
+            if (!text.equals(getString(R.string.ma_snack_database_not_synced))) {
                 snackMessages.add(text);
             }
         }
