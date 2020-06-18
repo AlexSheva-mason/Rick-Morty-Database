@@ -1,8 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.network;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -43,7 +41,6 @@ class VolleySingleton {
 
     void cancelRequests (String urlKey) {
         mRequestQueue.cancelAll(TAG);
-        Log.e("TAG", "cancelRequests key: " + urlKey);
         getRequestQueue().getCache().invalidate(urlKey, true);
     }
 

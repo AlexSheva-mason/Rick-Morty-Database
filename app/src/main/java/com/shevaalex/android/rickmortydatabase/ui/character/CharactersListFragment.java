@@ -121,9 +121,11 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterViewModel.getSearchQuery().observe(getViewLifecycleOwner(), string -> {
             searchQuery = string;
             if (string != null) {
-                searchMenuItem.expandActionView();
+                if (!searchMenuItem.isActionViewExpanded()) {
+                    searchMenuItem.expandActionView();
+                }
+                searchView.setFocusable(false);
                 searchView.clearFocus();
-                searchView.setQuery(searchQuery, false);
                 searchIsCommitted = true;
             } else {
                 searchView.setIconified(true);
@@ -133,15 +135,14 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
+                if (searchQuery != null) {
+                    searchView.post(() -> searchView.setQuery(searchQuery, false));
+                }
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                if (searchIsCommitted) {
-                    listJumpTo0();
-                    characterViewModel.setNameQuery(null);
-                }
                 return true;
             }
         });
@@ -241,6 +242,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     @Override
     public void onCharacterClick(int position, @NonNull View v) {
+        searchMenuItem.collapseActionView();
         PagedList<CharacterSmall> mCharacterList = characterAdapter.getCurrentList();
         if (mCharacterList != null && !mCharacterList.isEmpty()) {
             CharacterSmall clickedChar = mCharacterList.get(position);
