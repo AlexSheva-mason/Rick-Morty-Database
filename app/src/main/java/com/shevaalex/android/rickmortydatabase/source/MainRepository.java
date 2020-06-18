@@ -51,7 +51,7 @@ public class MainRepository {
     private final ArrayList<Location> mLocationList = new ArrayList<>();
     private final ArrayList<Episode> mEpisodeList = new ArrayList<>();
     //set LiveData to monitor database sync status via ViewModel
-    private final MutableLiveData<Boolean> dbIsUpToDate = new MutableLiveData<>();
+    private MutableLiveData<Boolean> dbIsUpToDate;
 
     private MainRepository(Application application) {
         if (sInstance != null) {
@@ -60,7 +60,6 @@ public class MainRepository {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
         this.rmDatabase = RickMortyDatabase.getInstance(application);
         this.appExecutors = AppExecutors.getInstance();
-        dbIsUpToDate.postValue(false);
         initialiseDataBase();
     }
 
@@ -76,6 +75,10 @@ public class MainRepository {
     }
 
     public LiveData<Boolean> getDatabaseIsUpToDate() {
+        if (dbIsUpToDate == null) {
+            dbIsUpToDate = new MutableLiveData<>();
+            dbIsUpToDate.setValue(false);
+        }
         return dbIsUpToDate;
     }
 
@@ -126,7 +129,7 @@ public class MainRepository {
     }
 
     private void networkInitialCall (String url) {
-        networkDataParsing.getVolleyResponce(response -> {
+        networkDataParsing.getVolleyResponse(response -> {
             try {
                 JSONObject jsonObject = response.getJSONObject(ApiCall.INFO);
                 int numberOfPages = jsonObject.getInt(ApiCall.PAGES);
@@ -138,7 +141,7 @@ public class MainRepository {
     }
 
     private void getLastEntries(final int numberOfPages, String url) {
-        networkDataParsing.getVolleyResponce(response -> {
+        networkDataParsing.getVolleyResponse(response -> {
             //get a JSONArray from the last page and fetch the last entry object
             try {
                 JSONArray jsonArray = response.getJSONArray(ApiCall.RESULTS_ARRAY);
@@ -185,14 +188,14 @@ public class MainRepository {
             }
         }
         if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-            new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 2000);
-            networkDataParsing.cancelVolleyRequests();
+            new Handler().postDelayed(() -> dbIsUpToDate.setValue(true), 1000);
+            networkDataParsing.cancelVolleyRequests(url);
         }
     }
 
     // loops through all pages and uses data to populate Database
     private void updateDataBaseEntries(final int pageNumber, String url) {
-        networkDataParsing.getVolleyResponce(response -> {
+        networkDataParsing.getVolleyResponse(response -> {
             try {
                 JSONArray jsonArray = response.getJSONArray(ApiCall.RESULTS_ARRAY);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -203,8 +206,8 @@ public class MainRepository {
                     }
                 }
                 if (characterTableIsUpToDate && locationTableIsUpToDate && episodeTableIsUpToDate) {
-                    new Handler().postDelayed(() -> dbIsUpToDate.postValue(true), 2000);
-                    networkDataParsing.cancelVolleyRequests();
+                    new Handler().postDelayed(() -> dbIsUpToDate.setValue(true), 1000);
+                    networkDataParsing.cancelVolleyRequests(url);
                     addJoinEntries();
                 }
             } catch (JSONException e) {

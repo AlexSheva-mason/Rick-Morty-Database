@@ -44,10 +44,9 @@ public class NetworkDataParsing {
     }
 
     // makes a call to get the number of pages containing Characters, and passes it to RmRepo
-    public void getVolleyResponce(final VolleyCallback callback, final String url) {
+    public void getVolleyResponse(final VolleyCallback callback, final String url) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
                     if (response != null) {
-                        //get number of pages containing Characters
                         callback.getJsonDataResponse(response);
                     }
                 }, error -> {
@@ -81,8 +80,10 @@ public class NetworkDataParsing {
         }
     }
 
-    public void cancelVolleyRequests (){
-        volleyInstance.cancelRequests();
+    //cancels Volley requests after database sync / check
+    //and invalidates last url's cache to prevent Volley returning cached requests without network connection
+    public void cancelVolleyRequests (String urlKey) {
+        volleyInstance.cancelRequests(urlKey);
     }
 
 }
