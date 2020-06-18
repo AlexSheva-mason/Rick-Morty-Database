@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,9 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
                         Intent shareIntent = new Intent();
                         shareIntent.setAction(Intent.ACTION_SEND);
                         shareIntent.setType("image/*");
+                        shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         shareIntent.putExtra(Intent.EXTRA_STREAM, ImageParsingUtil.parseBitmapToUri(bitmap, parsedName, requireContext()));
+                        Log.e("TAG", "onBitmapLoaded: " +  ImageParsingUtil.parseBitmapToUri(bitmap, parsedName, requireContext()));
                         startActivity(Intent.createChooser(shareIntent, "Share image with..."));
                     }
                     @Override
