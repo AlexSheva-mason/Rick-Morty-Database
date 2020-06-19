@@ -157,12 +157,12 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             public boolean onQueryTextSubmit(String query) {
                 listJumpTo0();
                 characterViewModel.setNameQuery(query.trim().toLowerCase());
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                return true;
             }
         });
         closeButton.setOnClickListener(v -> {

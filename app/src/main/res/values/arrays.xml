@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_theme_list_entries">
+        <item>@string/fragment_settings_theme_entry_follow_system</item>
+        <item>@string/fragment_settings_theme_entry_dark_theme</item>
+        <item>@string/fragment_settings_theme_entry_light_theme</item>
+    </array>
+    <array name="pref_theme_list_values">
+        <item>@string/fragment_settings_theme_value_follow_system</item>
+        <item>@string/fragment_settings_theme_value_dark_theme</item>
+        <item>@string/fragment_settings_theme_value_light_theme</item>
+    </array>
+
+</resources>

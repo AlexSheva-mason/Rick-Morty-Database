@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Characters database: Rick and Morty</string>
+    <string name="app_name">Characters for Rick and Morty</string>
     <string name="bottom_nav_character">Characters</string>
     <string name="bottom_nav_location">Locations</string>
     <string name="bottom_nav_episode">Episodes</string>
@@ -23,8 +23,15 @@
     //EpisodeAdapter
     <string name="episode_name_placeholder">\"%1$s\"</string>
 
-    //Setiings Fragment version prefrence
-    <string name="fragment_Setiings_version">Rick&amp;Morty Database: v</string>
+    //Setiings Fragment
+    <string name="fragment_settings_version">: v</string>
+    <string name="fragment_settings_theme_list_title">App\'s theme</string>
+    <string name="fragment_settings_theme_entry_follow_system">Follow the system</string>
+    <string name="fragment_settings_theme_entry_dark_theme">Dark theme</string>
+    <string name="fragment_settings_theme_entry_light_theme">Light theme</string>
+    <string name="fragment_settings_theme_value_follow_system">-1</string>
+    <string name="fragment_settings_theme_value_dark_theme">2</string>
+    <string name="fragment_settings_theme_value_light_theme">1</string>
 
     //CharacterImageFragment
     <string name="share_description">Share</string>

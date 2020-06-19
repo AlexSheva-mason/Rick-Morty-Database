@@ -10,9 +10,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
+
 import android.view.View;
 
 import com.shevaalex.android.rickmortydatabase.BuildConfig;
@@ -21,6 +23,7 @@ import com.shevaalex.android.rickmortydatabase.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
     private final static String KEY_THEME_SWITCH = "theme_switch";
+    private final static String KEY_THEME_LIST = "theme_list";
     private final static String KEY_VERSION = "version";
 
     public SettingsFragment() {
@@ -34,9 +37,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (switchPreference != null) {
             switchPreference.setOnPreferenceChangeListener(this);
         }
+        ListPreference listPreference = findPreference(KEY_THEME_LIST);
+        if (listPreference != null) {
+            listPreference.setOnPreferenceChangeListener(this);
+        }
         Preference versionPreference = findPreference(KEY_VERSION);
         if (versionPreference != null) {
-            versionPreference.setSummary(getString(R.string.fragment_Setiings_version) + BuildConfig.VERSION_NAME);
+            versionPreference.setSummary(getString(R.string.app_name) + getString(R.string.fragment_settings_version) + BuildConfig.VERSION_NAME);
         }
     }
 
@@ -56,11 +63,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        boolean nightModeOn = (Boolean) newValue;
-        if (nightModeOn) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        switch (preference.getKey()) {
+            case KEY_THEME_SWITCH:
+                boolean nightModeOn = (Boolean) newValue;
+                if (nightModeOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                break;
+            case KEY_THEME_LIST:
+                int value = Integer.parseInt((String) newValue);
+                AppCompatDelegate.setDefaultNightMode(value);
         }
         return true;
     }

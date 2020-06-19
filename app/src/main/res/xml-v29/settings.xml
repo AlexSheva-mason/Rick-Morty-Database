@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        app:key="theme_styles"
+        app:title="Theming">
+
+        <ListPreference
+            android:defaultValue="@string/fragment_settings_theme_value_follow_system"
+            android:entries="@array/pref_theme_list_entries"
+            android:entryValues="@array/pref_theme_list_values"
+            android:key="theme_list"
+            android:title="@string/fragment_settings_theme_list_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        app:key="help_category"
+        app:title="About">
+
+        <Preference
+            app:key="version"
+            app:summary="version here"
+            app:title="Version" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
