@@ -21,6 +21,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:id="@+id/tv_no_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/clf_no_results_query"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_character"
         android:layout_width="match_parent"

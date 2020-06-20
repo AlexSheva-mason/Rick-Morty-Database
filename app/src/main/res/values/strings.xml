@@ -18,7 +18,7 @@
     <string name="ma_snack_database_not_synced">Please connect to internet for database update</string>
 
     //CharacterListFragment
-    <string name="clf_toast_no_results_query">Ooops, nothing there :(</string>
+    <string name="clf_no_results_query">Oops, nothing found :(</string>
 
     //EpisodeAdapter
     <string name="episode_name_placeholder">\"%1$s\"</string>
