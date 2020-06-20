@@ -8,7 +8,7 @@ App is created using Android Jetpack library and Material Design library.
 ## App design and architecture
 Project is based on MVVM architecture, written in Java.
 Android Jetpack Architecture Components used:
-- VieModel
+- ViewModel
 - LiveData
 - Room
 - ViewBinding 
