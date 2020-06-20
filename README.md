@@ -13,9 +13,9 @@ Android Jetpack Architecture Components used:
 - Room
 - ViewBinding 
 - Navigation component (Single Activity - many Fragments)
-- Paging
+- Paging v2
 
-App is using components from Material Design library: BottomNavigationView, AppBarLayout, CollapsingToolbarLayout. Theming is implemented in this project using Dark and Light theme with custom styles and text appearance following modern design practices.
+App is using components from Material Design library: BottomNavigationView, AppBarLayout, CollapsingToolbarLayout. Theming is implemented using Dark and Light theme with custom styles and text appearance following modern design practices.
 This project supports responsive layouts on phones (multi-layout screens for tablets are not yet implemented).
 
 ## Credits
