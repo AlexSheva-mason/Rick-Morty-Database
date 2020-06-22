@@ -2,14 +2,19 @@ package com.shevaalex.android.rickmortydatabase;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.StrictMode;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
+import java.util.Locale;
+
 public class RmApplication extends Application {
     private static final String LIST_PREFERENCE_KEY = "theme_list";
+    public static String defSystemLanguage;
 
     @Override
     public void onCreate() {
@@ -30,7 +35,13 @@ public class RmApplication extends Application {
                     .penaltyDeath()
                     .build());
         }
-        super.onCreate();
+        defSystemLanguage = Locale.getDefault().getLanguage();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        defSystemLanguage = newConfig.locale.getLanguage();
     }
 
     //get saved preferences or set default theme if none stored

@@ -1,6 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.source;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
@@ -8,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.shevaalex.android.rickmortydatabase.RmApplication;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
@@ -26,11 +28,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class MainRepository {
     private static final Object LOCK = new Object();
+    private Context context;
     private final NetworkDataParsing networkDataParsing;
     private final RickMortyDatabase rmDatabase;
     private final AppExecutors appExecutors;
@@ -60,6 +64,7 @@ public class MainRepository {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
         this.rmDatabase = RickMortyDatabase.getInstance(application);
         this.appExecutors = AppExecutors.getInstance();
+        this.context = application.getApplicationContext();
         initialiseDataBase();
     }
 
@@ -260,6 +265,9 @@ public class MainRepository {
                 try {
                     int id = entryObjectJson.getInt(ApiCall.ApiCallCharacterKeys.CHARACTER_ID);
                     String name = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_NAME);
+                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
+                        name = StringParsing.returnNameLocale(context, id);
+                    }
                     String status = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_STATUS);
                     String species = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_SPECIES);
                     String type = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);

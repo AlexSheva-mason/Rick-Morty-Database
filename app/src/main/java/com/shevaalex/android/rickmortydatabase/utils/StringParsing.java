@@ -1,5 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.utils;
 
+import android.content.Context;
+
 import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
 
 import java.util.ArrayList;
@@ -34,7 +36,17 @@ public abstract class StringParsing {
     }
 
     public static String parseCharacterName (String characterName) {
-        return (characterName.trim().replace(" ", "_") + "_");
+        return (characterName.trim().replaceAll("\\s", "_") + "_");
+    }
+
+    public static String returnNameLocale (Context context, int id) {
+        String characterIdToMatch = "id_" + id;
+        try {
+            int resId = context.getResources().getIdentifier(characterIdToMatch, "string" , context.getPackageName());
+            return context.getResources().getString(resId);
+        } catch(Exception e){
+            return null;
+        }
     }
 }
 
