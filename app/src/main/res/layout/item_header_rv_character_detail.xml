@@ -104,7 +104,6 @@
                 android:maxLines="1"
                 android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                app:autoSizeMaxTextSize="20sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeStepGranularity="1sp"
                 app:autoSizeTextType="uniform"

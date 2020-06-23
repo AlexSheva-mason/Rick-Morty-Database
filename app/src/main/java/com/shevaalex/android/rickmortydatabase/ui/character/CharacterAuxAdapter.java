@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterSmallBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
-import com.shevaalex.android.rickmortydatabase.utils.CharacterAdapterUtil;
+import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -62,10 +62,10 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
             holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
             if (!currentCharacter.getStatus().equals("unknown")) {
-                int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
+                int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.binding.characterStatusValue.setTextColor(color);
             } else {
-                holder.binding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+                holder.binding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
             }
         }
     }

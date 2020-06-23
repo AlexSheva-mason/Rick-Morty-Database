@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    //CharacterDetailFragment toolbar
+    <dimen name="cdf_toolbar_expanded_title_text_spacing">-15dp</dimen>
+
     //CharacterDetailFragment header item
     <dimen name="item_header_names_left_margin">8dp</dimen>
 
     //CharacterDetailFragment item
     <dimen name="item_character_name_padding_start">4dp</dimen>
     <dimen name="item_character_name_padding_end">2dp</dimen>
-    <dimen name="item_character_name_min_text_size">14dp</dimen>
-    <dimen name="item_character_name_max_text_size">17dp</dimen>
 
     //Episode item grid spacing
     <dimen name="item_episode_image_width">100dp</dimen>

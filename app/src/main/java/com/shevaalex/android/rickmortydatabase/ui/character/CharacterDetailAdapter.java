@@ -15,7 +15,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.ItemHeaderRvCharacter
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
-import com.shevaalex.android.rickmortydatabase.utils.CharacterAdapterUtil;
+import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -85,10 +85,10 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
                 headerViewHolder.binding.characterStatusValue.setText(headerCharacter.getStatus());
                 if (!headerCharacter.getStatus().equals("unknown")) {
-                    int color = CharacterAdapterUtil.getStatusColour(headerCharacter.getStatus(), context);
+                    int color = TextColourUtil.getStatusColour(headerCharacter.getStatus(), context);
                     headerViewHolder.binding.characterStatusValue.setTextColor(color);
                 } else {
-                    headerViewHolder.binding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+                    headerViewHolder.binding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
                 }
                 headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
                 headerViewHolder.binding.characterGenderValue.setText(headerCharacter.getGender());

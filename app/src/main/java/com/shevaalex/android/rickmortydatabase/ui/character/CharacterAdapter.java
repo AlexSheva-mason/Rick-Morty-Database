@@ -16,7 +16,7 @@ import com.shevaalex.android.rickmortydatabase.R;
 
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
-import com.shevaalex.android.rickmortydatabase.utils.CharacterAdapterUtil;
+import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
 import com.squareup.picasso.Picasso;
 
 
@@ -70,13 +70,13 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
             holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
             if (!currentCharacter.getStatus().equals("unknown")) {
-                int color = CharacterAdapterUtil.getStatusColour(currentCharacter.getStatus(), context);
+                int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.characterItemBinding.characterStatusValue.setTextColor(color);
             } else {
                 if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    holder.characterItemBinding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+                    holder.characterItemBinding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
                 } else {
-                    holder.characterItemBinding.characterStatusValue.setTextColor(CharacterAdapterUtil.fetchThemeColor(R.attr.colorOnPrimary, context));
+                    holder.characterItemBinding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnPrimary, context));
                 }
             }
             if (viewModel != null && holder.characterItemBinding.characterLastLocationValue != null) {

@@ -30,79 +30,92 @@
     </style>
 
     <style name="TextAppearance.RM.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">100sp</item>
     </style>
 
     <style name="TextAppearance.RM.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">62sp</item>
     </style>
 
     <style name="TextAppearance.RM.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">50sp</item>
     </style>
 
     <style name="TextAppearance.RM.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">35sp</item>
     </style>
 
     <style name="TextAppearance.RM.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="TextAppearance.RM.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">21sp</item>
     </style>
 
     <style name="TextAppearance.RM.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextAppearance.RM.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextAppearance.RM.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="TextAppearance.RM.Body2" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextAppearance.RM.Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextAppearance.RM.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="TextAppearance.RM.Overline" parent="TextAppearance.MaterialComponents.Overline">
-        <item name="fontFamily">@font/underdog_regular</item>
-        <item name="android:fontFamily">@font/underdog_regular</item>
+        <item name="fontFamily">@font/neucha_regular</item>
+        <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
 

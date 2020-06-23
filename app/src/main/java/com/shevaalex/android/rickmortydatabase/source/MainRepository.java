@@ -265,9 +265,6 @@ public class MainRepository {
                 try {
                     int id = entryObjectJson.getInt(ApiCall.ApiCallCharacterKeys.CHARACTER_ID);
                     String name = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_NAME);
-                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
-                        name = StringParsing.returnNameLocale(context, id);
-                    }
                     String status = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_STATUS);
                     String species = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_SPECIES);
                     String type = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);
@@ -281,6 +278,13 @@ public class MainRepository {
                     JSONObject lastKnownLoc = entryObjectJson.getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
                     String lastKnownLocString = lastKnownLoc.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
                     int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
+                    //check device locale and make changes accordingly
+                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
+                        name = StringParsing.returnCharacterNameLocale(context, id);
+                        status = StringParsing.returnStatusLocale(context, gender, status);
+                        gender = StringParsing.returnGenderLocale(context, gender);
+                        species = StringParsing.returnSpeciesLocale(context, species);
+                    }
                     // Return a Character object
                     return new Character(id, name, status, species, type, gender, originLocId,
                             lastKnownLocId, imgUrl, episodeList);
@@ -295,6 +299,12 @@ public class MainRepository {
                     String type = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_TYPE);
                     String dimension = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
                     String residents = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS);
+                    //check device locale and make changes accordingly
+                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
+                        name = StringParsing.returnLocationNameLocale(context, id);
+                        type = StringParsing.returnTypeLocale(context, type);
+                        dimension = StringParsing.returnDimensionLocale(context, dimension);
+                    }
                     return new Location(id, name, type, dimension, residents);
                 } catch (JSONException e) {
                     e.printStackTrace();
