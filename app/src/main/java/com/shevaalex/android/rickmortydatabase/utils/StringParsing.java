@@ -19,22 +19,18 @@ public abstract class StringParsing {
     private static final String LOCATION_RES_KEY = "location_";
     private static final String EPISODE_RES_KEY = "episode_";
 
+    public static String returnStringOfIds (String string) {
+        return string.replaceAll("[a-zA-Z:\\\\/.\"\\[\\]]", "");
+    }
 
-    public static ArrayList<Integer> parseIdsFromString(String stringWirhUrls) {
+
+    public static ArrayList<Integer> parseIdsFromString(String stringUnSplit) {
         ArrayList<Integer> parsedIdList = new ArrayList<>();
-        if (stringWirhUrls.contains(",")) {
-            String[] splitArray = stringWirhUrls.split(",");
-            for (String arrayElement : splitArray) {
-                int slashIndex = arrayElement.lastIndexOf("/");
-                int quoteIndex = arrayElement.lastIndexOf("\"");
-                int parsedId = Integer.parseInt(arrayElement.substring(slashIndex+1, quoteIndex));
-                parsedIdList.add(parsedId);
+        String[] splitArray = stringUnSplit.split(",");
+        for (String arrayElement : splitArray) {
+            if (!arrayElement.isEmpty()) {
+                parsedIdList.add(Integer.parseInt(arrayElement));
             }
-        } else if (stringWirhUrls.contains("/")){
-            int slashIndex = stringWirhUrls.lastIndexOf("/");
-            int quoteIndex = stringWirhUrls.lastIndexOf("\"");
-            int parsedId = Integer.parseInt(stringWirhUrls.substring(slashIndex+1, quoteIndex));
-            parsedIdList.add(parsedId);
         }
         return parsedIdList;
     }
@@ -117,8 +113,7 @@ public abstract class StringParsing {
     }
 
     public static String returnTypeLocale (Context context, String type) {
-        String typeToMatch = LOCATION_RES_KEY + type.replaceAll("\\s", "_").replaceAll("\\(", "_")
-                .replaceAll("\\)", "_");
+        String typeToMatch = LOCATION_RES_KEY + type.replaceAll("[\\s()\\\\]", "_");
         try {
             int resId = context.getResources().getIdentifier(typeToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
@@ -131,8 +126,7 @@ public abstract class StringParsing {
         if (dimension.contains("J19ζ7")) {
             return "J19ζ7";
         }
-        String dimensionToMatch = LOCATION_RES_KEY + dimension.replaceAll("\\s", "_").replaceAll("\\(", "_")
-                .replaceAll("\\)", "_").replaceAll("'", "_").replaceAll("-", "_");
+        String dimensionToMatch = LOCATION_RES_KEY + dimension.replaceAll("[\\s()\\\\'-]", "_");
         try {
             int resId = context.getResources().getIdentifier(dimensionToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
@@ -152,8 +146,7 @@ public abstract class StringParsing {
     }
 
     public static String returnEpisodeAirDate (Context context, String airDate) {
-        String monthToMatch = EPISODE_RES_KEY + airDate.replaceAll("[0-9]", "")
-                .replaceAll("\\s", "").replaceAll(",", "").toLowerCase();
+        String monthToMatch = EPISODE_RES_KEY + airDate.replaceAll("[0-9\\s,]", "").toLowerCase();
         try {
             int resId = context.getResources().getIdentifier(monthToMatch, "string" , context.getPackageName());
             String monthTranslated = context.getResources().getString(resId);

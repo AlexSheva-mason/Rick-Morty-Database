@@ -185,6 +185,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 return true;
             }
             if (item.getItemId() == R.id.settingsFragment) {
+                searchMenuItem.collapseActionView();
                 navController.navigate(CharactersListFragmentDirections.toSettingsFragment());
                 return true;
             }

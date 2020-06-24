@@ -155,18 +155,20 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                     if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
                         binding.toolbarTitle.setVisibility(View.GONE);
                     }
+                    binding.toolbarFragmentCharacterDetail.setNavigationIcon(R.drawable.ic_baseline_arrow_back);
                     binding.collapsingToolbarLayout.setTitleEnabled(true);
                 } else if (verticalOffset == 0) {
                     // Fully expanded
                     binding.toolbarFragmentCharacterDetail.setTitle(null);
                     binding.collapsingToolbarLayout.setTitleEnabled(false);
                     binding.toolbarTitle.setVisibility(View.VISIBLE);
+                    binding.toolbarFragmentCharacterDetail.setNavigationIcon(R.drawable.ic_back_arrw);
                 } else {
                     // Not fully expanded not collapsed
                     if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
                         new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),250);
-                        //binding.toolbarFragmentCharacterDetail.setNavigationIcon(R.drawable.ic_search);
                     }
+                    binding.toolbarFragmentCharacterDetail.setNavigationIcon(R.drawable.ic_back_arrw);
                     binding.toolbarFragmentCharacterDetail.setTitle(null);
                     binding.collapsingToolbarLayout.setTitleEnabled(false);
                 }

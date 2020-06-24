@@ -1,3 +1,4 @@
 /build
 build.gradle
 /release/
+/src/main/res/values-ru/strings.xml

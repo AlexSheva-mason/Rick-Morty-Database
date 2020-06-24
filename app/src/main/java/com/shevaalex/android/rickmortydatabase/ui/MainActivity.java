@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setupViews();
         monitorConnectionAndDatabase();
+        //reinit database if locale has been changed
         if (!defSystemLanguage.equals(RmApplication.defSystemLanguage)) {
             defSystemLanguage = RmApplication.defSystemLanguage;
             characterViewModel.rmRepository.initialiseDataBase();

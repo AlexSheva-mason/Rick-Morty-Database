@@ -69,7 +69,7 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
             }
             holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
-            if (!currentCharacter.getStatus().equals("unknown")) {
+            if (!currentCharacter.getStatus().equals(context.getResources().getString(R.string.species_unknown))) {
                 int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.characterItemBinding.characterStatusValue.setTextColor(color);
             } else {

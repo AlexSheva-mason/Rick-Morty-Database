@@ -40,7 +40,6 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:textAppearance="?attr/textAppearanceHeadline6"
-                    app:autoSizeMaxTextSize="20sp"
                     app:autoSizeMinTextSize="10sp"
                     app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform"

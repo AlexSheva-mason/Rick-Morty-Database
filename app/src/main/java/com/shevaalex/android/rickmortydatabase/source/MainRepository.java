@@ -277,7 +277,7 @@ public class MainRepository {
                     String type = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);
                     String gender = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_GENDER);
                     String imgUrl = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
-                    String episodeList = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST);
+                    String episodeList = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST));
                     // Parse last known and origin locations strings to retreive IDs
                     JSONObject originLocation = entryObjectJson.getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION);
                     String originLocString = originLocation.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
@@ -305,7 +305,7 @@ public class MainRepository {
                     String name = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_NAME);
                     String type = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_TYPE);
                     String dimension = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
-                    String residents = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS);
+                    String residents = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
                     //check device locale and make changes accordingly
                     if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
                         name = StringParsing.returnLocationNameLocale(context, id);
@@ -323,7 +323,7 @@ public class MainRepository {
                     String name = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_NAME);
                     String airDate = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
                     String code = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
-                    String characters = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS);
+                    String characters = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
                     //check device locale and make changes accordingly
                     if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
                         name = StringParsing.returnEpisodeNameLocale(context, id);

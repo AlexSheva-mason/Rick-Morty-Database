@@ -3,7 +3,7 @@
     <style name="Widget.RM.TextView.Toolbar.Title" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
         <item name="autoSizeTextType">uniform</item>
         <item name="autoSizeMinTextSize">10sp</item>
         <item name="autoSizeMaxTextSize">24sp</item>

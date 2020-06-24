@@ -84,7 +84,7 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     headerViewHolder.binding.imageCharacterToolbar.setOnClickListener(viewOnClickListener);
                 }
                 headerViewHolder.binding.characterStatusValue.setText(headerCharacter.getStatus());
-                if (!headerCharacter.getStatus().equals("unknown")) {
+                if (!headerCharacter.getStatus().equals(context.getResources().getString(R.string.species_unknown))) {
                     int color = TextColourUtil.getStatusColour(headerCharacter.getStatus(), context);
                     headerViewHolder.binding.characterStatusValue.setTextColor(color);
                 } else {
