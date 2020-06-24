@@ -17,6 +17,7 @@ public abstract class StringParsing {
     private static final String CHARACTER_RES_KEY = "character_";
     private static final String SPECIES_RES_KEY = "species_";
     private static final String LOCATION_RES_KEY = "location_";
+    private static final String EPISODE_RES_KEY = "episode_";
 
 
     public static ArrayList<Integer> parseIdsFromString(String stringWirhUrls) {
@@ -138,6 +139,30 @@ public abstract class StringParsing {
         } catch(Exception e){
             return "null";
         }
+    }
+
+    public static String returnEpisodeNameLocale (Context context, int id) {
+        String episodeIdToMatch = EPISODE_RES_KEY + id;
+        try {
+            int resId = context.getResources().getIdentifier(episodeIdToMatch, "string" , context.getPackageName());
+            return context.getResources().getString(resId);
+        } catch(Exception e){
+            return "null";
+        }
+    }
+
+    public static String returnEpisodeAirDate (Context context, String airDate) {
+        String monthToMatch = EPISODE_RES_KEY + airDate.replaceAll("[0-9]", "")
+                .replaceAll("\\s", "").replaceAll(",", "").toLowerCase();
+        try {
+            int resId = context.getResources().getIdentifier(monthToMatch, "string" , context.getPackageName());
+            String monthTranslated = context.getResources().getString(resId);
+            String[] splitDate = airDate.replaceAll("[a-zA-Z]", "").split(",");
+            return splitDate[0] + " " + monthTranslated + splitDate[1];
+        } catch(Exception e){
+            return "null";
+        }
+
     }
 }
 

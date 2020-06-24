@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.shevaalex.android.rickmortydatabase.R;
+import com.shevaalex.android.rickmortydatabase.RmApplication;
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
 import com.shevaalex.android.rickmortydatabase.ui.character.CharacterViewModel;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean backPressedOnce;
     private BottomNavViewModel botNavViewModel;
     private CharacterViewModel characterViewModel;
+    private static String defSystemLanguage = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setupViews();
         monitorConnectionAndDatabase();
+        if (!defSystemLanguage.equals(RmApplication.defSystemLanguage)) {
+            defSystemLanguage = RmApplication.defSystemLanguage;
+            characterViewModel.rmRepository.initialiseDataBase();
+        }
     }
 
     @Override

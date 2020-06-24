@@ -12,11 +12,11 @@
     <string name="fragment_location_list">List of Locations</string>
 
     //Volley Error managing
-    <string name="timeout_or_no_connection">Request timed out or bad connection, Database might be not up to date</string>
-    <string name="auth_fail">Authentication Failure while performing the request, Database might be not up to date</string>
-    <string name="server_error">Server error, Database might be not up to date</string>
-    <string name="network_error">Network error, Database might be not up to date</string>
-    <string name="parse_error">Server response cannot be parsed, Database might be not up to date</string>
+    <string name="timeout_or_no_connection" translatable="false">Request timed out or bad connection, Database might be not up to date</string>
+    <string name="auth_fail" translatable="false">Authentication Failure while performing the request, Database might be not up to date</string>
+    <string name="server_error" translatable="false">Server error, Database might be not up to date</string>
+    <string name="network_error" translatable="false">Network error, Database might be not up to date</string>
+    <string name="parse_error" translatable="false">Server response cannot be parsed, Database might be not up to date</string>
 
     //MainActivity Error managing
     <string name="ma_snack_no_connection">No network connection</string>
@@ -26,13 +26,18 @@
 
     //CharacterListFragment
     <string name="clf_no_results_query">Oops, nothing found :(</string>
+    <string name="clf_searchview_query_hint">Enter your query…</string>
 
     //EpisodeAdapter
-    <string name="episode_name_placeholder">\"%1$s\"</string>
+    <string name="episode_name_placeholder" translatable="false">\"%1$s\"</string>
 
     //Setiings Fragment
-    <string name="fragment_settings_version">: v</string>
+    <string name="fragment_settings_preference_category_theme">Theming</string>
     <string name="fragment_settings_theme_list_title">App\'s theme</string>
+    <string name="fragment_settings_theme_switch_title">Enable dark theme</string>
+    <string name="fragment_settings_preference_category_help">About</string>
+    <string name="fragment_settings_preference_version">Version</string>
+    <string name="fragment_settings_version" translatable="false">: v</string>
     <string name="fragment_settings_theme_entry_follow_system">Follow the system</string>
     <string name="fragment_settings_theme_entry_dark_theme">Dark theme</string>
     <string name="fragment_settings_theme_entry_light_theme">Light theme</string>
@@ -48,7 +53,7 @@
     <string name="item_search">Search</string>
     <string name="item_settings">Settings</string>
     <string name="item_filter">Do not show dead</string>
-    <string name="item_overflow">Overflow</string>
+    <string name="item_overflow" translatable="false">Overflow</string>
 
     //Layout view names and descriptions
     <string name="img_character_description">Character image</string>
@@ -850,4 +855,56 @@
     <string name="location_Wasp_Dimension">Wasp_Dimension</string>
     <string name="location_Tusk_Dimension">Tusk_Dimension</string>
     <string name="location_Magic_Dimension">Magic_Dimension</string>
+
+    //Episode locale
+    <string name="episode_1">Pilot</string>
+    <string name="episode_2">Lawnmower Dog</string>
+    <string name="episode_3">Anatomy Park</string>
+    <string name="episode_4">M. Night Shaym-Aliens!</string>
+    <string name="episode_5">Meeseeks and Destroy</string>
+    <string name="episode_6">Rick Potion #9</string>
+    <string name="episode_7">Raising Gazorpazorp</string>
+    <string name="episode_8">Rixty Minutes</string>
+    <string name="episode_9">Something Ricked This Way Comes</string>
+    <string name="episode_10">Close Rick-counters of the Rick Kind</string>
+    <string name="episode_11">Ricksy Business</string>
+    <string name="episode_12">A Rickle in Time</string>
+    <string name="episode_13">Mortynight Run</string>
+    <string name="episode_14">Auto Erotic Assimilation</string>
+    <string name="episode_15">Total Rickall</string>
+    <string name="episode_16">Get Schwifty</string>
+    <string name="episode_17">The Ricks Must Be Crazy</string>
+    <string name="episode_18">Big Trouble in Little Sanchez</string>
+    <string name="episode_19">Interdimensional Cable 2: Tempting Fate</string>
+    <string name="episode_20">Look Whos Purging Now</string>
+    <string name="episode_21">The Wedding Squanchers</string>
+    <string name="episode_22">The Rickshank Rickdemption</string>
+    <string name="episode_23">Rickmancing the Stone</string>
+    <string name="episode_24">Pickle Rick</string>
+    <string name="episode_25">Vindicators 3: The Return of Worldender</string>
+    <string name="episode_26">The Whirly Dirly Conspiracy</string>
+    <string name="episode_27">Rest and Ricklaxation</string>
+    <string name="episode_28">The Ricklantis Mixup</string>
+    <string name="episode_29">Mortys Mind Blowers</string>
+    <string name="episode_30">The ABCs of Beth</string>
+    <string name="episode_31">The Rickchurian Mortydate</string>
+    <string name="episode_32">Edge of Tomorty: Rick, Die, Rickpeat</string>
+    <string name="episode_33">The Old Man and the Seat</string>
+    <string name="episode_34">One Crew Over the Crewcoos Morty</string>
+    <string name="episode_35">Claw and Hoarder: Special Ricktims Morty</string>
+    <string name="episode_36">Rattlestar Ricklactica</string>
+
+    //Episode air month
+    <string name="episode_january">january</string>
+    <string name="episode_february">february</string>
+    <string name="episode_march">march</string>
+    <string name="episode_april">april</string>
+    <string name="episode_may">may</string>
+    <string name="episode_june">june</string>
+    <string name="episode_july">july</string>
+    <string name="episode_august">august</string>
+    <string name="episode_september">septemper</string>
+    <string name="episode_october">october</string>
+    <string name="episode_november">november</string>
+    <string name="episode_december">december</string>
 </resources>

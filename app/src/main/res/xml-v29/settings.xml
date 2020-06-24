@@ -5,7 +5,7 @@
     <PreferenceCategory
         android:layout="@layout/preferences_category"
         app:key="theme_styles"
-        app:title="Theming">
+        app:title="@string/fragment_settings_preference_category_theme">
 
         <ListPreference
             android:defaultValue="@string/fragment_settings_theme_value_follow_system"
@@ -20,12 +20,12 @@
     <PreferenceCategory
         android:layout="@layout/preferences_category"
         app:key="help_category"
-        app:title="About">
+        app:title="@string/fragment_settings_preference_category_help">
 
         <Preference
             app:key="version"
             app:summary="version here"
-            app:title="Version" />
+            app:title="@string/fragment_settings_preference_version" />
 
     </PreferenceCategory>
 

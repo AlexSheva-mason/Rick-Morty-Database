@@ -113,7 +113,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         filterCheckBox = toolbar.getMenu().findItem(R.id.filter_button);
         searchMenuItem = toolbar.getMenu().findItem(R.id.search_button);
         searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setQueryHint("Enter your query...");
+        searchView.setQueryHint(a.getApplicationContext().getResources().getString(R.string.clf_searchview_query_hint));
         AutoCompleteTextView searchText = searchView.findViewById(R.id.search_src_text);
         searchText.setTextAppearance(getContext(), R.style.TextAppearance_RM_SearchView_Hint);
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);

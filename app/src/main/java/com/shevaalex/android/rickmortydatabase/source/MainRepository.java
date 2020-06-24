@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.RmApplication;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
@@ -51,9 +52,9 @@ public class MainRepository {
     private boolean characterTableIsUpToDate;
     private boolean locationTableIsUpToDate;
     private boolean episodeTableIsUpToDate;
-    private final ArrayList<Character> mCharacterList = new ArrayList<>();
-    private final ArrayList<Location> mLocationList = new ArrayList<>();
-    private final ArrayList<Episode> mEpisodeList = new ArrayList<>();
+    private ArrayList<Character> mCharacterList;
+    private ArrayList<Location> mLocationList;
+    private ArrayList<Episode> mEpisodeList;
     //set LiveData to monitor database sync status via ViewModel
     private MutableLiveData<Boolean> dbIsUpToDate;
 
@@ -89,6 +90,9 @@ public class MainRepository {
 
     // calls a method to check if database sync/initialisation is needed and fetch data if necessary
     public void initialiseDataBase() {
+        mCharacterList = new ArrayList<>();
+        mLocationList = new ArrayList<>();
+        mEpisodeList = new ArrayList<>();
         fetchLastDbEntries();
         String [] baseUrlArray = {ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES,
                 ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES, ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES};
@@ -169,6 +173,7 @@ public class MainRepository {
             if (lastNetworkCharacter.equals(lastDbCharacter) && lastNetworkCharacter.getId() == characterEntriesDbCount) {
                 characterTableIsUpToDate = true;
             } else {
+                characterTableIsUpToDate = false;
                 for (int x = 1; x < numberOfPages + 1; x++) {
                     updateDataBaseEntries(x, url);
                 }
@@ -178,6 +183,7 @@ public class MainRepository {
             if (lastNetworkLocation.equals(lastDbLocation) && lastNetworkLocation.getId() == locationEntriesDbCount) {
                 locationTableIsUpToDate = true;
             } else {
+                locationTableIsUpToDate = false;
                 for (int x = 1; x < numberOfPages + 1; x++) {
                     updateDataBaseEntries(x, url);
                 }
@@ -187,6 +193,7 @@ public class MainRepository {
             if (lastNetworkEpisode.equals(lastDbEpisode) && lastNetworkEpisode.getId() == episodeEntriesDbCount) {
                 episodeTableIsUpToDate = true;
             } else {
+                episodeTableIsUpToDate = false;
                 for (int x = 1; x < numberOfPages + 1; x++) {
                     updateDataBaseEntries(x, url);
                 }
@@ -317,6 +324,11 @@ public class MainRepository {
                     String airDate = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
                     String code = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
                     String characters = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS);
+                    //check device locale and make changes accordingly
+                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
+                        name = StringParsing.returnEpisodeNameLocale(context, id);
+                        airDate = StringParsing.returnEpisodeAirDate(context, airDate);
+                    }
                     return new Episode(id, name, airDate, code, characters);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -352,13 +364,15 @@ public class MainRepository {
     // calls the appropriate method based on search query and filter applied
     public LiveData<PagedList<CharacterSmall>> getCharacterListFiltered(String query, int filter) {
         LiveData<PagedList<CharacterSmall>> mCharacterList = new LiveData<PagedList<CharacterSmall>>() {};
+        String [] notDeadStatus = {context.getResources().getString(R.string.character_status_alive_female),
+                context.getResources().getString(R.string.character_status_alive_male), context.getResources().getString(R.string.species_unknown)};
         if (query == null || query.equals("")) {
             switch (filter) {
                 case 0:
                     mCharacterList = getAllCharacters();
                     break;
                 case 101:
-                    mCharacterList = getAllCharsNoDead();
+                    mCharacterList = getAllCharsNoDead(notDeadStatus);
                     break;
             }
         } else {
@@ -367,7 +381,7 @@ public class MainRepository {
                     mCharacterList = searchInCharacters(query);
                     break;
                 case 101:
-                    mCharacterList = searchInCharactersNoDead(query);
+                    mCharacterList = searchInCharactersNoDead(query, notDeadStatus);
                     break;
             }
         }
@@ -381,8 +395,8 @@ public class MainRepository {
     }
 
     //gets all characters, excludes Dead
-    private LiveData<PagedList<CharacterSmall>> getAllCharsNoDead() {
-        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().showAllCharsNoDead(), 50).setFetchExecutor(appExecutors.diskIO()).build();
+    private LiveData<PagedList<CharacterSmall>> getAllCharsNoDead(String[] notDeadStatus) {
+        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().showAllCharsNoDead(notDeadStatus), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
     //performs search by name in database, shows all
@@ -391,8 +405,8 @@ public class MainRepository {
     }
 
     //performs search by name in database, excludes Dead
-    private LiveData<PagedList<CharacterSmall>> searchInCharactersNoDead(String query) {
-        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().searchInCharacterListNoDead("%" + query + "%"), 50).setFetchExecutor(appExecutors.diskIO()).build();
+    private LiveData<PagedList<CharacterSmall>> searchInCharactersNoDead(String query, String[] notDeadStatus) {
+        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().searchInCharacterListNoDead("%" + query + "%", notDeadStatus), 50).setFetchExecutor(appExecutors.diskIO()).build();
     }
 
     //gets a character by id

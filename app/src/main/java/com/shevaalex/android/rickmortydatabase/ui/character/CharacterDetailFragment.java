@@ -147,7 +147,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
             binding.toolbarTitle.setVisibility(View.GONE);
             binding.toolbarTitle.setText(headerCharacter.getName());
         }
-        // manage custom collapsed/expanded title state
+        // manage custom collapsed/expanded title state and icon
         if (binding.appbarLayout != null && binding.collapsingToolbarLayout!= null && binding.toolbarFragmentCharacterDetail != null) {
             binding.appbarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
                 if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
@@ -165,6 +165,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                     // Not fully expanded not collapsed
                     if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
                         new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),250);
+                        //binding.toolbarFragmentCharacterDetail.setNavigationIcon(R.drawable.ic_search);
                     }
                     binding.toolbarFragmentCharacterDetail.setTitle(null);
                     binding.collapsingToolbarLayout.setTitleEnabled(false);
