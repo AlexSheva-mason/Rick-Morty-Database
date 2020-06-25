@@ -93,6 +93,9 @@ public class MainRepository {
         mCharacterList = new ArrayList<>();
         mLocationList = new ArrayList<>();
         mEpisodeList = new ArrayList<>();
+        characterTableIsUpToDate = false;
+        locationTableIsUpToDate = false;
+        episodeTableIsUpToDate = false;
         fetchLastDbEntries();
         String [] baseUrlArray = {ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES,
                 ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES, ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES};
@@ -359,6 +362,10 @@ public class MainRepository {
         }
         appExecutors.diskIO().execute(() -> rmDatabase.getCharacterEpisodeJoinDao().insertCharacterEpisodeJoinList(characterEpisodeJoins));
         appExecutors.diskIO().execute(() -> rmDatabase.getLocationCharacterJoinDao().insertLocationCharacterJoinList(locationCharacterJoins));
+    }
+
+    public void dropAllTables() {
+        appExecutors.diskIO().execute(rmDatabase::clearAllTables);
     }
 
     // calls the appropriate method based on search query and filter applied

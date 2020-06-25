@@ -10,6 +10,10 @@ import java.util.List;
 
 @Dao
 public interface EpisodeDao {
+    //drops the table
+    @Query("DELETE FROM Episode")
+    void dropTable();
+
     //shows list of all episodes
     @Query("SELECT * FROM Episode ORDER BY code")
     DataSource.Factory<Integer, Episode> showAllEpisodes();

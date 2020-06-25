@@ -74,7 +74,7 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
                         shareIntent.setType("image/*");
                         shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         shareIntent.putExtra(Intent.EXTRA_STREAM, ImageParsingUtil.parseBitmapToUri(bitmap, parsedName, requireContext()));
-                        startActivity(Intent.createChooser(shareIntent, "Share image with..."));
+                        startActivity(Intent.createChooser(shareIntent, v.getContext().getResources().getString(R.string.share_title)));
                     }
                     @Override
                     public void onBitmapFailed(Exception e, Drawable errorDrawable) {

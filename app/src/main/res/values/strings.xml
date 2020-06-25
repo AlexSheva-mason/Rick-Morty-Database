@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Characters from Rick and Morty</string>
 
+    //Main Activity
+    <string name="toast_close_message">Tap BACK again to exit</string>
+
     //Bottom Navigation
     <string name="bottom_nav_character">Characters</string>
     <string name="bottom_nav_location">Locations</string>
@@ -48,6 +51,7 @@
     //CharacterImageFragment
     <string name="share_description">Share</string>
     <string name="error_share_no_network">Sharing failed, please check your internet connection</string>
+    <string name="share_title">Share image with…</string>
 
     //App Bar
     <string name="item_search">Search</string>

@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -15,11 +16,11 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.RmApplication;
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
 import com.shevaalex.android.rickmortydatabase.ui.character.CharacterViewModel;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static ArrayList<String> snackMessages = new ArrayList<>();
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean backPressedOnce;
     private BottomNavViewModel botNavViewModel;
     private CharacterViewModel characterViewModel;
-    private static String defSystemLanguage = "";
+    private static String defSystemLanguage = Locale.getDefault().getLanguage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setupViews();
         monitorConnectionAndDatabase();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
         //reinit database if locale has been changed
-        if (!defSystemLanguage.equals(RmApplication.defSystemLanguage)) {
-            defSystemLanguage = RmApplication.defSystemLanguage;
-            characterViewModel.rmRepository.initialiseDataBase();
+        if (!defSystemLanguage.equals(newConfig.locale.getLanguage())) {
+            defSystemLanguage = newConfig.locale.getLanguage();
+            characterViewModel.rmRepository.dropAllTables();
+            new Handler().postDelayed(() -> characterViewModel.rmRepository.initialiseDataBase(), 500);
+            recreate();
         }
     }
 
@@ -140,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             backPressedOnce = true;
-            Toast.makeText(this, "Tap BACK again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.toast_close_message), Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(() -> backPressedOnce = false, 2000);
         } else { super.onBackPressed(); }
     }

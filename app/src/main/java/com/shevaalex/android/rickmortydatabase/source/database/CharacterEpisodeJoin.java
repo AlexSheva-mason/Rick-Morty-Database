@@ -5,13 +5,15 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity (indices = {@Index("episodeId")},
         primaryKeys = {"characterId", "episodeId"},
         foreignKeys = {
-                        @ForeignKey(entity = Character.class,
+                        @ForeignKey(onDelete = CASCADE, entity = Character.class,
                             parentColumns = "id",
                             childColumns = "characterId"),
-                        @ForeignKey(entity = Episode.class,
+                        @ForeignKey(onDelete = CASCADE, entity = Episode.class,
                             parentColumns = "id",
                             childColumns = "episodeId")})
 

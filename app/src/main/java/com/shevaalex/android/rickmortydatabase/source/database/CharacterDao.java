@@ -11,6 +11,10 @@ import java.util.List;
 
 @Dao
 public interface CharacterDao {
+    //drops the table
+    @Query("DELETE FROM Character")
+    void dropTable();
+
     //perform a search by character's name in the database, shows all results
     @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character " +
             "WHERE name LIKE :name ORDER BY LENGTH(episodeList) DESC, name")

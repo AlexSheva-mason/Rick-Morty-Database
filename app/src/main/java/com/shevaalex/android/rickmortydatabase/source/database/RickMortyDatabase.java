@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Character.class, Location.class, Episode.class, CharacterEpisodeJoin.class, LocationCharacterJoin.class}, version = 1, exportSchema = false)
+@Database(entities = {Character.class, Location.class, Episode.class, CharacterEpisodeJoin.class, LocationCharacterJoin.class}, version = 2, exportSchema = false)
 public abstract class RickMortyDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "rmdatabase";
@@ -20,8 +20,9 @@ public abstract class RickMortyDatabase extends RoomDatabase {
             */
                 synchronized (LOCK) {
                     if (sInstance == null) {
-                        sInstance = Room.databaseBuilder(context.getApplicationContext(), RickMortyDatabase.class,
-                                DATABASE_NAME).build();
+                        sInstance = Room.databaseBuilder(context.getApplicationContext(), RickMortyDatabase.class, DATABASE_NAME)
+                                .fallbackToDestructiveMigration()
+                                .build();
                     }
                 }
         }
