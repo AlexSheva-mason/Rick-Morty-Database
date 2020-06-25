@@ -2,7 +2,7 @@
 This project was created to help myself practicing Java and Android development. 
 App is created using Android Jetpack library and Material Design library.
 
-<img src="screenshots/demo.gif" width="250" hspace="20"><img src="screenshots/Screenshot_1592672654.png" width="250" hspace="20"><img src="screenshots/Screenshot_1592672636.png" width="250" hspace="20">
+<img src="screenshots/demo.gif" width="250" hspace="15"><img src="screenshots/Screenshot_1592672654.png" width="250" hspace="15"><img src="screenshots/Screenshot_1592672636.png" width="250" hspace="15">
 
 
 ## App design and architecture
