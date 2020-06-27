@@ -44,9 +44,9 @@
     <string name="fragment_settings_theme_entry_follow_system">Follow the system</string>
     <string name="fragment_settings_theme_entry_dark_theme">Dark theme</string>
     <string name="fragment_settings_theme_entry_light_theme">Light theme</string>
-    <string name="fragment_settings_theme_value_follow_system">-1</string>
-    <string name="fragment_settings_theme_value_dark_theme">2</string>
-    <string name="fragment_settings_theme_value_light_theme">1</string>
+    <string name="fragment_settings_theme_value_follow_system" translatable="false">-1</string>
+    <string name="fragment_settings_theme_value_dark_theme" translatable="false">2</string>
+    <string name="fragment_settings_theme_value_light_theme" translatable="false">1</string>
 
     //CharacterImageFragment
     <string name="share_description">Share</string>

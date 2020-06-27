@@ -35,6 +35,7 @@ import java.util.concurrent.Future;
 
 public class MainRepository {
     private static final Object LOCK = new Object();
+    private static final String KEY_NULL = "null";
     private Context context;
     private final NetworkDataParsing networkDataParsing;
     private final RickMortyDatabase rmDatabase;
@@ -289,11 +290,18 @@ public class MainRepository {
                     String lastKnownLocString = lastKnownLoc.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
                     int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
                     //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
-                        name = StringParsing.returnCharacterNameLocale(context, id);
+                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())
+                            ||RmApplication.defSystemLanguage.equals(new Locale("uk").getLanguage())) {
+                        String translatedName = StringParsing.returnCharacterNameLocale(context, id);
+                        if (!translatedName.equals(KEY_NULL)) {
+                            name = translatedName;
+                        }
                         status = StringParsing.returnStatusLocale(context, gender, status);
                         gender = StringParsing.returnGenderLocale(context, gender);
-                        species = StringParsing.returnSpeciesLocale(context, species);
+                        String translatedSpecies = StringParsing.returnSpeciesLocale(context, species);
+                        if (!translatedSpecies.equals(KEY_NULL)) {
+                            species = translatedSpecies;
+                        }
                     }
                     // Return a Character object
                     return new Character(id, name, status, species, type, gender, originLocId,
@@ -310,10 +318,20 @@ public class MainRepository {
                     String dimension = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
                     String residents = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
                     //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
-                        name = StringParsing.returnLocationNameLocale(context, id);
-                        type = StringParsing.returnTypeLocale(context, type);
-                        dimension = StringParsing.returnDimensionLocale(context, dimension);
+                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())
+                            ||RmApplication.defSystemLanguage.equals(new Locale("uk").getLanguage())) {
+                        String translatedName = StringParsing.returnLocationNameLocale(context, id);
+                        if (!translatedName.equals(KEY_NULL)) {
+                            name = translatedName;
+                        }
+                        String translatedType = StringParsing.returnTypeLocale(context, type);
+                        if (!translatedType.equals(KEY_NULL)) {
+                            type = translatedType;
+                        }
+                        String translatedDimension = StringParsing.returnDimensionLocale(context, dimension);
+                        if (!translatedDimension.equals(KEY_NULL)) {
+                            dimension = translatedDimension;
+                        }
                     }
                     return new Location(id, name, type, dimension, residents);
                 } catch (JSONException e) {
@@ -328,9 +346,16 @@ public class MainRepository {
                     String code = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
                     String characters = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
                     //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())) {
-                        name = StringParsing.returnEpisodeNameLocale(context, id);
-                        airDate = StringParsing.returnEpisodeAirDate(context, airDate);
+                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())
+                            ||RmApplication.defSystemLanguage.equals(new Locale("uk").getLanguage())) {
+                        String translatedName = StringParsing.returnEpisodeNameLocale(context, id);
+                        if (!translatedName.equals(KEY_NULL)) {
+                            name = translatedName;
+                        }
+                        String translatedAirDate = StringParsing.returnEpisodeAirDate(context, airDate);
+                        if (!translatedAirDate.equals(KEY_NULL)) {
+                            airDate = translatedAirDate;
+                        }
                     }
                     return new Episode(id, name, airDate, code, characters);
                 } catch (JSONException e) {
