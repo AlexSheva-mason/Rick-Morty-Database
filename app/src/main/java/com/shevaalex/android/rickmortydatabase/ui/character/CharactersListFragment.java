@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -135,6 +136,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 searchView.clearFocus();
                 searchIsCommitted = true;
             } else {
+                listJumpTo0();
                 searchView.setIconified(true);
                 searchIsCommitted = false;
             }
@@ -150,6 +152,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
+                if (searchIsCommitted) {
+                    characterViewModel.setNameQuery(null);
+                }
                 return true;
             }
         });
@@ -168,7 +173,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         });
         closeButton.setOnClickListener(v -> {
             if (searchIsCommitted) {
-                listJumpTo0();
                 characterViewModel.setNameQuery(null);
             }
             searchView.clearFocus();
@@ -185,6 +189,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 return true;
             }
             if (item.getItemId() == R.id.settingsFragment) {
+                searchIsCommitted = false;
                 searchMenuItem.collapseActionView();
                 navController.navigate(CharactersListFragmentDirections.toSettingsFragment());
                 return true;
@@ -244,12 +249,16 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void listJumpTo0() {
         if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
+            if (characterAdapter != null) {
+                characterAdapter.notifyDataSetChanged();
+            }
+            new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0), 500);
         }
     }
 
     @Override
     public void onCharacterClick(int position, @NonNull View v) {
+        searchIsCommitted = false;
         searchMenuItem.collapseActionView();
         PagedList<CharacterSmall> mCharacterList = characterAdapter.getCurrentList();
         if (mCharacterList != null && !mCharacterList.isEmpty()) {
