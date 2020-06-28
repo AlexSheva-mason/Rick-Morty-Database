@@ -29,6 +29,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
+import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
+
+import java.util.ArrayList;
 
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
@@ -48,6 +51,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private MenuItem filterCheckBox;
     private MenuItem searchMenuItem;
     private SearchView searchView;
+    private static ArrayList<String> searchQueries = new ArrayList<>();
 
 
     @Override
@@ -88,9 +92,14 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
             characterAdapter.submitList(characters);
+            if (characters.isEmpty() && searchQuery != null && searchQuery.contains(" ") && !searchQueries.contains(searchQuery)) {
+                searchQueries.add(searchQuery);
+                characterViewModel.setNameQuery(StringParsing.rearrangeSearchQuery(searchQuery));
+            }
             if (characters.isEmpty() && searchQuery != null) {
                 binding.tvNoResults.setVisibility(View.VISIBLE);
             } else {
+                searchQueries.clear();
                 binding.tvNoResults.setVisibility(View.GONE);
             }
         });

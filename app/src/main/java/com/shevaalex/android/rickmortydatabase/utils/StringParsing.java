@@ -19,6 +19,11 @@ public abstract class StringParsing {
     private static final String LOCATION_RES_KEY = "location_";
     private static final String EPISODE_RES_KEY = "episode_";
 
+    public static String rearrangeSearchQuery (String query) {
+        String [] splitQuery = query.split(" ");
+        return splitQuery[1] + " " + splitQuery[0];
+    }
+
     public static String returnStringOfIds (String string) {
         return string.replaceAll("[a-zA-Z:\\\\/.\"\\[\\]]", "");
     }
