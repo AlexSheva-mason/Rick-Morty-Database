@@ -156,7 +156,7 @@
     <fragment
         android:id="@+id/characterImageFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterImageFragment"
-        android:label="fragment_character_image"
+        android:label=""
         tools:layout="@layout/fragment_character_image">
         <argument
             android:name="character_image_url"

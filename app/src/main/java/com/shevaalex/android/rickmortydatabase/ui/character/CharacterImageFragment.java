@@ -1,12 +1,20 @@
 package com.shevaalex.android.rickmortydatabase.ui.character;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +32,18 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
     private FragmentCharacterImageBinding binding;
     private String imageUrl;
     private String characterName;
+    private Activity a;
 
     public CharacterImageFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            a = (Activity) context;
+        }
     }
 
     @Override
@@ -44,8 +61,24 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
         if (!imageUrl.equals("none")) {
             setCharacterImage(imageUrl);
         }
-        binding.shareButton.setOnClickListener(this);
+        if (binding.shareButton != null) {
+            binding.shareButton.setOnClickListener(this);
+        }
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        NavController navController = Navigation.findNavController(view);
+        //Set the action bar to show appropriate title, set top level destinations
+        AppBarConfiguration appBarConfiguration =
+                new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
+        Toolbar toolbar = binding.toolbarFragmentCharacterImage;
+        if (toolbar != null) {
+            createOptionsMenu(toolbar);
+            NavigationUI.setupWithNavController(
+                    toolbar, navController, appBarConfiguration);
+        }
     }
 
     @Override
@@ -61,8 +94,23 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
                 .into(binding.imageCharacter);
     }
 
+    private void createOptionsMenu(Toolbar toolbar) {
+        toolbar.inflateMenu(R.menu.toolbar_fragment_character_image);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.share_button) {
+                shareImage();
+                return true;
+            }
+            return false;
+        });
+    }
+
     @Override
     public void onClick(View v) {
+        shareImage();
+    }
+
+    private void shareImage() {
         String parsedName = StringParsing.parseCharacterName(characterName);
         Picasso.get()
                 .load(imageUrl)
@@ -74,7 +122,7 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
                         shareIntent.setType("image/*");
                         shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         shareIntent.putExtra(Intent.EXTRA_STREAM, ImageParsingUtil.parseBitmapToUri(bitmap, parsedName, requireContext()));
-                        startActivity(Intent.createChooser(shareIntent, v.getContext().getResources().getString(R.string.share_title)));
+                        startActivity(Intent.createChooser(shareIntent, a.getApplicationContext().getResources().getString(R.string.share_title)));
                     }
                     @Override
                     public void onBitmapFailed(Exception e, Drawable errorDrawable) {
