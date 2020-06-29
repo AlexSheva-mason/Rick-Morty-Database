@@ -29,7 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -290,8 +289,8 @@ public class MainRepository {
                     String lastKnownLocString = lastKnownLoc.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
                     int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
                     //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())
-                            ||RmApplication.defSystemLanguage.equals(new Locale("uk").getLanguage())) {
+                    if (RmApplication.defSystemLanguage.startsWith("ru")
+                            ||RmApplication.defSystemLanguage.startsWith("uk")) {
                         String translatedName = StringParsing.returnCharacterNameLocale(context, id);
                         if (!translatedName.equals(KEY_NULL)) {
                             name = translatedName;
@@ -318,8 +317,8 @@ public class MainRepository {
                     String dimension = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
                     String residents = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
                     //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())
-                            ||RmApplication.defSystemLanguage.equals(new Locale("uk").getLanguage())) {
+                    if (RmApplication.defSystemLanguage.startsWith("ru")
+                            ||RmApplication.defSystemLanguage.startsWith("uk")) {
                         String translatedName = StringParsing.returnLocationNameLocale(context, id);
                         if (!translatedName.equals(KEY_NULL)) {
                             name = translatedName;
@@ -346,8 +345,8 @@ public class MainRepository {
                     String code = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
                     String characters = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
                     //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.equals(new Locale("ru").getLanguage())
-                            ||RmApplication.defSystemLanguage.equals(new Locale("uk").getLanguage())) {
+                    if (RmApplication.defSystemLanguage.startsWith("ru")
+                            ||RmApplication.defSystemLanguage.startsWith("uk")) {
                         String translatedName = StringParsing.returnEpisodeNameLocale(context, id);
                         if (!translatedName.equals(KEY_NULL)) {
                             name = translatedName;

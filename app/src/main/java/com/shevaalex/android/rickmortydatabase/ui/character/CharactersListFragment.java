@@ -93,6 +93,12 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
             characterAdapter.submitList(characters);
+            if (savedState != null) {
+                if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+                    Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
+                    binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState);
+                }
+            }
             if (characters.isEmpty() && searchQuery != null && searchQuery.contains(" ") && !searchQueries.contains(searchQuery)) {
                 searchQueries.add(searchQuery);
                 characterViewModel.setNameQuery(StringParsing.rearrangeSearchQuery(searchQuery));
@@ -125,7 +131,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         if (savedState != null) {
             String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
             int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
-            Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
             if (savedFilterKey == KEY_FILTER_APPLIED) {
                 characterViewModel.setFilter(KEY_FILTER_APPLIED);
             } else {
@@ -133,9 +138,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             }
             if (searchQuery == null && savedSearchQuery != null) {
                 characterViewModel.setNameQuery(savedSearchQuery);
-            }
-            if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState), 50);
             }
         }
     }
