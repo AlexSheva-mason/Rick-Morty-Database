@@ -17,22 +17,22 @@ public interface CharacterDao {
 
     //perform a search by character's name in the database, shows all results
     @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character " +
-            "WHERE name LIKE :name ORDER BY LENGTH(episodeList) DESC, name")
+            "WHERE name LIKE :name ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
     DataSource.Factory<Integer, CharacterSmall> searchInCharacterList(String name);
 
     //perform a search by character's name in the database, excluding Dead
     @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character " +
-            "WHERE name LIKE :name AND (status IN (:notDeadStatus)) ORDER BY LENGTH(episodeList) DESC, name")
+            "WHERE name LIKE :name AND (status IN (:notDeadStatus)) ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
     DataSource.Factory<Integer, CharacterSmall> searchInCharacterListNoDead(String name, String[] notDeadStatus);
 
     //shows list of all characters
     @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character " +
-            "ORDER BY LENGTH(episodeList) DESC, name")
+            "ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
     DataSource.Factory<Integer, CharacterSmall> showAllCharacters();
 
     //shows list of all characters, excluding Dead
     @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl FROM Character " +
-            "WHERE status IN (:notDeadStatus) ORDER BY LENGTH(episodeList) DESC, name")
+            "WHERE status IN (:notDeadStatus) ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
     DataSource.Factory<Integer, CharacterSmall> showAllCharsNoDead(String[] notDeadStatus);
 
     // gets the last character to compare databases

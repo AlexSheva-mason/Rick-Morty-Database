@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.database;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,6 +9,8 @@ public class Character {
 
     @PrimaryKey
     private final int id;
+
+    @ColumnInfo(collate = ColumnInfo.LOCALIZED)
     private final String name;
     private final String status;
     private final String species;
