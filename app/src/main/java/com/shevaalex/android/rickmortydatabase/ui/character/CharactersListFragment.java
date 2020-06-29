@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
+    private static final String BUNDLE_SAVE_STATE_LIST = "List_state";
     private static final String BUNDLE_SAVE_STATE_SEARCH_QUERY = "Query_name";
     private static final String BUNDLE_SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
@@ -88,7 +90,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel, getContext());
-        characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewCharacter.setAdapter(characterAdapter);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
             characterAdapter.submitList(characters);
@@ -118,6 +119,53 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 toolbar, navController, appBarConfiguration);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (savedState != null) {
+            String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
+            int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
+            Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
+            if (savedFilterKey == KEY_FILTER_APPLIED) {
+                characterViewModel.setFilter(KEY_FILTER_APPLIED);
+            } else {
+                characterViewModel.setFilter(KEY_SHOW_ALL);
+            }
+            if (searchQuery == null && savedSearchQuery != null) {
+                characterViewModel.setNameQuery(savedSearchQuery);
+            }
+            if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+                new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState), 50);
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        customSaveState();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (characterAdapter != null) {
+            characterAdapter = null;
+        }
+        if (binding != null) {
+            binding = null;
+        }
+        if (filterCheckBox != null) {
+            filterCheckBox = null;
+        }
+        if (searchMenuItem != null) {
+            searchMenuItem = null;
+        }
+        if (searchView != null) {
+            searchView = null;
+        }
+    }
+
     private void createOptionsMenu(Toolbar toolbar) {
         toolbar.inflateMenu(R.menu.toolbar_fragment_character_list);
         filterCheckBox = toolbar.getMenu().findItem(R.id.filter_button);
@@ -145,7 +193,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 searchView.clearFocus();
                 searchIsCommitted = true;
             } else {
-                listJumpTo0();
                 searchView.setIconified(true);
                 searchIsCommitted = false;
             }
@@ -162,6 +209,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 if (searchIsCommitted) {
+                    listJumpTo0();
                     characterViewModel.setNameQuery(null);
                 }
                 return true;
@@ -182,6 +230,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         });
         closeButton.setOnClickListener(v -> {
             if (searchIsCommitted) {
+                listJumpTo0();
                 characterViewModel.setNameQuery(null);
             }
             searchView.clearFocus();
@@ -207,61 +256,20 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (savedState != null) {
-            String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
-            int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
-            if (savedFilterKey == KEY_FILTER_APPLIED) {
-                characterViewModel.setFilter(KEY_FILTER_APPLIED);
-            } else {
-                characterViewModel.setFilter(KEY_SHOW_ALL);
-            }
-            if (searchQuery == null && savedSearchQuery != null) {
-                characterViewModel.setNameQuery(savedSearchQuery);
-            }
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        customSaveState();
-    }
-
     private void customSaveState() {
         savedState = new Bundle();
         savedState.putString(BUNDLE_SAVE_STATE_SEARCH_QUERY, searchQuery);
         savedState.putInt(BUNDLE_SAVE_STATE_FILTER_KEY, filterListKey);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (characterAdapter != null) {
-            characterAdapter = null;
-        }
-        if (binding != null) {
-            binding = null;
-        }
-        if (filterCheckBox != null) {
-            filterCheckBox = null;
-        }
-        if (searchMenuItem != null) {
-            searchMenuItem = null;
-        }
-        if (searchView != null) {
-            searchView = null;
+        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+            savedState.putParcelable(BUNDLE_SAVE_STATE_LIST, binding.recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
         }
     }
 
     private void listJumpTo0() {
         if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            if (characterAdapter != null) {
-                characterAdapter.notifyDataSetChanged();
+            if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+                new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0), 500);
             }
-            new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0), 500);
         }
     }
 
