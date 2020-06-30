@@ -397,7 +397,7 @@ public class MainRepository {
         LiveData<PagedList<CharacterSmall>> mCharacterList = new LiveData<PagedList<CharacterSmall>>() {};
         String [] notDeadStatus = {context.getResources().getString(R.string.character_status_alive_female),
                 context.getResources().getString(R.string.character_status_alive_male), context.getResources().getString(R.string.species_unknown)};
-        if (query == null || query.equals("")) {
+        if (query == null || query.isEmpty()) {
             switch (filter) {
                 case 0:
                     mCharacterList = getAllCharacters();

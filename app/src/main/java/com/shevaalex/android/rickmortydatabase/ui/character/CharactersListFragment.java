@@ -76,6 +76,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         if (savedState == null) {
             characterViewModel.setFilter(KEY_SHOW_ALL);
             characterViewModel.setNameQuery(null);
+        } else {
+            restoreState();
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -129,16 +131,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onResume() {
         super.onResume();
         if (savedState != null) {
-            String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
-            int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
-            if (savedFilterKey == KEY_FILTER_APPLIED) {
-                characterViewModel.setFilter(KEY_FILTER_APPLIED);
-            } else {
-                characterViewModel.setFilter(KEY_SHOW_ALL);
-            }
-            if (searchQuery == null && savedSearchQuery != null) {
-                characterViewModel.setNameQuery(savedSearchQuery);
-            }
+            restoreState();
         }
     }
 
@@ -258,6 +251,19 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         });
     }
 
+    private void restoreState() {
+        String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
+        int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
+        if (savedFilterKey == KEY_FILTER_APPLIED) {
+            characterViewModel.setFilter(KEY_FILTER_APPLIED);
+        } else {
+            characterViewModel.setFilter(KEY_SHOW_ALL);
+        }
+        if (searchQuery == null && savedSearchQuery != null) {
+            characterViewModel.setNameQuery(savedSearchQuery);
+        }
+    }
+
     private void customSaveState() {
         savedState = new Bundle();
         savedState.putString(BUNDLE_SAVE_STATE_SEARCH_QUERY, searchQuery);
@@ -290,5 +296,4 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             }
         }
     }
-
 }

@@ -50,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
         if (!defSystemLanguage.equals(newConfig.locale.getLanguage())) {
             defSystemLanguage = newConfig.locale.getLanguage();
             characterViewModel.rmRepository.dropAllTables();
-            new Handler().postDelayed(() -> characterViewModel.rmRepository.initialiseDataBase(), 500);
-            recreate();
+            new Handler().postDelayed(() -> {
+                recreate();
+                characterViewModel.rmRepository.initialiseDataBase();
+                }, 500);
         }
     }
 
