@@ -27,6 +27,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDeta
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
+import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -145,7 +146,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         //set expanded title
         if (binding.toolbarTitle != null) {
             binding.toolbarTitle.setVisibility(View.GONE);
-            binding.toolbarTitle.setText(headerCharacter.getName());
+            binding.toolbarTitle.setText(UiTranslateUtils.getCharacterNameLocalized(context, headerCharacter));
         }
         // manage custom collapsed/expanded title state and icon
         if (binding.appbarLayout != null && binding.collapsingToolbarLayout!= null && binding.toolbarFragmentCharacterDetail != null) {
@@ -210,8 +211,10 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
             if (clickedEpisode != null) {
                 CharacterDetailFragmentDirections.ToEpisodeDetailFragmentAction2 action =
                         CharacterDetailFragmentDirections.toEpisodeDetailFragmentAction2();
-                action.setEpisodeName(clickedEpisode.getName()).setEpisodeAirDate(clickedEpisode.getAirDate())
-                        .setEpisodeCode(clickedEpisode.getCode()).setId(clickedEpisode.getId());
+                action.setEpisodeName(UiTranslateUtils.getEpisodeNameLocalized(a, clickedEpisode))
+                        .setEpisodeAirDate(UiTranslateUtils.getEpisodeAirDateLocalized(a, clickedEpisode))
+                        .setEpisodeCode(clickedEpisode.getCode())
+                        .setId(clickedEpisode.getId());
                 Navigation.findNavController(v).navigate(action);
             }
     }

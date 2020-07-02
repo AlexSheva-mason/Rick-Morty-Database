@@ -22,6 +22,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsList
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
+import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import java.util.Objects;
 
@@ -72,7 +73,7 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
         }
         binding.recyclerviewLocation.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
-        locationAdapter = new LocationAdapter(this);
+        locationAdapter = new LocationAdapter(a,this);
         locationAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocation.setAdapter(locationAdapter);
         locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
@@ -87,8 +88,10 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
             LocationsListFragmentDirections.ToLocationDetailFragmentAction action =
                     LocationsListFragmentDirections.toLocationDetailFragmentAction();
             if (clickedLocation != null) {
-                action.setLocationName(clickedLocation.getName()).setLocationDimension(clickedLocation.getDimension())
-                        .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList())
+                action.setLocationName(UiTranslateUtils.getLocationNameLocalized(a, clickedLocation))
+                        .setLocationDimension(UiTranslateUtils.getLocationDimensionLocalized(a, clickedLocation))
+                        .setLocationType(UiTranslateUtils.getLocationTypeLocalized(a, clickedLocation))
+                        .setLocationResidents(clickedLocation.getResidentsList())
                         .setLocationId(clickedLocation.getId());
                 Navigation.findNavController(v).navigate(action);
             }

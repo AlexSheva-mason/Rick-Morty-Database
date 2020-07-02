@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.location;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +11,17 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import me.zhanghai.android.fastscroll.PopupTextProvider;
 
 public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder> implements PopupTextProvider {
     private final OnLocationClickListener onLocationClickListener;
+    private Context context;
 
-    LocationAdapter(OnLocationClickListener clickListener) {
+    LocationAdapter(Context context, OnLocationClickListener clickListener) {
         super(DIFF_CALLBACK);
+        this.context = context;
         this.onLocationClickListener = clickListener;
     }
 
@@ -44,10 +48,10 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
     public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
         Location currentLocation = getItem(position);
         if (currentLocation != null) {
-            holder.binding.locationNameValue.setText(currentLocation.getName());
+            holder.binding.locationNameValue.setText(UiTranslateUtils.getLocationNameLocalized(context, currentLocation));
             if (holder.binding.locationDimensionValue != null &&  holder.binding.locationTypeValue != null) {
-                holder.binding.locationDimensionValue.setText(currentLocation.getDimension());
-                holder.binding.locationTypeValue.setText(currentLocation.getType());
+                holder.binding.locationDimensionValue.setText(UiTranslateUtils.getLocationDimensionLocalized(context, currentLocation));
+                holder.binding.locationTypeValue.setText(UiTranslateUtils.getLocationTypeLocalized(context, currentLocation));
             }
         }
     }

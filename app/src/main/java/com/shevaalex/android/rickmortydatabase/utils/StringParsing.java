@@ -18,6 +18,7 @@ public abstract class StringParsing {
     private static final String SPECIES_RES_KEY = "species_";
     private static final String LOCATION_RES_KEY = "location_";
     private static final String EPISODE_RES_KEY = "episode_";
+    public static final String KEY_NULL = "null";
 
     public static String rearrangeSearchQuery (String query) {
         String [] splitQuery = query.split(" ");
@@ -59,11 +60,11 @@ public abstract class StringParsing {
             int resId = context.getResources().getIdentifier(characterIdToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
         } catch(Exception e){
-            return "null";
+            return KEY_NULL;
         }
     }
 
-    public static String returnGenderLocale (Context context, String gender) {
+    public static String returnCharacterGenderLocale (Context context, String gender) {
         gender = gender.toLowerCase().trim();
         if (gender.contains(CHAR_GENDER_FEMALE)) {
             return context.getResources().getString(R.string.character_gender_female);
@@ -76,7 +77,7 @@ public abstract class StringParsing {
         }
     }
 
-    public static String returnStatusLocale (Context context, String gender, String status) {
+    public static String returnCharacterStatusLocale (Context context, String gender, String status) {
         status = status.toLowerCase().trim();
         gender = gender.toLowerCase().trim();
         String statusTranslated = context.getResources().getString(R.string.character_gender_unknown);
@@ -97,13 +98,13 @@ public abstract class StringParsing {
         return statusTranslated;
     }
 
-    public static String returnSpeciesLocale (Context context, String speciesEn) {
+    public static String returnCharacterSpeciesLocale (Context context, String speciesEn) {
         String speciesEnToMatch = SPECIES_RES_KEY + speciesEn;
         try {
             int resId = context.getResources().getIdentifier(speciesEnToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
         } catch(Exception e){
-            return "null";
+            return KEY_NULL;
         }
     }
 
@@ -113,21 +114,21 @@ public abstract class StringParsing {
             int resId = context.getResources().getIdentifier(locationIdToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
         } catch(Exception e){
-            return "null";
+            return KEY_NULL;
         }
     }
 
-    public static String returnTypeLocale (Context context, String type) {
+    public static String returnLocationTypeLocale(Context context, String type) {
         String typeToMatch = LOCATION_RES_KEY + type.replaceAll("[\\s()\\\\]", "_");
         try {
             int resId = context.getResources().getIdentifier(typeToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
         } catch(Exception e){
-            return "null";
+            return KEY_NULL;
         }
     }
 
-    public static String returnDimensionLocale (Context context, String dimension) {
+    public static String returnLocationDimensionLocale(Context context, String dimension) {
         if (dimension.contains("J19ζ7")) {
             return "J19ζ7";
         }
@@ -136,7 +137,7 @@ public abstract class StringParsing {
             int resId = context.getResources().getIdentifier(dimensionToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
         } catch(Exception e){
-            return "null";
+            return KEY_NULL;
         }
     }
 
@@ -146,7 +147,7 @@ public abstract class StringParsing {
             int resId = context.getResources().getIdentifier(episodeIdToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
         } catch(Exception e){
-            return "null";
+            return KEY_NULL;
         }
     }
 
@@ -158,7 +159,7 @@ public abstract class StringParsing {
             String[] splitDate = airDate.replaceAll("[a-zA-Z]", "").split(",");
             return splitDate[0] + " " + monthTranslated + splitDate[1];
         } catch(Exception e){
-            return "null";
+            return KEY_NULL;
         }
 
     }

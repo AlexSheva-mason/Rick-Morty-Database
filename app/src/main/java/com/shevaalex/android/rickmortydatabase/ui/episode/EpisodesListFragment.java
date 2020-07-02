@@ -22,6 +22,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListB
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
+import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import java.util.Objects;
 
@@ -85,8 +86,10 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
             EpisodesListFragmentDirections.ToEpisodeDetailFragmentAction action =
                     EpisodesListFragmentDirections.toEpisodeDetailFragmentAction();
             if (clickedEpisode != null) {
-                action.setEpisodeName(clickedEpisode.getName()).setEpisodeAirDate(clickedEpisode.getAirDate())
-                        .setEpisodeCode(clickedEpisode.getCode()).setId(clickedEpisode.getId());
+                action.setEpisodeName(UiTranslateUtils.getEpisodeNameLocalized(a, clickedEpisode))
+                        .setEpisodeAirDate(UiTranslateUtils.getEpisodeAirDateLocalized(a, clickedEpisode))
+                        .setEpisodeCode(clickedEpisode.getCode())
+                        .setId(clickedEpisode.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }

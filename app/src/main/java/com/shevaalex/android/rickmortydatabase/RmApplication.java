@@ -2,19 +2,15 @@ package com.shevaalex.android.rickmortydatabase;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.StrictMode;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
-import java.util.Locale;
-
 public class RmApplication extends Application {
-    private static final String LIST_PREFERENCE_KEY = "theme_list";
-    public static String defSystemLanguage;
+    private static final String LIST_THEME_PREFERENCE_KEY = "theme_list";
+    private static final String SWITCH_THEME_PREFERENCE_KEY = "theme_switch";
 
     @Override
     public void onCreate() {
@@ -35,20 +31,13 @@ public class RmApplication extends Application {
                     .penaltyDeath()
                     .build());
         }
-        defSystemLanguage = Locale.getDefault().getLanguage();
-    }
-
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        defSystemLanguage = newConfig.locale.getLanguage();
     }
 
     //get saved preferences or set default theme if none stored
     public void setupTheme() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int savedListPrefTheme = Integer.parseInt(sharedPreferences.getString(LIST_PREFERENCE_KEY, "99"));
-        boolean savedSwitchThemeNightOn = sharedPreferences.getBoolean("theme_switch", false);
+        int savedListPrefTheme = Integer.parseInt(sharedPreferences.getString(LIST_THEME_PREFERENCE_KEY, "99"));
+        boolean savedSwitchThemeNightOn = sharedPreferences.getBoolean(SWITCH_THEME_PREFERENCE_KEY, false);
         if (Build.VERSION.SDK_INT >= 29) {
             if (savedListPrefTheme == 99) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);

@@ -1,0 +1,10 @@
+
+<resources>
+    <string name="system_locale" translatable="false">system</string>
+    <string-array name="locales">
+        <item>@string/system_locale</item> <!-- system setting -->
+        <item>en</item>
+        <item>ru</item>
+        <item>uk</item>
+    </string-array>
+</resources>

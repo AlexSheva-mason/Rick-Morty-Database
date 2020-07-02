@@ -31,6 +31,7 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
+import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import java.util.ArrayList;
 
@@ -291,7 +292,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             CharactersListFragmentDirections.ToCharacterDetailFragmentAction action =
                     CharactersListFragmentDirections.toCharacterDetailFragmentAction();
             if (clickedChar != null) {
-                action.setCharacterName(clickedChar.getName()).setId(clickedChar.getId());
+                action.setCharacterName(UiTranslateUtils.getCharacterNameLocalized(a, clickedChar))
+                        .setId(clickedChar.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }

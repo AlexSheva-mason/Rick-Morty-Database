@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class CharacterSmall {
-
     @PrimaryKey
     private final int id;
 
@@ -18,7 +17,6 @@ public class CharacterSmall {
     private final int lastKnownLocation;
     private final String imgUrl;
 
-
     public CharacterSmall(int id, String name, String status, String species, String gender, int lastKnownLocation, String imgUrl) {
         this.id = id;
         this.name = name;
@@ -28,7 +26,6 @@ public class CharacterSmall {
         this.lastKnownLocation = lastKnownLocation;
         this.imgUrl = imgUrl;
     }
-
 
     // GETTERS
     public int getId () { return id; }

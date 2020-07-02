@@ -1,7 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
@@ -9,8 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.RmApplication;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
@@ -34,8 +31,8 @@ import java.util.concurrent.Future;
 
 public class MainRepository {
     private static final Object LOCK = new Object();
-    private static final String KEY_NULL = "null";
-    private Context context;
+    private static final String FILTER_KEY_STATUS_ALIVE = "alive";
+    private static final String FILTER_KEY_STATUS_UNKNOWN = "unknown";
     private final NetworkDataParsing networkDataParsing;
     private final RickMortyDatabase rmDatabase;
     private final AppExecutors appExecutors;
@@ -65,7 +62,6 @@ public class MainRepository {
         this.networkDataParsing = NetworkDataParsing.getInstance(application);
         this.rmDatabase = RickMortyDatabase.getInstance(application);
         this.appExecutors = AppExecutors.getInstance();
-        this.context = application.getApplicationContext();
         initialiseDataBase();
     }
 
@@ -288,20 +284,6 @@ public class MainRepository {
                     JSONObject lastKnownLoc = entryObjectJson.getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
                     String lastKnownLocString = lastKnownLoc.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
                     int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
-                    //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.startsWith("ru")
-                            ||RmApplication.defSystemLanguage.startsWith("uk")) {
-                        String translatedName = StringParsing.returnCharacterNameLocale(context, id);
-                        if (!translatedName.equals(KEY_NULL)) {
-                            name = translatedName;
-                        }
-                        status = StringParsing.returnStatusLocale(context, gender, status);
-                        gender = StringParsing.returnGenderLocale(context, gender);
-                        String translatedSpecies = StringParsing.returnSpeciesLocale(context, species);
-                        if (!translatedSpecies.equals(KEY_NULL)) {
-                            species = translatedSpecies;
-                        }
-                    }
                     // Return a Character object
                     return new Character(id, name, status, species, type, gender, originLocId,
                             lastKnownLocId, imgUrl, episodeList);
@@ -316,22 +298,6 @@ public class MainRepository {
                     String type = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_TYPE);
                     String dimension = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
                     String residents = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
-                    //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.startsWith("ru")
-                            ||RmApplication.defSystemLanguage.startsWith("uk")) {
-                        String translatedName = StringParsing.returnLocationNameLocale(context, id);
-                        if (!translatedName.equals(KEY_NULL)) {
-                            name = translatedName;
-                        }
-                        String translatedType = StringParsing.returnTypeLocale(context, type);
-                        if (!translatedType.equals(KEY_NULL)) {
-                            type = translatedType;
-                        }
-                        String translatedDimension = StringParsing.returnDimensionLocale(context, dimension);
-                        if (!translatedDimension.equals(KEY_NULL)) {
-                            dimension = translatedDimension;
-                        }
-                    }
                     return new Location(id, name, type, dimension, residents);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -344,18 +310,6 @@ public class MainRepository {
                     String airDate = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
                     String code = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
                     String characters = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
-                    //check device locale and make changes accordingly
-                    if (RmApplication.defSystemLanguage.startsWith("ru")
-                            ||RmApplication.defSystemLanguage.startsWith("uk")) {
-                        String translatedName = StringParsing.returnEpisodeNameLocale(context, id);
-                        if (!translatedName.equals(KEY_NULL)) {
-                            name = translatedName;
-                        }
-                        String translatedAirDate = StringParsing.returnEpisodeAirDate(context, airDate);
-                        if (!translatedAirDate.equals(KEY_NULL)) {
-                            airDate = translatedAirDate;
-                        }
-                    }
                     return new Episode(id, name, airDate, code, characters);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -388,15 +342,10 @@ public class MainRepository {
         appExecutors.diskIO().execute(() -> rmDatabase.getLocationCharacterJoinDao().insertLocationCharacterJoinList(locationCharacterJoins));
     }
 
-    public void dropAllTables() {
-        appExecutors.diskIO().execute(rmDatabase::clearAllTables);
-    }
-
     // calls the appropriate method based on search query and filter applied
     public LiveData<PagedList<CharacterSmall>> getCharacterListFiltered(String query, int filter) {
         LiveData<PagedList<CharacterSmall>> mCharacterList = new LiveData<PagedList<CharacterSmall>>() {};
-        String [] notDeadStatus = {context.getResources().getString(R.string.character_status_alive_female),
-                context.getResources().getString(R.string.character_status_alive_male), context.getResources().getString(R.string.species_unknown)};
+        String [] notDeadStatus = {FILTER_KEY_STATUS_ALIVE, FILTER_KEY_STATUS_UNKNOWN};
         if (query == null || query.isEmpty()) {
             switch (filter) {
                 case 0:

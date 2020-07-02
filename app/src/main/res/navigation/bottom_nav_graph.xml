@@ -151,7 +151,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.SettingsFragment"
-        android:label="Settings"
+        android:label="@string/fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/characterImageFragment"

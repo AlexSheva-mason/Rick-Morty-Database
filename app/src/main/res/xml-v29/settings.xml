@@ -15,6 +15,15 @@
             android:title="@string/fragment_settings_theme_list_title"
             app:useSimpleSummaryProvider="true" />
 
+        <ListPreference
+            android:defaultValue="@string/system_locale"
+            android:summary="%s"
+            android:entries="@array/pref_language_list_entries"
+            android:entryValues="@array/locales"
+            android:key="language_list"
+            android:title="@string/fragment_settings_language_list_title"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
