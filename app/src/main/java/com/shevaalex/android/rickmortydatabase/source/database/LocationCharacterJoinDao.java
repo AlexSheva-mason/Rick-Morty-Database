@@ -14,7 +14,7 @@ public interface LocationCharacterJoinDao {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insertLocationCharacterJoinList (List<LocationCharacterJoin> locationCharacterJoins);
 
-    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl " +
+    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList " +
             "FROM Character INNER JOIN LocationCharacterJoin ON Character.id = LocationCharacterJoin.characterId " +
             "WHERE LocationCharacterJoin.locationId=:locationID ORDER BY name COLLATE LOCALIZED")
     LiveData<List<CharacterSmall>> getCharactersFromLocations(int locationID);

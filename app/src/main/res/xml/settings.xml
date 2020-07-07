@@ -11,17 +11,7 @@
             app:key="theme_switch"
             app:title="@string/fragment_settings_theme_switch_title" />
 
-        <ListPreference
-            android:defaultValue="@string/system_locale"
-            android:summary="%s"
-            android:entries="@array/pref_language_list_entries"
-            android:entryValues="@array/locales"
-            android:key="language_list"
-            android:title="@string/fragment_settings_language_list_title"
-            app:useSimpleSummaryProvider="true" />
-
     </PreferenceCategory>
-
 
     <PreferenceCategory
         android:layout="@layout/preferences_category"

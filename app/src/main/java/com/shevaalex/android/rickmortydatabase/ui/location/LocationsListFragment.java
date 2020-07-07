@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui.location;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,6 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsList
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
-import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
-
-import java.util.Objects;
 
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
@@ -54,7 +52,6 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLocationsListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             int spanCount = a.getApplicationContext().getResources().getInteger(R.integer.grid_span_count);
             GridLayoutManager gridLayoutManager =
@@ -66,14 +63,16 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
         } else {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
             binding.recyclerviewLocation.setLayoutManager(linearLayoutManager);
-            //set fast scroller
+            //set fast scroller for API >= 24 (doesn't work on lower APIs)
+            if (Build.VERSION.SDK_INT >= 24) {
             new FastScrollerBuilder(binding.recyclerviewLocation)
-                    .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
+                    .setTrackDrawable(a.getResources().getDrawable(R.drawable.track_drawable, a.getTheme()))
                     .build();
+            }
         }
         binding.recyclerviewLocation.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
-        locationAdapter = new LocationAdapter(a,this);
+        locationAdapter = new LocationAdapter(this);
         locationAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         binding.recyclerviewLocation.setAdapter(locationAdapter);
         locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
@@ -88,10 +87,8 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
             LocationsListFragmentDirections.ToLocationDetailFragmentAction action =
                     LocationsListFragmentDirections.toLocationDetailFragmentAction();
             if (clickedLocation != null) {
-                action.setLocationName(UiTranslateUtils.getLocationNameLocalized(a, clickedLocation))
-                        .setLocationDimension(UiTranslateUtils.getLocationDimensionLocalized(a, clickedLocation))
-                        .setLocationType(UiTranslateUtils.getLocationTypeLocalized(a, clickedLocation))
-                        .setLocationResidents(clickedLocation.getResidentsList())
+                action.setLocationName(clickedLocation.getName()).setLocationDimension(clickedLocation.getDimension())
+                        .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList())
                         .setLocationId(clickedLocation.getId());
                 Navigation.findNavController(v).navigate(action);
             }

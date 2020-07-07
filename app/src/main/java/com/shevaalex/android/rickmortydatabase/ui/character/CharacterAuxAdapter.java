@@ -12,7 +12,6 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterSmallBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
-import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -55,16 +54,16 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
                 .placeholder(R.drawable.picasso_placeholder_error)
                 .error(R.drawable.picasso_placeholder_error)
                 .into(holder.binding.characterImage);
-        holder.binding.characterNameValue.setText(UiTranslateUtils.getCharacterNameLocalized(context, currentCharacter));
+        holder.binding.characterNameValue.setText(currentCharacter.getName());
         if (holder.binding.characterGenderValue != null
-        && holder.binding.characterSpeciesValue != null
-        && holder.binding.characterStatusValue != null) {
-            holder.binding.characterGenderValue.setText(UiTranslateUtils.getCharacterGenderLocalized(context, currentCharacter));
-            holder.binding.characterSpeciesValue.setText(UiTranslateUtils.getCharacterSpeciesLocalized(context, currentCharacter));
-            String characterStatus = UiTranslateUtils.getCharacterStatusLocalized(context, currentCharacter);
-            holder.binding.characterStatusValue.setText(characterStatus);
-            if (!characterStatus.equals(context.getResources().getString(R.string.species_unknown))) {
-                int color = TextColourUtil.getStatusColour(characterStatus, context);
+                && holder.binding.characterSpeciesValue != null
+                && holder.binding.characterStatusValue != null) {
+            holder.binding.characterGenderValue.setText(currentCharacter.getGender());
+            holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
+            holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
+            if (!currentCharacter.getStatus().equals(context.getResources().getString(R.string.species_unknown))) {
+
+                int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.binding.characterStatusValue.setTextColor(color);
             } else {
                 holder.binding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));

@@ -1,6 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui;
 
-import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -18,9 +18,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
 import com.shevaalex.android.rickmortydatabase.ui.character.CharacterViewModel;
-import com.shevaalex.android.rickmortydatabase.utils.LocaleUtils;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static ArrayList<String> snackMessages = new ArrayList<>();
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean backPressedOnce;
     private BottomNavViewModel botNavViewModel;
     private CharacterViewModel characterViewModel;
+    public static String defSystemLanguage = Locale.getDefault().getLanguage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setupViews();
         monitorConnectionAndDatabase();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //reinit database if locale has been changed
+        if (!defSystemLanguage.equals(newConfig.locale.getLanguage())) {
+            defSystemLanguage = newConfig.locale.getLanguage();
+            new Handler().postDelayed(() -> {
+                characterViewModel.rmRepository.initialiseDataBase();
+                recreate();
+            }, 500);
+        }
     }
 
     @Override
@@ -138,12 +152,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, getResources().getString(R.string.toast_close_message), Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(() -> backPressedOnce = false, 2000);
         } else { super.onBackPressed(); }
-    }
-
-    // rewrite context on language change
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleUtils.onAttach(base));
     }
 
 }

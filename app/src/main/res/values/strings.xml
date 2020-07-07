@@ -48,14 +48,6 @@
     <string name="fragment_settings_theme_value_follow_system" translatable="false">-1</string>
     <string name="fragment_settings_theme_value_dark_theme" translatable="false">2</string>
     <string name="fragment_settings_theme_value_light_theme" translatable="false">1</string>
-    <string name="fragment_settings_language_list_title">Language</string>
-    <string name="fragment_settings_language_entry_default">Default (System setting)</string>
-    <string name="fragment_settings_language_entry_english" translatable="false">English</string>
-    <string name="fragment_settings_language_entry_russian" translatable="false">Русский</string>
-    <string name="fragment_settings_language_entry_ukrainian" translatable="false">Українська</string>
-    <string name="fragment_settings_language_value_english" translatable="false">en</string>
-    <string name="fragment_settings_language_value_russian" translatable="false">ru</string>
-    <string name="fragment_settings_language_value_ukrainian" translatable="false">uk</string>
 
     //CharacterImageFragment
     <string name="share_description">Share</string>

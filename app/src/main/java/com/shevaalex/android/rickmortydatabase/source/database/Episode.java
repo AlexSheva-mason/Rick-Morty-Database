@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 public class Episode {
     @PrimaryKey
     private final int id;
-    private final String name;
-    private final String airDate;
+    private String name;
+    private String airDate;
     private final String code;
     private final String charactersList;
 
@@ -29,6 +29,14 @@ public class Episode {
     public String getCode() {        return code;    }
 
     String getCharactersList() {        return charactersList;    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAirDate(String airDate) {
+        this.airDate = airDate;
+    }
 
     @Override
     public boolean equals(Object obj) {

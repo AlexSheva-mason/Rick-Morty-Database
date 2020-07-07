@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 
@@ -31,7 +31,6 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
-import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import java.util.ArrayList;
 
@@ -54,6 +53,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private MenuItem filterCheckBox;
     private MenuItem searchMenuItem;
     private SearchView searchView;
+    private Toolbar toolbar;
     private static ArrayList<String> searchQueries = new ArrayList<>();
 
 
@@ -122,8 +122,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         //Set the action bar to show appropriate title, set top level destinations
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
-        Toolbar toolbar = binding.toolbarFragmentCharacterList;
-        createOptionsMenu(toolbar);
+        toolbar = binding.toolbarFragmentCharacterList;
+        createOptionsMenu();
         NavigationUI.setupWithNavController(
                 toolbar, navController, appBarConfiguration);
     }
@@ -139,35 +139,27 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onPause() {
         super.onPause();
+        hideKeyboard();
         customSaveState();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (characterAdapter != null) {
-            characterAdapter = null;
-        }
-        if (binding != null) {
-            binding = null;
-        }
-        if (filterCheckBox != null) {
-            filterCheckBox = null;
-        }
-        if (searchMenuItem != null) {
-            searchMenuItem = null;
-        }
-        if (searchView != null) {
-            searchView = null;
-        }
+        filterCheckBox = null;
+        searchMenuItem = null;
+        searchView = null;
+        toolbar = null;
+        characterAdapter = null;
+        binding = null;
     }
 
-    private void createOptionsMenu(Toolbar toolbar) {
+    private void createOptionsMenu() {
         toolbar.inflateMenu(R.menu.toolbar_fragment_character_list);
         filterCheckBox = toolbar.getMenu().findItem(R.id.filter_button);
         searchMenuItem = toolbar.getMenu().findItem(R.id.search_button);
         searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setQueryHint(a.getApplicationContext().getResources().getString(R.string.clf_searchview_query_hint));
+        searchView.setQueryHint(a.getResources().getString(R.string.clf_searchview_query_hint));
         AutoCompleteTextView searchText = searchView.findViewById(R.id.search_src_text);
         searchText.setTextAppearance(getContext(), R.style.TextAppearance_RM_SearchView_Hint);
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
@@ -182,14 +174,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         characterViewModel.getSearchQuery().observe(getViewLifecycleOwner(), string -> {
             searchQuery = string;
             if (string != null) {
-                if (!searchMenuItem.isActionViewExpanded()) {
-                    searchMenuItem.expandActionView();
-                }
-                searchView.setFocusable(false);
-                searchView.clearFocus();
+                hideKeyboard();
                 searchIsCommitted = true;
             } else {
-                searchView.setIconified(true);
                 searchIsCommitted = false;
             }
         });
@@ -201,9 +188,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 }
                 return true;
             }
-
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
+                hideKeyboard ();
                 if (searchIsCommitted) {
                     listJumpTo0();
                     characterViewModel.setNameQuery(null);
@@ -229,9 +216,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 listJumpTo0();
                 characterViewModel.setNameQuery(null);
             }
-            searchView.clearFocus();
             searchMenuItem.collapseActionView();
-            searchView.setIconified(true);
         });
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.filter_button) {
@@ -274,26 +259,32 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
     }
 
+    private void hideKeyboard () {
+        InputMethodManager inputMethodManager = (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null && searchView != null) {
+            inputMethodManager.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+            searchView.clearFocus();
+        }
+    }
+
     private void listJumpTo0() {
         if (binding.recyclerviewCharacter.getLayoutManager() != null) {
             if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                new Handler().postDelayed(() -> binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0), 500);
+                binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
             }
         }
     }
 
     @Override
     public void onCharacterClick(int position, @NonNull View v) {
-        searchIsCommitted = false;
-        searchMenuItem.collapseActionView();
+        hideKeyboard();
         PagedList<CharacterSmall> mCharacterList = characterAdapter.getCurrentList();
         if (mCharacterList != null && !mCharacterList.isEmpty()) {
             CharacterSmall clickedChar = mCharacterList.get(position);
             CharactersListFragmentDirections.ToCharacterDetailFragmentAction action =
                     CharactersListFragmentDirections.toCharacterDetailFragmentAction();
             if (clickedChar != null) {
-                action.setCharacterName(UiTranslateUtils.getCharacterNameLocalized(a, clickedChar))
-                        .setId(clickedChar.getId());
+                action.setCharacterName(clickedChar.getName()).setId(clickedChar.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }

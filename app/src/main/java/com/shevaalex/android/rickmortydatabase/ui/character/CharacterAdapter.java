@@ -17,7 +17,6 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
-import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 import com.squareup.picasso.Picasso;
 
 
@@ -64,15 +63,14 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
                     .placeholder(R.drawable.picasso_placeholder_error)
                     .error(R.drawable.picasso_placeholder_error)
                     .into(holder.characterItemBinding.characterImage);
-            holder.characterItemBinding.characterName.setText(UiTranslateUtils.getCharacterNameLocalized(context, currentCharacter));
+            holder.characterItemBinding.characterName.setText(currentCharacter.getName());
             if (holder.characterItemBinding.characterGenderValue != null) {
-                holder.characterItemBinding.characterGenderValue.setText(UiTranslateUtils.getCharacterGenderLocalized(context, currentCharacter));
+                holder.characterItemBinding.characterGenderValue.setText(currentCharacter.getGender());
             }
-            holder.characterItemBinding.characterSpeciesValue.setText(UiTranslateUtils.getCharacterSpeciesLocalized(context, currentCharacter));
-            String statusTranslated = UiTranslateUtils.getCharacterStatusLocalized(context, currentCharacter);
-            holder.characterItemBinding.characterStatusValue.setText(statusTranslated);
-            if (!statusTranslated.equals(context.getResources().getString(R.string.species_unknown))) {
-                int color = TextColourUtil.getStatusColour(statusTranslated, context);
+            holder.characterItemBinding.characterSpeciesValue.setText(currentCharacter.getSpecies());
+            holder.characterItemBinding.characterStatusValue.setText(currentCharacter.getStatus());
+            if (!currentCharacter.getStatus().equals(context.getResources().getString(R.string.species_unknown))) {
+                int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.characterItemBinding.characterStatusValue.setTextColor(color);
             } else {
                 if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -82,9 +80,10 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
                 }
             }
             if (viewModel != null && holder.characterItemBinding.characterLastLocationValue != null) {
-                Location lastLoc = viewModel.getLocationById(currentCharacter.getLastKnownLocation());
-                if (lastLoc != null) {
-                    holder.characterItemBinding.characterLastLocationValue.setText(UiTranslateUtils.getLocationNameLocalized(context, lastLoc));
+                int lastLocId = currentCharacter.getLastKnownLocation();
+                if (lastLocId != 0) {
+                    Location lastLoc = viewModel.getLocationById(lastLocId);
+                    holder.characterItemBinding.characterLastLocationValue.setText(lastLoc.getName());
                 } else {
                     holder.characterItemBinding.characterLastLocationValue.setText(R.string.tv_character_last_loc_unknown_value);
                 }

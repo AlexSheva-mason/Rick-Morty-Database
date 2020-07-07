@@ -16,7 +16,6 @@ import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
-import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -77,33 +76,32 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (headerCharacter != null) {
                 if (headerViewHolder.binding.toolbarTitle != null
                         && headerViewHolder.binding.imageCharacterToolbar != null) {
-                    headerViewHolder.binding.toolbarTitle.setText(UiTranslateUtils.getCharacterNameLocalized(context, headerCharacter));
+                    headerViewHolder.binding.toolbarTitle.setText(headerCharacter.getName());
                     Picasso.get()
                             .load(headerCharacter.getImgUrl())
                             .error(R.drawable.picasso_placeholder_error)
                             .into(headerViewHolder.binding.imageCharacterToolbar);
                     headerViewHolder.binding.imageCharacterToolbar.setOnClickListener(viewOnClickListener);
                 }
-                String charStatus = UiTranslateUtils.getCharacterStatusLocalized(context, headerCharacter);
-                headerViewHolder.binding.characterStatusValue.setText(charStatus);
-                if (!charStatus.equals(context.getResources().getString(R.string.species_unknown))) {
-                    int color = TextColourUtil.getStatusColour(charStatus, context);
+                headerViewHolder.binding.characterStatusValue.setText(headerCharacter.getStatus());
+                if (!headerCharacter.getStatus().equals(context.getResources().getString(R.string.species_unknown))) {
+                    int color = TextColourUtil.getStatusColour(headerCharacter.getStatus(), context);
                     headerViewHolder.binding.characterStatusValue.setTextColor(color);
                 } else {
                     headerViewHolder.binding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
                 }
-                headerViewHolder.binding.characterSpeciesValue.setText(UiTranslateUtils.getCharacterSpeciesLocalized(context, headerCharacter));
-                headerViewHolder.binding.characterGenderValue.setText(UiTranslateUtils.getCharacterGenderLocalized(context, headerCharacter));
+                headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
+                headerViewHolder.binding.characterGenderValue.setText(headerCharacter.getGender());
                 if (originLocation != null) {
                     headerViewHolder.binding.characterOriginValue.setVisibility(View.GONE);
-                    headerViewHolder.binding.buttonOriginLocation.setText(UiTranslateUtils.getLocationNameLocalized(context, originLocation));
+                    headerViewHolder.binding.buttonOriginLocation.setText(originLocation.getName());
                 } else {
                     headerViewHolder.binding.buttonOriginLocation.setVisibility(View.GONE);
                     headerViewHolder.binding.characterOriginValue.setVisibility(View.VISIBLE);
                 }
                 if (lastLocation != null) {
                     headerViewHolder.binding.characterLastLocationValue.setVisibility(View.GONE);
-                    headerViewHolder.binding.buttonLastLocation.setText(UiTranslateUtils.getLocationNameLocalized(context, lastLocation));
+                    headerViewHolder.binding.buttonLastLocation.setText(lastLocation.getName());
                 } else {
                     headerViewHolder.binding.buttonLastLocation.setVisibility(View.GONE);
                     headerViewHolder.binding.characterLastLocationValue.setVisibility(View.VISIBLE);
@@ -112,13 +110,13 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         } else if (holder instanceof EpisodeViewHolder) {
             EpisodeViewHolder episodeHolder = (EpisodeViewHolder) holder;
             Episode currentEpisode = mEpisodeList.get(position - 1);
-            // using ViewBinding class to set views
+            // using View Binding class to set views
             if (currentEpisode != null) {
                 episodeHolder.binding.episodeNameValue
-                        .setText(String.format(context.getResources().getString(R.string.episode_name_placeholder), UiTranslateUtils.getEpisodeNameLocalized(context, currentEpisode)));
+                        .setText(String.format(context.getResources().getString(R.string.episode_name_placeholder), currentEpisode.getName()));
                 episodeHolder.binding.episodeCodeValue.setText(currentEpisode.getCode());
                 if (episodeHolder.binding.episodeAirDateValue != null) {
-                    episodeHolder.binding.episodeAirDateValue.setText(UiTranslateUtils.getEpisodeAirDateLocalized(context, currentEpisode));
+                    episodeHolder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
                 }
             }
         }
@@ -175,10 +173,8 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             CharacterDetailFragmentDirections.ToLocationDetailFragmentAction2 action =
                     CharacterDetailFragmentDirections.toLocationDetailFragmentAction2();
             if (clickedLocation != null) {
-                action.setLocationName(UiTranslateUtils.getLocationNameLocalized(context, clickedLocation))
-                        .setLocationDimension(UiTranslateUtils.getLocationDimensionLocalized(context, clickedLocation))
-                        .setLocationType(UiTranslateUtils.getLocationTypeLocalized(context, clickedLocation))
-                        .setLocationResidents(clickedLocation.getResidentsList())
+                action.setLocationName(clickedLocation.getName()).setLocationDimension(clickedLocation.getDimension())
+                        .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList())
                         .setLocationId(clickedLocation.getId());
                 Navigation.findNavController(v).navigate(action);
             }

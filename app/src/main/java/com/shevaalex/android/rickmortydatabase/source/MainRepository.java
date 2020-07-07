@@ -1,6 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.source;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
@@ -8,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
@@ -19,6 +21,7 @@ import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
 import com.shevaalex.android.rickmortydatabase.utils.AppExecutors;
 import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
+import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,8 +34,6 @@ import java.util.concurrent.Future;
 
 public class MainRepository {
     private static final Object LOCK = new Object();
-    private static final String FILTER_KEY_STATUS_ALIVE = "alive";
-    private static final String FILTER_KEY_STATUS_UNKNOWN = "unknown";
     private final NetworkDataParsing networkDataParsing;
     private final RickMortyDatabase rmDatabase;
     private final AppExecutors appExecutors;
@@ -52,6 +53,7 @@ public class MainRepository {
     private ArrayList<Character> mCharacterList;
     private ArrayList<Location> mLocationList;
     private ArrayList<Episode> mEpisodeList;
+    private Context mContext;
     //set LiveData to monitor database sync status via ViewModel
     private MutableLiveData<Boolean> dbIsUpToDate;
 
@@ -63,6 +65,7 @@ public class MainRepository {
         this.rmDatabase = RickMortyDatabase.getInstance(application);
         this.appExecutors = AppExecutors.getInstance();
         initialiseDataBase();
+        mContext = application.getApplicationContext();
     }
 
     public static synchronized MainRepository getInstance(Application application) {
@@ -269,48 +272,74 @@ public class MainRepository {
         switch (url) {
             case ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES:
                 try {
-                    int id = entryObjectJson.getInt(ApiCall.ApiCallCharacterKeys.CHARACTER_ID);
-                    String name = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_NAME);
-                    String status = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_STATUS);
-                    String species = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_SPECIES);
-                    String type = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);
-                    String gender = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_GENDER);
-                    String imgUrl = entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
-                    String episodeList = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST));
+                    int id = entryObjectJson.
+                            getInt(ApiCall.ApiCallCharacterKeys.CHARACTER_ID);
+                    String name = entryObjectJson.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_NAME);
+                    String status = entryObjectJson.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_STATUS);
+                    String species = entryObjectJson.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_SPECIES);
+                    String type = entryObjectJson.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);
+                    String gender = entryObjectJson.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_GENDER);
+                    String imgUrl = entryObjectJson.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
+                    String episodeList = StringParsing.returnStringOfIds(entryObjectJson.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST));
                     // Parse last known and origin locations strings to retreive IDs
-                    JSONObject originLocation = entryObjectJson.getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION);
-                    String originLocString = originLocation.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
+                    JSONObject originLocation = entryObjectJson.
+                            getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION);
+                    String originLocString = originLocation.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
                     int originLocId = StringParsing.parseLocationId(originLocString);
-                    JSONObject lastKnownLoc = entryObjectJson.getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
-                    String lastKnownLocString = lastKnownLoc.getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
+                    JSONObject lastKnownLoc = entryObjectJson.
+                            getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
+                    String lastKnownLocString = lastKnownLoc.
+                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
                     int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
                     // Return a Character object
-                    return new Character(id, name, status, species, type, gender, originLocId,
+                    Character newChar = new Character(id, name, status, species, type, gender, originLocId,
                             lastKnownLocId, imgUrl, episodeList);
+                    return UiTranslateUtils.getTranslatedCharacter(mContext, newChar);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return null;
                 }
             case ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES:
                 try {
-                    int id = entryObjectJson.getInt(ApiCall.ApiCallLocationKeys.LOCATION_ID);
-                    String name = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_NAME);
-                    String type = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_TYPE);
-                    String dimension = entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
-                    String residents = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
-                    return new Location(id, name, type, dimension, residents);
+                    int id = entryObjectJson.
+                            getInt(ApiCall.ApiCallLocationKeys.LOCATION_ID);
+                    String name = entryObjectJson.
+                            getString(ApiCall.ApiCallLocationKeys.LOCATION_NAME);
+                    String type = entryObjectJson.
+                            getString(ApiCall.ApiCallLocationKeys.LOCATION_TYPE);
+                    String dimension = entryObjectJson.
+                            getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
+                    String residents = StringParsing.returnStringOfIds(entryObjectJson
+                            .getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
+                    Location newLoc = new Location(id, name, type, dimension, residents);
+                    return UiTranslateUtils.getTranslatedLocation(mContext, newLoc);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return null;
                 }
             case ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES:
                 try {
-                    int id = entryObjectJson.getInt(ApiCall.ApiCallEpisodeKeys.EPISODE_ID);
-                    String name = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_NAME);
-                    String airDate = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
-                    String code = entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
-                    String characters = StringParsing.returnStringOfIds(entryObjectJson.getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
-                    return new Episode(id, name, airDate, code, characters);
+                    int id = entryObjectJson.
+                            getInt(ApiCall.ApiCallEpisodeKeys.EPISODE_ID);
+                    String name = entryObjectJson.
+                            getString(ApiCall.ApiCallEpisodeKeys.EPISODE_NAME);
+                    String airDate = entryObjectJson.
+                            getString(ApiCall.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
+                    String code = entryObjectJson.
+                            getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
+                    String characters = StringParsing.
+                            returnStringOfIds(entryObjectJson
+                            .getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
+                    Episode newEp = new Episode(id, name, airDate, code, characters);
+                    return UiTranslateUtils.getTranslatedEpisode(mContext, newEp);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return null;
@@ -345,50 +374,36 @@ public class MainRepository {
     // calls the appropriate method based on search query and filter applied
     public LiveData<PagedList<CharacterSmall>> getCharacterListFiltered(String query, int filter) {
         LiveData<PagedList<CharacterSmall>> mCharacterList = new LiveData<PagedList<CharacterSmall>>() {};
-        String [] notDeadStatus = {FILTER_KEY_STATUS_ALIVE, FILTER_KEY_STATUS_UNKNOWN};
+        String [] notDeadStatus = {mContext.getResources().getString(R.string.character_status_alive_female),
+                mContext.getResources().getString(R.string.character_status_alive_male),
+                mContext.getResources().getString(R.string.species_unknown)};
         if (query == null || query.isEmpty()) {
             switch (filter) {
                 case 0:
-                    mCharacterList = getAllCharacters();
-                    break;
+                    return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
+                            .getCharacterList(), 50)
+                            .setFetchExecutor(appExecutors.diskIO()).build();
                 case 101:
-                    mCharacterList = getAllCharsNoDead(notDeadStatus);
-                    break;
+                    return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
+                            .getCharacterList(notDeadStatus), 50)
+                            .setFetchExecutor(appExecutors.diskIO()).build();
             }
         } else {
             switch (filter) {
                 case 0:
-                    mCharacterList = searchInCharacters(query);
-                    break;
+                    return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
+                            .getCharacterList("%" + query + "%"), 50)
+                            .setFetchExecutor(appExecutors.diskIO()).build();
                 case 101:
-                    mCharacterList = searchInCharactersNoDead(query, notDeadStatus);
-                    break;
+                    return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
+                            .getCharacterList("%" + query + "%", notDeadStatus), 50)
+                            .setFetchExecutor(appExecutors.diskIO()).build();
             }
         }
         return mCharacterList;
     }
 
     //CHARACTERS
-    //gets all characters
-    private LiveData<PagedList<CharacterSmall>> getAllCharacters() {
-        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().showAllCharacters(), 50).setFetchExecutor(appExecutors.diskIO()).build();
-    }
-
-    //gets all characters, excludes Dead
-    private LiveData<PagedList<CharacterSmall>> getAllCharsNoDead(String[] notDeadStatus) {
-        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().showAllCharsNoDead(notDeadStatus), 50).setFetchExecutor(appExecutors.diskIO()).build();
-    }
-
-    //performs search by name in database, shows all
-    private LiveData<PagedList<CharacterSmall>> searchInCharacters(String query) {
-        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().searchInCharacterList("%" + query + "%"), 50).setFetchExecutor(appExecutors.diskIO()).build();
-    }
-
-    //performs search by name in database, excludes Dead
-    private LiveData<PagedList<CharacterSmall>> searchInCharactersNoDead(String query, String[] notDeadStatus) {
-        return new LivePagedListBuilder<>(rmDatabase.getCharacterDao().searchInCharacterListNoDead("%" + query + "%", notDeadStatus), 50).setFetchExecutor(appExecutors.diskIO()).build();
-    }
-
     //gets a character by id
     public Character getCharacterById (int id) {
         Character character = null;
@@ -407,7 +422,8 @@ public class MainRepository {
     //LOCATIONS
     //gets all locations
     public LiveData<PagedList<Location>> getAllLocations() {
-        return new LivePagedListBuilder<>(rmDatabase.getLocationDao().showAllLocations(), 50).setFetchExecutor(appExecutors.diskIO()).build();
+        return new LivePagedListBuilder<>(rmDatabase.getLocationDao().showAllLocations(), 50)
+                .setFetchExecutor(appExecutors.diskIO()).build();
     }
 
     //gets location by ID
@@ -428,7 +444,8 @@ public class MainRepository {
     //EPISODES
     //gets all episodes
     public LiveData<PagedList<Episode>> getAllEpisodes() {
-        return new LivePagedListBuilder<>(rmDatabase.getEpisodeDao().showAllEpisodes(), 20).setFetchExecutor(appExecutors.diskIO()).build();
+        return new LivePagedListBuilder<>(rmDatabase.getEpisodeDao().showAllEpisodes(), 20)
+                .setFetchExecutor(appExecutors.diskIO()).build();
     }
 
     //JOIN DAOs

@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui.episode;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,6 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListB
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
-import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
-
-import java.util.Objects;
 
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
@@ -64,10 +62,12 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
         } else {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
             binding.recyclerviewEpisode.setLayoutManager(linearLayoutManager);
-            //set fast scroller
-            new FastScrollerBuilder(binding.recyclerviewEpisode)
-                    .setTrackDrawable(Objects.requireNonNull(a.getApplicationContext().getDrawable(R.drawable.track_drawable)))
-                    .build();
+            //set fast scroller for API >= 24 (doesn't work on lower APIs)
+            if (Build.VERSION.SDK_INT >= 24) {
+                new FastScrollerBuilder(binding.recyclerviewEpisode)
+                        .setTrackDrawable(a.getResources().getDrawable(R.drawable.track_drawable, a.getTheme()))
+                        .build();
+            }
         }
         binding.recyclerviewEpisode.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
@@ -86,10 +86,8 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
             EpisodesListFragmentDirections.ToEpisodeDetailFragmentAction action =
                     EpisodesListFragmentDirections.toEpisodeDetailFragmentAction();
             if (clickedEpisode != null) {
-                action.setEpisodeName(UiTranslateUtils.getEpisodeNameLocalized(a, clickedEpisode))
-                        .setEpisodeAirDate(UiTranslateUtils.getEpisodeAirDateLocalized(a, clickedEpisode))
-                        .setEpisodeCode(clickedEpisode.getCode())
-                        .setId(clickedEpisode.getId());
+                action.setEpisodeName(clickedEpisode.getName()).setEpisodeAirDate(clickedEpisode.getAirDate())
+                        .setEpisodeCode(clickedEpisode.getCode()).setId(clickedEpisode.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }

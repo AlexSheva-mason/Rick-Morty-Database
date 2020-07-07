@@ -10,16 +10,5 @@
         <item>@string/fragment_settings_theme_value_dark_theme</item>
         <item>@string/fragment_settings_theme_value_light_theme</item>
     </array>
-    <array name="pref_language_list_entries">
-        <item>@string/fragment_settings_language_entry_default</item>
-        <item>@string/fragment_settings_language_entry_english</item>
-        <item>@string/fragment_settings_language_entry_russian</item>
-        <item>@string/fragment_settings_language_entry_ukrainian</item>
-    </array>
-    <array name="pref_language_list_values">
-        <item>@string/fragment_settings_language_value_english</item>
-        <item>@string/fragment_settings_language_value_russian</item>
-        <item>@string/fragment_settings_language_value_ukrainian</item>
-    </array>
 
 </resources>

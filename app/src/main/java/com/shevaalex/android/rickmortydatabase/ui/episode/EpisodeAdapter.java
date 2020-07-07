@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
-import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import me.zhanghai.android.fastscroll.PopupTextProvider;
 
@@ -51,9 +50,9 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
         Episode currentEpisode = getItem(position);
         if (currentEpisode != null) {
             holder.binding.episodeNameValue
-                    .setText(String.format(context.getResources().getString(R.string.episode_name_placeholder), UiTranslateUtils.getEpisodeNameLocalized(context, currentEpisode)));
+                    .setText(String.format(context.getResources().getString(R.string.episode_name_placeholder), currentEpisode.getName()));
             if (holder.binding.episodeAirDateValue != null) {
-                holder.binding.episodeAirDateValue.setText(UiTranslateUtils.getEpisodeAirDateLocalized(context, currentEpisode));
+                holder.binding.episodeAirDateValue.setText(currentEpisode.getAirDate());
             }
             holder.binding.episodeCodeValue.setText(currentEpisode.getCode());
         }

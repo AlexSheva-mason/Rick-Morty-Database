@@ -9,21 +9,19 @@ public class Character extends CharacterSmall {
     @ColumnInfo(collate = ColumnInfo.LOCALIZED)
     private final String type;
     private final int originLocation;
-    private final String episodeList;
 
     public Character (int id, String name, String status, String species, String type,
                       String gender, int originLocation, int lastKnownLocation,
                       String imgUrl, String episodeList) {
-        super(id, name, status, species, gender, lastKnownLocation, imgUrl);
+        super(id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList);
         this.type = type;
         this.originLocation = originLocation;
-        this.episodeList = episodeList;
     }
 
     // GETTERS
     public String getType() {        return type;    }
     public int getOriginLocation() {        return originLocation;    }
-    public String getEpisodeList() {        return episodeList;    }
+
 
     @Override
     public boolean equals(Object obj) {

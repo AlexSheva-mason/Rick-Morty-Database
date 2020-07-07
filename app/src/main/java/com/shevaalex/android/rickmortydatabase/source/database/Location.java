@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey;
 public class Location {
     @PrimaryKey
     private final int id;
-    private final String name;
-    private final String type;
-    private final String dimension;
+    private String name;
+    private String type;
+    private String dimension;
     private final String residentsList;
 
     public Location (int id, String name, String type, String dimension, String residentsList) {
@@ -29,6 +29,18 @@ public class Location {
     public String getDimension() {        return dimension;    }
 
     public String getResidentsList() {        return residentsList;    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
+    }
 
     @Override
     public boolean equals(Object obj) {

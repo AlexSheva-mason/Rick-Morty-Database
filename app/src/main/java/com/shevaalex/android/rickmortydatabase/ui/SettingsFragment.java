@@ -1,6 +1,5 @@
 package com.shevaalex.android.rickmortydatabase.ui;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 
 import android.view.View;
@@ -22,14 +20,12 @@ import android.widget.TextView;
 
 import com.shevaalex.android.rickmortydatabase.BuildConfig;
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.utils.LocaleUtils;
 
 
-public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
     private final static String KEY_THEME_SWITCH = "theme_switch";
     private final static String KEY_THEME_LIST = "theme_list";
     private final static String KEY_VERSION = "version";
-    private final static String LIST_LANGUAGE_PREFERENCE_KEY = "language_list";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -84,25 +80,5 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 AppCompatDelegate.setDefaultNightMode(value);
         }
         return true;
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (LIST_LANGUAGE_PREFERENCE_KEY.equals(key)) {
-            LocaleUtils.setLocale(requireActivity().getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(requireActivity().getApplicationContext()).getString(key, ""));
-            requireActivity().recreate();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 }
