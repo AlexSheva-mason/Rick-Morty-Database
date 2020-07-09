@@ -3,3 +3,5 @@ build.gradle
 /release/
 /src/main/res/values-ru/strings.xml
 /src/main/res/values-uk/strings.xml
+/src/main/assets/containers/GTM-K7J7WGB.json
+google-services.json

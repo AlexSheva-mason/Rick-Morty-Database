@@ -149,7 +149,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
         }
         // manage custom collapsed/expanded title state and icon
         if (binding.appbarLayout != null && binding.collapsingToolbarLayout!= null && binding.toolbarFragmentCharacterDetail != null) {
-            binding.appbarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            binding.appbarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> appBarLayout.post(() -> {
                 if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
                     //  Collapsed
                     if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
@@ -172,7 +172,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                     binding.toolbarFragmentCharacterDetail.setTitle(null);
                     binding.collapsingToolbarLayout.setTitleEnabled(false);
                 }
-            });
+            }));
         }
     }
 

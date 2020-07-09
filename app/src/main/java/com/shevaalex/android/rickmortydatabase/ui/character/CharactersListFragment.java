@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
@@ -55,6 +57,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     private SearchView searchView;
     private Toolbar toolbar;
     private static ArrayList<String> searchQueries = new ArrayList<>();
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     @Override
@@ -69,6 +72,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(a);
     }
 
     @Nullable
@@ -84,10 +88,12 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         View view = binding.getRoot();
         //set layout manager and RecyclerView
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), RecyclerView.HORIZONTAL, false);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(),
+                    RecyclerView.HORIZONTAL, false);
             binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
         } else {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), RecyclerView.VERTICAL, false);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(),
+                    RecyclerView.VERTICAL, false);
             binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
         }
         binding.recyclerviewCharacter.setHasFixedSize(true);
@@ -99,7 +105,9 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             if (savedState != null) {
                 if (binding.recyclerviewCharacter.getLayoutManager() != null) {
                     Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
-                    binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState);
+                    new Handler().postDelayed(() ->
+                            binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState),
+                            250);
                 }
             }
             if (characters.isEmpty() && searchQuery != null && searchQuery.contains(" ") && !searchQueries.contains(searchQuery)) {
@@ -201,6 +209,11 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                //log search event with firebase
+                Bundle searchBundle = new Bundle();
+                searchBundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, query);
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH, searchBundle);
+                //process the query
                 listJumpTo0();
                 characterViewModel.setNameQuery(query.trim().toLowerCase());
                 return true;

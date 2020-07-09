@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterImageBinding;
 import com.shevaalex.android.rickmortydatabase.utils.ImageParsingUtil;
@@ -33,6 +34,8 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
     private String imageUrl;
     private String characterName;
     private Activity a;
+    private final String SHARE_TYPE = "image/*";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public CharacterImageFragment() {
         // Required empty public constructor
@@ -49,6 +52,7 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(a);
     }
 
     @Override
@@ -119,10 +123,15 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                         Intent shareIntent = new Intent();
                         shareIntent.setAction(Intent.ACTION_SEND);
-                        shareIntent.setType("image/*");
+                        shareIntent.setType(SHARE_TYPE);
                         shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         shareIntent.putExtra(Intent.EXTRA_STREAM, ImageParsingUtil.parseBitmapToUri(bitmap, parsedName, requireContext()));
                         startActivity(Intent.createChooser(shareIntent, a.getApplicationContext().getResources().getString(R.string.share_title)));
+                        //log share intent with firebase
+                        Bundle shareBundle = new Bundle();
+                        shareBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, SHARE_TYPE);
+                        shareBundle.putString(FirebaseAnalytics.Param.ITEM_ID, parsedName);
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, shareBundle);
                     }
                     @Override
                     public void onBitmapFailed(Exception e, Drawable errorDrawable) {
