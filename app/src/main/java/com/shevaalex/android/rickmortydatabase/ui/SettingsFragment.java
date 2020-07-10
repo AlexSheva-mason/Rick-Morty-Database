@@ -18,6 +18,7 @@ import androidx.preference.SwitchPreferenceCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.BuildConfig;
 import com.shevaalex.android.rickmortydatabase.R;
 
@@ -26,6 +27,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private final static String KEY_THEME_SWITCH = "theme_switch";
     private final static String KEY_THEME_LIST = "theme_list";
     private final static String KEY_VERSION = "version";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -49,6 +51,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(requireActivity());
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = Navigation.findNavController(view);
@@ -62,6 +70,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             TextView titleTextView = view.findViewById(R.id.toolbar_title);
             titleTextView.setText(toolbar.getTitle());
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFirebaseAnalytics.setCurrentScreen(
+                requireActivity(),
+                this.getClass().getSimpleName(),
+                this.getClass().getSimpleName());
     }
 
     @Override

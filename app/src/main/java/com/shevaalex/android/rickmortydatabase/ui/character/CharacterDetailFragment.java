@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
@@ -40,6 +41,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
     private List<Episode> episodeList = new ArrayList<>();
     private Character headerCharacter;
     private Context context;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public CharacterDetailFragment() {
         // Required empty public constructor
@@ -57,7 +59,9 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(a);
+        viewModel = new ViewModelProvider
+                .AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
     }
 
     @Override
@@ -122,10 +126,36 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 && binding.toolbarFragmentCharacterDetail != null) {
             NavController navController = Navigation.findNavController(view);
             AppBarConfiguration appBarConfiguration =
-                    new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
+                    new AppBarConfiguration.Builder(R.id.charactersListFragment,
+                            R.id.locationsListFragment,
+                            R.id.episodesListFragment)
+                            .build();
             NavigationUI.setupWithNavController(
                     binding.toolbarFragmentCharacterDetail, navController, appBarConfiguration);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFirebaseAnalytics.setCurrentScreen(
+                requireActivity(),
+                this.getClass().getSimpleName(),
+                this.getClass().getSimpleName());
+    }
+
+    //set the toolbar and it's title
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        adapter = null;
+        binding = null;
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        a = null;
     }
 
     private void setCharacterImage(Character headerCharacter) {
@@ -135,7 +165,6 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 .into(binding.imageCharacterToolbar);
     }
 
-    //set the toolbar and it's title
     private void setToolbar(Character headerCharacter) {
         //check if app is currently in dark theme and set the contentScrimColor of collapsing toolbar to surface color
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -174,24 +203,6 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 }
             }));
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        adapter = null;
-        binding = null;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        a = null;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     public void openImageFragment(View v) {

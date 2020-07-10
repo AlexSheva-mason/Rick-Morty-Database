@@ -86,6 +86,15 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mFirebaseAnalytics.setCurrentScreen(
+                requireActivity(),
+                this.getClass().getSimpleName(),
+                this.getClass().getSimpleName());
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;

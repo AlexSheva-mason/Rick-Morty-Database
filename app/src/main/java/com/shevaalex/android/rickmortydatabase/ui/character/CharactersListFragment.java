@@ -139,6 +139,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onResume() {
         super.onResume();
+        mFirebaseAnalytics.setCurrentScreen(
+                requireActivity(),
+                this.getClass().getSimpleName(),
+                this.getClass().getSimpleName());
         if (savedState != null) {
             restoreState();
         }

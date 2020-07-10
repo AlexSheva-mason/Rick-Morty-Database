@@ -14,10 +14,19 @@ import androidx.navigation.ui.NavigationUI;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 
 
 public abstract class FragmentToolbarSimple extends Fragment {
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(requireActivity());
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -33,5 +42,14 @@ public abstract class FragmentToolbarSimple extends Fragment {
                 titleTextView.setText(toolbar.getTitle());
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFirebaseAnalytics.setCurrentScreen(
+                requireActivity(),
+                this.getClass().getSimpleName(),
+                this.getClass().getSimpleName());
     }
 }
