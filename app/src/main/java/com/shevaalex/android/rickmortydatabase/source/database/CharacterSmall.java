@@ -64,8 +64,6 @@ public class CharacterSmall {
             return false;
         }
         CharacterSmall newChar = (CharacterSmall) obj;
-        return getId() == newChar.getId() && getName().equals(newChar.getName()) && getStatus().equals(newChar.getStatus()) && getSpecies().equals(newChar.getSpecies())
-                && getGender().equals(newChar.getGender()) && getLastKnownLocation() == newChar.getLastKnownLocation()
-                && getImgUrl().equals(newChar.getImgUrl());
+        return getId() == newChar.getId() && getName().equals(newChar.getName());
     }
 }

@@ -2,7 +2,6 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -25,7 +24,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.paging.PagedList;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -86,30 +84,13 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        //set layout manager and RecyclerView
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(),
-                    RecyclerView.HORIZONTAL, false);
-            binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
-        } else {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(),
-                    RecyclerView.VERTICAL, false);
-            binding.recyclerviewCharacter.setLayoutManager(linearLayoutManager);
-        }
+        binding.recyclerviewCharacter.setVisibility(View.GONE);
         binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel, getContext());
-        binding.recyclerviewCharacter.setAdapter(characterAdapter);
+        characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
-            characterAdapter.submitList(characters);
-            if (savedState != null) {
-                if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                    Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
-                    new Handler().postDelayed(() ->
-                            binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState),
-                            250);
-                }
-            }
+            //re-arrange search query if contains 2 words and didn't bring any results
             if (characters.isEmpty() && searchQuery != null && searchQuery.contains(" ") && !searchQueries.contains(searchQuery)) {
                 searchQueries.add(searchQuery);
                 characterViewModel.setNameQuery(StringParsing.rearrangeSearchQuery(searchQuery));
@@ -119,6 +100,25 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             } else {
                 searchQueries.clear();
                 binding.tvNoResults.setVisibility(View.GONE);
+            }
+            //restore list position and show recyclerview
+            if (savedState != null) {
+                Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
+                new Handler().postDelayed(() -> {
+                    if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+                        binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState);
+                        savedState = new Bundle();
+                        binding.recyclerviewCharacter.setVisibility(View.VISIBLE);
+                    }
+                }, 200);
+            } else {
+                binding.recyclerviewCharacter.setVisibility(View.VISIBLE);
+            }
+            //set data to the adapter
+            characterAdapter.submitList(characters);
+            //set adapter to the recyclerview
+            if (binding.recyclerviewCharacter.getAdapter() != characterAdapter) {
+                binding.recyclerviewCharacter.setAdapter(characterAdapter);
             }
         });
         return view;
@@ -143,9 +143,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 requireActivity(),
                 this.getClass().getSimpleName(),
                 this.getClass().getSimpleName());
-        if (savedState != null) {
-            restoreState();
-        }
     }
 
     @Override
@@ -285,11 +282,11 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     }
 
     private void listJumpTo0() {
-        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+        new Handler().postDelayed(() -> {
             if (binding.recyclerviewCharacter.getLayoutManager() != null) {
                 binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
             }
-        }
+        },300);
     }
 
     @Override
