@@ -381,22 +381,22 @@ public class MainRepository {
             switch (filter) {
                 case 0:
                     return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
-                            .getCharacterList(), 50)
+                            .getCharacterList(), 20)
                             .setFetchExecutor(appExecutors.diskIO()).build();
                 case 101:
                     return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
-                            .getCharacterList(notDeadStatus), 50)
+                            .getCharacterList(notDeadStatus), 20)
                             .setFetchExecutor(appExecutors.diskIO()).build();
             }
         } else {
             switch (filter) {
                 case 0:
                     return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
-                            .getCharacterList("%" + query + "%"), 50)
+                            .getCharacterList("%" + query + "%"), 20)
                             .setFetchExecutor(appExecutors.diskIO()).build();
                 case 101:
                     return new LivePagedListBuilder<>(rmDatabase.getCharacterDao()
-                            .getCharacterList("%" + query + "%", notDeadStatus), 50)
+                            .getCharacterList("%" + query + "%", notDeadStatus), 20)
                             .setFetchExecutor(appExecutors.diskIO()).build();
             }
         }
