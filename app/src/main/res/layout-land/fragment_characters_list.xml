@@ -34,6 +34,8 @@
         android:id="@+id/recyclerview_character"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
         android:fadeScrollbars="true"
         android:scrollbarDefaultDelayBeforeFade="500"
         android:scrollbarThumbHorizontal="@drawable/thumb"
