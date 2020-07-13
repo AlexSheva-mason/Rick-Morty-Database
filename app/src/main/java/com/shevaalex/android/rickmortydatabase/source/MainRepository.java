@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -427,8 +428,8 @@ public class MainRepository {
     }
 
     //gets location by ID
-    public Location getLocationById (int id) {
-        Location location = null;
+    public @NonNull Location getLocationById (int id) {
+        Location location = new Location(0, "unknown", "null", "null", "null");
         Future<Location> futureLocation = appExecutors.diskIO().submit(() -> {
             if (rmDatabase.getLocationDao().getLocationById(id) != null) {
                 return rmDatabase.getLocationDao().getLocationById(id);

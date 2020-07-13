@@ -2,6 +2,8 @@ package com.shevaalex.android.rickmortydatabase.utils;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
@@ -10,7 +12,7 @@ import com.shevaalex.android.rickmortydatabase.ui.MainActivity;
 //translates the data retrieved by the Room database and returns it to the recyclerview adapter
 public class UiTranslateUtils {
     //CHARACTER data
-    public static Character getTranslatedCharacter (Context context, Character character) {
+    public static Character getTranslatedCharacter (Context context, @NonNull Character character) {
         if (MainActivity.defSystemLanguage.startsWith("ru") || MainActivity.defSystemLanguage.startsWith("uk")) {
             character.setName(getCharacterNameLocalized(context, character));
             character.setSpecies(getCharacterSpeciesLocalized(context, character));
@@ -21,7 +23,7 @@ public class UiTranslateUtils {
         return character;
     }
 
-    private static String getCharacterNameLocalized(Context context, Character character) {
+    private static String getCharacterNameLocalized(Context context, @NonNull Character character) {
         String translatedName = StringParsing.returnCharacterNameLocale(context, character.getId());
         if (!translatedName.equals(StringParsing.KEY_NULL)) {
             return translatedName;
@@ -29,7 +31,7 @@ public class UiTranslateUtils {
         return character.getName();
     }
 
-    private static String getCharacterGenderLocalized (Context context, Character character) {
+    private static String getCharacterGenderLocalized (Context context, @NonNull Character character) {
         String translatedGender = StringParsing.returnCharacterGenderLocale(context, character.getGender());
         if (!translatedGender.equals(StringParsing.KEY_NULL)) {
             return translatedGender;
@@ -37,7 +39,7 @@ public class UiTranslateUtils {
         return character.getGender();
     }
 
-    private static String getCharacterSpeciesLocalized (Context context, Character character) {
+    private static String getCharacterSpeciesLocalized (Context context, @NonNull Character character) {
         String translatedSpecies = StringParsing.returnCharacterSpeciesLocale(context, character.getSpecies());
         if (!translatedSpecies.equals(StringParsing.KEY_NULL)) {
             return translatedSpecies;
@@ -45,7 +47,7 @@ public class UiTranslateUtils {
         return character.getSpecies();
     }
 
-    private static String getCharacterStatusLocalized (Context context, Character character) {
+    private static String getCharacterStatusLocalized (Context context, @NonNull Character character) {
         String translatedStatus = StringParsing.returnCharacterStatusLocale(context, character.getGender(), character.getStatus());
         if (!translatedStatus.equals(StringParsing.KEY_NULL)) {
             return translatedStatus;
@@ -54,7 +56,7 @@ public class UiTranslateUtils {
     }
 
     // LOCATION data
-    public static Location getTranslatedLocation (Context context, Location location) {
+    public static Location getTranslatedLocation (Context context, @NonNull Location location) {
         if (MainActivity.defSystemLanguage.startsWith("ru") || MainActivity.defSystemLanguage.startsWith("uk")) {
             location.setName(getLocationNameLocalized(context, location));
             location.setDimension(getLocationDimensionLocalized(context, location));
@@ -64,7 +66,7 @@ public class UiTranslateUtils {
         return location;
     }
 
-    private static String getLocationNameLocalized (Context context, Location location) {
+    private static String getLocationNameLocalized (Context context, @NonNull Location location) {
         String translatedName = StringParsing.returnLocationNameLocale(context, location.getId());
         if (!translatedName.equals(StringParsing.KEY_NULL)) {
             return translatedName;
@@ -72,7 +74,7 @@ public class UiTranslateUtils {
         return location.getName();
     }
 
-    private static String getLocationDimensionLocalized (Context context, Location location) {
+    private static String getLocationDimensionLocalized (Context context, @NonNull Location location) {
         String translatedDimension = StringParsing.returnLocationDimensionLocale(context, location.getDimension());
         if (!translatedDimension.equals(StringParsing.KEY_NULL)) {
             return translatedDimension;
@@ -80,7 +82,7 @@ public class UiTranslateUtils {
         return location.getDimension();
     }
 
-    private static String getLocationTypeLocalized (Context context, Location location) {
+    private static String getLocationTypeLocalized (Context context, @NonNull Location location) {
         String translatedType = StringParsing.returnLocationTypeLocale(context, location.getType());
         if (!translatedType.equals(StringParsing.KEY_NULL)) {
             return translatedType;
@@ -89,7 +91,7 @@ public class UiTranslateUtils {
     }
 
     // EPISODE data
-    public static Episode getTranslatedEpisode (Context context, Episode episode) {
+    public static Episode getTranslatedEpisode (Context context, @NonNull Episode episode) {
         if (MainActivity.defSystemLanguage.startsWith("ru") || MainActivity.defSystemLanguage.startsWith("uk")) {
             episode.setName(getEpisodeNameLocalized(context, episode));
             episode.setAirDate(getEpisodeAirDateLocalized(context, episode));
@@ -98,7 +100,7 @@ public class UiTranslateUtils {
         return episode;
     }
 
-    private static String getEpisodeNameLocalized (Context context, Episode episode) {
+    private static String getEpisodeNameLocalized (Context context, @NonNull Episode episode) {
         String translatedName = StringParsing.returnEpisodeNameLocale(context, episode.getId());
         if (!translatedName.equals(StringParsing.KEY_NULL)) {
             return translatedName;
@@ -106,7 +108,7 @@ public class UiTranslateUtils {
         return episode.getName();
     }
 
-    private static String getEpisodeAirDateLocalized (Context context, Episode episode) {
+    private static String getEpisodeAirDateLocalized (Context context, @NonNull Episode episode) {
         String translatedAirDate = StringParsing.returnEpisodeAirDate(context, episode.getAirDate());
         if (!translatedAirDate.equals(StringParsing.KEY_NULL)) {
             return translatedAirDate;

@@ -81,7 +81,7 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
             }
             if (viewModel != null && holder.characterItemBinding.characterLastLocationValue != null) {
                 int lastLocId = currentCharacter.getLastKnownLocation();
-                if (lastLocId != 0) {
+                if (lastLocId != 0 && viewModel.getLocationById(lastLocId) != null) {
                     Location lastLoc = viewModel.getLocationById(lastLocId);
                     holder.characterItemBinding.characterLastLocationValue.setText(lastLoc.getName());
                 } else {
