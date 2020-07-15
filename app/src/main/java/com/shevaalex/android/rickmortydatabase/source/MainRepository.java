@@ -106,38 +106,15 @@ public class MainRepository {
 
     // gets last objects from SQLite database
     private void fetchLastDbEntries() {
-        Future<Character> futureCharacter = appExecutors.diskIO().submit(() -> {
-            if (rmDatabase.getCharacterDao().showLastInCharacterList() != null) {
-                return rmDatabase.getCharacterDao().showLastInCharacterList();
-            } else { return null; }
+        appExecutors.diskIO().execute(() -> {
+            lastDbCharacter = rmDatabase.getCharacterDao().showLastInCharacterList();
+            lastDbLocation = rmDatabase.getLocationDao().showLastInLocationList();
+            lastDbEpisode = rmDatabase.getEpisodeDao().showLastInEpisodeList();
+            // get number of entries in local database
+            characterEntriesDbCount = rmDatabase.getCharacterDao().getCharacterCount();
+            locationEntriesDbCount = rmDatabase.getLocationDao().getLocationCount();
+            episodeEntriesDbCount = rmDatabase.getEpisodeDao().getEpisodeCount();
         });
-        try { this.lastDbCharacter = futureCharacter.get(); }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace();  }
-        Future<Location>  futureLocation = appExecutors.diskIO().submit(() -> {
-            if (rmDatabase.getLocationDao().showLastInLocationList() != null) {
-                return rmDatabase.getLocationDao().showLastInLocationList();
-            } else { return null; }
-        });
-        try { this.lastDbLocation = futureLocation.get(); }
-        catch (ExecutionException | InterruptedException e) {  e.printStackTrace(); }
-        Future<Episode> futureEpisode = appExecutors.diskIO().submit(() -> {
-            if (rmDatabase.getEpisodeDao().showLastInEpisodeList() != null) {
-                return rmDatabase.getEpisodeDao().showLastInEpisodeList();
-            } else { return null; }
-        });
-        try { this.lastDbEpisode = futureEpisode.get(); }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace(); }
-
-        // get number of entries in local database
-        Future<Integer> futureCharacterCount = appExecutors.diskIO().submit(() -> rmDatabase.getCharacterDao().getCharacterCount());
-        try { this.characterEntriesDbCount = futureCharacterCount.get(); }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace(); }
-        Future<Integer> futureLocationCount = appExecutors.diskIO().submit(() -> rmDatabase.getLocationDao().getLocationCount());
-        try { this.locationEntriesDbCount = futureLocationCount.get(); }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace(); }
-        Future<Integer> futureEpisodeCount = appExecutors.diskIO().submit(() -> rmDatabase.getEpisodeDao().getEpisodeCount());
-        try { this.episodeEntriesDbCount = futureEpisodeCount.get(); }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace(); }
     }
 
     private void networkInitialCall (String url) {
@@ -173,7 +150,8 @@ public class MainRepository {
     private void compareLastEntries(Object lastEntryObject, String url, int numberOfPages) {
         if (lastEntryObject.getClass() == Character.class) {
             lastNetworkCharacter = (Character) lastEntryObject;
-            if (lastNetworkCharacter.equals(lastDbCharacter) && lastNetworkCharacter.getId() == characterEntriesDbCount) {
+            if (lastNetworkCharacter.equals(lastDbCharacter)
+                    && lastNetworkCharacter.getId() == characterEntriesDbCount) {
                 characterTableIsUpToDate = true;
             } else {
                 characterTableIsUpToDate = false;
@@ -183,7 +161,8 @@ public class MainRepository {
             }
         } else if (lastEntryObject.getClass() == Location.class) {
             lastNetworkLocation = (Location) lastEntryObject;
-            if (lastNetworkLocation.equals(lastDbLocation) && lastNetworkLocation.getId() == locationEntriesDbCount) {
+            if (lastNetworkLocation.equals(lastDbLocation)
+                    && lastNetworkLocation.getId() == locationEntriesDbCount) {
                 locationTableIsUpToDate = true;
             } else {
                 locationTableIsUpToDate = false;
@@ -193,7 +172,8 @@ public class MainRepository {
             }
         } else if (lastEntryObject.getClass() == Episode.class) {
             lastNetworkEpisode = (Episode) lastEntryObject;
-            if (lastNetworkEpisode.equals(lastDbEpisode) && lastNetworkEpisode.getId() == episodeEntriesDbCount) {
+            if (lastNetworkEpisode.equals(lastDbEpisode)
+                    && lastNetworkEpisode.getId() == episodeEntriesDbCount) {
                 episodeTableIsUpToDate = true;
             } else {
                 episodeTableIsUpToDate = false;
@@ -239,10 +219,13 @@ public class MainRepository {
             if (!mCharacterList.contains(newCharacter)) {
                 mCharacterList.add(newCharacter);
             }
-            if (!characterTableIsUpToDate && lastNetworkCharacter.getId() == mCharacterList.size() && mCharacterList.contains(lastNetworkCharacter)) {
+            if (!characterTableIsUpToDate
+                    && lastNetworkCharacter.getId() == mCharacterList.size()
+                    && mCharacterList.contains(lastNetworkCharacter)) {
                 characterTableIsUpToDate = true;
                 lastDbCharacter = newCharacter;
-                appExecutors.diskIO().execute(() -> rmDatabase.getCharacterDao().insertCharacterList(mCharacterList));
+                appExecutors.diskIO()
+                        .execute(() -> rmDatabase.getCharacterDao().insertCharacterList(mCharacterList));
             }
         } else if (newEntryObject.getClass() == Location.class) {
             //adds a new Location to the database
@@ -250,10 +233,13 @@ public class MainRepository {
             if (!mLocationList.contains(newLocation)) {
                 mLocationList.add(newLocation);
             }
-            if (!locationTableIsUpToDate && lastNetworkLocation.getId() == mLocationList.size() && mLocationList.contains(lastNetworkLocation)) {
+            if (!locationTableIsUpToDate
+                    && lastNetworkLocation.getId() == mLocationList.size()
+                    && mLocationList.contains(lastNetworkLocation)) {
                 locationTableIsUpToDate = true;
                 lastDbLocation = newLocation;
-                appExecutors.diskIO().execute(() -> rmDatabase.getLocationDao().insertLocationList(mLocationList));
+                appExecutors.diskIO()
+                        .execute(() -> rmDatabase.getLocationDao().insertLocationList(mLocationList));
             }
         } else if (newEntryObject.getClass() == Episode.class) {
             //adds a new Episode to the database
@@ -261,10 +247,13 @@ public class MainRepository {
             if (!mEpisodeList.contains(newEpisode)) {
                 mEpisodeList.add(newEpisode);
             }
-            if (!episodeTableIsUpToDate && lastNetworkEpisode.getId() == mEpisodeList.size() && mEpisodeList.contains(lastNetworkEpisode)) {
+            if (!episodeTableIsUpToDate
+                    && lastNetworkEpisode.getId() == mEpisodeList.size()
+                    && mEpisodeList.contains(lastNetworkEpisode)) {
                 episodeTableIsUpToDate = true;
                 lastDbEpisode = newEpisode;
-                appExecutors.diskIO().execute(() -> rmDatabase.getEpisodeDao().insertEpisodeList(mEpisodeList));
+                appExecutors.diskIO()
+                        .execute(() -> rmDatabase.getEpisodeDao().insertEpisodeList(mEpisodeList));
             }
         }
     }
@@ -368,8 +357,12 @@ public class MainRepository {
                 }
             }
         }
-        appExecutors.diskIO().execute(() -> rmDatabase.getCharacterEpisodeJoinDao().insertCharacterEpisodeJoinList(characterEpisodeJoins));
-        appExecutors.diskIO().execute(() -> rmDatabase.getLocationCharacterJoinDao().insertLocationCharacterJoinList(locationCharacterJoins));
+        appExecutors.diskIO()
+                .execute(() -> rmDatabase.getCharacterEpisodeJoinDao()
+                        .insertCharacterEpisodeJoinList(characterEpisodeJoins));
+        appExecutors.diskIO()
+                .execute(() -> rmDatabase.getLocationCharacterJoinDao()
+                        .insertLocationCharacterJoinList(locationCharacterJoins));
     }
 
     // calls the appropriate method based on search query and filter applied
@@ -429,7 +422,8 @@ public class MainRepository {
 
     //gets location by ID
     public @NonNull Location getLocationById (int id) {
-        Location location = new Location(0, "unknown", "null", "null", "null");
+        Location location
+                = new Location(0, "unknown", "null", "null", "null");
         Future<Location> futureLocation = appExecutors.diskIO().submit(() -> {
             if (rmDatabase.getLocationDao().getLocationById(id) != null) {
                 return rmDatabase.getLocationDao().getLocationById(id);
