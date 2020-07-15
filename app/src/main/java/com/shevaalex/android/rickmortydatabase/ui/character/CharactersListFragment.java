@@ -84,11 +84,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        binding.recyclerviewCharacter.setVisibility(View.GONE);
         binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel, getContext());
-        characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
             //re-arrange search query if contains 2 words and didn't bring any results
             if (characters.isEmpty() && searchQuery != null && searchQuery.contains(" ") && !searchQueries.contains(searchQuery)) {
@@ -101,6 +100,12 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                 searchQueries.clear();
                 binding.tvNoResults.setVisibility(View.GONE);
             }
+            //set data to the adapter
+            characterAdapter.submitList(characters);
+            //set adapter to the recyclerview
+            if (binding.recyclerviewCharacter.getAdapter() != characterAdapter) {
+                binding.recyclerviewCharacter.setAdapter(characterAdapter);
+            }
             //restore list position and show recyclerview
             if (savedState != null) {
                 Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
@@ -108,17 +113,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                     if (binding.recyclerviewCharacter.getLayoutManager() != null) {
                         binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState);
                         savedState = new Bundle();
-                        binding.recyclerviewCharacter.setVisibility(View.VISIBLE);
                     }
-                }, 200);
-            } else {
-                binding.recyclerviewCharacter.setVisibility(View.VISIBLE);
-            }
-            //set data to the adapter
-            characterAdapter.submitList(characters);
-            //set adapter to the recyclerview
-            if (binding.recyclerviewCharacter.getAdapter() != characterAdapter) {
-                binding.recyclerviewCharacter.setAdapter(characterAdapter);
+                }, 100);
             }
         });
         return view;
