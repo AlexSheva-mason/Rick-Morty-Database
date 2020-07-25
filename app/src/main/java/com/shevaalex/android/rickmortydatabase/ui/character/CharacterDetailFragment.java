@@ -144,14 +144,13 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 this.getClass().getSimpleName());
     }
 
-    //set the toolbar and it's title
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         adapter = null;
         binding = null;
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -165,6 +164,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                 .into(binding.imageCharacterToolbar);
     }
 
+    //set the toolbar and it's title
     private void setToolbar(Character headerCharacter) {
         //check if app is currently in dark theme and set the contentScrimColor of collapsing toolbar to surface color
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -183,7 +183,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
             binding.appbarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> appBarLayout.post(() -> {
                 if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
                     //  Collapsed
-                    if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
+                    if (binding.toolbarTitle != null && binding.toolbarTitle.getVisibility() == View.VISIBLE) {
                         binding.toolbarTitle.setVisibility(View.GONE);
                     }
                     binding.toolbarFragmentCharacterDetail.setNavigationIcon(a.getDrawable(R.drawable.ic_baseline_arrow_back));
@@ -192,11 +192,13 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
                     // Fully expanded
                     binding.toolbarFragmentCharacterDetail.setTitle(null);
                     binding.collapsingToolbarLayout.setTitleEnabled(false);
-                    binding.toolbarTitle.setVisibility(View.VISIBLE);
+                    if (binding.toolbarTitle != null) {
+                        binding.toolbarTitle.setVisibility(View.VISIBLE);
+                    }
                     binding.toolbarFragmentCharacterDetail.setNavigationIcon(a.getDrawable(R.drawable.ic_back_arrw));
                 } else {
                     // Not fully expanded not collapsed
-                    if (binding.toolbarTitle.getVisibility() == View.VISIBLE) {
+                    if (binding.toolbarTitle != null && binding.toolbarTitle.getVisibility() == View.VISIBLE) {
                         new Handler().postDelayed(()->binding.toolbarTitle.setVisibility(View.GONE),250);
                     }
                     binding.toolbarFragmentCharacterDetail.setNavigationIcon(a.getDrawable(R.drawable.ic_back_arrw));
