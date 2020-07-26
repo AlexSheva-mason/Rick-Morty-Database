@@ -7,19 +7,15 @@ import androidx.annotation.NonNull;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
-import com.shevaalex.android.rickmortydatabase.ui.MainActivity;
 
 //translates the data retrieved by the Room database and returns it to the recyclerview adapter
 public class UiTranslateUtils {
     //CHARACTER data
     public static Character getTranslatedCharacter (Context context, @NonNull Character character) {
-        if (MainActivity.defSystemLanguage.startsWith("ru") || MainActivity.defSystemLanguage.startsWith("uk")) {
-            character.setName(getCharacterNameLocalized(context, character));
-            character.setSpecies(getCharacterSpeciesLocalized(context, character));
-            character.setStatus(getCharacterStatusLocalized(context, character));
-            character.setGender(getCharacterGenderLocalized(context, character));
-            return character;
-        }
+        character.setName(getCharacterNameLocalized(context, character));
+        character.setSpecies(getCharacterSpeciesLocalized(context, character));
+        character.setStatus(getCharacterStatusLocalized(context, character));
+        character.setGender(getCharacterGenderLocalized(context, character));
         return character;
     }
 
@@ -57,12 +53,9 @@ public class UiTranslateUtils {
 
     // LOCATION data
     public static Location getTranslatedLocation (Context context, @NonNull Location location) {
-        if (MainActivity.defSystemLanguage.startsWith("ru") || MainActivity.defSystemLanguage.startsWith("uk")) {
-            location.setName(getLocationNameLocalized(context, location));
-            location.setDimension(getLocationDimensionLocalized(context, location));
-            location.setType(getLocationTypeLocalized(context, location));
-            return location;
-        }
+        location.setName(getLocationNameLocalized(context, location));
+        location.setDimension(getLocationDimensionLocalized(context, location));
+        location.setType(getLocationTypeLocalized(context, location));
         return location;
     }
 
@@ -92,11 +85,8 @@ public class UiTranslateUtils {
 
     // EPISODE data
     public static Episode getTranslatedEpisode (Context context, @NonNull Episode episode) {
-        if (MainActivity.defSystemLanguage.startsWith("ru") || MainActivity.defSystemLanguage.startsWith("uk")) {
-            episode.setName(getEpisodeNameLocalized(context, episode));
-            episode.setAirDate(getEpisodeAirDateLocalized(context, episode));
-            return episode;
-        }
+        episode.setName(getEpisodeNameLocalized(context, episode));
+        episode.setAirDate(getEpisodeAirDateLocalized(context, episode));
         return episode;
     }
 

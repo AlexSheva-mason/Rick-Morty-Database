@@ -14,14 +14,13 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterEpisodeJoin;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
-import com.shevaalex.android.rickmortydatabase.source.database.LocationCharacterJoin;
 import com.shevaalex.android.rickmortydatabase.source.database.RickMortyDatabase;
 import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
+import com.shevaalex.android.rickmortydatabase.ui.MainActivity;
 import com.shevaalex.android.rickmortydatabase.utils.AppExecutors;
-import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
+import com.shevaalex.android.rickmortydatabase.utils.RepoHelperUtil;
 import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils;
 
 import org.json.JSONArray;
@@ -30,6 +29,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -98,7 +98,8 @@ public class MainRepository {
         episodeTableIsUpToDate = false;
         fetchLastDbEntries();
         String [] baseUrlArray = {ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES,
-                ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES, ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES};
+                ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES,
+                ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES};
         for (String url : baseUrlArray) {
             networkInitialCall(url);
         }
@@ -261,108 +262,42 @@ public class MainRepository {
     private Object parseJsonObject (JSONObject entryObjectJson, String url) {
         switch (url) {
             case ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES:
-                try {
-                    int id = entryObjectJson.
-                            getInt(ApiCall.ApiCallCharacterKeys.CHARACTER_ID);
-                    String name = entryObjectJson.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_NAME);
-                    String status = entryObjectJson.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_STATUS);
-                    String species = entryObjectJson.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_SPECIES);
-                    String type = entryObjectJson.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);
-                    String gender = entryObjectJson.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_GENDER);
-                    String imgUrl = entryObjectJson.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
-                    String episodeList = StringParsing.returnStringOfIds(entryObjectJson.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST));
-                    // Parse last known and origin locations strings to retreive IDs
-                    JSONObject originLocation = entryObjectJson.
-                            getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION);
-                    String originLocString = originLocation.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
-                    int originLocId = StringParsing.parseLocationId(originLocString);
-                    JSONObject lastKnownLoc = entryObjectJson.
-                            getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
-                    String lastKnownLocString = lastKnownLoc.
-                            getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
-                    int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
-                    // Return a Character object
-                    Character newChar = new Character(id, name, status, species, type, gender, originLocId,
-                            lastKnownLocId, imgUrl, episodeList);
-                    return UiTranslateUtils.getTranslatedCharacter(mContext, newChar);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return null;
-                }
+                Character newChar = RepoHelperUtil.parseCharacterFromJSON(entryObjectJson);
+                if (MainActivity.defSystemLanguage.startsWith("ru")
+                        || MainActivity.defSystemLanguage.startsWith("uk"))
+                    //translate if needed
+                    return UiTranslateUtils
+                            .getTranslatedCharacter(mContext, Objects.requireNonNull(newChar));
+                else return newChar;
             case ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES:
-                try {
-                    int id = entryObjectJson.
-                            getInt(ApiCall.ApiCallLocationKeys.LOCATION_ID);
-                    String name = entryObjectJson.
-                            getString(ApiCall.ApiCallLocationKeys.LOCATION_NAME);
-                    String type = entryObjectJson.
-                            getString(ApiCall.ApiCallLocationKeys.LOCATION_TYPE);
-                    String dimension = entryObjectJson.
-                            getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
-                    String residents = StringParsing.returnStringOfIds(entryObjectJson
-                            .getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
-                    Location newLoc = new Location(id, name, type, dimension, residents);
-                    return UiTranslateUtils.getTranslatedLocation(mContext, newLoc);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return null;
-                }
+                Location newLoc = RepoHelperUtil.parseLocationFromJSON(entryObjectJson);
+                if (MainActivity.defSystemLanguage.startsWith("ru")
+                        || MainActivity.defSystemLanguage.startsWith("uk"))
+                    //translate if needed
+                    return UiTranslateUtils
+                            .getTranslatedLocation(mContext, Objects.requireNonNull(newLoc));
+                else return newLoc;
             case ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES:
-                try {
-                    int id = entryObjectJson.
-                            getInt(ApiCall.ApiCallEpisodeKeys.EPISODE_ID);
-                    String name = entryObjectJson.
-                            getString(ApiCall.ApiCallEpisodeKeys.EPISODE_NAME);
-                    String airDate = entryObjectJson.
-                            getString(ApiCall.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
-                    String code = entryObjectJson.
-                            getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
-                    String characters = StringParsing.
-                            returnStringOfIds(entryObjectJson
-                            .getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
-                    Episode newEp = new Episode(id, name, airDate, code, characters);
-                    return UiTranslateUtils.getTranslatedEpisode(mContext, newEp);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return null;
-                }
+                Episode newEp = RepoHelperUtil.parseEpisodeFromJSON(entryObjectJson);
+                if (MainActivity.defSystemLanguage.startsWith("ru")
+                        || MainActivity.defSystemLanguage.startsWith("uk"))
+                    //translate if needed
+                    return UiTranslateUtils
+                            .getTranslatedEpisode(mContext, Objects.requireNonNull(newEp));
+                else return newEp;
             default: return  null;
         }
     }
 
     private void addJoinEntries() {
-        ArrayList<CharacterEpisodeJoin> characterEpisodeJoins = new ArrayList<>();
-        ArrayList<LocationCharacterJoin> locationCharacterJoins = new ArrayList<>();
-        for (Character character : mCharacterList) {
-            ArrayList<Integer> episodeIds = StringParsing.parseIdsFromString(character.getEpisodeList());
-            if (episodeIds.size() > 0) {
-                for (int episodeID : episodeIds) {
-                    characterEpisodeJoins.add(new CharacterEpisodeJoin(character.getId(), episodeID));
-                }
-            }
-        }
-        for (Location location : mLocationList) {
-            ArrayList<Integer> residentsIds = StringParsing.parseIdsFromString(location.getResidentsList());
-            if (residentsIds.size() > 0) {
-                for (int residentId : residentsIds) {
-                    locationCharacterJoins.add(new LocationCharacterJoin(residentId, location.getId()));
-                }
-            }
-        }
         appExecutors.diskIO()
                 .execute(() -> rmDatabase.getCharacterEpisodeJoinDao()
-                        .insertCharacterEpisodeJoinList(characterEpisodeJoins));
+                        .insertCharacterEpisodeJoinList(RepoHelperUtil
+                                .getCharacterEpisodeJoins(mCharacterList)));
         appExecutors.diskIO()
                 .execute(() -> rmDatabase.getLocationCharacterJoinDao()
-                        .insertLocationCharacterJoinList(locationCharacterJoins));
+                        .insertLocationCharacterJoinList(RepoHelperUtil
+                        .getLocationCharacterJoins(mLocationList)));
     }
 
     // calls the appropriate method based on search query and filter applied
@@ -400,7 +335,9 @@ public class MainRepository {
     //CHARACTERS
     //gets a character by id
     public Character getCharacterById (int id) {
-        Character character = null;
+        Character character = new Character(0, "name", "status", "species",
+                "type", "gender", 0, 0, "url",
+                "null");
         Future<Character> futureCharacter = appExecutors.diskIO().submit(() -> {
             if (rmDatabase.getCharacterDao().getCharacterById(id) != null) {
                 return rmDatabase.getCharacterDao().getCharacterById(id);
