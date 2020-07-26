@@ -1,4 +1,6 @@
 # Characters for Rick and Morty
+<a href='https://play.google.com/store/apps/details?id=com.shevaalex.android.rickmortydatabase&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/static/images/badges/en_badge_web_generic.png' height="50"/></a>
+
 This project was created to help myself practicing Java and Android development. 
 App is created using Android Jetpack library and Material Design library.
 
