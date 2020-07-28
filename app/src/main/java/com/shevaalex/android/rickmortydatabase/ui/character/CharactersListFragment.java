@@ -27,6 +27,7 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
@@ -69,13 +70,17 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        characterViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
+        characterViewModel = new ViewModelProvider
+                .AndroidViewModelFactory(a.getApplication())
+                .create(CharacterViewModel.class);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(a);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         if (savedState == null) {
             characterViewModel.setFilter(KEY_SHOW_ALL);
             characterViewModel.setNameQuery(null);
@@ -84,39 +89,8 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        binding.recyclerviewCharacter.setHasFixedSize(true);
-        //instantiate the adapter and set this fragment as a listener for onClick
-        characterAdapter = new CharacterAdapter(CharactersListFragment.this, characterViewModel, getContext());
-        characterAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
-        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
-            //re-arrange search query if contains 2 words and didn't bring any results
-            if (characters.isEmpty() && searchQuery != null && searchQuery.contains(" ") && !searchQueries.contains(searchQuery)) {
-                searchQueries.add(searchQuery);
-                characterViewModel.setNameQuery(StringParsing.rearrangeSearchQuery(searchQuery));
-            }
-            if (characters.isEmpty() && searchQuery != null) {
-                binding.tvNoResults.setVisibility(View.VISIBLE);
-            } else {
-                searchQueries.clear();
-                binding.tvNoResults.setVisibility(View.GONE);
-            }
-            //set data to the adapter
-            characterAdapter.submitList(characters);
-            //set adapter to the recyclerview
-            if (binding.recyclerviewCharacter.getAdapter() != characterAdapter) {
-                binding.recyclerviewCharacter.setAdapter(characterAdapter);
-            }
-            //restore list position and show recyclerview
-            if (savedState != null) {
-                Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
-                new Handler().postDelayed(() -> {
-                    if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                        binding.recyclerviewCharacter.getLayoutManager().onRestoreInstanceState(listState);
-                        savedState = new Bundle();
-                    }
-                }, 100);
-            }
-        });
+        setRecyclerView();
+        registerObservers();
         return view;
     }
 
@@ -124,8 +98,11 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
         //Set the action bar to show appropriate title, set top level destinations
-        AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.charactersListFragment, R.id.locationsListFragment, R.id.episodesListFragment).build();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.charactersListFragment,
+                R.id.locationsListFragment,
+                R.id.episodesListFragment)
+                .build();
         toolbar = binding.toolbarFragmentCharacterList;
         createOptionsMenu();
         NavigationUI.setupWithNavController(
@@ -157,6 +134,55 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         toolbar = null;
         characterAdapter = null;
         binding = null;
+    }
+
+    private void setRecyclerView() {
+        binding.recyclerviewCharacter.setHasFixedSize(true);
+        FirebaseCrashlytics.getInstance().log("CLF: setRecyclerView()");
+        //instantiate the adapter and set this fragment as a listener for onClick
+        characterAdapter = new CharacterAdapter(
+                CharactersListFragment.this,
+                characterViewModel,
+                a.getApplicationContext());
+        characterAdapter
+                .setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
+    }
+
+    private void registerObservers() {
+        characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
+            //re-arrange search query if contains 2 words and didn't bring any results
+            if (characters.isEmpty() && searchQuery != null
+                    && searchQuery.contains(" ")
+                    && !searchQueries.contains(searchQuery)) {
+                searchQueries.add(searchQuery);
+                characterViewModel.setNameQuery(StringParsing.rearrangeSearchQuery(searchQuery));
+            }
+            if (characters.isEmpty() && searchQuery != null) {
+                binding.tvNoResults.setVisibility(View.VISIBLE);
+            } else {
+                searchQueries.clear();
+                binding.tvNoResults.setVisibility(View.GONE);
+            }
+            //set data to the adapter
+            characterAdapter.submitList(characters);
+            //set adapter to the recyclerview
+            binding.recyclerviewCharacter.setAdapter(characterAdapter);
+            FirebaseCrashlytics.getInstance().log("CLF: registerObservers()");
+            //restore list position
+            if (savedState != null) {
+                Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
+                new Handler().postDelayed(() -> {
+                    FirebaseCrashlytics.getInstance().log("CLF: Handler().postDelayed");
+                    if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+                        binding.recyclerviewCharacter
+                                .getLayoutManager()
+                                .onRestoreInstanceState(listState);
+                        FirebaseCrashlytics.getInstance().log("CLF: RV.getLayoutManager()");
+                        savedState = new Bundle();
+                    }
+                }, 100);
+            }
+        });
     }
 
     private void createOptionsMenu() {
@@ -265,12 +291,15 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         savedState.putString(BUNDLE_SAVE_STATE_SEARCH_QUERY, searchQuery);
         savedState.putInt(BUNDLE_SAVE_STATE_FILTER_KEY, filterListKey);
         if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            savedState.putParcelable(BUNDLE_SAVE_STATE_LIST, binding.recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
+            savedState.putParcelable(
+                    BUNDLE_SAVE_STATE_LIST,
+                    binding.recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
         }
     }
 
     private void hideKeyboard () {
-        InputMethodManager inputMethodManager = (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null && searchView != null) {
             inputMethodManager.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
             searchView.clearFocus();
