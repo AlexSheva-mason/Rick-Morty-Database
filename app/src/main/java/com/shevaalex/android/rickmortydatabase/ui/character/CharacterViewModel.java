@@ -2,7 +2,6 @@ package com.shevaalex.android.rickmortydatabase.ui.character;
 
 import android.app.Application;
 import android.os.Parcelable;
-import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -17,7 +16,6 @@ import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
-import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
 import java.util.List;
 
@@ -32,7 +30,6 @@ public class CharacterViewModel extends AndroidViewModel {
     private MutableLiveData<Integer> filterResultKey;
     private MutableLiveData<Parcelable> rvListPosition;
     private LiveData<PagedList<CharacterSmall>> mCharacterList;
-    private final StatusMediatorLiveData statusLiveData;
     private final FilterLiveData trigger;
     private SavedStateHandle savedStateHandle;
 
@@ -43,9 +40,7 @@ public class CharacterViewModel extends AndroidViewModel {
         filterResultKey = savedStateHandle.getLiveData(SAVED_STATE_KEY_FILTER, KEY_SHOW_ALL);
         rvListPosition = savedStateHandle.getLiveData(SAVED_STATE_KEY_LIST_POSITION);
         rmRepository = MainRepository.getInstance(application);
-        ConnectionLiveData connectionLiveData = new ConnectionLiveData(application);
         trigger = new FilterLiveData(searchQuery, filterResultKey);
-        statusLiveData = new StatusMediatorLiveData(rmRepository.getDatabaseIsUpToDate(), connectionLiveData);
     }
 
     void setNameQuery(String name) {
@@ -93,10 +88,6 @@ public class CharacterViewModel extends AndroidViewModel {
 
     LiveData<List<Episode>> getEpisodeList(int characterId) {
         return rmRepository.getEpisodesFromCharacter(characterId);
-    }
-
-    public LiveData<Pair<Boolean, Boolean>> getStatusLiveData() {
-        return statusLiveData;
     }
 
 }

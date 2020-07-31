@@ -18,7 +18,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
-import com.shevaalex.android.rickmortydatabase.ui.character.CharacterViewModel;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private boolean backPressedOnce;
     private BottomNavViewModel botNavViewModel;
-    private CharacterViewModel characterViewModel;
+    private NetworkStatusViewModel networkStatusViewModel;
     public static String defSystemLanguage = Locale.getDefault().getLanguage();
 
     @Override
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseAnalytics.getInstance(this);
         botNavViewModel = new ViewModelProvider(this).get(BottomNavViewModel.class);
-        characterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
+        networkStatusViewModel = new ViewModelProvider(this).get(NetworkStatusViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -51,10 +50,11 @@ public class MainActivity extends AppCompatActivity {
         //reinit database if locale has been changed
         if (!defSystemLanguage.equals(newConfig.locale.getLanguage())) {
             defSystemLanguage = newConfig.locale.getLanguage();
-            new Handler().postDelayed(() -> {
+            //TODO check it later
+            /*new Handler().postDelayed(() -> {
                 characterViewModel.rmRepository.initialiseDataBase();
                 recreate();
-            }, 500);
+            }, 500);*/
         }
     }
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     //monitors internet connection, checks if database is up to date
     private void monitorConnectionAndDatabase() {
-        characterViewModel.getStatusLiveData().observe(this, pair -> {
+        networkStatusViewModel.getNetworkStatusLiveData().observe(this, pair -> {
             @NonNull String text;
             int snackBarDuration = BaseTransientBottomBar.LENGTH_SHORT;
             // database is up to date and device is connected to network
@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
             // database is _not_ up to date and device is connected to network
             else if (!pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                characterViewModel.rmRepository.initialiseDataBase();
+                //TODO check this later
+                //**characterViewModel.rmRepository.initialiseDataBase();
                 text = getString(R.string.ma_snack_database_sync);
             }
             // database is up to date and device is _disconnected_ from network
