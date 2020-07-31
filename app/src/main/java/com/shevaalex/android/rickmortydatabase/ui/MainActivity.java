@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseAnalytics.getInstance(this);
         botNavViewModel = new ViewModelProvider(this).get(BottomNavViewModel.class);
-        characterViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(CharacterViewModel.class);
+        characterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);

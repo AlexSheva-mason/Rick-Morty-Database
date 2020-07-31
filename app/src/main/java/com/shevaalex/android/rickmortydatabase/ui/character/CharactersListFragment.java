@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,6 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
@@ -37,25 +35,19 @@ import java.util.ArrayList;
 
 
 public class CharactersListFragment extends Fragment implements CharacterAdapter.OnCharacterListener {
-    private static final String BUNDLE_SAVE_STATE_LIST = "List_state";
-    private static final String BUNDLE_SAVE_STATE_SEARCH_QUERY = "Query_name";
-    private static final String BUNDLE_SAVE_STATE_FILTER_KEY = "Filter_key";
     private static final int KEY_FILTER_APPLIED = 101;
     private static final int KEY_SHOW_ALL = 0;
-    private static Bundle savedState;
     private Activity a;
     private FragmentCharactersListBinding binding;
     private CharacterViewModel characterViewModel;
     private CharacterAdapter characterAdapter;
     private String searchQuery;
-    private int filterListKey;
     private boolean searchIsCommitted;
     private NavController navController;
     private MenuItem filterCheckBox;
     private MenuItem searchMenuItem;
     private SearchView searchView;
     private Toolbar toolbar;
-    private static ArrayList<String> searchQueries = new ArrayList<>();
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -70,9 +62,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        characterViewModel = new ViewModelProvider
-                .AndroidViewModelFactory(a.getApplication())
-                .create(CharacterViewModel.class);
+        characterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(a);
     }
 
@@ -81,12 +71,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        if (savedState == null) {
-            characterViewModel.setFilter(KEY_SHOW_ALL);
-            characterViewModel.setNameQuery(null);
-        } else {
-            restoreState();
-        }
         binding = FragmentCharactersListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setRecyclerView();
@@ -138,7 +122,6 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void setRecyclerView() {
         binding.recyclerviewCharacter.setHasFixedSize(true);
-        FirebaseCrashlytics.getInstance().log("CLF: setRecyclerView()");
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(
                 CharactersListFragment.this,
@@ -149,6 +132,7 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
     }
 
     private void registerObservers() {
+        ArrayList<String> searchQueries = new ArrayList<>();
         characterViewModel.getCharacterList().observe(getViewLifecycleOwner(), characters -> {
             //re-arrange search query if contains 2 words and didn't bring any results
             if (characters.isEmpty() && searchQuery != null
@@ -156,31 +140,27 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
                     && !searchQueries.contains(searchQuery)) {
                 searchQueries.add(searchQuery);
                 characterViewModel.setNameQuery(StringParsing.rearrangeSearchQuery(searchQuery));
+            } else {
+                searchQueries.clear();
             }
             if (characters.isEmpty() && searchQuery != null) {
                 binding.tvNoResults.setVisibility(View.VISIBLE);
             } else {
-                searchQueries.clear();
                 binding.tvNoResults.setVisibility(View.GONE);
             }
             //set data to the adapter
             characterAdapter.submitList(characters);
             //set adapter to the recyclerview
             binding.recyclerviewCharacter.setAdapter(characterAdapter);
-            FirebaseCrashlytics.getInstance().log("CLF: registerObservers()");
+        });
+        characterViewModel.getListPosition().observe(getViewLifecycleOwner(), listPosition -> {
             //restore list position
-            if (savedState != null) {
-                Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
-                new Handler().postDelayed(() -> {
-                    FirebaseCrashlytics.getInstance().log("CLF: Handler().postDelayed");
-                    if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-                        binding.recyclerviewCharacter
-                                .getLayoutManager()
-                                .onRestoreInstanceState(listState);
-                        FirebaseCrashlytics.getInstance().log("CLF: RV.getLayoutManager()");
-                        savedState = new Bundle();
-                    }
-                }, 100);
+            if (listPosition != null) {
+                if (binding != null && binding.recyclerviewCharacter.getLayoutManager() != null) {
+                    binding.recyclerviewCharacter
+                            .getLayoutManager()
+                            .onRestoreInstanceState(listPosition);
+                }
             }
         });
     }
@@ -194,17 +174,16 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         AutoCompleteTextView searchText = searchView.findViewById(R.id.search_src_text);
         searchText.setTextAppearance(getContext(), R.style.TextAppearance_RM_SearchView_Hint);
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
-        characterViewModel.getFilterResultKey().observe(getViewLifecycleOwner(), integer -> {
-            filterListKey = integer;
-            if (integer == KEY_FILTER_APPLIED) {
+        characterViewModel.getFilterResultKey().observe(getViewLifecycleOwner(), filter -> {
+            if (filter == KEY_FILTER_APPLIED) {
                 filterCheckBox.setChecked(true);
             } else {
                 filterCheckBox.setChecked(false);
             }
         });
-        characterViewModel.getSearchQuery().observe(getViewLifecycleOwner(), string -> {
-            searchQuery = string;
-            if (string != null) {
+        characterViewModel.getSearchQuery().observe(getViewLifecycleOwner(), query -> {
+            searchQuery = query;
+            if (query != null) {
                 hideKeyboard();
                 searchIsCommitted = true;
             } else {
@@ -273,27 +252,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
         });
     }
 
-    private void restoreState() {
-        String savedSearchQuery = savedState.getString(BUNDLE_SAVE_STATE_SEARCH_QUERY);
-        int savedFilterKey = savedState.getInt(BUNDLE_SAVE_STATE_FILTER_KEY);
-        if (savedFilterKey == KEY_FILTER_APPLIED) {
-            characterViewModel.setFilter(KEY_FILTER_APPLIED);
-        } else {
-            characterViewModel.setFilter(KEY_SHOW_ALL);
-        }
-        if (searchQuery == null && savedSearchQuery != null) {
-            characterViewModel.setNameQuery(savedSearchQuery);
-        }
-    }
-
     private void customSaveState() {
-        savedState = new Bundle();
-        savedState.putString(BUNDLE_SAVE_STATE_SEARCH_QUERY, searchQuery);
-        savedState.putInt(BUNDLE_SAVE_STATE_FILTER_KEY, filterListKey);
-        if (binding.recyclerviewCharacter.getLayoutManager() != null) {
-            savedState.putParcelable(
-                    BUNDLE_SAVE_STATE_LIST,
-                    binding.recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
+        if (binding != null && binding.recyclerviewCharacter.getLayoutManager() != null) {
+            characterViewModel.setListPosition(binding.
+                    recyclerviewCharacter.getLayoutManager().onSaveInstanceState());
         }
     }
 
@@ -308,10 +270,10 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void listJumpTo0() {
         new Handler().postDelayed(() -> {
-            if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+            if (binding != null && binding.recyclerviewCharacter.getLayoutManager() != null) {
                 binding.recyclerviewCharacter.getLayoutManager().scrollToPosition(0);
             }
-        },300);
+        },100);
     }
 
     @Override

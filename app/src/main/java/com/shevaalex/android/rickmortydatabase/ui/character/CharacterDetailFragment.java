@@ -36,7 +36,7 @@ import java.util.List;
 public class CharacterDetailFragment extends Fragment
         implements CharacterDetailAdapter.OnEpisodeListener, View.OnClickListener {
     private FragmentCharacterDetailBinding binding;
-    private CharacterViewModel viewModel;
+    private CharacterViewModel characterViewModel;
     private Activity a;
     private CharacterDetailAdapter adapter;
     private List<Episode> episodeList = new ArrayList<>();
@@ -61,8 +61,7 @@ public class CharacterDetailFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(a);
-        viewModel = new ViewModelProvider
-                .AndroidViewModelFactory(a.getApplication()).create(CharacterViewModel.class);
+        characterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
     }
 
     @Override
@@ -147,9 +146,9 @@ public class CharacterDetailFragment extends Fragment
     }
 
     private void registerObservers(int characterId) {
-        viewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
+        characterViewModel.getEpisodeList(characterId).observe(getViewLifecycleOwner(), episodes -> {
             episodeList = episodes;
-            headerCharacter = viewModel.getCharacterById(characterId);
+            headerCharacter = characterViewModel.getCharacterById(characterId);
             if (headerCharacter != null) {
                 if (binding.collapsingToolbarLayout != null) {
                     binding.collapsingToolbarLayout.setOnClickListener(this);
@@ -160,11 +159,11 @@ public class CharacterDetailFragment extends Fragment
                 }
                 adapter.setHeaderCharacter(headerCharacter);
                 if (headerCharacter.getOriginLocation() != 0) {
-                    adapter.setOriginLocation(viewModel.
+                    adapter.setOriginLocation(characterViewModel.
                             getLocationById(headerCharacter.getOriginLocation()));
                 }
                 if (headerCharacter.getLastKnownLocation() != 0) {
-                    adapter.setLastLocation(viewModel.
+                    adapter.setLastLocation(characterViewModel.
                             getLocationById(headerCharacter.getLastKnownLocation()));
                 }
             }
