@@ -334,20 +334,8 @@ public class MainRepository {
 
     //CHARACTERS
     //gets a character by id
-    public Character getCharacterById (int id) {
-        Character character = new Character(0, "name", "status", "species",
-                "type", "gender", 0, 0, "url",
-                "null");
-        Future<Character> futureCharacter = appExecutors.diskIO().submit(() -> {
-            if (rmDatabase.getCharacterDao().getCharacterById(id) != null) {
-                return rmDatabase.getCharacterDao().getCharacterById(id);
-            } else { return null; }
-        });
-        try {
-            character = futureCharacter.get();
-        }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace();  }
-        return character;
+    public LiveData<Character> getCharacterById (int id) {
+        return rmDatabase.getCharacterDao().getCharacterById(id);
     }
 
     //LOCATIONS

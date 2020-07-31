@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -41,7 +42,7 @@ public interface CharacterDao {
 
     //gets the character by ID
     @Query("SELECT * FROM Character WHERE id LIKE :id")
-    Character getCharacterById(int id);
+    LiveData<Character> getCharacterById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCharacterList(List<Character> characters);

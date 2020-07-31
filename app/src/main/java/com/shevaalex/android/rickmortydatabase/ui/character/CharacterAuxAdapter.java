@@ -62,7 +62,6 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
             holder.binding.characterSpeciesValue.setText(currentCharacter.getSpecies());
             holder.binding.characterStatusValue.setText(currentCharacter.getStatus());
             if (!currentCharacter.getStatus().equals(context.getResources().getString(R.string.species_unknown))) {
-
                 int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.binding.characterStatusValue.setTextColor(color);
             } else {

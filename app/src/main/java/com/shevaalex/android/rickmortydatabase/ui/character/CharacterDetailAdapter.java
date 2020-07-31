@@ -33,7 +33,9 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private List<Episode> mEpisodeList = new ArrayList<>();
     private final Context context;
 
-    CharacterDetailAdapter(OnEpisodeListener onEpisodeListener, View.OnClickListener viewOnClickListener, Context context){
+    CharacterDetailAdapter(OnEpisodeListener onEpisodeListener,
+                           View.OnClickListener viewOnClickListener,
+                           Context context){
         this.onEpisodeListener = onEpisodeListener;
         this.viewOnClickListener = viewOnClickListener;
         this.context = context;
@@ -61,10 +63,14 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
             // inflating Header view
-            ItemHeaderRvCharacterDetailBinding binding = ItemHeaderRvCharacterDetailBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            ItemHeaderRvCharacterDetailBinding binding =
+                    ItemHeaderRvCharacterDetailBinding
+                            .inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new HeaderViewHolder(binding);
         } else {
-            ItemEpisodeBinding binding = ItemEpisodeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            ItemEpisodeBinding binding =
+                    ItemEpisodeBinding
+                            .inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new EpisodeViewHolder(binding);
         }
     }
@@ -88,7 +94,8 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     int color = TextColourUtil.getStatusColour(headerCharacter.getStatus(), context);
                     headerViewHolder.binding.characterStatusValue.setTextColor(color);
                 } else {
-                    headerViewHolder.binding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+                    headerViewHolder.binding.characterStatusValue
+                            .setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
                 }
                 headerViewHolder.binding.characterSpeciesValue.setText(headerCharacter.getSpecies());
                 headerViewHolder.binding.characterGenderValue.setText(headerCharacter.getGender());
@@ -173,8 +180,10 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             CharacterDetailFragmentDirections.ToLocationDetailFragmentAction2 action =
                     CharacterDetailFragmentDirections.toLocationDetailFragmentAction2();
             if (clickedLocation != null) {
-                action.setLocationName(clickedLocation.getName()).setLocationDimension(clickedLocation.getDimension())
-                        .setLocationType(clickedLocation.getType()).setLocationResidents(clickedLocation.getResidentsList())
+                action.setLocationName(clickedLocation.getName())
+                        .setLocationDimension(clickedLocation.getDimension())
+                        .setLocationType(clickedLocation.getType())
+                        .setLocationResidents(clickedLocation.getResidentsList())
                         .setLocationId(clickedLocation.getId());
                 Navigation.findNavController(v).navigate(action);
             }

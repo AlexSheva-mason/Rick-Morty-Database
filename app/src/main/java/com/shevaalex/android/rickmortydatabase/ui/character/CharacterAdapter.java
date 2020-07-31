@@ -16,18 +16,19 @@ import com.shevaalex.android.rickmortydatabase.R;
 
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.utils.RecyclerViewAdapterCallback;
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
 import com.squareup.picasso.Picasso;
 
 
 public class CharacterAdapter extends PagedListAdapter<CharacterSmall, CharacterAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
-    private final CharacterViewModel viewModel;
+    private final RecyclerViewAdapterCallback callback;
     private final Context context;
-    CharacterAdapter(OnCharacterListener onClickListener, CharacterViewModel viewModel, Context context) {
+    CharacterAdapter(OnCharacterListener onClickListener, RecyclerViewAdapterCallback callback, Context context) {
         super(DIFF_CALLBACK);
         this.onCharacterListener = onClickListener;
-        this.viewModel = viewModel;
+        this.callback = callback;
         this.context = context;
     }
 
@@ -79,10 +80,9 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
                     holder.characterItemBinding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnPrimary, context));
                 }
             }
-            if (viewModel != null && holder.characterItemBinding.characterLastLocationValue != null) {
-                int lastLocId = currentCharacter.getLastKnownLocation();
-                if (lastLocId != 0 && viewModel.getLocationById(lastLocId) != null) {
-                    Location lastLoc = viewModel.getLocationById(lastLocId);
+            if (holder.characterItemBinding.characterLastLocationValue != null) {
+                Location lastLoc = callback.returnLocationFromId(currentCharacter.getLastKnownLocation());
+                if (lastLoc != null) {
                     holder.characterItemBinding.characterLastLocationValue.setText(lastLoc.getName());
                 } else {
                     holder.characterItemBinding.characterLastLocationValue.setText(R.string.tv_character_last_loc_unknown_value);

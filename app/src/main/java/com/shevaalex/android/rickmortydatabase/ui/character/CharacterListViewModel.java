@@ -12,15 +12,12 @@ import androidx.lifecycle.Transformations;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
-import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
-import java.util.List;
 
 
-public class CharacterViewModel extends AndroidViewModel {
+public class CharacterListViewModel extends AndroidViewModel {
     private static final String SAVED_STATE_KEY_QUERY = "query";
     private static final String SAVED_STATE_KEY_FILTER = "filter";
     private static final String SAVED_STATE_KEY_LIST_POSITION = "list_position";
@@ -33,7 +30,7 @@ public class CharacterViewModel extends AndroidViewModel {
     private final FilterLiveData trigger;
     private SavedStateHandle savedStateHandle;
 
-    public CharacterViewModel(@NonNull Application application, SavedStateHandle savedStateHandle) {
+    public CharacterListViewModel(@NonNull Application application, SavedStateHandle savedStateHandle) {
         super(application);
         this.savedStateHandle = savedStateHandle;
         searchQuery = savedStateHandle.getLiveData(SAVED_STATE_KEY_QUERY, null);
@@ -81,13 +78,4 @@ public class CharacterViewModel extends AndroidViewModel {
     Location getLocationById (int id) {
         return rmRepository.getLocationById(id);
     }
-
-    Character getCharacterById (int id) {
-        return rmRepository.getCharacterById(id);
-    }
-
-    LiveData<List<Episode>> getEpisodeList(int characterId) {
-        return rmRepository.getEpisodesFromCharacter(characterId);
-    }
-
 }
