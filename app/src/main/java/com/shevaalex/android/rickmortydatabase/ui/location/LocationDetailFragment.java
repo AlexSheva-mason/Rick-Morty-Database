@@ -1,6 +1,5 @@
 package com.shevaalex.android.rickmortydatabase.ui.location;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -27,8 +26,7 @@ import java.util.List;
 public class LocationDetailFragment extends FragmentToolbarSimple implements CharacterAuxAdapter.OnCharacterListener {
     private FragmentLocationDetailBinding binding;
     private CharacterAuxAdapter characterAuxAdapter;
-    private LocationViewModel viewModel;
-    private Activity a;
+    private LocationDetailViewModel locationDetailViewModel;
     private List<CharacterSmall> mCharacterList = new ArrayList<>();
     private Context context;
 
@@ -40,15 +38,12 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
-        if (context instanceof Activity) {
-            a = (Activity) context;
-        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(LocationViewModel.class);
+        locationDetailViewModel = new ViewModelProvider(this).get(LocationDetailViewModel.class);
     }
 
     @Override
@@ -62,31 +57,16 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
         String dimension = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationDimension();
         String type = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationType();
         int locationId = LocationDetailFragmentArgs.fromBundle(requireArguments()).getLocationId();
+        //save location id with SavedStateHandle
+        locationDetailViewModel.setLocationId(locationId);
         //set retreived data to appropriate views
         if (binding.locationNameValue != null) {
             binding.locationNameValue.setText(name);
         }
         binding.locationDimensionValue.setText(dimension);
         binding.locationTypeValue.setText(type);
-        //set the recyclerview
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        }
-        binding.recyclerviewLocationDetail.setLayoutManager(layoutManager);
-        binding.recyclerviewLocationDetail.setHasFixedSize(true);
-        //get recyclerview Adapter and set data to it using ViewModel
-        characterAuxAdapter = new CharacterAuxAdapter(this, context);
-        characterAuxAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        binding.recyclerviewLocationDetail.setAdapter(characterAuxAdapter);
-        viewModel.getCharactersFromLocation(locationId).observe(getViewLifecycleOwner(), characters -> {
-            if (!characters.isEmpty()) {
-                characterAuxAdapter.setCharacterList(characters);
-                mCharacterList = characters;
-            } else {
-                binding.locationResidentsNone.setVisibility(View.VISIBLE);
-            }
-        });
+        setRecyclerView();
+        registerObservers();
         return view;
     }
 
@@ -97,6 +77,31 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
         if (characterAuxAdapter != null) {
             characterAuxAdapter = null;
         }
+    }
+
+    private void setRecyclerView() {
+        //set the recyclerview
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        }
+        binding.recyclerviewLocationDetail.setLayoutManager(layoutManager);
+        binding.recyclerviewLocationDetail.setHasFixedSize(true);
+        //get recyclerview Adapter and set data to it using ViewModel
+        characterAuxAdapter = new CharacterAuxAdapter(this, context);
+        characterAuxAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+    }
+
+    private void registerObservers() {
+        locationDetailViewModel.getCharactersFromLocation().observe(getViewLifecycleOwner(), characters -> {
+            if (!characters.isEmpty()) {
+                characterAuxAdapter.setCharacterList(characters);
+                mCharacterList = characters;
+                binding.recyclerviewLocationDetail.setAdapter(characterAuxAdapter);
+            } else {
+                binding.locationResidentsNone.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

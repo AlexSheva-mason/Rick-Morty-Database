@@ -30,7 +30,7 @@ import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 public class LocationsListFragment extends FragmentToolbarSimple implements LocationAdapter.OnLocationClickListener {
     private Activity a;
     private FragmentLocationsListBinding binding;
-    private LocationViewModel locationViewModel;
+    private LocationListViewModel locationListViewModel;
     private LocationAdapter locationAdapter;
 
     @Override
@@ -44,7 +44,7 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(LocationViewModel.class);
+        locationListViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(LocationListViewModel.class);
     }
 
     @Nullable
@@ -52,6 +52,21 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLocationsListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        setRecyclerView();
+        registerObservers();
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (locationAdapter != null) {
+            locationAdapter = null;
+        }
+        binding = null;
+    }
+
+    private void setRecyclerView() {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             int spanCount = a.getApplicationContext().getResources().getInteger(R.integer.grid_span_count);
             GridLayoutManager gridLayoutManager =
@@ -74,9 +89,13 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
         //instantiate an adapter and set this fragment as a listener for onClick
         locationAdapter = new LocationAdapter(this);
         locationAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        binding.recyclerviewLocation.setAdapter(locationAdapter);
-        locationViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> locationAdapter.submitList(locations));
-        return view;
+    }
+
+    private void registerObservers() {
+        locationListViewModel.getLocationList().observe(getViewLifecycleOwner(), locations -> {
+            locationAdapter.submitList(locations);
+            binding.recyclerviewLocation.setAdapter(locationAdapter);
+        });
     }
 
     @Override
@@ -93,14 +112,5 @@ public class LocationsListFragment extends FragmentToolbarSimple implements Loca
                 Navigation.findNavController(v).navigate(action);
             }
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (locationAdapter != null) {
-            locationAdapter = null;
-        }
-        binding = null;
     }
 }

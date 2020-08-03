@@ -7,16 +7,13 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
-import java.util.List;
-
-public class LocationViewModel extends AndroidViewModel {
+public class LocationListViewModel extends AndroidViewModel {
     private final MainRepository rmRepository;
     private LiveData<PagedList<Location>> mLocationList;
 
-    public LocationViewModel (Application application) {
+    public LocationListViewModel(Application application) {
         super(application);
         rmRepository = MainRepository.getInstance(application);
         mLocationList = rmRepository.getAllLocations();
@@ -27,9 +24,5 @@ public class LocationViewModel extends AndroidViewModel {
             mLocationList = rmRepository.getAllLocations();
         }
         return mLocationList;
-    }
-
-    LiveData<List<CharacterSmall>> getCharactersFromLocation(int locationId) {
-        return rmRepository.getCharactersFromLocation(locationId);
     }
 }
