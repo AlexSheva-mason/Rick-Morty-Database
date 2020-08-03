@@ -1,6 +1,5 @@
 package com.shevaalex.android.rickmortydatabase.ui.episode;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -24,11 +23,11 @@ import com.shevaalex.android.rickmortydatabase.ui.character.CharacterAuxAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EpisodeDetailFragment extends FragmentToolbarSimple implements CharacterAuxAdapter.OnCharacterListener {
+public class EpisodeDetailFragment extends FragmentToolbarSimple
+        implements CharacterAuxAdapter.OnCharacterListener {
     private FragmentEpisodeDetailBinding binding;
     private CharacterAuxAdapter characterAuxAdapter;
-    private EpisodeViewModel viewModel;
-    private Activity a;
+    private EpisodeDetailViewModel episodeDetailViewModel;
     private List<CharacterSmall> characterList = new ArrayList<>();
     private Context context;
 
@@ -40,15 +39,13 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
-        if (context instanceof Activity) {
-            a = (Activity) context;
-        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(EpisodeViewModel.class);
+        episodeDetailViewModel = new ViewModelProvider(this)
+                .get(EpisodeDetailViewModel.class);
     }
 
     @Override
@@ -61,24 +58,14 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
         String name = EpisodeDetailFragmentArgs.fromBundle(requireArguments()).getEpisodeName();
         String airDate = EpisodeDetailFragmentArgs.fromBundle(requireArguments()).getEpisodeAirDate();
         int episodeID = EpisodeDetailFragmentArgs.fromBundle(requireArguments()).getId();
+        //save episode Id with SavedStateHandle
+        episodeDetailViewModel.setEpisodeId(episodeID);
         //set retreived data to appropriate views
         binding.episodeNameValue.setText(name);
         binding.episodeAirDateValue.setText(airDate);
         //set the recyclerview
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        }
-        binding.recyclerviewEpisodeDetail.setLayoutManager(layoutManager);
-        binding.recyclerviewEpisodeDetail.setHasFixedSize(true);
-        //get recyclerview Adapter and set data to it using ViewModel
-        characterAuxAdapter = new CharacterAuxAdapter(this, context);
-        characterAuxAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        binding.recyclerviewEpisodeDetail.setAdapter(characterAuxAdapter);
-        viewModel.getCharactersFromEpisode(episodeID).observe(getViewLifecycleOwner(), characters -> {
-            characterAuxAdapter.setCharacterList(characters);
-            characterList = characters;
-        });
+        setRecyclerView();
+        registerObservers();
         return view;
     }
 
@@ -89,6 +76,29 @@ public class EpisodeDetailFragment extends FragmentToolbarSimple implements Char
         if (characterAuxAdapter != null) {
             characterAuxAdapter = null;
         }
+    }
+
+    private void setRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        }
+        binding.recyclerviewEpisodeDetail.setLayoutManager(layoutManager);
+        binding.recyclerviewEpisodeDetail.setHasFixedSize(true);
+        //get recyclerview Adapter and set data to it using ViewModel
+        characterAuxAdapter = new CharacterAuxAdapter(context, this);
+        characterAuxAdapter
+                .setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+    }
+
+    private void registerObservers() {
+        episodeDetailViewModel
+                .getCharactersFromEpisode()
+                .observe(getViewLifecycleOwner(), characters -> {
+            characterList = characters;
+            characterAuxAdapter.setCharacterList(characters);
+            binding.recyclerviewEpisodeDetail.setAdapter(characterAuxAdapter);
+        });
     }
 
     @Override

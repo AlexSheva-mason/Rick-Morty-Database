@@ -26,9 +26,10 @@ import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
 
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
-public class EpisodesListFragment extends FragmentToolbarSimple implements EpisodeAdapter.OnEpisodeClickListener {
+public class EpisodesListFragment extends FragmentToolbarSimple
+        implements EpisodeAdapter.OnEpisodeClickListener {
     private Activity a;
-    private EpisodeViewModel episodeViewModel;
+    private EpisodeListViewModel episodeListViewModel;
     private FragmentEpisodesListBinding binding;
     private EpisodeAdapter episodeAdapter;
 
@@ -43,18 +44,39 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        episodeViewModel = new ViewModelProvider.AndroidViewModelFactory(a.getApplication()).create(EpisodeViewModel.class);
+        episodeListViewModel = new ViewModelProvider
+                .AndroidViewModelFactory(a.getApplication()).create(EpisodeListViewModel.class);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentEpisodesListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        setRecyclerView();
+        registerObservers();
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (episodeAdapter != null) {
+            episodeAdapter = null;
+        }
+        binding = null;
+    }
+
+    private void setRecyclerView() {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            int spanCount = a.getApplicationContext().getResources().getInteger(R.integer.grid_span_count);
-            GridLayoutManager gridLayoutManager =
-                    new GridLayoutManager(a.getApplicationContext(), spanCount, RecyclerView.HORIZONTAL, false);
+            int spanCount = a.getApplicationContext()
+                    .getResources()
+                    .getInteger(R.integer.grid_span_count);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(a.getApplicationContext(),
+                    spanCount,
+                    RecyclerView.HORIZONTAL,
+                    false);
             binding.recyclerviewEpisode.setLayoutManager(gridLayoutManager);
             // apply spacing to gridlayout
             CustomItemDecoration itemDecoration = new CustomItemDecoration(a, false);
@@ -65,17 +87,23 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
             //set fast scroller for API >= 24 (doesn't work on lower APIs)
             if (Build.VERSION.SDK_INT >= 24) {
                 new FastScrollerBuilder(binding.recyclerviewEpisode)
-                        .setTrackDrawable(a.getResources().getDrawable(R.drawable.track_drawable, a.getTheme()))
+                        .setTrackDrawable(a.getResources().getDrawable(R.drawable.track_drawable,
+                                a.getTheme()))
                         .build();
             }
         }
         binding.recyclerviewEpisode.setHasFixedSize(true);
         //instantiate an adapter and set this fragment as a listener for onClick
-        episodeAdapter = new EpisodeAdapter(this, requireContext());
-        episodeAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        binding.recyclerviewEpisode.setAdapter(episodeAdapter);
-        episodeViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> episodeAdapter.submitList(episodes) );
-        return view;
+        episodeAdapter = new EpisodeAdapter(requireContext(), this);
+        episodeAdapter
+                .setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+    }
+
+    private void registerObservers() {
+        episodeListViewModel.getEpisodeList().observe(getViewLifecycleOwner(), episodes -> {
+            episodeAdapter.submitList(episodes);
+            binding.recyclerviewEpisode.setAdapter(episodeAdapter);
+        } );
     }
 
     @Override
@@ -86,19 +114,12 @@ public class EpisodesListFragment extends FragmentToolbarSimple implements Episo
             EpisodesListFragmentDirections.ToEpisodeDetailFragmentAction action =
                     EpisodesListFragmentDirections.toEpisodeDetailFragmentAction();
             if (clickedEpisode != null) {
-                action.setEpisodeName(clickedEpisode.getName()).setEpisodeAirDate(clickedEpisode.getAirDate())
-                        .setEpisodeCode(clickedEpisode.getCode()).setId(clickedEpisode.getId());
+                action.setEpisodeName(clickedEpisode.getName())
+                        .setEpisodeAirDate(clickedEpisode.getAirDate())
+                        .setEpisodeCode(clickedEpisode.getCode())
+                        .setId(clickedEpisode.getId());
                 Navigation.findNavController(v).navigate(action);
             }
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (episodeAdapter != null) {
-            episodeAdapter = null;
-        }
-        binding = null;
     }
 }

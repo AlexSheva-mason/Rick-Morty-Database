@@ -16,17 +16,20 @@ import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 
 import me.zhanghai.android.fastscroll.PopupTextProvider;
 
-public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder> implements PopupTextProvider {
+public class EpisodeAdapter
+        extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder>
+        implements PopupTextProvider {
     private final OnEpisodeClickListener clickListener;
     private final Context context;
 
-    EpisodeAdapter (OnEpisodeClickListener clickListener, Context context) {
+    EpisodeAdapter(Context context, OnEpisodeClickListener clickListener) {
         super(DIFF_CALLBACK);
         this.clickListener = clickListener;
         this.context = context;
     }
 
-    private static final DiffUtil.ItemCallback<Episode> DIFF_CALLBACK = new DiffUtil.ItemCallback<Episode>() {
+    private static final DiffUtil.ItemCallback<Episode> DIFF_CALLBACK
+            = new DiffUtil.ItemCallback<Episode>() {
         @Override
         public boolean areItemsTheSame(@NonNull Episode oldItem, @NonNull Episode newItem) {
             return oldItem.getId() == newItem.getId();
@@ -41,7 +44,8 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
     @Override
     public EpisodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
-        ItemEpisodeBinding binding = ItemEpisodeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemEpisodeBinding binding = ItemEpisodeBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new EpisodeViewHolder(binding);
     }
 
@@ -63,7 +67,8 @@ public class EpisodeAdapter extends PagedListAdapter<Episode, EpisodeAdapter.Epi
     public String getPopupText(int position) {
         Episode currentEpisode = getItem(position);
         if (currentEpisode != null) {
-            return "s" + currentEpisode.getCode().substring(2,3) + "e" + currentEpisode.getCode().substring(4);
+            return "s" + currentEpisode.getCode().substring(2,3)
+                    + "e" + currentEpisode.getCode().substring(4);
         } else {
             return "";
         }

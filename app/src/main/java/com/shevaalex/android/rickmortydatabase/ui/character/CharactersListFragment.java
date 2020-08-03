@@ -127,9 +127,9 @@ public class CharactersListFragment extends Fragment
         binding.recyclerviewCharacter.setHasFixedSize(true);
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(
-                CharactersListFragment.this,
-                CharactersListFragment.this,
-                a);
+                a, CharactersListFragment.this,
+                CharactersListFragment.this
+        );
         characterAdapter
                 .setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
     }

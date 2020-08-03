@@ -23,7 +23,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
     private List<CharacterSmall> mCharacterList = new ArrayList<>();
     private final Context context;
 
-    public CharacterAuxAdapter(OnCharacterListener onCharacterListener, Context context){
+    public CharacterAuxAdapter(Context context, OnCharacterListener onCharacterListener){
         this.context = context;
         this.onCharacterListener = onCharacterListener;
     }
@@ -65,7 +65,10 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
                 int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.binding.characterStatusValue.setTextColor(color);
             } else {
-                holder.binding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+                holder
+                        .binding
+                        .characterStatusValue
+                        .setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
             }
         }
     }

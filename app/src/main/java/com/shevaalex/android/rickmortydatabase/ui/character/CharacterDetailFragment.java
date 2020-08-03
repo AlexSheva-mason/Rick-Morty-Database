@@ -144,7 +144,7 @@ public class CharacterDetailFragment extends Fragment
     private void setRecyclerView() {
         binding.recyclerviewCharacterDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        adapter = new CharacterDetailAdapter(this, this, context);
+        adapter = new CharacterDetailAdapter(context, this, this);
         adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
 

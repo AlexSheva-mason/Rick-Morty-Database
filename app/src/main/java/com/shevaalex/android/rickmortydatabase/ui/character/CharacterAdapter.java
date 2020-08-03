@@ -21,11 +21,14 @@ import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
 import com.squareup.picasso.Picasso;
 
 
-public class CharacterAdapter extends PagedListAdapter<CharacterSmall, CharacterAdapter.CharacterViewHolder> {
+public class CharacterAdapter
+        extends PagedListAdapter<CharacterSmall, CharacterAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
     private final RecyclerViewAdapterCallback callback;
     private final Context context;
-    CharacterAdapter(OnCharacterListener onClickListener, RecyclerViewAdapterCallback callback, Context context) {
+    CharacterAdapter(Context context,
+                     OnCharacterListener onClickListener,
+                     RecyclerViewAdapterCallback callback) {
         super(DIFF_CALLBACK);
         this.onCharacterListener = onClickListener;
         this.callback = callback;
@@ -36,12 +39,14 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
             new DiffUtil.ItemCallback<CharacterSmall>() {
 
                 @Override
-                public boolean areItemsTheSame(@NonNull CharacterSmall oldItem, @NonNull CharacterSmall newItem) {
+                public boolean areItemsTheSame(@NonNull CharacterSmall oldItem,
+                                               @NonNull CharacterSmall newItem) {
                     return oldItem.getId() == newItem.getId();
                 }
 
                 @Override
-                public boolean areContentsTheSame(@NonNull CharacterSmall oldItem, @NonNull CharacterSmall newItem) {
+                public boolean areContentsTheSame(@NonNull CharacterSmall oldItem,
+                                                  @NonNull CharacterSmall newItem) {
                     return newItem.equals(oldItem);
                 }
             };
@@ -50,7 +55,8 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
-        ItemCharacterBinding binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemCharacterBinding binding = ItemCharacterBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new CharacterViewHolder(binding);
     }
 
@@ -74,10 +80,17 @@ public class CharacterAdapter extends PagedListAdapter<CharacterSmall, Character
                 int color = TextColourUtil.getStatusColour(currentCharacter.getStatus(), context);
                 holder.characterItemBinding.characterStatusValue.setTextColor(color);
             } else {
-                if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    holder.characterItemBinding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
+                if (context.getResources().getConfiguration().orientation
+                        == Configuration.ORIENTATION_PORTRAIT) {
+                    holder
+                            .characterItemBinding
+                            .characterStatusValue
+                            .setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnBackground, context));
                 } else {
-                    holder.characterItemBinding.characterStatusValue.setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnPrimary, context));
+                    holder
+                            .characterItemBinding
+                            .characterStatusValue
+                            .setTextColor(TextColourUtil.fetchThemeColor(R.attr.colorOnPrimary, context));
                 }
             }
             if (holder.characterItemBinding.characterLastLocationValue != null) {

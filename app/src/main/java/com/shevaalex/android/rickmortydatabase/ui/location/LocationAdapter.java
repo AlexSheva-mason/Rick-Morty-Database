@@ -13,7 +13,9 @@ import com.shevaalex.android.rickmortydatabase.source.database.Location;
 
 import me.zhanghai.android.fastscroll.PopupTextProvider;
 
-public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder> implements PopupTextProvider {
+public class LocationAdapter
+        extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder>
+        implements PopupTextProvider {
     private final OnLocationClickListener onLocationClickListener;
 
     LocationAdapter(OnLocationClickListener clickListener) {
@@ -21,7 +23,8 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
         this.onLocationClickListener = clickListener;
     }
 
-    private static final DiffUtil.ItemCallback<Location> DIFF_CALLBACK = new DiffUtil.ItemCallback<Location>() {
+    private static final DiffUtil.ItemCallback<Location> DIFF_CALLBACK
+            = new DiffUtil.ItemCallback<Location>() {
         @Override
         public boolean areItemsTheSame(@NonNull Location oldItem, @NonNull Location newItem) {
             return oldItem.getId() == newItem.getId();
@@ -36,7 +39,8 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
     @Override
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //instantiate view binding class and pass it to ViewHolder
-        ItemLocationBinding binding = ItemLocationBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemLocationBinding binding = ItemLocationBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new LocationViewHolder(binding);
     }
 
@@ -45,7 +49,8 @@ public class LocationAdapter extends PagedListAdapter<Location, LocationAdapter.
         Location currentLocation = getItem(position);
         if (currentLocation != null) {
             holder.binding.locationNameValue.setText(currentLocation.getName());
-            if (holder.binding.locationDimensionValue != null &&  holder.binding.locationTypeValue != null) {
+            if (holder.binding.locationDimensionValue != null
+                    &&  holder.binding.locationTypeValue != null) {
                 holder.binding.locationDimensionValue.setText(currentLocation.getDimension());
                 holder.binding.locationTypeValue.setText(currentLocation.getType());
             }

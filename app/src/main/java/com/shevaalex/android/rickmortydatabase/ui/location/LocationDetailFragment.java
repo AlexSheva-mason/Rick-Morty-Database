@@ -88,7 +88,7 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
         binding.recyclerviewLocationDetail.setLayoutManager(layoutManager);
         binding.recyclerviewLocationDetail.setHasFixedSize(true);
         //get recyclerview Adapter and set data to it using ViewModel
-        characterAuxAdapter = new CharacterAuxAdapter(this, context);
+        characterAuxAdapter = new CharacterAuxAdapter(context, this);
         characterAuxAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
 
