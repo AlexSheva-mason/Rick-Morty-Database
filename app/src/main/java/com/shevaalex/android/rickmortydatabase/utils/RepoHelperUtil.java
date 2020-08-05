@@ -5,7 +5,7 @@ import com.shevaalex.android.rickmortydatabase.source.database.CharacterEpisodeJ
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.source.database.LocationCharacterJoin;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
+import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,31 +22,31 @@ public abstract class RepoHelperUtil {
     public static Character parseCharacterFromJSON(JSONObject entryObjectJson) {
         try {
             int id = entryObjectJson.
-                    getInt(ApiCall.ApiCallCharacterKeys.CHARACTER_ID);
+                    getInt(ApiConstants.ApiCallCharacterKeys.CHARACTER_ID);
             String name = entryObjectJson.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_NAME);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_NAME);
             String status = entryObjectJson.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_STATUS);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_STATUS);
             String species = entryObjectJson.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_SPECIES);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_SPECIES);
             String type = entryObjectJson.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_TYPE);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_TYPE);
             String gender = entryObjectJson.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_GENDER);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_GENDER);
             String imgUrl = entryObjectJson.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_IMAGE_URL);
             String episodeList = StringParsing.returnStringOfIds(entryObjectJson.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST));
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_EPISODE_LIST));
             // Parse last known and origin locations strings to retreive IDs
             JSONObject originLocation = entryObjectJson.
-                    getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION);
+                    getJSONObject(ApiConstants.ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION);
             String originLocString = originLocation.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
             int originLocId = StringParsing.parseLocationId(originLocString);
             JSONObject lastKnownLoc = entryObjectJson.
-                    getJSONObject(ApiCall.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
+                    getJSONObject(ApiConstants.ApiCallCharacterKeys.CHARACTER_LAST_LOCATION);
             String lastKnownLocString = lastKnownLoc.
-                    getString(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
+                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
             int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
             // Return a Character object
             return new Character(id, name, status, species, type, gender, originLocId,
@@ -61,15 +61,15 @@ public abstract class RepoHelperUtil {
     public static Location parseLocationFromJSON(JSONObject entryObjectJson) {
         try {
             int id = entryObjectJson.
-                    getInt(ApiCall.ApiCallLocationKeys.LOCATION_ID);
+                    getInt(ApiConstants.ApiCallLocationKeys.LOCATION_ID);
             String name = entryObjectJson.
-                    getString(ApiCall.ApiCallLocationKeys.LOCATION_NAME);
+                    getString(ApiConstants.ApiCallLocationKeys.LOCATION_NAME);
             String type = entryObjectJson.
-                    getString(ApiCall.ApiCallLocationKeys.LOCATION_TYPE);
+                    getString(ApiConstants.ApiCallLocationKeys.LOCATION_TYPE);
             String dimension = entryObjectJson.
-                    getString(ApiCall.ApiCallLocationKeys.LOCATION_DIMENSION);
+                    getString(ApiConstants.ApiCallLocationKeys.LOCATION_DIMENSION);
             String residents = StringParsing.returnStringOfIds(entryObjectJson
-                    .getString(ApiCall.ApiCallLocationKeys.LOCATION_RESIDENTS));
+                    .getString(ApiConstants.ApiCallLocationKeys.LOCATION_RESIDENTS));
             return new Location(id, name, type, dimension, residents);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -81,16 +81,16 @@ public abstract class RepoHelperUtil {
     public static Episode parseEpisodeFromJSON(JSONObject entryObjectJson) {
         try {
             int id = entryObjectJson.
-                    getInt(ApiCall.ApiCallEpisodeKeys.EPISODE_ID);
+                    getInt(ApiConstants.ApiCallEpisodeKeys.EPISODE_ID);
             String name = entryObjectJson.
-                    getString(ApiCall.ApiCallEpisodeKeys.EPISODE_NAME);
+                    getString(ApiConstants.ApiCallEpisodeKeys.EPISODE_NAME);
             String airDate = entryObjectJson.
-                    getString(ApiCall.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
+                    getString(ApiConstants.ApiCallEpisodeKeys.EPISODE_AIR_DATE);
             String code = entryObjectJson.
-                    getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CODE);
+                    getString(ApiConstants.ApiCallEpisodeKeys.EPISODE_CODE);
             String characters = StringParsing.
                     returnStringOfIds(entryObjectJson
-                            .getString(ApiCall.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
+                            .getString(ApiConstants.ApiCallEpisodeKeys.EPISODE_CHARACTERS));
             return new Episode(id, name, airDate, code, characters);
         } catch (JSONException e) {
             e.printStackTrace();

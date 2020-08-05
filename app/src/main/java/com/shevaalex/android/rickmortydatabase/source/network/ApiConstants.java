@@ -1,11 +1,16 @@
 package com.shevaalex.android.rickmortydatabase.source.network;
 
-public abstract class ApiCall {
+public abstract class ApiConstants {
     public static final String INFO = "info";
     public static final String PAGES = "pages";
     public static final String RESULTS_ARRAY = "results";
+    public static final String BASE_URL = "https://rickandmortyapi.com/api/";
+    public static final String KEY_QUERY_PAGE = "page";
+    public static final String KEY_PAGE_PREV = "prev";
+    public static final String KEY_PAGE_NEXT = "next";
 
     public static class ApiCallCharacterKeys {
+        public static final String SUB_URL_CHARACTER = "character/";
         public static final String BASE_URL_CHARACTER_PAGES = "https://rickandmortyapi.com/api/character/?page=";
 
         public static final String CHARACTER_ID = "id";

@@ -16,7 +16,7 @@ import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.source.database.RickMortyDatabase;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
+import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
 import com.shevaalex.android.rickmortydatabase.ui.MainActivity;
 import com.shevaalex.android.rickmortydatabase.utils.AppExecutors;
@@ -97,9 +97,9 @@ public class MainRepository {
         locationTableIsUpToDate = false;
         episodeTableIsUpToDate = false;
         fetchLastDbEntries();
-        String [] baseUrlArray = {ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES,
-                ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES,
-                ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES};
+        String [] baseUrlArray = {ApiConstants.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES,
+                ApiConstants.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES,
+                ApiConstants.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES};
         for (String url : baseUrlArray) {
             networkInitialCall(url);
         }
@@ -121,8 +121,8 @@ public class MainRepository {
     private void networkInitialCall (String url) {
         networkDataParsing.getVolleyResponse(response -> {
             try {
-                JSONObject jsonObject = response.getJSONObject(ApiCall.INFO);
-                int numberOfPages = jsonObject.getInt(ApiCall.PAGES);
+                JSONObject jsonObject = response.getJSONObject(ApiConstants.INFO);
+                int numberOfPages = jsonObject.getInt(ApiConstants.PAGES);
                 getLastEntries(numberOfPages, url);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -134,7 +134,7 @@ public class MainRepository {
         networkDataParsing.getVolleyResponse(response -> {
             //get a JSONArray from the last page and fetch the last entry object
             try {
-                JSONArray jsonArray = response.getJSONArray(ApiCall.RESULTS_ARRAY);
+                JSONArray jsonArray = response.getJSONArray(ApiConstants.RESULTS_ARRAY);
                 int lastArrayObjectId = jsonArray.length() - 1;
                 JSONObject entryObjectJson = jsonArray.getJSONObject(lastArrayObjectId);
                 Object lastEntryObject = parseJsonObject(entryObjectJson, url);
@@ -193,7 +193,7 @@ public class MainRepository {
     private void updateDataBaseEntries(final int pageNumber, String url) {
         networkDataParsing.getVolleyResponse(response -> {
             try {
-                JSONArray jsonArray = response.getJSONArray(ApiCall.RESULTS_ARRAY);
+                JSONArray jsonArray = response.getJSONArray(ApiConstants.RESULTS_ARRAY);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     Object newEntryObject = parseJsonObject(jsonObject, url);
@@ -261,7 +261,7 @@ public class MainRepository {
 
     private Object parseJsonObject (JSONObject entryObjectJson, String url) {
         switch (url) {
-            case ApiCall.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES:
+            case ApiConstants.ApiCallCharacterKeys.BASE_URL_CHARACTER_PAGES:
                 Character newChar = RepoHelperUtil.parseCharacterFromJSON(entryObjectJson);
                 if (MainActivity.defSystemLanguage.startsWith("ru")
                         || MainActivity.defSystemLanguage.startsWith("uk"))
@@ -269,7 +269,7 @@ public class MainRepository {
                     return UiTranslateUtils
                             .getTranslatedCharacter(mContext, Objects.requireNonNull(newChar));
                 else return newChar;
-            case ApiCall.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES:
+            case ApiConstants.ApiCallLocationKeys.BASE_URL_LOCATION_PAGES:
                 Location newLoc = RepoHelperUtil.parseLocationFromJSON(entryObjectJson);
                 if (MainActivity.defSystemLanguage.startsWith("ru")
                         || MainActivity.defSystemLanguage.startsWith("uk"))
@@ -277,7 +277,7 @@ public class MainRepository {
                     return UiTranslateUtils
                             .getTranslatedLocation(mContext, Objects.requireNonNull(newLoc));
                 else return newLoc;
-            case ApiCall.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES:
+            case ApiConstants.ApiCallEpisodeKeys.BASE_URL_EPISODE_PAGES:
                 Episode newEp = RepoHelperUtil.parseEpisodeFromJSON(entryObjectJson);
                 if (MainActivity.defSystemLanguage.startsWith("ru")
                         || MainActivity.defSystemLanguage.startsWith("uk"))

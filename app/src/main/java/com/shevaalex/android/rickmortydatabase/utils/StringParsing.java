@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.utils;
 import android.content.Context;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
+import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ public abstract class StringParsing {
 
     public static int parseLocationId (String locationUrl) {
         int lastKnownLocId = 0;
-        if (locationUrl.contains(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING)) {
+        if (locationUrl.contains(ApiConstants.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING)) {
             int slashId = locationUrl.lastIndexOf("/");
             lastKnownLocId = Integer.parseInt(locationUrl.substring(slashId+1));
         }

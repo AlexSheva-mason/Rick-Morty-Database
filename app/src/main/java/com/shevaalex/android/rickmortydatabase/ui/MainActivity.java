@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,9 +19,18 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
+import com.shevaalex.android.rickmortydatabase.source.network.RetrofitService;
+import com.shevaalex.android.rickmortydatabase.source.network.requests.CharacterApi;
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterPageModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static ArrayList<String> snackMessages = new ArrayList<>();
@@ -42,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setupViews();
         monitorConnectionAndDatabase();
+        testRetrofitService();
     }
 
     @Override
@@ -157,4 +168,46 @@ public class MainActivity extends AppCompatActivity {
         } else { super.onBackPressed(); }
     }
 
+    //TODO for testing - delete later
+    private void testRetrofitService() {
+        CharacterApi characterApi = RetrofitService.getInstance().getCharacterApi();
+        Call<CharacterPageModel> responseCall = characterApi.getCharactersPage("1");
+        Call<CharacterModel> responseCallChar = characterApi.getCharacter(591);
+        responseCall.enqueue(new Callback<CharacterPageModel>() {
+            @Override
+            public void onResponse(@NonNull Call<CharacterPageModel> call, @NonNull Response<CharacterPageModel> response) {
+                Log.w("TAGg", "page: " + response.toString());
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        Log.w("TAGg", "page: " + response.body().toString());
+                        List<CharacterModel> characterModels = new ArrayList<>(response.body().getCharacterModels());
+                        for (CharacterModel characterModel : characterModels) {
+                            Log.e("TAGg", "characterModel: " + characterModel.toString());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CharacterPageModel> call, @NonNull Throwable t) {
+
+            }
+        });
+        responseCallChar.enqueue(new Callback<CharacterModel>() {
+            @Override
+            public void onResponse(@NonNull Call<CharacterModel> call, @NonNull Response<CharacterModel> response) {
+                Log.w("TAGg", "character: " + response.toString());
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        Log.w("TAGg", "character: " + response.body().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CharacterModel> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
 }
