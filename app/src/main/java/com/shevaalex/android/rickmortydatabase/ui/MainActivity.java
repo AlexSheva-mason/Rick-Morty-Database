@@ -81,14 +81,18 @@ public class MainActivity extends AppCompatActivity {
         // Setting the nav controller with bottom navigation
         NavigationUI.setupWithNavController(binding.bottomPanel, navController);
         //setup the ViewModel for lifecycle aware observing bottomNav state
-        botNavViewModel.getBottomNavVisibility().observe(this, integer -> binding.bottomPanel.setVisibility(integer));
-        botNavViewModel.getBottomNavLabelStatus().observe(this, integer -> binding.bottomPanel.setLabelVisibilityMode(integer));
+        botNavViewModel.getBottomNavVisibility().observe(this,
+                integer -> binding.bottomPanel.setVisibility(integer));
+        botNavViewModel.getBottomNavLabelStatus().observe(this,
+                integer -> binding.bottomPanel.setLabelVisibilityMode(integer));
         // monitor navigation and remove BottomNavigationView in Detail fragments
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.settingsFragment || destination.getId() == R.id.characterImageFragment) {
+            if (destination.getId() == R.id.settingsFragment
+                    || destination.getId() == R.id.characterImageFragment) {
                 new Handler().postDelayed(() ->
                         botNavViewModel.hideBottomNav(), 100);
-            } else if(destination.getId() == R.id.characterDetailFragment2 || destination.getId() == R.id.locationDetailFragment
+            } else if(destination.getId() == R.id.characterDetailFragment2
+                    || destination.getId() == R.id.locationDetailFragment
                     || destination.getId() == R.id.episodeDetailFragment) {
                 botNavViewModel.showBottomNav();
                 botNavViewModel.setUnlabeled();
@@ -99,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
         });
         // add bottom menu listener to prevent posibbility of double clicking the same item and refreshing or backing up the old search
         binding.bottomPanel.setOnNavigationItemSelectedListener(item -> {
-            if (navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() != item.getItemId()){
+            if (navController.getCurrentDestination() != null
+                    && navController.getCurrentDestination().getId() != item.getItemId()){
                 NavigationUI.onNavDestinationSelected(item, navController);
                 return true;
             }
@@ -171,20 +176,24 @@ public class MainActivity extends AppCompatActivity {
     //TODO for testing - delete later
     private void testRetrofitService() {
         CharacterApi characterApi = RetrofitService.getInstance().getCharacterApi();
-        Call<CharacterPageModel> responseCall = characterApi.getCharactersPage("1");
+        Call<CharacterPageModel> responseCall = characterApi.getCharactersPage(String.valueOf(1));
         Call<CharacterModel> responseCallChar = characterApi.getCharacter(591);
         responseCall.enqueue(new Callback<CharacterPageModel>() {
             @Override
-            public void onResponse(@NonNull Call<CharacterPageModel> call, @NonNull Response<CharacterPageModel> response) {
+            public void onResponse(@NonNull Call<CharacterPageModel> call,
+                                   @NonNull Response<CharacterPageModel> response) {
                 Log.w("TAGg", "page: " + response.toString());
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         Log.w("TAGg", "page: " + response.body().toString());
-                        List<CharacterModel> characterModels = new ArrayList<>(response.body().getCharacterModels());
+                        List<CharacterModel> characterModels
+                                = new ArrayList<>(response.body().getCharacterModels());
                         for (CharacterModel characterModel : characterModels) {
                             Log.e("TAGg", "characterModel: " + characterModel.toString());
                         }
                     }
+                } else if (response.errorBody() != null) {
+                    Log.e("TAGg", "character: " + response.errorBody().toString());
                 }
             }
 
@@ -195,12 +204,15 @@ public class MainActivity extends AppCompatActivity {
         });
         responseCallChar.enqueue(new Callback<CharacterModel>() {
             @Override
-            public void onResponse(@NonNull Call<CharacterModel> call, @NonNull Response<CharacterModel> response) {
+            public void onResponse(@NonNull Call<CharacterModel> call,
+                                   @NonNull Response<CharacterModel> response) {
                 Log.w("TAGg", "character: " + response.toString());
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         Log.w("TAGg", "character: " + response.body().toString());
                     }
+                } else if (response.errorBody() != null) {
+                    Log.e("TAGg", "character: " + response.errorBody().toString());
                 }
             }
 

@@ -20,8 +20,8 @@ import org.json.JSONObject;
 public class NetworkDataParsing {
     private static final String LOG_TAG = NetworkDataParsing.class.getSimpleName();
     private static final Object LOCK = new Object();
-    private static NetworkDataParsing sInstance;
-    private static volatile VolleySingleton volleyInstance;
+    private static volatile NetworkDataParsing sInstance;
+    private final VolleySingleton volleyInstance;
     private final Context context;
 
     private NetworkDataParsing (Context context) {

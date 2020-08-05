@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
     private static final Object LOCK = new Object();
-    private static volatile RetrofitService sInstance;
+    private static volatile RetrofitService sRetrofitService;
     private CharacterApi characterApi;
 
     private RetrofitService() {
@@ -20,14 +20,14 @@ public class RetrofitService {
     }
 
     public static synchronized RetrofitService getInstance() {
-        if (sInstance == null) {
+        if (sRetrofitService == null) {
             synchronized (LOCK) {
-                if (sInstance == null) {
-                    sInstance = new RetrofitService();
+                if (sRetrofitService == null) {
+                    sRetrofitService = new RetrofitService();
                 }
             }
         }
-        return sInstance;
+        return sRetrofitService;
     }
 
     public CharacterApi getCharacterApi() {
