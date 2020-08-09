@@ -11,12 +11,14 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.R;
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.source.database.RickMortyDatabase;
 import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
+import com.shevaalex.android.rickmortydatabase.source.network.CharacterNetworkClient;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
 import com.shevaalex.android.rickmortydatabase.ui.MainActivity;
 import com.shevaalex.android.rickmortydatabase.utils.AppExecutors;
@@ -384,4 +386,20 @@ public class MainRepository {
         return rmDatabase.getCharacterEpisodeJoinDao().getEpisodesFromCharacters(characterId);
     }
 
+
+    //TODO retrofit test
+    public LiveData<List<CharacterModel>> getTestCharacterList() {
+        return CharacterNetworkClient.getInstance().getCharacterList();
+    }
+
+    public void callCharacterPage(int pageNumber) {
+        if(pageNumber == 0){
+            pageNumber = 1;
+        }
+        CharacterNetworkClient.getInstance().callCharacterPage(pageNumber);
+    }
+
+    public LiveData<Boolean> getNetworkTimedOut() {
+        return CharacterNetworkClient.getInstance().getNetworkTimedOut();
+    }
 }

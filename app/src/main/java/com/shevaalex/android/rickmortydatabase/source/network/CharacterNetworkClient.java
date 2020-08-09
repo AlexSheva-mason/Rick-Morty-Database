@@ -22,8 +22,9 @@ public class CharacterNetworkClient {
     private static final int NETWORK_TIMEOUT = 3000;
     private static final Object LOCK = new Object();
     private static volatile CharacterNetworkClient sCharacterNetworkClient;
-    private RetrieveCharacterPageRunnable retrieveCharacterPageRunnable;
+    private RetrieveCharacterPageRunnable mRetrieveCharacterPageRunnable;
     private MutableLiveData<List<CharacterModel>> mCharacterList = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mNetworkTimedOut = new MutableLiveData<>();
 
     private CharacterNetworkClient() {
         if (sCharacterNetworkClient != null) {
@@ -43,20 +44,34 @@ public class CharacterNetworkClient {
     }
 
     public LiveData<List<CharacterModel>> getCharacterList() {
+        if (mCharacterList.getValue() != null && mCharacterList.getValue().size() > 0) {
+            mNetworkTimedOut.postValue(false);
+        }
         return mCharacterList;
     }
 
+    public LiveData<Boolean> getNetworkTimedOut() {
+        return mNetworkTimedOut;
+    }
+
     public void callCharacterPage(int pageNumber) {
-        if (retrieveCharacterPageRunnable != null) {
-            retrieveCharacterPageRunnable = null;
+        if (mRetrieveCharacterPageRunnable != null) {
+            mRetrieveCharacterPageRunnable = null;
         }
-        retrieveCharacterPageRunnable = new RetrieveCharacterPageRunnable(pageNumber);
-        final Future handler
-                = AppExecutors.getInstance().networkIO().submit(retrieveCharacterPageRunnable);
+        mRetrieveCharacterPageRunnable = new RetrieveCharacterPageRunnable(pageNumber);
+        final Future<?> handler
+                = AppExecutors.getInstance().networkIO().submit(mRetrieveCharacterPageRunnable);
         //set the network timeout limit to 3sec (cancels request after 3sec)
         AppExecutors.getInstance().networkIO().schedule(() -> {
             handler.cancel(true);
         }, NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
+    }
+
+    //TODO call this from repository to cancel request
+    public void cancelRequest() {
+        if (mRetrieveCharacterPageRunnable != null) {
+            mRetrieveCharacterPageRunnable.cancelRequest();
+        }
     }
 
     private class RetrieveCharacterPageRunnable implements Runnable {
@@ -89,8 +104,7 @@ public class CharacterNetworkClient {
                         }
                     }
                 } else if (response.errorBody() != null) {
-                    //TODO
-                    Log.e("TAGg", "runnable error: " + response.errorBody().toString());
+                    mNetworkTimedOut.postValue(true);
                     mCharacterList.postValue(null);
                 }
             } catch (IOException e) {

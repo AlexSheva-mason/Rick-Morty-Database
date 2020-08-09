@@ -9,7 +9,6 @@ import java.util.Arrays;
 
 import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants.ApiCallCharacterKeys;
 
-//TODO parcelable?
 @SuppressWarnings("unused")
 public class CharacterModel {
     private int id;
