@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding;
 import com.shevaalex.android.rickmortydatabase.R;
 
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.utils.RecyclerViewAdapterCallback;
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 
 
 public class CharacterAdapter
-        extends PagedListAdapter<CharacterSmall, CharacterAdapter.CharacterViewHolder> {
+        extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
     private final RecyclerViewAdapterCallback callback;
     private final Context context;
@@ -35,18 +35,18 @@ public class CharacterAdapter
         this.context = context;
     }
 
-    private static final DiffUtil.ItemCallback<CharacterSmall> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<CharacterSmall>() {
+    private static final DiffUtil.ItemCallback<Character> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Character>() {
 
                 @Override
-                public boolean areItemsTheSame(@NonNull CharacterSmall oldItem,
-                                               @NonNull CharacterSmall newItem) {
+                public boolean areItemsTheSame(@NonNull Character oldItem,
+                                               @NonNull Character newItem) {
                     return oldItem.getId() == newItem.getId();
                 }
 
                 @Override
-                public boolean areContentsTheSame(@NonNull CharacterSmall oldItem,
-                                                  @NonNull CharacterSmall newItem) {
+                public boolean areContentsTheSame(@NonNull Character oldItem,
+                                                  @NonNull Character newItem) {
                     return newItem.equals(oldItem);
                 }
             };
@@ -62,7 +62,7 @@ public class CharacterAdapter
 
     @Override
     public void onBindViewHolder(@NonNull final CharacterViewHolder holder, int position) {
-        CharacterSmall currentCharacter = getItem(position);
+        Character currentCharacter = getItem(position);
         if (currentCharacter != null) {
             // using View Binding class to set views without calling findViewById
             Picasso.get()

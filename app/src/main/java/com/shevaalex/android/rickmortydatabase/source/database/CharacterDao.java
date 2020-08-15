@@ -13,24 +13,24 @@ import java.util.List;
 @Dao
 public interface CharacterDao {
     //perform a search by character's name in the database, shows all results
-    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList FROM Character " +
+    @Query("SELECT * FROM Character " +
             "WHERE name LIKE :name ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    DataSource.Factory<Integer, CharacterSmall> getCharacterList(String name);
+    DataSource.Factory<Integer, Character> getCharacterList(String name);
 
     //perform a search by character's name in the database, excluding Dead
-    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList FROM Character " +
+    @Query("SELECT * FROM Character " +
             "WHERE name LIKE :name AND (status IN (:notDeadStatus)) ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    DataSource.Factory<Integer, CharacterSmall> getCharacterList(String name, String[] notDeadStatus);
+    DataSource.Factory<Integer, Character> getCharacterList(String name, String[] notDeadStatus);
 
     //shows list of all characters
-    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList FROM Character " +
+    @Query("SELECT * FROM Character " +
             "ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    DataSource.Factory<Integer, CharacterSmall> getCharacterList();
+    DataSource.Factory<Integer, Character> getCharacterList();
 
     //shows list of all characters, excluding Dead
-    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList FROM Character " +
+    @Query("SELECT * FROM Character " +
             "WHERE status IN (:notDeadStatus) ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    DataSource.Factory<Integer, CharacterSmall> getCharacterList(String[] notDeadStatus);
+    DataSource.Factory<Integer, Character> getCharacterList(String[] notDeadStatus);
 
     // gets the last character to compare databases
     @Query("SELECT * FROM Character ORDER BY id DESC LIMIT 1")

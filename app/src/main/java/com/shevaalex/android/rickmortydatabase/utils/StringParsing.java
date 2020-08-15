@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.utils;
 import android.content.Context;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
 
 import java.util.ArrayList;
 

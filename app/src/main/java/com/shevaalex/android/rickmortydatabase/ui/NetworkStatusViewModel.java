@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.Resource;
 import com.shevaalex.android.rickmortydatabase.utils.StatusMediatorLiveData;
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
@@ -31,16 +32,7 @@ public class NetworkStatusViewModel extends AndroidViewModel {
     }
 
     //TODO for retrofit test
-    public LiveData<List<CharacterModel>> getTestCharacterList() {
-        return rmRepository.getTestCharacterList();
-    };
-
-    public void callCharacterPage(int pageNumber) {
-        rmRepository.callCharacterPage(pageNumber);
+    public LiveData<Resource<List<CharacterModel>>> getTestCharacters() {
+        return rmRepository.getTestCharacters();
     }
-
-    public LiveData<Boolean> getNetworkTimedOut() {
-        return rmRepository.getNetworkTimedOut();
-    }
-
 }

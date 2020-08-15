@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class EpisodeDetailViewModel extends AndroidViewModel {
         savedStateHandle.set(SAVED_STATE_KEY_EPISODE_ID, episodeId);
     }
 
-    LiveData<List<CharacterSmall>> getCharactersFromEpisode() {
+    LiveData<List<Character>> getCharactersFromEpisode() {
         if (episodeId.getValue() != null) {
             return  rmRepository.getCharactersFromEpisode(episodeId.getValue());
         }

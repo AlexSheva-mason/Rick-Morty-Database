@@ -3,8 +3,10 @@ package com.shevaalex.android.rickmortydatabase.source;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -12,14 +14,17 @@ import androidx.paging.PagedList;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterPageModel;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.source.database.RickMortyDatabase;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
-import com.shevaalex.android.rickmortydatabase.source.network.CharacterNetworkClient;
+import com.shevaalex.android.rickmortydatabase.source.network.ApiResponse;
+import com.shevaalex.android.rickmortydatabase.source.network.RetrofitService;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.NetworkBoundResource;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.Resource;
 import com.shevaalex.android.rickmortydatabase.ui.MainActivity;
 import com.shevaalex.android.rickmortydatabase.utils.AppExecutors;
 import com.shevaalex.android.rickmortydatabase.utils.RepoHelperUtil;
@@ -303,8 +308,8 @@ public class MainRepository {
     }
 
     // calls the appropriate method based on search query and filter applied
-    public LiveData<PagedList<CharacterSmall>> getCharacterListFiltered(String query, int filter) {
-        LiveData<PagedList<CharacterSmall>> mCharacterList = new LiveData<PagedList<CharacterSmall>>() {};
+    public LiveData<PagedList<Character>> getCharacterListFiltered(String query, int filter) {
+        LiveData<PagedList<Character>> mCharacterList = new LiveData<PagedList<Character>>() {};
         String [] notDeadStatus = {mContext.getResources().getString(R.string.character_status_alive_female),
                 mContext.getResources().getString(R.string.character_status_alive_male),
                 mContext.getResources().getString(R.string.species_unknown)};
@@ -372,12 +377,12 @@ public class MainRepository {
 
     //JOIN DAOs
     //gets characters from episode
-    public LiveData<List<CharacterSmall>> getCharactersFromEpisode(int episodeId){
+    public LiveData<List<Character>> getCharactersFromEpisode(int episodeId){
         return rmDatabase.getCharacterEpisodeJoinDao().getCharactersFromEpisode(episodeId);
     }
 
     //gets characters from location
-    public LiveData<List<CharacterSmall>> getCharactersFromLocation(int locationId) {
+    public LiveData<List<Character>> getCharactersFromLocation(int locationId) {
         return rmDatabase.getLocationCharacterJoinDao().getCharactersFromLocations(locationId);
     }
 
@@ -386,20 +391,35 @@ public class MainRepository {
         return rmDatabase.getCharacterEpisodeJoinDao().getEpisodesFromCharacters(characterId);
     }
 
-
     //TODO retrofit test
-    public LiveData<List<CharacterModel>> getTestCharacterList() {
-        return CharacterNetworkClient.getInstance().getCharacterList();
-    }
+    public LiveData<Resource<List<CharacterModel>>> getTestCharacters() {
+        return new NetworkBoundResource<List<CharacterModel>, CharacterPageModel>(appExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull CharacterPageModel characterPageModel) {
+                List<CharacterModel> charList = characterPageModel.getCharacterModels();
+                Log.e("TAGg", "saveCallResult: " + charList.get(0));
+                rmDatabase.getCharacterModelDao().insertCharacterList(charList);
+            }
 
-    public void callCharacterPage(int pageNumber) {
-        if(pageNumber == 0){
-            pageNumber = 1;
-        }
-        CharacterNetworkClient.getInstance().callCharacterPage(pageNumber);
-    }
+            @Override
+            protected boolean shouldFetch(@Nullable List<CharacterModel> characterModels) {
+                return true;
+            }
 
-    public LiveData<Boolean> getNetworkTimedOut() {
-        return CharacterNetworkClient.getInstance().getNetworkTimedOut();
+            @NonNull
+            @Override
+            protected LiveData<List<CharacterModel>> loadFromDb() {
+                return rmDatabase.getCharacterModelDao().getCharacterList();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<CharacterPageModel>> createCall() {
+                return RetrofitService
+                        .getInstance()
+                        .getCharacterApi()
+                        .getCharactersPage(String.valueOf(1));
+            }
+        }.getAsLiveData();
     }
 }

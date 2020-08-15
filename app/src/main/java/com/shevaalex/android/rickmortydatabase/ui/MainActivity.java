@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //reinit database if locale has been changed
         if (!defSystemLanguage.equals(newConfig.locale.getLanguage())) {
             defSystemLanguage = newConfig.locale.getLanguage();
-            //TODO check it later
+            //TODO fix it later
             /*new Handler().postDelayed(() -> {
                 characterViewModel.rmRepository.initialiseDataBase();
                 recreate();
@@ -168,21 +168,31 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO for testing - delete later
     private void testRetrofitService() {
-        callCharacterPage(1);
         observeRetrofitList();
     }
 
     private void observeRetrofitList() {
-        networkStatusViewModel.getTestCharacterList().observe(this, characterModels -> {
-            if (characterModels != null) {
-                for (CharacterModel character : characterModels) {
-                    Log.d("TAGg", "observeRetrofitList: " + character.getName());
+        networkStatusViewModel.getTestCharacters().observe(this, listResource -> {
+            if (listResource != null) {
+                Log.w("TAGg", "observeRetrofitList: " + listResource.status);
+                if (listResource.data != null) {
+                    switch (listResource.status) {
+                        case SUCCESS:
+                            Log.w("TAGg", "list size: " + listResource.data.size());
+                            for(CharacterModel characterModel : listResource.data) {
+                                Log.w("TAGg", "observeRetrofitList: " +
+                                        characterModel.getLastLocation().getName());
+                            }
+                            break;
+                        case ERROR:
+                            String errorMessage = listResource.message;
+                            break;
+                        case LOADING:
+                            //display loading
+                            break;
+                    }
                 }
             }
         });
-    }
-
-    private void callCharacterPage(int pageNumber) {
-        networkStatusViewModel.callCharacterPage(pageNumber);
     }
 }

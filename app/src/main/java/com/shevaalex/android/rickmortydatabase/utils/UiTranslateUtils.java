@@ -67,6 +67,16 @@ public class UiTranslateUtils {
         return location.getName();
     }
 
+    public static String getLocationNameLocalized (Context context, @NonNull int locationId) {
+        String translatedName = StringParsing.returnLocationNameLocale(context, locationId);
+        if (!translatedName.equals(StringParsing.KEY_NULL)) {
+            return translatedName;
+        }
+        //TODO return original name if no translation found
+        //TODO return "unknown" if id==0
+        return "null";
+    }
+
     private static String getLocationDimensionLocalized (Context context, @NonNull Location location) {
         String translatedDimension = StringParsing.returnLocationDimensionLocale(context, location.getDimension());
         if (!translatedDimension.equals(StringParsing.KEY_NULL)) {

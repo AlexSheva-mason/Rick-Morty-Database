@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterSmallBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
 import com.squareup.picasso.Picasso;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
-    private List<CharacterSmall> mCharacterList = new ArrayList<>();
+    private List<Character> mCharacterList = new ArrayList<>();
     private final Context context;
 
     public CharacterAuxAdapter(Context context, OnCharacterListener onCharacterListener){
@@ -28,7 +28,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
         this.onCharacterListener = onCharacterListener;
     }
 
-    public void setCharacterList (List<CharacterSmall> mCharacterList) {
+    public void setCharacterList (List<Character> mCharacterList) {
         this.mCharacterList = mCharacterList;
         notifyDataSetChanged();
     }
@@ -47,7 +47,7 @@ public class CharacterAuxAdapter extends RecyclerView.Adapter<CharacterAuxAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
-        CharacterSmall currentCharacter = mCharacterList.get(position);
+        Character currentCharacter = mCharacterList.get(position);
         // using View Binding class to set views without calling findViewById
         Picasso.get()
                 .load(currentCharacter.getImgUrl())

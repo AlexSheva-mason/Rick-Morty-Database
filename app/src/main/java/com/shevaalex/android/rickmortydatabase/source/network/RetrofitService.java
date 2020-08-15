@@ -1,5 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.source.network;
 
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.CallAdapterLiveDataFactory;
 import com.shevaalex.android.rickmortydatabase.source.network.requests.CharacterApi;
 
 import retrofit2.Retrofit;
@@ -14,6 +16,7 @@ public class RetrofitService {
         Retrofit.Builder builder =
                 new Retrofit.Builder()
                         .baseUrl(ApiConstants.BASE_URL)
+                        .addCallAdapterFactory(new CallAdapterLiveDataFactory())
                         .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         characterApi = retrofit.create(CharacterApi.class);

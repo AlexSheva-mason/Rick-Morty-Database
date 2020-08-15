@@ -14,10 +14,10 @@ public interface CharacterEpisodeJoinDao {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insertCharacterEpisodeJoinList (List<CharacterEpisodeJoin> characterEpisodeJoins);
 
-    @Query("SELECT id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList " +
+    @Query("SELECT * " +
             "FROM Character INNER JOIN CharacterEpisodeJoin ON Character.id = CharacterEpisodeJoin.characterId " +
             "WHERE CharacterEpisodeJoin.episodeId=:episodeID ORDER BY name COLLATE LOCALIZED")
-    LiveData<List<CharacterSmall>> getCharactersFromEpisode(int episodeID);
+    LiveData<List<Character>> getCharactersFromEpisode(int episodeID);
 
     @Query("SELECT id, name, airDate, code, charactersList " +
             "FROM Episode INNER JOIN CharacterEpisodeJoin ON Episode.id = CharacterEpisodeJoin.episodeId " +

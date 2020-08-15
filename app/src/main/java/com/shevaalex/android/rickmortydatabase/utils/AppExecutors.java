@@ -1,24 +1,28 @@
 package com.shevaalex.android.rickmortydatabase.utils;
 
 
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.annotation.NonNull;
+
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 
 public class AppExecutors {
     private static final Object LOCK = new Object();
     private static volatile AppExecutors sInstance;
     private final ExecutorService diskIO;
-    //scheduled executor service for retrofit (configuring timeout)
-    private final ScheduledExecutorService mNetworkIO;
+    private final Executor mainThreadExecutor;
 
-    private AppExecutors (ExecutorService diskIO, ScheduledExecutorService scExecutorService) {
+    private AppExecutors (ExecutorService diskIO, Executor mainThreadExecutor) {
         if (sInstance != null) {
             throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
         this.diskIO = diskIO;
-        mNetworkIO = scExecutorService;
+        this.mainThreadExecutor = mainThreadExecutor;
     }
 
     public static AppExecutors getInstance() {
@@ -27,7 +31,7 @@ public class AppExecutors {
                 if (sInstance == null) {
                     sInstance = new AppExecutors(
                             Executors.newSingleThreadExecutor(),
-                            Executors.newScheduledThreadPool(3));
+                            new MainThreadExecutor());
                 }
             }
         }
@@ -38,7 +42,16 @@ public class AppExecutors {
         return diskIO;
     }
 
-    public ScheduledExecutorService networkIO() {
-        return mNetworkIO;
+    public Executor mainThreadExecutor() {
+        return mainThreadExecutor;
+    }
+
+    private static class MainThreadExecutor implements Executor {
+        private final Handler handler = new Handler(Looper.getMainLooper());
+
+        @Override
+        public void execute(@NonNull Runnable r) {
+            handler.post(r);
+        }
     }
 }

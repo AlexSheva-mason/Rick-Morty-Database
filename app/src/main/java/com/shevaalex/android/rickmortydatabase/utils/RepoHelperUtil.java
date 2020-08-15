@@ -5,7 +5,7 @@ import com.shevaalex.android.rickmortydatabase.source.database.CharacterEpisodeJ
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.source.database.LocationCharacterJoin;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,8 +29,6 @@ public abstract class RepoHelperUtil {
                     getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_STATUS);
             String species = entryObjectJson.
                     getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_SPECIES);
-            String type = entryObjectJson.
-                    getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_TYPE);
             String gender = entryObjectJson.
                     getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_GENDER);
             String imgUrl = entryObjectJson.
@@ -49,8 +47,7 @@ public abstract class RepoHelperUtil {
                     getString(ApiConstants.ApiCallCharacterKeys.CHARACTER_LOCATIONS_URL);
             int lastKnownLocId = StringParsing.parseLocationId(lastKnownLocString);
             // Return a Character object
-            return new Character(id, name, status, species, type, gender, originLocId,
-                    lastKnownLocId, imgUrl, episodeList);
+            return new Character(id, name, status, species, gender, lastKnownLocId, originLocId, imgUrl, episodeList);
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

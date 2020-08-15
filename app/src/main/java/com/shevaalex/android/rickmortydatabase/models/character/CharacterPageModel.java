@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
 
 @SuppressWarnings("unused")
 public class CharacterPageModel {

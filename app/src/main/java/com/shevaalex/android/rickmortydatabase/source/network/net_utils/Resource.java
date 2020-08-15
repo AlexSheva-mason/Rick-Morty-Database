@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.source.network;
+package com.shevaalex.android.rickmortydatabase.source.network.net_utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +12,8 @@ public class Resource<T> {
 
     @Nullable
     public final String message;
+
+    public enum Status { SUCCESS, ERROR, LOADING}
 
     private Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
         this.status = status;
@@ -30,6 +32,4 @@ public class Resource<T> {
     public static <T> Resource<T> loading(@Nullable T data) {
         return new Resource<>(Status.LOADING, data, null);
     }
-
-    public enum Status { SUCCESS, ERROR, LOADING}
 }

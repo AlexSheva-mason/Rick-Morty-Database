@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.models.character;
 import androidx.annotation.NonNull;
 
 @SuppressWarnings("unused")
-class LinkedLocationModel {
+public class LinkedLocationModel {
     private String name;
     private String url;
 

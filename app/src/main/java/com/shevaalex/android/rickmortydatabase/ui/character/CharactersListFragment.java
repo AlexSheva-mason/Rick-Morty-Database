@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.utils.RecyclerViewAdapterCallback;
 import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
@@ -282,9 +282,9 @@ public class CharactersListFragment extends Fragment
     @Override
     public void onCharacterClick(int position, @NonNull View v) {
         hideKeyboard();
-        PagedList<CharacterSmall> mCharacterList = characterAdapter.getCurrentList();
+        PagedList<Character> mCharacterList = characterAdapter.getCurrentList();
         if (mCharacterList != null && !mCharacterList.isEmpty()) {
-            CharacterSmall clickedChar = mCharacterList.get(position);
+            Character clickedChar = mCharacterList.get(position);
             CharactersListFragmentDirections.ToCharacterDetailFragmentAction action =
                     CharactersListFragmentDirections.toCharacterDetailFragmentAction();
             if (clickedChar != null) {

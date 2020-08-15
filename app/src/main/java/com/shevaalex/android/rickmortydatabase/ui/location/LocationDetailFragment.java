@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationDetailBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.ui.FragmentToolbarSimple;
 import com.shevaalex.android.rickmortydatabase.ui.character.CharacterAuxAdapter;
 
@@ -27,7 +27,7 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
     private FragmentLocationDetailBinding binding;
     private CharacterAuxAdapter characterAuxAdapter;
     private LocationDetailViewModel locationDetailViewModel;
-    private List<CharacterSmall> mCharacterList = new ArrayList<>();
+    private List<Character> mCharacterList = new ArrayList<>();
     private Context context;
 
     public LocationDetailFragment() {
@@ -107,7 +107,7 @@ public class LocationDetailFragment extends FragmentToolbarSimple implements Cha
     @Override
     public void onCharacterClick(int position, View v) {
         if (mCharacterList != null && !mCharacterList.isEmpty()) {
-            CharacterSmall clickedChar = mCharacterList.get(position);
+            Character clickedChar = mCharacterList.get(position);
             LocationDetailFragmentDirections.ToCharacterDetailFragmentAction3 action =
                     LocationDetailFragmentDirections.toCharacterDetailFragmentAction3();
             if (clickedChar != null) {

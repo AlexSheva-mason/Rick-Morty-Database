@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.source.network;
+package com.shevaalex.android.rickmortydatabase.source.network.net_utils;
 
 public abstract class ApiConstants {
     public static final String INFO = "info";
@@ -29,7 +29,7 @@ public abstract class ApiConstants {
 
     public static class ApiCallLocationKeys {
         public static final String BASE_URL_LOCATION_PAGES = "https://rickandmortyapi.com/api/location/?page=";
-
+        public static final String BASE_URL_LOCATION = "https://rickandmortyapi.com/api/location/";
         public static final String LOCATION_ID = "id";
         public static final String LOCATION_NAME = "name";
         public static final String LOCATION_TYPE = "type";

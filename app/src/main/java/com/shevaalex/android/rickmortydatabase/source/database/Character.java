@@ -2,25 +2,69 @@ package com.shevaalex.android.rickmortydatabase.source.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+
+//TODO delete this class later
 @Entity
-public class Character extends CharacterSmall {
+public class Character {
+    @PrimaryKey
+    private final int id;
 
     @ColumnInfo(collate = ColumnInfo.LOCALIZED)
-    private final String type;
+    private String name;
+    private String status;
+    private String species;
+    private String gender;
+    private final int lastKnownLocation;
     private final int originLocation;
+    private final String imgUrl;
+    private final String episodeList;
 
-    public Character (int id, String name, String status, String species, String type,
-                      String gender, int originLocation, int lastKnownLocation,
-                      String imgUrl, String episodeList) {
-        super(id, name, status, species, gender, lastKnownLocation, imgUrl, episodeList);
-        this.type = type;
+    public Character(int id, String name, String status, String species, String gender,
+                     int lastKnownLocation, int originLocation, String imgUrl,
+                     String episodeList) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.species = species;
+        this.gender = gender;
+        this.lastKnownLocation = lastKnownLocation;
         this.originLocation = originLocation;
+        this.imgUrl = imgUrl;
+        this.episodeList = episodeList;
     }
 
     // GETTERS
-    public String getType() {        return type;    }
-    public int getOriginLocation() {        return originLocation;    }
+    public int getId () { return id; }
+    public String getName() {        return name;    }
+    public String getStatus() {        return status;    }
+    public String getSpecies() {        return species;    }
+    public String getGender() {        return gender;    }
+    public int getLastKnownLocation() {        return lastKnownLocation;    }
+    public String getImgUrl() {        return imgUrl;    }
+    public String getEpisodeList() {        return episodeList;    }
+    public int getOriginLocation() {
+        return originLocation;
+    }
+
+    //SETTERS
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 
 
     @Override
@@ -29,9 +73,6 @@ public class Character extends CharacterSmall {
             return false;
         }
         Character newChar = (Character) obj;
-        return getId() == newChar.getId() && getName().equals(newChar.getName()) && getStatus().equals(newChar.getStatus()) && getSpecies().equals(newChar.getSpecies())
-                && getType().equals(newChar.getType()) && getGender().equals(newChar.getGender())
-                && getOriginLocation() == newChar.getOriginLocation() && getLastKnownLocation() == newChar.getLastKnownLocation()
-                && getImgUrl().equals(newChar.getImgUrl());
+        return getId() == newChar.getId() && getName().equals(newChar.getName());
     }
 }

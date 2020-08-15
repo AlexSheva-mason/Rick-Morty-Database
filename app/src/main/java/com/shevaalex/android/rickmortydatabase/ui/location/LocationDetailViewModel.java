@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
+import com.shevaalex.android.rickmortydatabase.source.database.Character;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class LocationDetailViewModel extends AndroidViewModel {
         savedStateHandle.set(SAVED_STATE_KEY_LOCATION_ID, locationId);
     }
 
-    LiveData<List<CharacterSmall>> getCharactersFromLocation() {
+    LiveData<List<Character>> getCharactersFromLocation() {
         if (locationId.getValue() != null) {
             return rmRepository.getCharactersFromLocation(locationId.getValue());
         }

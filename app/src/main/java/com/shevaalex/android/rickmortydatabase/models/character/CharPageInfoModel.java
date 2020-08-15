@@ -4,7 +4,7 @@ package com.shevaalex.android.rickmortydatabase.models.character;
 import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiConstants;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
 
 @SuppressWarnings("unused")
 public class CharPageInfoModel {
