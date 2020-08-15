@@ -99,7 +99,7 @@ public abstract class StringParsing {
     }
 
     public static String returnCharacterSpeciesLocale (Context context, String speciesEn) {
-        String speciesEnToMatch = SPECIES_RES_KEY + speciesEn;
+        String speciesEnToMatch = SPECIES_RES_KEY + speciesEn.replaceAll("\\s", "_");
         try {
             int resId = context.getResources().getIdentifier(speciesEnToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
@@ -119,7 +119,7 @@ public abstract class StringParsing {
     }
 
     public static String returnLocationTypeLocale(Context context, String type) {
-        String typeToMatch = LOCATION_RES_KEY + type.replaceAll("[\\s()\\\\]", "_");
+        String typeToMatch = LOCATION_RES_KEY + type.replaceAll("[\\s()\\\\-]", "_");
         try {
             int resId = context.getResources().getIdentifier(typeToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);

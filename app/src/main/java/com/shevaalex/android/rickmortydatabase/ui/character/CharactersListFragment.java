@@ -27,7 +27,6 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterSmall;
@@ -138,12 +137,11 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
 
     private void setRecyclerView() {
         binding.recyclerviewCharacter.setHasFixedSize(true);
-        FirebaseCrashlytics.getInstance().log("CLF: setRecyclerView()");
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = new CharacterAdapter(
                 CharactersListFragment.this,
                 characterViewModel,
-                a.getApplicationContext());
+                a);
         characterAdapter
                 .setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
     }
@@ -167,17 +165,14 @@ public class CharactersListFragment extends Fragment implements CharacterAdapter
             characterAdapter.submitList(characters);
             //set adapter to the recyclerview
             binding.recyclerviewCharacter.setAdapter(characterAdapter);
-            FirebaseCrashlytics.getInstance().log("CLF: registerObservers()");
             //restore list position
             if (savedState != null) {
                 Parcelable listState = savedState.getParcelable(BUNDLE_SAVE_STATE_LIST);
                 new Handler().postDelayed(() -> {
-                    FirebaseCrashlytics.getInstance().log("CLF: Handler().postDelayed");
-                    if (binding.recyclerviewCharacter.getLayoutManager() != null) {
+                    if (binding != null && binding.recyclerviewCharacter.getLayoutManager() != null) {
                         binding.recyclerviewCharacter
                                 .getLayoutManager()
                                 .onRestoreInstanceState(listState);
-                        FirebaseCrashlytics.getInstance().log("CLF: RV.getLayoutManager()");
                         savedState = new Bundle();
                     }
                 }, 100);

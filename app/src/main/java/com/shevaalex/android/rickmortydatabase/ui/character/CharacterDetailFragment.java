@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,20 +187,19 @@ public class CharacterDetailFragment extends Fragment
         int currentNightMode
                 = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (currentNightMode == Configuration.UI_MODE_NIGHT_YES
-                && binding.collapsingToolbarLayout != null) {
+                && binding!= null && binding.collapsingToolbarLayout != null) {
             binding.collapsingToolbarLayout
                     .setContentScrimColor(context.getResources().getColor(R.color.rm_grey_900));
         }
         //set expanded title
-        if (binding.toolbarTitle != null) {
+        if (binding!= null && binding.toolbarTitle != null) {
             binding.toolbarTitle.setVisibility(View.GONE);
             binding.toolbarTitle.setText(headerCharacter.getName());
         }
         // manage custom collapsed/expanded title state and icon
-        if (binding.appbarLayout != null) {
+        if (binding!= null && binding.appbarLayout != null) {
             binding.appbarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) ->
-                    appBarLayout.post(() ->
-                    {
+                    appBarLayout.post(() -> {
                 if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
                     //  Collapsed
                     manageCollapsedState();
@@ -218,45 +217,53 @@ public class CharacterDetailFragment extends Fragment
     /*hides custom toolbar title (TextView) and shows standard one,
         sets back navigation icon to standard*/
     private void manageCollapsedState() {
-        if (binding.toolbarTitle != null
-                && binding.toolbarFragmentCharacterDetail != null
-                && binding.collapsingToolbarLayout != null
-                && binding.toolbarTitle.getVisibility() == View.VISIBLE) {
-            binding.toolbarTitle.setVisibility(View.GONE);
-            binding.toolbarFragmentCharacterDetail
-                    .setNavigationIcon(a.getDrawable(R.drawable.ic_baseline_arrow_back));
-            binding.collapsingToolbarLayout.setTitleEnabled(true);
+        if (binding != null && binding.appbarLayout != null) {
+            if (binding.toolbarTitle != null && binding.toolbarTitle.getVisibility() == View.VISIBLE) {
+                binding.toolbarTitle.setVisibility(View.GONE);
+            }
+            if (binding.toolbarFragmentCharacterDetail != null) {
+                binding.toolbarFragmentCharacterDetail
+                        .setNavigationIcon(ContextCompat.getDrawable(a, R.drawable.ic_baseline_arrow_back));
+            }
+            if (binding.collapsingToolbarLayout != null) {
+                binding.collapsingToolbarLayout.setTitleEnabled(true);
+            }
         }
     }
 
     /*disables standard toolbar title, shows custom one (TextView),
         sets back navigation icon to custom one (with shadow) */
     private void manageExpandedState() {
-        if (binding.toolbarFragmentCharacterDetail != null
-                && binding.collapsingToolbarLayout != null
-                && binding.toolbarTitle != null) {
-            binding.toolbarFragmentCharacterDetail.setTitle(null);
-            binding.collapsingToolbarLayout.setTitleEnabled(false);
-            binding.toolbarTitle.setVisibility(View.VISIBLE);
-            binding.toolbarFragmentCharacterDetail
-                    .setNavigationIcon(a.getDrawable(R.drawable.ic_back_arrw));
+        if (binding != null && binding.appbarLayout != null) {
+            if (binding.toolbarFragmentCharacterDetail != null) {
+                binding.toolbarFragmentCharacterDetail.setTitle(null);
+                binding.toolbarFragmentCharacterDetail
+                        .setNavigationIcon(ContextCompat.getDrawable(a, R.drawable.ic_back_arrw));
+            }
+            if (binding.collapsingToolbarLayout != null) {
+                binding.collapsingToolbarLayout.setTitleEnabled(false);
+            }
+            if (binding.toolbarTitle != null) {
+                binding.toolbarTitle.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     /*disables standard toolbar title, hides custom one (TextView) with a delay,
         sets back navigation icon to custom one (with shadow) */
     private void manageTransitionalState() {
-        if (binding.toolbarFragmentCharacterDetail != null
-                && binding.collapsingToolbarLayout != null) {
-            new Handler().postDelayed(()-> {
-                if (binding.toolbarTitle != null) {
-                    binding.toolbarTitle.setVisibility(View.GONE);
-                }
-            },250);
-            binding.toolbarFragmentCharacterDetail
-                    .setNavigationIcon(a.getDrawable(R.drawable.ic_back_arrw));
-            binding.toolbarFragmentCharacterDetail.setTitle(null);
-            binding.collapsingToolbarLayout.setTitleEnabled(false);
+        if (binding != null && binding.appbarLayout != null) {
+            if (binding.toolbarTitle != null) {
+                binding.toolbarTitle.setVisibility(View.GONE);
+            }
+            if (binding.toolbarFragmentCharacterDetail != null) {
+                binding.toolbarFragmentCharacterDetail
+                        .setNavigationIcon(ContextCompat.getDrawable(a, R.drawable.ic_back_arrw));
+                binding.toolbarFragmentCharacterDetail.setTitle(null);
+            }
+            if (binding.collapsingToolbarLayout != null) {
+                binding.collapsingToolbarLayout.setTitleEnabled(false);
+            }
         }
     }
 
