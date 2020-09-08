@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui.episode;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
@@ -86,10 +88,12 @@ public class EpisodesListFragment extends FragmentToolbarSimple
             binding.recyclerviewEpisode.setLayoutManager(linearLayoutManager);
             //set fast scroller for API >= 24 (doesn't work on lower APIs)
             if (Build.VERSION.SDK_INT >= 24) {
-                new FastScrollerBuilder(binding.recyclerviewEpisode)
-                        .setTrackDrawable(a.getResources().getDrawable(R.drawable.track_drawable,
-                                a.getTheme()))
-                        .build();
+                Drawable drawable = ContextCompat.getDrawable(a, R.drawable.track_drawable);
+                if (drawable != null) {
+                    new FastScrollerBuilder(binding.recyclerviewEpisode)
+                            .setTrackDrawable(drawable)
+                            .build();
+                }
             }
         }
         binding.recyclerviewEpisode.setHasFixedSize(true);
