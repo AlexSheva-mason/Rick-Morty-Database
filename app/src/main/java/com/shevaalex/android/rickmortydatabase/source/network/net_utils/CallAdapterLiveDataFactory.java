@@ -15,8 +15,7 @@ import retrofit2.Retrofit;
 public class CallAdapterLiveDataFactory extends CallAdapter.Factory {
     /**
      * This method performs a number of checks and then returns the Response type for the Retrofit requests
-     * (@bodyType is the ResponseType. It can be RecipeResponse or RecipeSearchResponse)
-     *
+     * (@bodyType is the ResponseType)
      * CHECK #1) returnType returns LIVEDATA
      * CHECK #2) Type LiveData<T> is of ApiResponse.class
      * CHECK #3) Make sure ApiResponse is parameeterized. (ApiResponse<T> exists)

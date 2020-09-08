@@ -13,7 +13,7 @@ public class Resource<T> {
     @Nullable
     public final String message;
 
-    public enum Status { SUCCESS, ERROR, LOADING}
+    public enum Status { SUCCESS, ERROR, LOADING }
 
     private Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
         this.status = status;

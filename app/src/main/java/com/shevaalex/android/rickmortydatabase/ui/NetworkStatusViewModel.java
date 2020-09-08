@@ -13,8 +13,6 @@ import com.shevaalex.android.rickmortydatabase.source.network.net_utils.Resource
 import com.shevaalex.android.rickmortydatabase.utils.StatusMediatorLiveData;
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
-import java.util.List;
-
 
 public class NetworkStatusViewModel extends AndroidViewModel {
     public final MainRepository rmRepository;
@@ -31,8 +29,12 @@ public class NetworkStatusViewModel extends AndroidViewModel {
         return statusLiveData;
     }
 
-    //TODO for retrofit test
-    public LiveData<Resource<List<CharacterModel>>> getTestCharacters() {
-        return rmRepository.getTestCharacters();
+    //retrofit test
+    public LiveData<Resource<CharacterModel>> dbInitTest() {
+        return rmRepository.databaseInit();
+    }
+
+    public void checkDatabase() {
+        rmRepository.databaseInit();
     }
 }

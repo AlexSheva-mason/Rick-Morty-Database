@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -23,7 +23,7 @@ import com.shevaalex.android.rickmortydatabase.source.network.ApiResponse;
 import com.shevaalex.android.rickmortydatabase.source.network.RetrofitService;
 import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
 import com.shevaalex.android.rickmortydatabase.source.network.NetworkDataParsing;
-import com.shevaalex.android.rickmortydatabase.source.network.net_utils.NetworkBoundResource;
+import com.shevaalex.android.rickmortydatabase.source.network.net_utils.InitManager;
 import com.shevaalex.android.rickmortydatabase.source.network.net_utils.Resource;
 import com.shevaalex.android.rickmortydatabase.ui.MainActivity;
 import com.shevaalex.android.rickmortydatabase.utils.AppExecutors;
@@ -41,6 +41,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class MainRepository {
+    private static final String TAG = "LOG_TAG_MainRepository";
     private static final Object LOCK = new Object();
     private final NetworkDataParsing networkDataParsing;
     private final RickMortyDatabase rmDatabase;
@@ -391,35 +392,91 @@ public class MainRepository {
         return rmDatabase.getCharacterEpisodeJoinDao().getEpisodesFromCharacters(characterId);
     }
 
-    //TODO retrofit test
-    public LiveData<Resource<List<CharacterModel>>> getTestCharacters() {
-        return new NetworkBoundResource<List<CharacterModel>, CharacterPageModel>(appExecutors) {
+    //retrofit test
+    public LiveData<Resource<CharacterModel>> databaseInit(){
+        return new InitManager<CharacterModel, CharacterPageModel>() {
             @Override
-            protected void saveCallResult(@NonNull CharacterPageModel characterPageModel) {
-                List<CharacterModel> charList = characterPageModel.getCharacterModels();
-                Log.e("TAGg", "saveCallResult: " + charList.get(0));
-                rmDatabase.getCharacterModelDao().insertCharacterList(charList);
-            }
-
-            @Override
-            protected boolean shouldFetch(@Nullable List<CharacterModel> characterModels) {
-                return true;
+            protected LiveData<ApiResponse<CharacterModel>> callLastApiModel(int lastModelId) {
+                return RetrofitService
+                        .getInstance()
+                        .getCharacterApi()
+                        .getCharacter(lastModelId);
             }
 
             @NonNull
             @Override
-            protected LiveData<List<CharacterModel>> loadFromDb() {
-                return rmDatabase.getCharacterModelDao().getCharacterList();
+            protected LiveData<CharacterModel> getLastEntryFromDb() {
+                return rmDatabase.getCharacterModelDao().showLastInCharacterList();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Integer> getDbEntriesCount() {
+                return rmDatabase.getCharacterModelDao().getCharacterCount();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<ApiResponse<CharacterPageModel>>> callAllPages(int pageCount) {
+                Log.d(TAG, "callAllPages: ");
+                List<LiveData<ApiResponse<CharacterPageModel>>> requests = new ArrayList<>();
+                final ArrayList<ApiResponse<CharacterPageModel>> zippedObjects = new ArrayList<>();
+                final MediatorLiveData<List<ApiResponse<CharacterPageModel>>> mediator
+                        = new MediatorLiveData<>();
+                for(int x = 0; x < pageCount; x++) {
+                    requests.add(RetrofitService
+                            .getInstance()
+                            .getCharacterApi()
+                            .getCharactersPage(String.valueOf(x+1)));
+                }
+                //zip LiveData and get a list of ApiResponse objects
+                for(LiveData<ApiResponse<CharacterPageModel>> item: requests){
+                    mediator.addSource(item, o -> {
+                        if(!zippedObjects.contains(o)){
+                            zippedObjects.add(o);
+                        }
+                        mediator.setValue(zippedObjects);
+                    });
+                }
+                return mediator;
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<CharacterPageModel>> createCall() {
-                return RetrofitService
+                return  RetrofitService
                         .getInstance()
                         .getCharacterApi()
                         .getCharactersPage(String.valueOf(1));
             }
+
+            @Override
+            protected void saveCallResult(List<ApiResponse.SuccessApiResponse<CharacterPageModel>> successApiResponses) {
+                Log.d(TAG, "saveCallResult: CharacterPageModels count= "
+                        + successApiResponses.size());
+                ArrayList<CharacterModel> characterModelList = new ArrayList<>();
+                for (ApiResponse.SuccessApiResponse<CharacterPageModel> characterPageModel
+                        : successApiResponses) {
+                    ArrayList<CharacterModel> modelList
+                            = new ArrayList<>(characterPageModel.getBody().getCharacterModels());
+                    for (CharacterModel characterModel : modelList) {
+                        //set the timestamp to System.currentTimeMillis() in days
+                        characterModel.setTimeStamp((int) (System.currentTimeMillis()/86400000));
+                    }
+                    characterModelList.addAll(modelList);
+                }
+                if (!characterModelList.isEmpty()) {
+                    Log.d(TAG, "saveCallResult: first item id= "
+                            + characterModelList.get(0).getId());
+                    Log.d(TAG, "saveCallResult: last item id= "
+                            + characterModelList.get(characterModelList.size()-1).getId());
+                } else {
+                    Log.d(TAG, "saveCallResult: list is empty");
+                }
+                appExecutors.diskIO().execute(() ->
+                        rmDatabase.getCharacterModelDao().insertCharacterList(characterModelList));
+            }
         }.getAsLiveData();
     }
+
 }

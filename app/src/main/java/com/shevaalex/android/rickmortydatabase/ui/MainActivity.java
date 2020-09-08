@@ -19,13 +19,13 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding;
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "LOG_TAG_MainActivity";
     private static ArrayList<String> snackMessages = new ArrayList<>();
     private ActivityMainBinding binding;
     private NavController navController;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setupViews();
         monitorConnectionAndDatabase();
-        testRetrofitService();
+        observeRetrofitList();
     }
 
     @Override
@@ -54,11 +54,10 @@ public class MainActivity extends AppCompatActivity {
         //reinit database if locale has been changed
         if (!defSystemLanguage.equals(newConfig.locale.getLanguage())) {
             defSystemLanguage = newConfig.locale.getLanguage();
-            //TODO fix it later
-            /*new Handler().postDelayed(() -> {
-                characterViewModel.rmRepository.initialiseDataBase();
+            new Handler().postDelayed(() -> {
+                networkStatusViewModel.checkDatabase();
                 recreate();
-            }, 500);*/
+            }, 500);
         }
     }
 
@@ -118,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
             // database is _not_ up to date and device is connected to network
             else if (!pair.first && pair.second) {
                 binding.progressBar.progressBar.setVisibility(View.VISIBLE);
-                //TODO check this later
                 //**characterViewModel.rmRepository.initialiseDataBase();
                 text = getString(R.string.ma_snack_database_sync);
             }
@@ -166,29 +164,22 @@ public class MainActivity extends AppCompatActivity {
         } else { super.onBackPressed(); }
     }
 
-    //TODO for testing - delete later
-    private void testRetrofitService() {
-        observeRetrofitList();
-    }
-
     private void observeRetrofitList() {
-        networkStatusViewModel.getTestCharacters().observe(this, listResource -> {
-            if (listResource != null) {
-                Log.w("TAGg", "observeRetrofitList: " + listResource.status);
-                if (listResource.data != null) {
-                    switch (listResource.status) {
+        networkStatusViewModel.dbInitTest().observe(this, objResource -> {
+            if (objResource != null) {
+                Log.d(TAG, "observe object Resource: " + objResource.status);
+                if (objResource.data != null) {
+                    switch (objResource.status) {
                         case SUCCESS:
-                            Log.w("TAGg", "list size: " + listResource.data.size());
-                            for(CharacterModel characterModel : listResource.data) {
-                                Log.w("TAGg", "observeRetrofitList: " +
-                                        characterModel.getLastLocation().getName());
-                            }
+                            Log.d(TAG, "observe object: ID= " + objResource.data.getId());
                             break;
                         case ERROR:
-                            String errorMessage = listResource.message;
+                            String errorMessage = objResource.message;
+                            Log.d(TAG, "observe object: ERROR..." + errorMessage);
                             break;
                         case LOADING:
-                            //display loading
+                            //display progress bar etc
+                            Log.d(TAG, "observe object: loading...");
                             break;
                     }
                 }

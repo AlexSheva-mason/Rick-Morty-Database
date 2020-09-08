@@ -10,7 +10,7 @@ class VolleySingleton {
     private RequestQueue mRequestQueue;
     private final Context context;
     private static final Object LOCK = new Object();
-    private static final String TAG = "DbRequest";
+    private static final String TAG = "LOG_TAG_VolleySingleton";
 
     private VolleySingleton (Context context) {
         if (sInstance != null) {

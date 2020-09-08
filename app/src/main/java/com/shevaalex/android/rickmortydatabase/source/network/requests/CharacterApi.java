@@ -17,7 +17,7 @@ public interface CharacterApi {
     LiveData<ApiResponse<CharacterPageModel>> getCharactersPage
     (@Query(ApiConstants.KEY_QUERY_PAGE) String page);
 
-    //gets single Character
+    //gets a single Character
     @GET(ApiConstants.ApiCallCharacterKeys.SUB_URL_CHARACTER + "{id}")
     LiveData<ApiResponse<CharacterModel>> getCharacter(@Path("id") int charId);
 }
