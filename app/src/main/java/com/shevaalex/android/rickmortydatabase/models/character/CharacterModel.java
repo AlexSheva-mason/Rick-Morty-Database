@@ -2,28 +2,20 @@ package com.shevaalex.android.rickmortydatabase.models.character;
 
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
 import java.util.Objects;
 
+import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel;
 import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants.ApiCallCharacterKeys;
 
 
-//TODO rename to Character.java (and later on to something different to prefent clashing with Character)
-// and replace all imports from com.shevaalex.android.rickmortydatabase.source.database.character to this one ^^^
 @SuppressWarnings("unused")
 @Entity
-public class CharacterModel {
-    @PrimaryKey
-    private final int id;
-
-    @ColumnInfo(collate = ColumnInfo.LOCALIZED)
-    private String name;
+public class CharacterModel extends ApiObjectModel {
 
     private String status;
     private String species;
@@ -41,13 +33,10 @@ public class CharacterModel {
     @SerializedName(ApiCallCharacterKeys.CHARACTER_EPISODE_LIST)
     private String[] episodeList;
 
-    private int timeStamp;
-
-    public CharacterModel(int id, String name, String status, String species, String gender,
-                          LinkedLocationModel originLocation, LinkedLocationModel lastLocation,
-                          String imageUrl, String[] episodeList, int timeStamp) {
-        this.id = id;
-        this.name = name;
+    public CharacterModel(int id, String name, int timeStamp, String status, String species,
+                          String gender, LinkedLocationModel originLocation,
+                          LinkedLocationModel lastLocation, String imageUrl, String[] episodeList) {
+        super(id, name, timeStamp);
         this.status = status;
         this.species = species;
         this.gender = gender;
@@ -55,19 +44,6 @@ public class CharacterModel {
         this.lastLocation = lastLocation;
         this.imageUrl = imageUrl;
         this.episodeList = episodeList;
-        this.timeStamp = timeStamp;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getStatus() {
@@ -126,36 +102,25 @@ public class CharacterModel {
         this.episodeList = episodeList;
     }
 
-    public int getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(int timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CharacterModel)) return false;
+        if (!super.equals(o)) return false;
         CharacterModel that = (CharacterModel) o;
-        return id == that.id &&
-                timeStamp == that.timeStamp &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(species, that.species) &&
-                Objects.equals(gender, that.gender) &&
-                Objects.equals(originLocation, that.originLocation) &&
-                Objects.equals(lastLocation, that.lastLocation) &&
-                Objects.equals(imageUrl, that.imageUrl) &&
-                Arrays.equals(episodeList, that.episodeList);
+        return Objects.equals(getStatus(), that.getStatus()) &&
+                Objects.equals(getSpecies(), that.getSpecies()) &&
+                Objects.equals(getGender(), that.getGender()) &&
+                Objects.equals(getOriginLocation(), that.getOriginLocation()) &&
+                Objects.equals(getLastLocation(), that.getLastLocation()) &&
+                Objects.equals(getImageUrl(), that.getImageUrl()) &&
+                Arrays.equals(getEpisodeList(), that.getEpisodeList());
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, status, species, gender,
-                originLocation, lastLocation, imageUrl, timeStamp);
-        result = 31 * result + Arrays.hashCode(episodeList);
+        int result = Objects.hash(super.hashCode(), getStatus(), getSpecies(), getGender(), getOriginLocation(), getLastLocation(), getImageUrl());
+        result = 31 * result + Arrays.hashCode(getEpisodeList());
         return result;
     }
 
@@ -163,15 +128,13 @@ public class CharacterModel {
     @Override
     public String toString() {
         return "CharacterModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", status='" + status + '\'' +
+                "status='" + status + '\'' +
                 ", species='" + species + '\'' +
                 ", gender='" + gender + '\'' +
                 ", originLocation=" + originLocation +
                 ", lastLocation=" + lastLocation +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", episodeList=" + Arrays.toString(episodeList) +
-                '}';
+                "} " + super.toString();
     }
 }

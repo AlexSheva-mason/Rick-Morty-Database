@@ -2,6 +2,8 @@ package com.shevaalex.android.rickmortydatabase.models.character;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 @SuppressWarnings("unused")
 public class LinkedLocationModel {
     private String name;
@@ -27,4 +29,19 @@ public class LinkedLocationModel {
                 ", url='" + url + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LinkedLocationModel)) return false;
+        LinkedLocationModel that = (LinkedLocationModel) o;
+        return Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getUrl(), that.getUrl());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getUrl());
+    }
+
 }
