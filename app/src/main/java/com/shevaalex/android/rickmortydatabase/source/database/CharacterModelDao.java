@@ -11,7 +11,6 @@ import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
 
 import java.util.List;
 
-//TODO rename later to CharacterDao to replace the old class
 @Dao
 public interface CharacterModelDao {
 
@@ -27,23 +26,23 @@ public interface CharacterModelDao {
     @Query("SELECT * FROM CharacterModel WHERE id LIKE :id")
     LiveData<CharacterModel> getCharacterById(int id);
 
-    /*//perform a search by character's name in the database, shows all results
+    //gets a paged list of all characters
+    @Query("SELECT id, name, status, species, gender, originLocation, lastLocation, imageUrl," +
+            "episodeList, timeStamp FROM CharacterModel " +
+            "ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
+    DataSource.Factory<Integer, CharacterModel> getCharacterPagedList();
+
+    //performs a search by character's name in the database, shows all results
     @Query("SELECT id, name, status, species, gender, originLocation, lastLocation, imageUrl," +
             "episodeList, timeStamp FROM CharacterModel WHERE name LIKE :name " +
             "ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    DataSource.Factory<Integer, CharacterModel> getCharacterList(String name);*/
+    DataSource.Factory<Integer, CharacterModel> getCharacterList(String name);
 
-    //perform a search by character's name in the database, excluding Dead
+    //performs a search by character's name in the database, excluding Dead
     @Query("SELECT id, name, status, species, gender, originLocation, lastLocation, imageUrl," +
             "episodeList, timeStamp FROM CharacterModel WHERE name LIKE :name" +
             " AND (status IN (:notDeadStatus)) ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
     DataSource.Factory<Integer, CharacterModel> getCharacterList(String name, String[] notDeadStatus);
-
-    /*//shows list of all characters
-    @Query("SELECT id, name, status, species, gender, originLocation, lastLocation, imageUrl," +
-            "episodeList, timeStamp FROM CharacterModel " +
-            "ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    DataSource.Factory<Integer, CharacterModel> getCharacterList();*/
 
     //shows list of all characters, excluding Dead
     @Query("SELECT id, name, status, species, gender, originLocation, lastLocation, imageUrl," +
@@ -53,10 +52,10 @@ public interface CharacterModelDao {
 
     // gets the last character to compare databases
     @Query("SELECT * FROM CharacterModel ORDER BY id DESC LIMIT 1")
-    CharacterModel showLastInCharacterList();
+    LiveData<CharacterModel> showLastInCharacterList();
 
     // gets the entry count to compare databases
     @Query("SELECT COUNT(id) FROM CharacterModel")
-    int getCharacterCount();
+    LiveData<Integer> getCharacterCount();
 
 }
