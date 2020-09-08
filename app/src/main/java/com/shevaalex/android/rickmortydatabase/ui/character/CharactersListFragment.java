@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,13 +29,14 @@ import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding;
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.ui.BaseFragment;
 import com.shevaalex.android.rickmortydatabase.utils.RecyclerViewAdapterCallback;
 import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
 
 import java.util.ArrayList;
 
 
-public class CharactersListFragment extends Fragment
+public class CharactersListFragment extends BaseFragment
         implements CharacterAdapter.OnCharacterListener, RecyclerViewAdapterCallback {
     private static final int KEY_FILTER_APPLIED = 101;
     private static final int KEY_SHOW_ALL = 0;
@@ -94,15 +94,6 @@ public class CharactersListFragment extends Fragment
         createOptionsMenu();
         NavigationUI.setupWithNavController(
                 toolbar, navController, appBarConfiguration);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mFirebaseAnalytics.setCurrentScreen(
-                requireActivity(),
-                this.getClass().getSimpleName(),
-                this.getClass().getSimpleName());
     }
 
     @Override

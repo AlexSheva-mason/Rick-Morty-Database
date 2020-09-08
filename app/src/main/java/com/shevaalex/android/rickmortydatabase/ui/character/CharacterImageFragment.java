@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,12 +23,13 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterImageBinding;
+import com.shevaalex.android.rickmortydatabase.ui.BaseFragment;
 import com.shevaalex.android.rickmortydatabase.utils.ImageParsingUtil;
 import com.shevaalex.android.rickmortydatabase.utils.StringParsing;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-public class CharacterImageFragment extends Fragment implements View.OnClickListener {
+public class CharacterImageFragment extends BaseFragment implements View.OnClickListener {
     private FragmentCharacterImageBinding binding;
     private String imageUrl;
     private String characterName;
@@ -83,15 +83,6 @@ public class CharacterImageFragment extends Fragment implements View.OnClickList
             NavigationUI.setupWithNavController(
                     toolbar, navController, appBarConfiguration);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mFirebaseAnalytics.setCurrentScreen(
-                requireActivity(),
-                this.getClass().getSimpleName(),
-                this.getClass().getSimpleName());
     }
 
     @Override

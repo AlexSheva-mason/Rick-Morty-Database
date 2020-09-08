@@ -75,10 +75,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public void onResume() {
         super.onResume();
-        mFirebaseAnalytics.setCurrentScreen(
-                requireActivity(),
-                this.getClass().getSimpleName(),
-                this.getClass().getSimpleName());
+        //log screen view to firebase
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.getClass().getSimpleName());
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, params);
     }
 
     @Override

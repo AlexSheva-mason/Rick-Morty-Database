@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,13 +27,14 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDeta
 import com.shevaalex.android.rickmortydatabase.source.database.Character;
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.ui.BaseFragment;
 import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterDetailFragment extends Fragment
+public class CharacterDetailFragment extends BaseFragment
         implements CharacterDetailAdapter.OnEpisodeListener,
         View.OnClickListener {
     private FragmentCharacterDetailBinding binding;
@@ -99,10 +100,10 @@ public class CharacterDetailFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        mFirebaseAnalytics.setCurrentScreen(
-                requireActivity(),
-                this.getClass().getSimpleName(),
-                this.getClass().getSimpleName());
+        //log screen view to firebase
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.getClass().getSimpleName());
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, params);
     }
 
     @Override
@@ -229,7 +230,7 @@ public class CharacterDetailFragment extends Fragment
             }
             if (binding.toolbarFragmentCharacterDetail != null) {
                 binding.toolbarFragmentCharacterDetail
-                        .setNavigationIcon(a.getDrawable(R.drawable.ic_baseline_arrow_back));
+                        .setNavigationIcon(ContextCompat.getDrawable(a, R.drawable.ic_baseline_arrow_back));
             }
             if (binding.collapsingToolbarLayout != null) {
                 binding.collapsingToolbarLayout.setTitleEnabled(true);
@@ -244,7 +245,7 @@ public class CharacterDetailFragment extends Fragment
             if (binding.toolbarFragmentCharacterDetail != null) {
                 binding.toolbarFragmentCharacterDetail.setTitle(null);
                 binding.toolbarFragmentCharacterDetail
-                        .setNavigationIcon(a.getDrawable(R.drawable.ic_back_arrw));
+                        .setNavigationIcon(ContextCompat.getDrawable(a, R.drawable.ic_back_arrw));
             }
             if (binding.collapsingToolbarLayout != null) {
                 binding.collapsingToolbarLayout.setTitleEnabled(false);
@@ -264,7 +265,8 @@ public class CharacterDetailFragment extends Fragment
             }
             if (binding.toolbarFragmentCharacterDetail != null) {
                 binding.toolbarFragmentCharacterDetail
-                        .setNavigationIcon(a.getDrawable(R.drawable.ic_back_arrw));
+                        .setNavigationIcon(ContextCompat.getDrawable(a, R.drawable.ic_back_arrw));
+
                 binding.toolbarFragmentCharacterDetail.setTitle(null);
             }
             if (binding.collapsingToolbarLayout != null) {
