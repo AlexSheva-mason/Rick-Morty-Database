@@ -214,7 +214,7 @@
     <string name="character_129">Fulgora</string>
     <string name="character_130">Galactic Federation President</string>
     <string name="character_131">Gar Gloonch</string>
-    <string name="character_132">Gars Mytholog</string>
+    <string name="character_132">Gar\'s Mytholog</string>
     <string name="character_133">Garblovian</string>
     <string name="character_134">Garmanarnar</string>
     <string name="character_135">Garment District Rick</string>
@@ -242,7 +242,7 @@
     <string name="character_157">Hole in the Wall Where the Men Can See it All</string>
     <string name="character_158">Hookah Alien</string>
     <string name="character_159">Hunter</string>
-    <string name="character_160">Hunters Father</string>
+    <string name="character_160">Hunter\'s Father</string>
     <string name="character_161">Hydrogen-F</string>
     <string name="character_162">Ice-T</string>
     <string name="character_163">Ideal Jerry</string>
@@ -256,14 +256,14 @@
     <string name="character_171">Jaguar</string>
     <string name="character_172">Jamey</string>
     <string name="character_173">Jan-Michael Vincent</string>
-    <string name="character_174">Jerry 5126</string>
+    <string name="character_174">Jerry 5–126</string>
     <string name="character_175">Jerry Smith</string>
     <string name="character_176">Celebrity Jerry</string>
     <string name="character_177">Jerry Smith</string>
-    <string name="character_178">Jerrys Mytholog</string>
+    <string name="character_178">Jerry\'s Mytholog</string>
     <string name="character_179">Jessica</string>
     <string name="character_180">Jessica</string>
-    <string name="character_181">Jessicas Friend</string>
+    <string name="character_181">Jessica\'s Friend</string>
     <string name="character_182">Jim</string>
     <string name="character_183">Johnny Depp</string>
     <string name="character_184">Jon</string>
@@ -379,7 +379,7 @@
     <string name="character_294">Ricktiminus Sancheziminius</string>
     <string name="character_295">Riq IV</string>
     <string name="character_296">Risotto Groupon</string>
-    <string name="character_297">Risottos Tentacled Henchman</string>
+    <string name="character_297">Risotto\'s Tentacled Henchman</string>
     <string name="character_298">Robot Morty</string>
     <string name="character_299">Robot Rick</string>
     <string name="character_300">Roger</string>
@@ -439,7 +439,7 @@
     <string name="character_354">Toby Matthews</string>
     <string name="character_355">Todd Crystal</string>
     <string name="character_356">Tom Randolph</string>
-    <string name="character_357">Tommys Clone</string>
+    <string name="character_357">Tommy\'s Clone</string>
     <string name="character_358">Tophat Jones</string>
     <string name="character_359">Tortured Morty</string>
     <string name="character_360">Toxic Morty</string>
@@ -469,7 +469,7 @@
     <string name="character_384">Yellow Headed Doctor</string>
     <string name="character_385">Yellow Shirt Rick</string>
     <string name="character_386">Zarbadar Gloonch</string>
-    <string name="character_387">Zarbadars Mytholog</string>
+    <string name="character_387">Zarbadar\'s Mytholog</string>
     <string name="character_388">Zeep Xanflorp</string>
     <string name="character_389">Zeta Alpha Rick</string>
     <string name="character_390">Zick Zack</string>
@@ -483,7 +483,7 @@
     <string name="character_398">Accountant dog</string>
     <string name="character_399">Tiny-persons advocacy group lawyer</string>
     <string name="character_400">Giant Judge</string>
-    <string name="character_401">Morty Js interviewer</string>
+    <string name="character_401">Morty Jr\'s interviewer</string>
     <string name="character_402">Guy from The Bachelor</string>
     <string name="character_403">Corn detective</string>
     <string name="character_404">Michael Jackson</string>
@@ -500,7 +500,7 @@
     <string name="character_415">Pro trunk people marriage guy</string>
     <string name="character_416">Muscular Mannie</string>
     <string name="character_417">Baby Legs Chief</string>
-    <string name="character_418">Mrs. Sullivans Boyfriend</string>
+    <string name="character_418">Mrs. Sullivan\'s Boyfriend</string>
     <string name="character_419">Plutonian Hostess</string>
     <string name="character_420">Plutonian Host</string>
     <string name="character_421">Rich Plutonian</string>
@@ -520,7 +520,7 @@
     <string name="character_435">Pripudlian</string>
     <string name="character_436">Giant Testicle Monster</string>
     <string name="character_437">Michael</string>
-    <string name="character_438">Michaels Lawyer</string>
+    <string name="character_438">Michael\'s Lawyer</string>
     <string name="character_439">Veterinary</string>
     <string name="character_440">Veterinary Nurse</string>
     <string name="character_441">Bearded Jerry</string>
@@ -531,11 +531,11 @@
     <string name="character_446">Jerryboree Receptionist</string>
     <string name="character_447">Anchor Gear</string>
     <string name="character_448">Gear Cop</string>
-    <string name="character_449">Roys Mum</string>
-    <string name="character_450">Roys Wife</string>
-    <string name="character_451">Roys Son</string>
+    <string name="character_449">Roy\'s Mum</string>
+    <string name="character_450">Roy\'s Wife</string>
+    <string name="character_451">Roy\'s Son</string>
     <string name="character_452">Simon</string>
-    <string name="character_453">Vampire Masters Assistant</string>
+    <string name="character_453">Vampire Master\'s Assistant</string>
     <string name="character_454">Arbolian Mentirososian</string>
     <string name="character_455">St. Gloopy Noops Nurse</string>
     <string name="character_456">Nano Doctor</string>
@@ -543,8 +543,8 @@
     <string name="character_458">Tax Attorney</string>
     <string name="character_459">Butthole Ice Cream Guy</string>
     <string name="character_460">Traflorkian Journalist</string>
-    <string name="character_461">Communications Responsible Rick</string>
-    <string name="character_462">Teleportations Responsible Rick</string>
+    <string name="character_461">Communication\'s Responsible Rick</string>
+    <string name="character_462">Teleportation\'s Responsible Rick</string>
     <string name="character_463">SEAL Team Rick</string>
     <string name="character_464">SEAL Team Rick</string>
     <string name="character_465">SEAL Team Rick</string>
@@ -616,14 +616,14 @@
     <string name="character_531">Tony</string>
     <string name="character_532">Tony’s Wife</string>
     <string name="character_533">Monogatron Queen</string>
-    <string name="character_534">Tonys Dad</string>
+    <string name="character_534">Tony\'s Dad</string>
     <string name="character_535">Jeff</string>
     <string name="character_536">Josiah</string>
     <string name="character_537">Maggie</string>
     <string name="character_538">Priest Witherspoon</string>
     <string name="character_539">Richard</string>
     <string name="character_540">Running Bird</string>
-    <string name="character_541">Secretary at Tonys</string>
+    <string name="character_541">Secretary at Tony\'s</string>
     <string name="character_542">Mountain Sweat Jerry</string>
     <string name="character_543">Vermigurber</string>
     <string name="character_544">Miles Knightly</string>
@@ -665,7 +665,7 @@
     <string name="character_580">Secret Service Snake</string>
     <string name="character_581">Anchosnake</string>
     <string name="character_582">Anchosnake</string>
-    <string name="character_583">80s snake</string>
+    <string name="character_583">80\'s snake</string>
     <string name="character_584">Bar Customer</string>
     <string name="character_585">Bartender</string>
     <string name="character_586">PC Basketball Player</string>
@@ -674,12 +674,92 @@
     <string name="character_589">Snake Reporter</string>
     <string name="character_590">High Pilot</string>
     <string name="character_591">High Pilot</string>
+    <string name="character_592">Phoenixperson</string>
+    <string name="character_593">Tickets Please Guy</string>
+    <string name="character_594">Floaty Bloody Man</string>
+    <string name="character_595">Floaty Non-Gasm Brotherhood Member</string>
+    <string name="character_596">Floaty Non-Gasm Brotherhood Member Friend</string>
+    <string name="character_597">Abradolf Lincler</string>
+    <string name="character_598">Biblesaurus</string>
+    <string name="character_599">Birdperson</string>
+    <string name="character_600">Cats Fan</string>
+    <string name="character_601">Christmas Storyteller</string>
+    <string name="character_602">Cookies Guy</string>
+    <string name="character_603">Crossy</string>
+    <string name="character_604">Female Scorpion</string>
+    <string name="character_605">Floaty Bloody Man’s Daughter</string>
+    <string name="character_606">Goomby</string>
+    <string name="character_607">Hairspray Fan</string>
+    <string name="character_608">Jesus Christ</string>
+    <string name="character_609">Josh</string>
+    <string name="character_610">Joshs Sister</string>
+    <string name="character_611">Leah</string>
+    <string name="character_612">Marcus</string>
+    <string name="character_613">Mike Johnson</string>
+    <string name="character_614">Mr. Celery &amp; Friends</string>
+    <string name="character_615">Musical Fan</string>
+    <string name="character_616">Phantom of the Opera Fan</string>
+    <string name="character_617">Phoenixperson</string>
+    <string name="character_618">Private Smith</string>
+    <string name="character_619">Professor Sanchez</string>
+    <string name="character_620">Ramamama Lord</string>
+    <string name="character_621">Ruth Bader Ginsburg</string>
+    <string name="character_622">Sarge</string>
+    <string name="character_623">Shrek The Musical Fan</string>
+    <string name="character_624">Snuffles</string>
+    <string name="character_625">Storylord</string>
+    <string name="character_626">Tammy Guetermann</string>
+    <string name="character_627">The Concept of Time</string>
+    <string name="character_628">Beth Smith</string>
+    <string name="character_629">Summer Smith</string>
+    <string name="character_630">Morty Smith</string>
+    <string name="character_631">Rick Sanchez</string>
+    <string name="character_632">Train Cop</string>
+    <string name="character_633">Train Cops</string>
+    <string name="character_634">Train Cops Instructor</string>
+    <string name="character_635">Darth Poopybutthole</string>
+    <string name="character_636">Evil Morty</string>
+    <string name="character_637">Morty’s Disguise</string>
+    <string name="character_638">Rick’s Disguise</string>
+    <string name="character_639">Uncle Nibbles</string>
+    <string name="character_640">Angry Glorzo</string>
+    <string name="character_641">Bruce</string>
+    <string name="character_642">Council of Glorzos Member</string>
+    <string name="character_643">Council of Glorzos Member</string>
+    <string name="character_644">Old Glorzo</string>
+    <string name="character_645">Shane</string>
+    <string name="character_646">Steve</string>
+    <string name="character_647">Troy</string>
+    <string name="character_648">Crystal Dealers Boss</string>
+    <string name="character_649">Crystal Dealer</string>
+    <string name="character_650">Crystal Dealer</string>
+    <string name="character_651">Crystal Dealer</string>
+    <string name="character_652">SWAT Officer</string>
+    <string name="character_653">Plane Crash Survivor</string>
+    <string name="character_654">Plane Crash Survivor</string>
+    <string name="character_655">Heroine Keith</string>
+    <string name="character_656">Impervious to Acid SWAT Officer</string>
+    <string name="character_657">Johnny Carson</string>
+    <string name="character_658">Sonia Sotomayor</string>
+    <string name="character_659">Morty’s Father-in-law</string>
+    <string name="character_660">Morty’s Mother-in-law</string>
+    <string name="character_661">Morty’s Girlfriend</string>
+    <string name="character_662">Gaia</string>
+    <string name="character_663">Reggie</string>
+    <string name="character_664">Ticktock</string>
+    <string name="character_665">Florflock</string>
+    <string name="character_666">Squeeb</string>
+    <string name="character_667">Defiance Beth</string>
+    <string name="character_668">Defiance Squanchette</string>
+    <string name="character_669">Defiance Doctor</string>
+    <string name="character_670">New Improved Galactic Federation Guard</string>
+    <string name="character_671">New Improved Galactic Federation Guard</string>
 
     //Database locale character gender
-    <string name="character_gender_genderless">g</string>
-    <string name="character_gender_female">f</string>
-    <string name="character_gender_male">m</string>
-    <string name="character_gender_unknown">u</string>
+    <string name="character_gender_genderless">genderless</string>
+    <string name="character_gender_female">female</string>
+    <string name="character_gender_male">male</string>
+    <string name="character_gender_unknown">unknown</string>
 
     //Database locale character status
     <string name="character_status_alive_female">Alive</string>
@@ -700,6 +780,8 @@
     <string name="species_Cronenberg">Cronenberg</string>
     <string name="species_Disease">Disease</string>
     <string name="species_Parasite">Parasite</string>
+    <string name="species_Planet">Planet</string>
+    <string name="species_Mythological_Creature">Mythological Creature</string>
 
     //Database locale location names
     <string name="location_1">Earth (C-137)</string>
@@ -796,6 +878,20 @@
     <string name="location_92">Earth (Tusk Dimension)</string>
     <string name="location_93">Gramuflack</string>
     <string name="location_94">Draygon</string>
+    <string name="location_95">New Improved Galactic Federation Quarters</string>
+    <string name="location_96">Story Train</string>
+    <string name="location_97">Non-Diegetic Alternative Reality</string>
+    <string name="location_98">Tickets Please Guy Nightmare</string>
+    <string name="location_99">Morty’s Story</string>
+    <string name="location_100">Ricks’s Story</string>
+    <string name="location_101">Glorzo Asteroid</string>
+    <string name="location_102">Alien Acid Plant</string>
+    <string name="location_103">Merged Universe</string>
+    <string name="location_104">Near-Duplicate Reality</string>
+    <string name="location_105">NX-5 Planet Remover</string>
+    <string name="location_106">Gaia</string>
+    <string name="location_107">Defiance\'s Ship</string>
+    <string name="location_108">Defiance\'s Base</string>
 
     //Location type
     <string name="location_Planet">Planet</string>
@@ -827,6 +923,14 @@
     <string name="location_Liquid">Liquid</string>
     <string name="location_Convention">Convention</string>
     <string name="location_Woods">Woods</string>
+    <string name="location_Diegesis">Diegesis</string>
+    <string name="location_Non_Diegetic_Alternative_Reality">Non_Diegetic_Alternative_Reality</string>
+    <string name="location_Nightmare">Nightmare</string>
+    <string name="location_Asteroid">Asteroid</string>
+    <string name="location_Acid_Plant">Acid_Plant</string>
+    <string name="location_Reality">Reality</string>
+    <string name="location_Death_Star">Death_Star</string>
+    <string name="location_Base">Base</string>
 
     //Location Dimension
     <string name="location_Dimension_C_137">Dimension_C_137</string>
@@ -860,6 +964,7 @@
     <string name="location_Wasp_Dimension">Wasp_Dimension</string>
     <string name="location_Tusk_Dimension">Tusk_Dimension</string>
     <string name="location_Magic_Dimension">Magic_Dimension</string>
+    <string name="location_Merged_Dimension">Merged_Dimension</string>
 
     //Episode locale
     <string name="episode_1">Pilot</string>
@@ -898,6 +1003,11 @@
     <string name="episode_34">One Crew Over the Crewcoos Morty</string>
     <string name="episode_35">Claw and Hoarder: Special Ricktims Morty</string>
     <string name="episode_36">Rattlestar Ricklactica</string>
+    <string name="episode_37">Never Ricking Morty</string>
+    <string name="episode_38">Promortyus</string>
+    <string name="episode_39">The Vat of Acid Episode</string>
+    <string name="episode_40">Childrick of Mort</string>
+    <string name="episode_41">Star Mort: Rickturn of the Jerri</string>
 
     //Episode air month
     <string name="episode_january">january</string>
