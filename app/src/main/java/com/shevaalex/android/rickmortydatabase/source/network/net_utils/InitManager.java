@@ -33,46 +33,38 @@ public abstract class InitManager<ObjectModel extends ApiObjectModel, PageModelO
         //set the loading status for livedata
         resultObjectModel.setValue(Resource.loading(null));
         //observe last object livedata from the database
-        final LiveData<ObjectModel> dbSourceLastObject = getLastEntryFromDb();
         final LiveData<ApiResponse<PageModelObject>> firstPage = createCall();
-        resultObjectModel.addSource(dbSourceLastObject, lastObjectFromDb -> {
-            if (lastObjectFromDb != null) {
-                Log.d(TAG, "init: last db object ID: " + lastObjectFromDb.getId());
+        //call and observe the first api page
+        resultObjectModel.addSource(firstPage, pageModelObjectApiResponse -> {
+            //if response is successfull -> get the last object's id and fetch it
+            if (pageModelObjectApiResponse instanceof ApiResponse.SuccessApiResponse) {
+                ApiPageInfoModel pageInfo =
+                        ((ApiResponse.SuccessApiResponse<PageModelObject>) pageModelObjectApiResponse)
+                                .getBody()
+                                .getApiPageInfoModel();
+                int lastModelId = pageInfo.getCount();
+                int pageCount = pageInfo.getPages();
+                LiveData<ApiResponse<ObjectModel>> apiSourcelastObject
+                        = callLastApiModel(lastModelId);
+                // if ApiResponse with last object is successfull - set it as Resource.success value
+                resultObjectModel.addSource(apiSourcelastObject, lastNetworkObject -> {
+                    Log.d(TAG, "init: success ApiResponse single object");
+                    if (lastNetworkObject instanceof ApiResponse.SuccessApiResponse) {
+                        resultObjectModel
+                                .setValue(Resource
+                                        .success(((ApiResponse.SuccessApiResponse<ObjectModel>) lastNetworkObject)
+                                                .getBody()));
+                        shouldFetch(((ApiResponse.SuccessApiResponse<ObjectModel>) lastNetworkObject)
+                                        .getBody(), pageCount);
+                    } else {
+                        manageEmptyOrErrorResponse(lastNetworkObject);
+                    }
+                    resultObjectModel.removeSource(apiSourcelastObject);
+                });
+            } else {
+                manageEmptyOrErrorResponse(pageModelObjectApiResponse);
             }
-            //call and observe the first api page
-            resultObjectModel.addSource(firstPage, pageModelObjectApiResponse -> {
-                //if response is successfull -> get the last object's id and fetch it
-                if (pageModelObjectApiResponse instanceof ApiResponse.SuccessApiResponse) {
-                    ApiPageInfoModel pageInfo =
-                            ((ApiResponse.SuccessApiResponse<PageModelObject>) pageModelObjectApiResponse)
-                                    .getBody()
-                                    .getApiPageInfoModel();
-                    int lastModelId = pageInfo.getCount();
-                    int pageCount = pageInfo.getPages();
-                    LiveData<ApiResponse<ObjectModel>> apiSourcelastObject
-                            = callLastApiModel(lastModelId);
-                    // if ApiResponse with last object is successfull - set it as Resource.success value
-                    resultObjectModel.addSource(apiSourcelastObject, lastNetworkObject -> {
-                        Log.d(TAG, "init: success ApiResponse single object");
-                        if (lastNetworkObject instanceof ApiResponse.SuccessApiResponse) {
-                            resultObjectModel
-                                    .setValue(Resource
-                                    .success(((ApiResponse.SuccessApiResponse<ObjectModel>) lastNetworkObject)
-                                            .getBody()));
-                            shouldFetch(((ApiResponse.SuccessApiResponse<ObjectModel>) lastNetworkObject)
-                                            .getBody()
-                                    , lastObjectFromDb, pageCount);
-                        } else {
-                            manageEmptyOrErrorResponse(lastNetworkObject);
-                        }
-                        resultObjectModel.removeSource(apiSourcelastObject);
-                    });
-                } else {
-                    manageEmptyOrErrorResponse(pageModelObjectApiResponse);
-                }
-                resultObjectModel.removeSource(firstPage);
-            });
-            resultObjectModel.removeSource(dbSourceLastObject);
+            resultObjectModel.removeSource(firstPage);
         });
     }
 
@@ -84,9 +76,9 @@ public abstract class InitManager<ObjectModel extends ApiObjectModel, PageModelO
      * 4) Fetch if last network object id > database objects count
      */
     private void shouldFetch(ObjectModel lastNetworkObject,
-                             ObjectModel lastCacheObject,
                              int pageCount) {
-        final LiveData<Integer> dbObjectsCount = getDbEntriesCount();
+        final ObjectModel lastCacheObject = getLastEntryFromDb();
+        final int dbObjectsCount = getDbEntriesCount();
         //fetch if no cached object found
         if (lastCacheObject == null) {
             Log.d(TAG, "shouldFetch true: last cache obj is null");
@@ -105,21 +97,14 @@ public abstract class InitManager<ObjectModel extends ApiObjectModel, PageModelO
             fetchFromNetwork(pageCount);
             return;
         }
-        //observe number of saved entries in the database
-        resultObjectModel.addSource(dbObjectsCount, dbCount -> {
-            if (dbCount == null) {
-                dbCount = 0;
-            }
-            Log.d(TAG, "shouldFetch: lastNetworkObject.getId() + dbCount: "
-                    + lastNetworkObject.getId() + " + " + dbCount);
-            //fetch if last network object id > number of database entries
-            if (lastNetworkObject.getId() > dbCount) {
-                fetchFromNetwork(pageCount);
-            } else {
-                Log.d(TAG, "shouldFetch: fetch not needed");
-            }
-            resultObjectModel.removeSource(dbObjectsCount);
-        });
+        //fetch if last network object id > number of database entries
+        Log.d(TAG, "shouldFetch: lastNetworkObject.getId() + dbCount: "
+                + lastNetworkObject.getId() + " + " + dbObjectsCount);
+        if (lastNetworkObject.getId() > dbObjectsCount) {
+            fetchFromNetwork(pageCount);
+        } else {
+            Log.d(TAG, "shouldFetch: fetch not needed");
+        }
     }
 
     private void fetchFromNetwork(int pageCount){
@@ -213,12 +198,12 @@ public abstract class InitManager<ObjectModel extends ApiObjectModel, PageModelO
     protected abstract LiveData<ApiResponse<ObjectModel>> callLastApiModel(int lastModelId);
 
     //returns last entry from database
-    @NonNull @MainThread
-    protected abstract LiveData<ObjectModel> getLastEntryFromDb();
+    @MainThread
+    protected abstract ObjectModel getLastEntryFromDb();
 
     //returns number of entries from database
-    @NonNull @MainThread
-    protected abstract LiveData<Integer> getDbEntriesCount();
+    @MainThread
+    protected abstract int getDbEntriesCount();
 
     //calls all pages in sequence and returns a merged result
     @NonNull

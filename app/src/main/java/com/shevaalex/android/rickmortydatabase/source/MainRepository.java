@@ -403,16 +403,30 @@ public class MainRepository {
                         .getCharacter(lastModelId);
             }
 
-            @NonNull
             @Override
-            protected LiveData<CharacterModel> getLastEntryFromDb() {
-                return rmDatabase.getCharacterModelDao().showLastInCharacterList();
+            protected CharacterModel getLastEntryFromDb() {
+                Future<CharacterModel> characterModelFuture = appExecutors.diskIO().submit(() ->
+                        rmDatabase.getCharacterModelDao().showLastInCharacterList());
+                try {
+                    return characterModelFuture.get();
+                }
+                catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
 
-            @NonNull
             @Override
-            protected LiveData<Integer> getDbEntriesCount() {
-                return rmDatabase.getCharacterModelDao().getCharacterCount();
+            protected int getDbEntriesCount() {
+                int entriesCount = 0;
+                Future<Integer> future = appExecutors.diskIO().submit(() ->
+                        rmDatabase.getCharacterModelDao().getCharacterCount());
+                try {
+                    entriesCount = (int) future.get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return entriesCount;
             }
 
             @NonNull

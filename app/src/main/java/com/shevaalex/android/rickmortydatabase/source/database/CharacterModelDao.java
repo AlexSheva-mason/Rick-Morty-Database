@@ -52,10 +52,10 @@ public interface CharacterModelDao {
 
     // gets the last character to compare databases
     @Query("SELECT * FROM CharacterModel ORDER BY id DESC LIMIT 1")
-    LiveData<CharacterModel> showLastInCharacterList();
+    CharacterModel showLastInCharacterList();
 
     // gets the entry count to compare databases
     @Query("SELECT COUNT(id) FROM CharacterModel")
-    LiveData<Integer> getCharacterCount();
+    int getCharacterCount();
 
 }
