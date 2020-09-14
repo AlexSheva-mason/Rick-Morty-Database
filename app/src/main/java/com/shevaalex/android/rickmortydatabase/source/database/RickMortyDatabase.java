@@ -15,7 +15,7 @@ import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
         Location.class,
         Episode.class,
         CharacterEpisodeJoin.class,
-        LocationCharacterJoin.class}, version = 3, exportSchema = false)
+        LocationCharacterJoin.class}, version = 3)
 @TypeConverters({Converters.class})
 public abstract class RickMortyDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
