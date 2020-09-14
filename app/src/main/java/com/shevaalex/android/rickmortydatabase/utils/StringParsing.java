@@ -22,7 +22,10 @@ public abstract class StringParsing {
 
     public static String rearrangeSearchQuery (String query) {
         String [] splitQuery = query.split(" ");
-        return splitQuery[1] + " " + splitQuery[0];
+        if(splitQuery.length > 1) {
+            return splitQuery[1] + " " + splitQuery[0];
+        }
+        return query;
     }
 
     public static String returnStringOfIds (String string) {
