@@ -8,9 +8,13 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel;
+import com.shevaalex.android.rickmortydatabase.models.location.LocationModel;
 
 @Database(entities = {
         CharacterModel.class,
+        LocationModel.class,
+        EpisodeModel.class,
         Character.class,
         Location.class,
         Episode.class,
@@ -42,5 +46,7 @@ public abstract class RickMortyDatabase extends RoomDatabase {
     public abstract CharacterEpisodeJoinDao getCharacterEpisodeJoinDao();
     public abstract LocationCharacterJoinDao getLocationCharacterJoinDao();
     public abstract CharacterModelDao getCharacterModelDao();
+    public abstract LocationModelDao getLocationModelDao();
+    public abstract EpisodeModelDao getEpisodeModelDao();
 
 }
