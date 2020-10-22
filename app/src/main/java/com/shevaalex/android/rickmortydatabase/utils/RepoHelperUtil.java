@@ -5,7 +5,7 @@ import com.shevaalex.android.rickmortydatabase.source.database.CharacterEpisodeJ
 import com.shevaalex.android.rickmortydatabase.source.database.Episode;
 import com.shevaalex.android.rickmortydatabase.source.database.Location;
 import com.shevaalex.android.rickmortydatabase.source.database.LocationCharacterJoin;
-import com.shevaalex.android.rickmortydatabase.source.network.net_utils.ApiConstants;
+import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;

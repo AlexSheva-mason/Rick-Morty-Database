@@ -7,9 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
 import com.shevaalex.android.rickmortydatabase.source.MainRepository;
-import com.shevaalex.android.rickmortydatabase.source.network.net_utils.Resource;
 import com.shevaalex.android.rickmortydatabase.utils.StatusMediatorLiveData;
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData;
 
@@ -29,12 +27,4 @@ public class NetworkStatusViewModel extends AndroidViewModel {
         return statusLiveData;
     }
 
-    //retrofit test
-    public LiveData<Resource<CharacterModel>> dbInitTest() {
-        return rmRepository.databaseInit();
-    }
-
-    public void checkDatabase() {
-        rmRepository.databaseInit();
-    }
 }

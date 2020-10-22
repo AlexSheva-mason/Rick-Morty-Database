@@ -29,9 +29,13 @@ public class EpisodeDetailViewModel extends AndroidViewModel {
         savedStateHandle.set(SAVED_STATE_KEY_EPISODE_ID, episodeId);
     }
 
+    //TODO
+    //this is not right according to documentation
+    //livedata is being reassigned
+    //should use a transformation
     LiveData<List<Character>> getCharactersFromEpisode() {
         if (episodeId.getValue() != null) {
-            return  rmRepository.getCharactersFromEpisode(episodeId.getValue());
+            //return  rmRepository.getCharactersFromEpisode(episodeId.getValue());
         }
         return null;
     }

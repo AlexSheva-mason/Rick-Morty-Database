@@ -33,6 +33,10 @@ public class CharacterDetailViewModel extends AndroidViewModel {
         savedStateHandle.set(SAVED_STATE_KEY_CHARECTER_ID, characterId);
     }
 
+    //TODO
+    //this is not right according to documentation
+    //livedata is being reassigned
+    //should use a transformation
     LiveData<Character> getCharacter() {
         if (characterId.getValue() != null) {
             return rmRepository.getCharacterById(characterId.getValue());
@@ -40,9 +44,13 @@ public class CharacterDetailViewModel extends AndroidViewModel {
         return null;
     }
 
+    //TODO
+    //this is not right according to documentation
+    //livedata is being reassigned
+    //should use a transformation
     LiveData<List<Episode>> getEpisodeList() {
         if (characterId.getValue() != null) {
-            return rmRepository.getEpisodesFromCharacter(characterId.getValue());
+            //return rmRepository.getEpisodesFromCharacter(characterId.getValue());
         }
         return null;
     }

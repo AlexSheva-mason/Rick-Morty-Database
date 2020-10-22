@@ -29,9 +29,13 @@ public class LocationDetailViewModel extends AndroidViewModel {
         savedStateHandle.set(SAVED_STATE_KEY_LOCATION_ID, locationId);
     }
 
+    //TODO
+    //this is not right according to documentation
+    //livedata is being reassigned
+    //should use a transformation
     LiveData<List<Character>> getCharactersFromLocation() {
         if (locationId.getValue() != null) {
-            return rmRepository.getCharactersFromLocation(locationId.getValue());
+            //return rmRepository.getCharactersFromLocation(locationId.getValue());
         }
         return null;
     }

@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 
 import androidx.lifecycle.LiveData;
 
+import timber.log.Timber;
+
 public class ConnectionLiveData extends LiveData<Boolean> {
     private final Context context;
     private final ConnectivityManager connectivityManager;
@@ -28,6 +30,7 @@ public class ConnectionLiveData extends LiveData<Boolean> {
     @Override
     protected void onInactive() {
         super.onInactive();
+        Timber.d("onInactive: unregistering the BroadcastReceiver");
         context.unregisterReceiver(networkReceiver);
     }
 
@@ -37,11 +40,7 @@ public class ConnectionLiveData extends LiveData<Boolean> {
             NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
             boolean isConnected = activeNetwork != null &&
                     activeNetwork.isConnectedOrConnecting();
-            if(isConnected) {
-                postValue(true);
-            } else {
-                postValue(false);
-            }
+            postValue(isConnected);
         }
     };
 }

@@ -22,11 +22,12 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shevaalex.android.rickmortydatabase.BuildConfig;
 import com.shevaalex.android.rickmortydatabase.R;
 
+import static com.shevaalex.android.rickmortydatabase.utils.Constants.KEY_VERSION;
+import static com.shevaalex.android.rickmortydatabase.utils.Constants.LIST_THEME_PREFERENCE_KEY;
+import static com.shevaalex.android.rickmortydatabase.utils.Constants.SWITCH_THEME_PREFERENCE_KEY;
+
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
-    private final static String KEY_THEME_SWITCH = "theme_switch";
-    private final static String KEY_THEME_LIST = "theme_list";
-    private final static String KEY_VERSION = "version";
     private FirebaseAnalytics mFirebaseAnalytics;
 
     public SettingsFragment() {
@@ -36,11 +37,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
-        SwitchPreferenceCompat switchPreference = findPreference(KEY_THEME_SWITCH);
+        SwitchPreferenceCompat switchPreference = findPreference(SWITCH_THEME_PREFERENCE_KEY);
         if (switchPreference != null) {
             switchPreference.setOnPreferenceChangeListener(this);
         }
-        ListPreference listPreference = findPreference(KEY_THEME_LIST);
+        ListPreference listPreference = findPreference(LIST_THEME_PREFERENCE_KEY);
         if (listPreference != null) {
             listPreference.setOnPreferenceChangeListener(this);
         }
@@ -84,7 +85,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         switch (preference.getKey()) {
-            case KEY_THEME_SWITCH:
+            case SWITCH_THEME_PREFERENCE_KEY:
                 boolean nightModeOn = (Boolean) newValue;
                 if (nightModeOn) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -92,7 +93,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
                 break;
-            case KEY_THEME_LIST:
+            case LIST_THEME_PREFERENCE_KEY:
                 int value = Integer.parseInt((String) newValue);
                 AppCompatDelegate.setDefaultNightMode(value);
         }
