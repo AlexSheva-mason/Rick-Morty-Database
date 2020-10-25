@@ -5,7 +5,6 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
 import com.shevaalex.android.rickmortydatabase.models.ApiPageModel
-import com.shevaalex.android.rickmortydatabase.ui.MainActivity
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
@@ -13,6 +12,7 @@ import com.shevaalex.android.rickmortydatabase.utils.networking.Message
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import timber.log.Timber
+import java.util.*
 
 abstract class InitManager<ObjectModel: ApiObjectModel, PageModelObject: ApiPageModel>(
         val context: Context
@@ -34,8 +34,8 @@ abstract class InitManager<ObjectModel: ApiObjectModel, PageModelObject: ApiPage
                         val lastCacheObject = getLastEntryFromDb()
                         val dbObjectsCount = getDbEntriesCount()
                         //translate if needed
-                        if (MainActivity.defSystemLanguage.startsWith("ru")
-                                || MainActivity.defSystemLanguage.startsWith("uk")) {
+                        if (Locale.getDefault().language.startsWith("ru")
+                                || Locale.getDefault().language.startsWith("uk")) {
                             UiTranslateUtils.getTranslatedObject(context, lastNetworkObject)
                         }
                         Timber.d("asFlow: success ApiResponse last object= %s",

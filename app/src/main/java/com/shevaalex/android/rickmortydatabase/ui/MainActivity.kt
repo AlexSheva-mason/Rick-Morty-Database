@@ -1,14 +1,12 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
-import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
 import android.os.PersistableBundle
-import android.util.Pair
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
@@ -28,13 +26,9 @@ import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
+import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        private val snackMessages = ArrayList<String>()
-        var defSystemLanguage = Locale.getDefault().language
-    }
 
     @Inject
     lateinit var viewModelFactory: MyViewModelFactory<InitViewModel>
@@ -45,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     private var backPressedOnce = false
 
     private val botNavViewModel: BottomNavViewModel by viewModels()
-    private val networkStatusViewModel: NetworkStatusViewModel by viewModels()
     private val initViewModel: InitViewModel by viewModels {
         viewModelFactory
     }
@@ -60,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         FirebaseAnalytics.getInstance(this)
         restoreInstanceState(savedInstanceState)
         setupViews()
-        monitorConnectionAndDatabase()
         getInitState()
     }
 
@@ -84,57 +76,76 @@ class MainActivity : AppCompatActivity() {
                 //if db has not been synced -> monitor network connection and fetch data when connected
                 if (!it) {
                     monitorNetworkState()
-                    testFlow()
+                    dbInit()
                 }
             }
         })
     }
 
-    private fun testFlow() {
+    private fun dbInit() {
         initViewModel.test.observe(this, {
-            if (it != null) {
-                Timber.i("stateResource is not null")
-            } else {
-                Timber.e("stateResource is null")
-            }
             it?.let {stateResource ->
+                val snackText: String
+                var snackBarDuration = BaseTransientBottomBar.LENGTH_SHORT
+                var snackColor: Int? = null
                 when (stateResource.status) {
-                    is Status.Error -> Timber.e("Error")
-                    is Status.Loading -> Timber.i("Loading")
+                    is Status.Error -> {
+                        snackColor = ContextCompat.getColor(this, R.color.rm_red_add)
+                        Timber.e("Error")
+                        binding.progressBar.progressBar.visibility = View.GONE
+                    }
+                    is Status.Loading -> {
+                        Timber.i("Loading")
+                        binding.progressBar.progressBar.visibility = View.VISIBLE
+                    }
                     is Status.Success -> {
+                        snackColor = ContextCompat.getColor(this, R.color.rm_green_200)
                         Timber.d("Success!")
+                        binding.progressBar.progressBar.visibility = View.GONE
                         initViewModel.dbIsSynced(true)
                         unSubscribe()
                     }
                 }
                 when (stateResource.message) {
-                    is Message.NoInternet -> Timber.d("NoInternet")
-                    is Message.UpdatingDatabase -> Timber.i("UpdatingDatabase")
-                    is Message.DbIsUpToDate -> Timber.i("DbIsUpToDate")
-                    is Message.ServerError -> Timber.e(
-                            "ServerError: %s",
-                            stateResource.message.statusCode
-                    )
-                    is Message.NetworkError -> Timber.e("NetworkError")
-                    is Message.EmptyResponse -> Timber.e("EmptyResponse")
-                    null -> Timber.i("empty message")
+                    is Message.NoInternet -> {
+                        Timber.d("NoInternet")
+                        snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE
+                        snackText = getString(R.string.ma_snack_database_not_synced)
+                    }
+                    is Message.UpdatingDatabase -> {
+                        Timber.i("UpdatingDatabase")
+                        snackText = getString(R.string.ma_snack_database_sync)
+                    }
+                    is Message.DbIsUpToDate -> {
+                        Timber.i("DbIsUpToDate")
+                        snackText = getString(R.string.ma_snack_database_up_to_date)
+                    }
+                    is Message.ServerError -> {
+                        Timber.e(
+                                "ServerError: %s",
+                                stateResource.message.statusCode
+                        )
+                        snackText = getString(R.string.ma_snack_error_server_error)
+                                .plus(stateResource.message.statusCode)
+                    }
+                    is Message.NetworkError -> {
+                        Timber.e("NetworkError")
+                        snackText = getString(R.string.ma_snack_error_network_error)
+                    }
+                    is Message.EmptyResponse -> {
+                        Timber.e("EmptyResponse")
+                        snackText = getString(R.string.ma_snack_error_empty_response)
+                    }
+                    null -> {
+                        Timber.i("empty message")
+                        snackText = ""
+                    }
+                }
+                if (snackText.isNotEmpty()) {
+                    showSnackBar(snackText, snackBarDuration, snackColor)
                 }
             }
         })
-    }
-
-    private fun unSubscribe() {
-        connectionStatus.removeObservers(this)
-        initViewModel.test.removeObservers(this)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        //reinit database if locale has been changed
-        if (defSystemLanguage != newConfig.locale.language) {
-            defSystemLanguage = newConfig.locale.language
-            //do stuff
-        }
     }
 
     private fun monitorNetworkState() {
@@ -142,6 +153,11 @@ class MainActivity : AppCompatActivity() {
         connectionStatus.observe(this) {
             initViewModel.isNetworkAvailable(it)
         }
+    }
+
+    private fun unSubscribe() {
+        connectionStatus.removeObservers(this)
+        initViewModel.test.removeObservers(this)
     }
 
     private fun setupViews() {
@@ -155,11 +171,15 @@ class MainActivity : AppCompatActivity() {
         botNavViewModel.bottomNavLabelStatus.observe(this,
                 { integer: Int -> binding.bottomPanel.labelVisibilityMode = integer })
         // monitor navigation and remove BottomNavigationView in Detail fragments
-        navController.addOnDestinationChangedListener { controller: NavController?, destination: NavDestination, arguments: Bundle? ->
+        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
             if (destination.id == R.id.settingsFragment
                     || destination.id == R.id.characterImageFragment) {
-                Handler().postDelayed({ botNavViewModel.hideBottomNav() }, 100)
-            } else if (destination.id == R.id.characterDetailFragment2 || destination.id == R.id.locationDetailFragment || destination.id == R.id.episodeDetailFragment) {
+                Timer().schedule(100){
+                    botNavViewModel.hideBottomNav()
+                }
+            } else if (destination.id == R.id.characterDetailFragment2
+                    || destination.id == R.id.locationDetailFragment
+                    || destination.id == R.id.episodeDetailFragment) {
                 botNavViewModel.showBottomNav()
                 botNavViewModel.setUnlabeled()
             } else {
@@ -167,7 +187,8 @@ class MainActivity : AppCompatActivity() {
                 botNavViewModel.showBottomNav()
             }
         }
-        // add bottom menu listener to prevent posibbility of double clicking the same item and refreshing or backing up the old search
+        // add bottom menu listener to prevent posibbility of double clicking the same item
+        // and refreshing or backing up the old search
         binding.bottomPanel.setOnNavigationItemSelectedListener { item ->
             if (navController.currentDestination != null
                     && navController.currentDestination!!.id != item.itemId) {
@@ -178,44 +199,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //TODO delete redundant method
-    //monitors internet connection, checks if database is up to date
-    private fun monitorConnectionAndDatabase() {
-        networkStatusViewModel.networkStatusLiveData.observe(this, { pair: Pair<Boolean, Boolean> ->
-            val text: String
-            var snackBarDuration = BaseTransientBottomBar.LENGTH_SHORT
-            // database is up to date and device is connected to network
-            if (pair.first && pair.second) {
-                binding.progressBar.progressBar.visibility = View.GONE
-                text = getString(R.string.ma_snack_database_up_to_date)
-            } else if (!pair.first && pair.second) {
-                binding.progressBar.progressBar.visibility = View.VISIBLE
-                //**characterViewModel.rmRepository.initialiseDataBase();
-                text = getString(R.string.ma_snack_database_sync)
-            } else if (pair.first) {
-                text = getString(R.string.ma_snack_database_up_to_date)
-            } else {
-                binding.progressBar.progressBar.visibility = View.VISIBLE
-                snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE
-                text = getString(R.string.ma_snack_database_not_synced)
-            }
-            showSnackBar(text, snackBarDuration)
-        })
-    }
-
-    private fun showSnackBar(text: String, snackBarDuration: Int) {
-        if (text.isNotEmpty() && !snackMessages.contains(text)) {
-            val mySnackbar = Snackbar.make(binding.activityMainLayout, text, snackBarDuration)
-            val snackBarView = mySnackbar.view
-            //TODO set the error color to red when appropriate
-            //snackBarView.getRootView().setBackgroundColor(ContextCompat.getColor(this, R.color.red));
-            mySnackbar.setTextColor(resources.getColor(R.color.rm_white_50))
-            mySnackbar.setAnchorView(binding.bottomPanel)
-            mySnackbar.show()
-            if (text != getString(R.string.ma_snack_database_not_synced)) {
-                snackMessages.add(text)
-            }
+    private fun showSnackBar(text: String, snackBarDuration: Int, color: Int?) {
+        val mySnackbar = Snackbar.make(binding.activityMainLayout, text, snackBarDuration)
+        val snackBarView = mySnackbar.view
+        color?.let {
+            snackBarView.rootView.setBackgroundColor(it)
         }
+        mySnackbar.setTextColor(ContextCompat.getColor(this, R.color.rm_white_50))
+        mySnackbar.anchorView = binding.bottomPanel
+        mySnackbar.show()
     }
 
     override fun onBackPressed() {
@@ -223,15 +215,21 @@ class MainActivity : AppCompatActivity() {
             navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         }
         // Check if the current destination is actually the start destination (Home screen)
-        if (navController!!.currentDestination != null
-                && navController!!.graph.startDestination == navController!!.currentDestination!!.id) {
+        if (navController?.currentDestination != null
+                && navController?.graph?.startDestination == navController?.currentDestination?.id) {
             if (backPressedOnce) {
                 super.onBackPressed()
                 return
             }
             backPressedOnce = true
-            Toast.makeText(this, resources.getString(R.string.toast_close_message), Toast.LENGTH_SHORT).show()
-            Handler().postDelayed({ backPressedOnce = false }, 2000)
+            Toast.makeText(
+                    this,
+                    resources.getString(R.string.toast_close_message),
+                    Toast.LENGTH_SHORT)
+                    .show()
+            Timer().schedule(2000){
+                backPressedOnce = false
+            }
         } else {
             super.onBackPressed()
         }

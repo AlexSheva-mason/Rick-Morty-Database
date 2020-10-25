@@ -15,7 +15,6 @@ import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
 import com.shevaalex.android.rickmortydatabase.source.network.requests.CharacterApi
 import com.shevaalex.android.rickmortydatabase.source.network.requests.EpisodeApi
 import com.shevaalex.android.rickmortydatabase.source.network.requests.LocationApi
-import com.shevaalex.android.rickmortydatabase.ui.MainActivity
 import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
@@ -23,6 +22,7 @@ import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -99,8 +99,8 @@ constructor(
                 val characters = pageModels.flatMap { it.characterModels }.toList()
                 //translate if needed and add a timestamp to each model
                 characters.map {
-                    if (MainActivity.defSystemLanguage.startsWith("ru")
-                            || MainActivity.defSystemLanguage.startsWith("uk")) {
+                    if (Locale.getDefault().language.startsWith("ru")
+                            || Locale.getDefault().language.startsWith("uk")) {
                         UiTranslateUtils.getTranslatedCharacter(application, it)
                     }
                     it.timeStamp = (System.currentTimeMillis() / 86400000).toInt()
@@ -157,8 +157,8 @@ constructor(
                 val locations = pageModels.flatMap { it.locationModels }.toList()
                 //translate if needed and add a timestamp to each model
                 locations.map {
-                    if (MainActivity.defSystemLanguage.startsWith("ru")
-                            || MainActivity.defSystemLanguage.startsWith("uk")) {
+                    if (Locale.getDefault().language.startsWith("ru")
+                            || Locale.getDefault().language.startsWith("uk")) {
                         UiTranslateUtils.getTranslatedLocation(application, it)
                     }
                     it.timeStamp = (System.currentTimeMillis() / 86400000).toInt()
@@ -215,8 +215,8 @@ constructor(
                 val episodes = pageModels.flatMap { it.episodeModels }.toList()
                 //translate if needed and add a timestamp to each model
                 episodes.map {
-                    if (MainActivity.defSystemLanguage.startsWith("ru")
-                            || MainActivity.defSystemLanguage.startsWith("uk")) {
+                    if (Locale.getDefault().language.startsWith("ru")
+                            || Locale.getDefault().language.startsWith("uk")) {
                         UiTranslateUtils.getTranslatedEpisode(application, it)
                     }
                     it.timeStamp = (System.currentTimeMillis() / 86400000).toInt()
