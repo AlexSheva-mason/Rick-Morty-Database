@@ -10,9 +10,9 @@ class Constants {
         const val KEY_VERSION = "version"
 
         //Retrofit options
-        const val CONNECTION_TIMEOUT = 6L
-        const val READ_TIMEOUT = 5L
-        const val WRITE_TIMEOUT = 5L
+        const val CONNECTION_TIMEOUT = 10L
+        const val READ_TIMEOUT = 10L
+        const val WRITE_TIMEOUT = 10L
 
         //sets the db entry update period (days)
         const val REFRESH_CONSTANT = 45
