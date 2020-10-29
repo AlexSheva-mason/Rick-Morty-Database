@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -22,6 +22,7 @@ import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_ACT
 import com.shevaalex.android.rickmortydatabase.utils.MyViewModelFactory
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
+import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import timber.log.Timber
 import java.util.*
@@ -85,64 +86,26 @@ class MainActivity : AppCompatActivity() {
     private fun dbInit() {
         initViewModel.test.observe(this, {
             it?.let {stateResource ->
-                val snackText: String
-                var snackBarDuration = BaseTransientBottomBar.LENGTH_SHORT
-                var snackColor: Int? = null
+                val snackColor: Int?
                 when (stateResource.status) {
                     is Status.Error -> {
                         snackColor = ContextCompat.getColor(this, R.color.rm_red_add)
+                        composeMessage(stateResource, snackColor)
                         Timber.e("Error")
                         binding.progressBar.progressBar.visibility = View.GONE
                     }
                     is Status.Loading -> {
-                        Timber.i("Loading")
+                        composeMessage(stateResource)
                         binding.progressBar.progressBar.visibility = View.VISIBLE
                     }
                     is Status.Success -> {
-                        snackColor = ContextCompat.getColor(this, R.color.rm_green_200)
+                        snackColor = ContextCompat.getColor(this, R.color.rm_green_300)
+                        composeMessage(stateResource, snackColor)
                         Timber.d("Success!")
                         binding.progressBar.progressBar.visibility = View.GONE
                         initViewModel.dbIsSynced(true)
                         unSubscribe()
                     }
-                }
-                when (stateResource.message) {
-                    is Message.NoInternet -> {
-                        Timber.d("NoInternet")
-                        snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE
-                        snackText = getString(R.string.ma_snack_database_not_synced)
-                    }
-                    is Message.UpdatingDatabase -> {
-                        Timber.i("UpdatingDatabase")
-                        snackText = getString(R.string.ma_snack_database_sync)
-                    }
-                    is Message.DbIsUpToDate -> {
-                        Timber.i("DbIsUpToDate")
-                        snackText = getString(R.string.ma_snack_database_up_to_date)
-                    }
-                    is Message.ServerError -> {
-                        Timber.e(
-                                "ServerError: %s",
-                                stateResource.message.statusCode
-                        )
-                        snackText = getString(R.string.ma_snack_error_server_error)
-                                .plus(stateResource.message.statusCode)
-                    }
-                    is Message.NetworkError -> {
-                        Timber.e("NetworkError")
-                        snackText = getString(R.string.ma_snack_error_network_error)
-                    }
-                    is Message.EmptyResponse -> {
-                        Timber.e("EmptyResponse")
-                        snackText = getString(R.string.ma_snack_error_empty_response)
-                    }
-                    null -> {
-                        Timber.i("empty message")
-                        snackText = ""
-                    }
-                }
-                if (snackText.isNotEmpty()) {
-                    showSnackBar(snackText, snackBarDuration, snackColor)
                 }
             }
         })
@@ -164,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         // Finding the navigation controller
         val navController = findNavController(R.id.nav_host_fragment)
         // Setting the nav controller with bottom navigation
-        NavigationUI.setupWithNavController(binding.bottomPanel, navController)
+        binding.bottomPanel.setupWithNavController(navController)
         //setup the ViewModel for lifecycle aware observing bottomNav state
         botNavViewModel.bottomNavVisibility.observe(this,
                 { integer: Int -> binding.bottomPanel.visibility = integer })
@@ -183,19 +146,41 @@ class MainActivity : AppCompatActivity() {
                 botNavViewModel.showBottomNav()
                 botNavViewModel.setUnlabeled()
             } else {
-                botNavViewModel.setLabelSelected()
                 botNavViewModel.showBottomNav()
+                botNavViewModel.setLabelSelected()
             }
         }
         // add bottom menu listener to prevent posibbility of double clicking the same item
         // and refreshing or backing up the old search
-        binding.bottomPanel.setOnNavigationItemSelectedListener { item ->
-            if (navController.currentDestination != null
-                    && navController.currentDestination!!.id != item.itemId) {
-                NavigationUI.onNavDestinationSelected(item, navController)
-                return@setOnNavigationItemSelectedListener true
+        binding.bottomPanel.setOnNavigationItemReselectedListener {
+            // do nothing
+        }
+    }
+
+    private fun composeMessage(stateResource: StateResource, snackColor: Int? = null) {
+        val snackText: String
+        var snackBarDuration = BaseTransientBottomBar.LENGTH_LONG
+        when (stateResource.message) {
+            is Message.NoInternet -> {
+                snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE
+                snackText = getString(R.string.ma_snack_database_not_synced)
             }
-            true
+            is Message.UpdatingDatabase ->
+                snackText = getString(R.string.ma_snack_database_sync)
+            is Message.DbIsUpToDate ->
+                snackText = getString(R.string.ma_snack_database_up_to_date)
+            is Message.ServerError ->
+                snackText = getString(R.string.ma_snack_error_server_error)
+                        .plus(stateResource.message.statusCode)
+            is Message.NetworkError ->
+                snackText = getString(R.string.ma_snack_error_network_error)
+            is Message.EmptyResponse ->
+                snackText = getString(R.string.ma_snack_error_empty_response)
+            null ->
+                snackText = ""
+        }
+        if (snackText.isNotBlank()) {
+            showSnackBar(snackText, snackBarDuration, snackColor)
         }
     }
 

@@ -42,7 +42,10 @@ constructor(
     fun getDbStateResource(): LiveData<StateResource> = liveData {
         emit(StateResource(Status.Loading))
         val initFuns = listOf(initCharacters(), initLocations(), initEpisodes())
-        Timber.i("init funs results: %s, %s, %s", initFuns[0], initFuns[1], initFuns[2])
+        Timber.i("init funs results: %s, %s, %s",
+                initFuns[0].status.toString(),
+                initFuns[1].status.toString(),
+                initFuns[2].status.toString())
         //if there is at least one error whilst initiating db -> emit Status.Error
         initFuns.find { errorStateResource: StateResource ->
             errorStateResource.status == Status.Error }?.let {

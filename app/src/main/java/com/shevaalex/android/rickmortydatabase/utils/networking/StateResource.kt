@@ -8,11 +8,23 @@ data class StateResource (
 
 sealed class Status {
 
-    object Loading : Status()
+    object Loading : Status() {
+        override fun toString(): String {
+            return "Status.Loading"
+        }
+    }
 
-    object Success : Status()
+    object Success : Status() {
+        override fun toString(): String {
+            return "Status.Success"
+        }
+    }
 
-    object Error : Status()
+    object Error : Status() {
+        override fun toString(): String {
+            return "Status.Error"
+        }
+    }
 
 }
 

@@ -189,7 +189,6 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
                 }
             }
             searchPlate?.setOnItemClickListener { parent, _, position, _ ->
-                Timber.e("onItemClick: %s", parent?.getItemAtPosition(position))
                 val newQuery: String? = parent?.getItemAtPosition(position).toString()
                 newQuery?.let {
                     searchView.setQuery(newQuery, true)
