@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/charactersListFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment"
-        android:label="@string/fragment_character_list"
+        android:label=""
         tools:layout="@layout/fragment_characters_list">
         <action
             android:id="@+id/toCharacterDetailFragmentAction"

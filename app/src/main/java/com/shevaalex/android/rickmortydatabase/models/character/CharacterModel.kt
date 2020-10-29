@@ -34,9 +34,18 @@ data class CharacterModel(
         val imageUrl: String,
 
         @SerializedName(ApiCallCharacterKeys.CHARACTER_EPISODE_LIST)
-        val episodeList: Array<String>,
+        val episodeList: Array<String>
 
 ): ApiObjectModel {
+
+    val episodes: List<String>
+        get() {
+            return episodeList.map {
+                it.dropWhile {char ->
+                    !char.isDigit()
+                }
+            }
+        }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

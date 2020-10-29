@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:text="@string/dialog_subtitle_status"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorPrimary"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/status_alive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/character_status_alive_male"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/status_dead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/character_status_dead_male"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:text="@string/dialog_subtitle_gender"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorPrimary"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/gender_female"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/character_gender_female"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/gender_male"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/character_gender_male"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:text="@string/dialog_subtitle_species"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorPrimary"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_human"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Human"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_humanoid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Humanoid"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_alien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Alien"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_animal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Animal"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_robot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Robot"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_poopy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Poopybutthole"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_cronenberg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Cronenberg"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_mythological"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species_Mythological_Creature"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/species_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_species_other"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+</LinearLayout>

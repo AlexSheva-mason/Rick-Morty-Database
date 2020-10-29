@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--TODO delete this layout-->
     <item
         android:id="@+id/search_button"
         android:icon="@drawable/ic_search"
@@ -19,7 +20,7 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/settingsFragment"
+                android:id="@+id/settings_Fragment"
                 android:icon="@drawable/ic_settings"
                 android:orderInCategory="3"
                 android:title="@string/item_settings"

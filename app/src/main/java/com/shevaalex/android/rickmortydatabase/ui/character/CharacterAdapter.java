@@ -14,39 +14,36 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding;
 import com.shevaalex.android.rickmortydatabase.R;
 
-import com.shevaalex.android.rickmortydatabase.source.database.Character;
-import com.shevaalex.android.rickmortydatabase.source.database.Location;
-import com.shevaalex.android.rickmortydatabase.utils.RecyclerViewAdapterCallback;
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
+import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocationModel;
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil;
 import com.squareup.picasso.Picasso;
 
 
 public class CharacterAdapter
-        extends PagedListAdapter<Character, CharacterAdapter.CharacterViewHolder> {
+        extends PagedListAdapter<CharacterModel, CharacterAdapter.CharacterViewHolder> {
     private final OnCharacterListener onCharacterListener;
-    private final RecyclerViewAdapterCallback callback;
     private final Context context;
+
     CharacterAdapter(Context context,
-                     OnCharacterListener onClickListener,
-                     RecyclerViewAdapterCallback callback) {
+                     OnCharacterListener onClickListener) {
         super(DIFF_CALLBACK);
         this.onCharacterListener = onClickListener;
-        this.callback = callback;
         this.context = context;
     }
 
-    private static final DiffUtil.ItemCallback<Character> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<Character>() {
+    private static final DiffUtil.ItemCallback<CharacterModel> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<CharacterModel>() {
 
                 @Override
-                public boolean areItemsTheSame(@NonNull Character oldItem,
-                                               @NonNull Character newItem) {
+                public boolean areItemsTheSame(@NonNull CharacterModel oldItem,
+                                               @NonNull CharacterModel newItem) {
                     return oldItem.getId() == newItem.getId();
                 }
 
                 @Override
-                public boolean areContentsTheSame(@NonNull Character oldItem,
-                                                  @NonNull Character newItem) {
+                public boolean areContentsTheSame(@NonNull CharacterModel oldItem,
+                                                  @NonNull CharacterModel newItem) {
                     return newItem.equals(oldItem);
                 }
             };
@@ -62,11 +59,11 @@ public class CharacterAdapter
 
     @Override
     public void onBindViewHolder(@NonNull final CharacterViewHolder holder, int position) {
-        Character currentCharacter = getItem(position);
+        CharacterModel currentCharacter = getItem(position);
         if (currentCharacter != null) {
             // using View Binding class to set views without calling findViewById
             Picasso.get()
-                    .load(currentCharacter.getImgUrl())
+                    .load(currentCharacter.getImageUrl())
                     .placeholder(R.drawable.picasso_placeholder_error)
                     .error(R.drawable.picasso_placeholder_error)
                     .into(holder.characterItemBinding.characterImage);
@@ -94,18 +91,14 @@ public class CharacterAdapter
                 }
             }
             if (holder.characterItemBinding.characterLastLocationValue != null) {
-                Location lastLoc = callback.returnLocationFromId(currentCharacter.getLastKnownLocation());
-                if (lastLoc != null) {
-                    holder.characterItemBinding.characterLastLocationValue.setText(lastLoc.getName());
-                } else {
-                    holder.characterItemBinding.characterLastLocationValue.setText(R.string.tv_character_last_loc_unknown_value);
-                }
+                LinkedLocationModel lastLoc = currentCharacter.getLastLocation();
+                holder.characterItemBinding.characterLastLocationValue.setText(lastLoc.getName());
             }
         }
     }
 
     class CharacterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ItemCharacterBinding characterItemBinding;
+        private final ItemCharacterBinding characterItemBinding;
 
         CharacterViewHolder(ItemCharacterBinding binding) {
             super(binding.getRoot());

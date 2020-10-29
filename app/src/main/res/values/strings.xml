@@ -15,13 +15,6 @@
     <string name="fragment_location_list">List of Locations</string>
     <string name="fragment_settings">Settings</string>
 
-    //Volley Error managing
-    <string name="timeout_or_no_connection" translatable="false">Request timed out or bad connection, Database might be not up to date</string>
-    <string name="auth_fail" translatable="false">Authentication Failure while performing the request, Database might be not up to date</string>
-    <string name="server_error" translatable="false">Server error, Database might be not up to date</string>
-    <string name="network_error" translatable="false">Network error, Database might be not up to date</string>
-    <string name="parse_error" translatable="false">Server response cannot be parsed, Database might be not up to date</string>
-
     //MainActivity Error managing
     <string name="ma_snack_no_connection">No internet connection</string>
     <string name="ma_snack_database_up_to_date">Database is up to date</string>
@@ -30,6 +23,16 @@
     <string name="ma_snack_error_server_error">Error while syncing the database. \nServer Error: </string>
     <string name="ma_snack_error_network_error">Error while syncing the database. \nPlease, check your network connection</string>
     <string name="ma_snack_error_empty_response">Error while syncing the database. \nServer response is empty</string>
+
+    //Menu
+    <string name="filter">Filter</string>
+
+    //Dialog filter characters
+    <string name="dialog_title">Filter options</string>
+    <string name="dialog_subtitle_status">Filter by status:</string>
+    <string name="dialog_subtitle_gender">Filter by gender:</string>
+    <string name="dialog_subtitle_species">Filter by species:</string>
+    <string name="dialog_species_other">Other</string>
 
     //CharacterListFragment
     <string name="clf_no_results_query">Oops, nothing found :(</string>
@@ -760,8 +763,8 @@
 
     //Database locale character gender
     <string name="character_gender_genderless">genderless</string>
-    <string name="character_gender_female">female</string>
-    <string name="character_gender_male">male</string>
+    <string name="character_gender_female">Female</string>
+    <string name="character_gender_male">Male</string>
     <string name="character_gender_unknown">unknown</string>
 
     //Database locale character status
@@ -1025,4 +1028,5 @@
     <string name="episode_october">october</string>
     <string name="episode_november">november</string>
     <string name="episode_december">december</string>
+
 </resources>
