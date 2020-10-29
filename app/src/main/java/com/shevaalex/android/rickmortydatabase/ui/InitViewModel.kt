@@ -17,7 +17,8 @@ constructor(
 
     private val isNetworkAvailable = MutableLiveData<Boolean>()
 
-    val dbIsSynced = MutableLiveData(false)
+    private val _dbIsSynced = MutableLiveData(false)
+    val dbIsSynced: LiveData<Boolean> get() = _dbIsSynced
 
     //emits dummy livedata with network error (no internet connection)
     private val noInternetError: LiveData<StateResource> = liveData {
@@ -35,7 +36,7 @@ constructor(
     }
 
     fun dbIsSynced (isSynced: Boolean) {
-        dbIsSynced.value = isSynced
+        _dbIsSynced.value = isSynced
     }
 
     fun isNetworkAvailable(isConnected: Boolean) {
