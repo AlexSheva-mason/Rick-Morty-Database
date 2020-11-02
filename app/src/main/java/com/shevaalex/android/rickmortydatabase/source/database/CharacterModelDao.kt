@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.source.database
 import androidx.paging.DataSource
 import androidx.room.*
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterModelDao {
@@ -23,11 +24,11 @@ interface CharacterModelDao {
     suspend fun charactersCount(): Int
 
     /**
-     * gets all names for suggestions
+     * gets all names for seacrh suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT name FROM CharacterModel")
-    suspend fun getSuggestionsNames(): List<String>
+    fun getSuggestionsNames(): Flow<List<String>>
 
     /**
      * gets all characters

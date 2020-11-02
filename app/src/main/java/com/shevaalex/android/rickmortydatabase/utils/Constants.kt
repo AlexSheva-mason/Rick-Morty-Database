@@ -19,5 +19,8 @@ class Constants {
 
         //SavedInstanceState keys
         const val KEY_ACTIVITY_MAIN_DB_SYNC_BOOL = "main_activity_dbsync"
+
+        //SearchView recent queries list size
+        const val SV_RECENT_COUNT = 10
     }
 }

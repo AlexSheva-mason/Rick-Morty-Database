@@ -2,10 +2,7 @@ package com.shevaalex.android.rickmortydatabase.di
 
 import android.app.Application
 import androidx.room.Room
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
-import com.shevaalex.android.rickmortydatabase.source.database.EpisodeModelDao
-import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
-import com.shevaalex.android.rickmortydatabase.source.database.RickMortyDatabase
+import com.shevaalex.android.rickmortydatabase.source.database.*
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -39,6 +36,12 @@ object DbModule{
     @Provides
     fun provideEpisodeDao(db: RickMortyDatabase): EpisodeModelDao {
         return db.episodeModelDao
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterRecentDao(db: RickMortyDatabase): CharacterRecentDao {
+        return db.characterRecentDao
     }
 
 }

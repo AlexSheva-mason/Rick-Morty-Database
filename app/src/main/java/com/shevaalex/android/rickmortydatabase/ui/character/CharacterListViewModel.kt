@@ -5,13 +5,20 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.repository.CharacterRepository
+import timber.log.Timber
 import javax.inject.Inject
 
-class CharacterListViewModelKotlin
+class CharacterListViewModel
 @Inject
 constructor(
         private val characterRepository: CharacterRepository
 ): ViewModel() {
+
+    val suggestions: LiveData<List<String>>
+            = characterRepository.getSuggestionsNames().asLiveData()
+
+    var recentQueries: LiveData<List<String>>
+            = characterRepository.getRecentQueries().asLiveData()
 
     private val _rvListPosition = MutableLiveData<Parcelable>()
 
@@ -23,20 +30,28 @@ constructor(
 
     val searchQuery: String? get() = _searchQuery.value
 
-    val rvListPosition: LiveData<Parcelable> get() = _rvListPosition
+    val rvListPosition: Parcelable? get() = _rvListPosition.value
 
     val characterList: LiveData<PagedList<CharacterModel>>
             = Transformations.switchMap(_searchQuery) { query ->
-        if (query == null || query == "") {
+        //if query is null or blank show all results
+        if (query.isNullOrBlank()) {
             allCharacters
-        } else characterRepository.searchCharacters(query)
+        }
+        // else -> perform search
+        else characterRepository.searchCharacters(query)
     }
 
     fun setLayoutManagerState(parcelable: Parcelable?) {
         _rvListPosition.value = parcelable
     }
 
+    /**
+     * sets the name query and resets the recyclerview list position
+     */
     fun setNameQuery(name: String) {
+        Timber.w("setNameQuery: %s", name)
+        _rvListPosition.value = null
         _searchQuery.value = name
     }
 
@@ -49,8 +64,11 @@ constructor(
        return loggedQueryList.value?.add(text)?: false
     }
 
-    suspend fun getSuggestionsNames(): List<String> {
-        return characterRepository.getSuggestionsNames()
+    /**
+     * saves search query to db table for recent suggestions
+     */
+    suspend fun saveSearchQuery(query: String) {
+        characterRepository.saveSearchQuery(query)
     }
 
 }

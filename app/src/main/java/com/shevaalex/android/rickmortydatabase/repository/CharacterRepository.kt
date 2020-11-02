@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterQuery
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
+import com.shevaalex.android.rickmortydatabase.source.database.CharacterRecentDao
+import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,7 +16,11 @@ import javax.inject.Singleton
 class CharacterRepository
 @Inject
 constructor(
+
         private val characterDao: CharacterModelDao,
+
+        private val characterRecentDao: CharacterRecentDao
+
 ) {
 
     fun getAllCharacters(): LiveData<PagedList<CharacterModel>> =
@@ -31,9 +38,16 @@ constructor(
         return characterDao.getCharacterList(query).toLiveData(50)
     }
 
-    suspend fun getSuggestionsNames(): List<String> {
+    suspend fun saveSearchQuery(query: String) {
+        characterRecentDao.insertAndDeleteInTransaction(CharacterQuery(id = 0, name = query))
+    }
+
+    fun getSuggestionsNames(): Flow<List<String>> {
         return characterDao.getSuggestionsNames()
     }
 
+    fun getRecentQueries(): Flow<List<String>> {
+        return characterRecentDao.getRecentQueries()
+    }
 
 }
