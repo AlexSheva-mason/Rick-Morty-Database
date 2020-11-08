@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding
-import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_ACTIVITY_MAIN_DB_SYNC_BOOL
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 import com.shevaalex.android.rickmortydatabase.utils.MyViewModelFactory
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        if (!isDbCheckNeeded()) initViewModel.dbIsSynced(true)
         connectionStatus = ConnectionLiveData(this)
         restoreInstanceState(savedInstanceState)
         setupViews()
@@ -56,18 +58,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun restoreInstanceState(savedInstanceState: Bundle?) {
         savedInstanceState?.let{savedInstance ->
-            Timber.v("restoreInstanceState: savedInstanceState not null")
-            (savedInstance[KEY_ACTIVITY_MAIN_DB_SYNC_BOOL] as Boolean?)?.let {dbSynced ->
+            (savedInstance[Const.KEY_ACTIVITY_MAIN_DB_SYNC_BOOL] as Boolean?)?.let {dbSynced ->
                 Timber.v("restoring dbsynced bool: %s", dbSynced)
                 initViewModel.dbIsSynced(dbSynced)
             }
-        }?: Timber.v("restoreInstanceState: savedInstanceState is null")
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val dbIsSynced = initViewModel.dbIsSynced.value?: false
-        outState.putBoolean(KEY_ACTIVITY_MAIN_DB_SYNC_BOOL, dbIsSynced)
+        outState.putBoolean(Const.KEY_ACTIVITY_MAIN_DB_SYNC_BOOL, dbIsSynced)
     }
 
     private fun getInitState() {
@@ -78,6 +79,8 @@ class MainActivity : AppCompatActivity() {
                     monitorNetworkState()
                     dbInit()
                 }
+                //else save the timestamp to shared prefs
+                else saveToSharedPrefs()
             }
         })
     }
@@ -90,7 +93,6 @@ class MainActivity : AppCompatActivity() {
                     is Status.Error -> {
                         snackColor = ContextCompat.getColor(this, R.color.rm_red_add)
                         composeMessage(stateResource, snackColor)
-                        Timber.e("Error")
                         binding.progressBar.progressBar.visibility = View.GONE
                     }
                     is Status.Loading -> {
@@ -100,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                     is Status.Success -> {
                         snackColor = ContextCompat.getColor(this, R.color.rm_green_300)
                         composeMessage(stateResource, snackColor)
-                        Timber.d("Success!")
                         binding.progressBar.progressBar.visibility = View.GONE
                         initViewModel.dbIsSynced(true)
                         unSubscribe()
@@ -111,7 +112,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun monitorNetworkState() {
-        //initViewModel.isNetworkAvailable(false)
         connectionStatus.observe(this) {
             initViewModel.isNetworkAvailable(it)
         }
@@ -192,6 +192,35 @@ class MainActivity : AppCompatActivity() {
         mySnackbar.setTextColor(ContextCompat.getColor(this, R.color.rm_white_50))
         mySnackbar.anchorView = binding.bottomPanel
         mySnackbar.show()
+    }
+
+    /**
+     * save the timestamp with the time when dbsynced was true
+     */
+    private fun saveToSharedPrefs() {
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
+        with (sharedPref.edit()) {
+            val currentTimeHrs = (System.currentTimeMillis()/3600000).toInt()
+            Timber.i("saving to share prefs timestamp: %s", currentTimeHrs)
+            putInt(Const.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, currentTimeHrs)
+            apply()
+        }
+    }
+
+    /**
+     * @return true if currentTimeHrs - lastSynced is more than Const.DB_CHECK_PERIOD (hours)
+     */
+    private fun isDbCheckNeeded(): Boolean{
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
+        val lastSynced = sharedPref.getInt(Const.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, 0)
+        val currentTimeHrs = (System.currentTimeMillis()/3600000).toInt()
+        Timber.i(
+                "getLastTimeSynced, lastSync: %s, currentTimeHrs: %s, diff: %s",
+                lastSynced,
+                currentTimeHrs,
+                currentTimeHrs-lastSynced
+        )
+        return currentTimeHrs - lastSynced > Const.DB_CHECK_PERIOD
     }
 
     override fun onBackPressed() {

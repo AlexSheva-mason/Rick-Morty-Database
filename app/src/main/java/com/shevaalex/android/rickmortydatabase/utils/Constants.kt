@@ -16,13 +16,19 @@ class Constants {
         const val WRITE_TIMEOUT = 10L
 
         //sets the db entry update period (days)
-        const val REFRESH_CONSTANT = 45
+        const val DB_REFETCH_PERIOD = 45
+
+        //sets the db sync status check period (hours)
+        const val DB_CHECK_PERIOD = 24
 
         //SavedInstanceState keys
         const val KEY_ACTIVITY_MAIN_DB_SYNC_BOOL = "main_activity_dbsync"
         const val KEY_FRAGMENT_CHAR_LIST_QUERY = "fragment_character_list_query"
         const val KEY_FRAGMENT_CHAR_LIST_FILTER_MAP = "fragment_character_list_filter_map"
         const val KEY_FRAGMENT_CHAR_LIST_LIST_POSITION = "fragment_character_list_list_position"
+
+        //Shared Prefs keys
+        const val KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP = "main_activity_bool_true_timestamp"
 
         //SearchView recent queries list size
         const val SV_RECENT_COUNT = 10

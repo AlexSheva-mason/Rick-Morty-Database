@@ -84,21 +84,20 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
         super.onActivityCreated(savedInstanceState)
         //restore the view state
         savedInstanceState?.let {
-            Timber.v("onActivityCreated savedInstanceState is not null")
             (savedInstanceState[Const.KEY_FRAGMENT_CHAR_LIST_FILTER_MAP] as String?)?.let {
                 val type = object: TypeToken<Map<String, Pair<Boolean, String?>>>() {}.type
                 val map = Gson().fromJson<Map<String, Pair<Boolean, String?>>>(it, type)
-                Timber.v("restoring map: %s", map)
+                Timber.v("savedInstance restoring map: %s", map)
                 characterListViewModel.setFilterFlags(map)
             }
             (savedInstanceState[Const.KEY_FRAGMENT_CHAR_LIST_QUERY] as String?)?.let {
-                Timber.v("restoring query: %s", it)
+                Timber.v("savedInstance restoring query: %s", it)
                 characterListViewModel.setNameQuery(it)
             }
             (savedInstanceState[Const.KEY_FRAGMENT_CHAR_LIST_LIST_POSITION] as Parcelable?)?.let {
                 characterListViewModel.setLayoutManagerState(it)
             }
-        }?: Timber.e("onActivityCreated savedInstanceState is null")
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

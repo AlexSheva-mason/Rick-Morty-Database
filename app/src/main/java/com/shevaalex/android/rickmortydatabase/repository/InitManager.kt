@@ -176,7 +176,7 @@ abstract class InitManager<ObjectModel: ApiObjectModel, PageModelObject: ApiPage
                 currentTimeDays,
                 lastRefresh,
                 currentTimeDays - lastRefresh)
-        return currentTimeDays - lastRefresh >= Constants.REFRESH_CONSTANT
+        return currentTimeDays - lastRefresh >= Constants.DB_REFETCH_PERIOD
     }
 
     /**
