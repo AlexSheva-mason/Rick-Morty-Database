@@ -33,7 +33,10 @@ interface CharacterModelDao {
     /**
      * gets all characters
      */
-    @Query("SELECT * FROM CharacterModel ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
+    @Query("""SELECT * FROM CharacterModel
+        ORDER BY LENGTH(episodeList) DESC,
+        name 
+        COLLATE LOCALIZED""")
     fun getAllCharacters(): DataSource.Factory<Int, CharacterModel>
 
     /**
@@ -44,7 +47,7 @@ interface CharacterModelDao {
         ORDER BY LENGTH(episodeList) DESC,
         name
         COLLATE LOCALIZED""")
-    fun getCharacterList(name: String?): DataSource.Factory<Int, CharacterModel>
+    fun searchCharacters(name: String?): DataSource.Factory<Int, CharacterModel>
 
     /**
      * performs a search by character's name with query that contains two words, queries both options
@@ -55,20 +58,70 @@ interface CharacterModelDao {
         ORDER BY LENGTH(episodeList) DESC,
         name
         COLLATE LOCALIZED""")
-    fun getCharacterList(name: String, nameReversed: String): DataSource.Factory<Int, CharacterModel>
+    fun searchCharacters(name: String, nameReversed: String): DataSource.Factory<Int, CharacterModel>
 
-    /*@Query("SELECT * FROM CharacterModel WHERE id LIKE :id")
-    fun getCharacterById(id: Int): LiveData<CharacterModel?>?*/
+    /**
+     * gets filtered result with filtered species, without search
+     */
+    @Query("""SELECT * FROM CharacterModel
+        WHERE status IN (:statuses)
+        AND gender IN (:genders)
+        AND species IN (:species)
+        ORDER BY LENGTH(episodeList) DESC,
+        name
+        COLLATE LOCALIZED""")
+    fun getFilteredCharacters(
+            statuses: List<String>,
+            genders: List<String>,
+            species: List<String>
+    ): DataSource.Factory<Int, CharacterModel>
 
-    //performs a search by character's name in the database, excluding Dead
-    /*@Query("SELECT id, name, status, species, gender, originLocation, lastLocation, imageUrl," +
-            "episodeList, timeStamp FROM CharacterModel WHERE name LIKE :name" +
-            " AND (status IN (:notDeadStatus)) ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    fun getCharacterList(name: String?, notDeadStatus: Array<String?>?): DataSource.Factory<Int?, CharacterModel?>?*/
+    /**
+     * gets filtered result, species NOT filtered, without search
+     */
+    @Query("""SELECT * FROM CharacterModel
+        WHERE status IN (:statuses)
+        AND gender IN (:genders)
+        ORDER BY LENGTH(episodeList) DESC,
+        name
+        COLLATE LOCALIZED""")
+    fun getFilteredNoSpeciesCharacters(
+            statuses: List<String>,
+            genders: List<String>
+    ): DataSource.Factory<Int, CharacterModel>
 
-    //shows list of all characters, excluding Dead
-    /*@Query("SELECT id, name, status, species, gender, originLocation, lastLocation, imageUrl," +
-            "episodeList, timeStamp FROM CharacterModel " +
-            "WHERE status IN (:notDeadStatus) ORDER BY LENGTH(episodeList) DESC, name COLLATE LOCALIZED")
-    fun getCharacterList(notDeadStatus: Array<String?>?): DataSource.Factory<Int?, CharacterModel?>?*/
+    /**
+     * searches and gets filtered result with filtered species
+     */
+    @Query("""SELECT * FROM CharacterModel
+        WHERE name LIKE '%' || :name || '%'
+        AND status IN (:statuses)
+        AND gender IN (:genders)
+        AND species IN (:species)
+        ORDER BY LENGTH(episodeList) DESC,
+        name
+        COLLATE LOCALIZED""")
+    fun searchAndFilterCharacters(
+            name: String,
+            statuses: List<String>,
+            genders: List<String>,
+            species: List<String>
+    ): DataSource.Factory<Int, CharacterModel>
+
+    /**
+     * searches and gets filtered result, species NOT filtered
+     */
+    @Query("""SELECT * FROM CharacterModel
+        WHERE name LIKE '%' || :name || '%'
+        AND status IN (:statuses)
+        AND gender IN (:genders)
+        ORDER BY LENGTH(episodeList) DESC,
+        name
+        COLLATE LOCALIZED""")
+    fun searchAndFilterNoSpeciesCharacters(
+            name: String,
+            statuses: List<String>,
+            genders: List<String>
+    ): DataSource.Factory<Int, CharacterModel>
+
 }

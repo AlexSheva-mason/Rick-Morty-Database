@@ -5,6 +5,8 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.repository.CharacterRepository
+import com.shevaalex.android.rickmortydatabase.utils.Constants
+import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,30 +19,53 @@ constructor(
     val suggestions: LiveData<List<String>>
             = characterRepository.getSuggestionsNames().asLiveData()
 
-    var recentQueries: LiveData<List<String>>
+    val recentQueries: LiveData<List<String>>
             = characterRepository.getRecentQueries().asLiveData()
 
     private val _rvListPosition = MutableLiveData<Parcelable>()
+    val rvListPosition: LiveData<Parcelable>
+        get() = _rvListPosition
 
     private val allCharacters = characterRepository.getAllCharacters()
 
     private val loggedQueryList = MutableLiveData(mutableSetOf(" "))
 
     private val _searchQuery = MutableLiveData("")
-
     val searchQuery: String? get() = _searchQuery.value
 
-    val rvListPosition: Parcelable? get() = _rvListPosition.value
+    private val filterData = MutableLiveData<Map<String, Pair<Boolean, String?>>>(mapOf(
+            Constants.KEY_MAP_FILTER_STATUS_ALIVE_F to Pair(true, null),
+            Constants.KEY_MAP_FILTER_STATUS_ALIVE_M to Pair(true, null),
+            Constants.KEY_MAP_FILTER_STATUS_DEAD_F to Pair(true, null),
+            Constants.KEY_MAP_FILTER_STATUS_DEAD_M to Pair(true, null),
+            Constants.KEY_MAP_FILTER_STATUS_UNKNOWN to Pair(true, null),
+            Constants.KEY_MAP_FILTER_GENDER_FEMALE to Pair(true, null),
+            Constants.KEY_MAP_FILTER_GENDER_MALE to Pair(true, null),
+            Constants.KEY_MAP_FILTER_GENDER_GENDERLESS to Pair(true, null),
+            Constants.KEY_MAP_FILTER_GENDER_UNKNOWN to Pair(true, null),
+            Constants.KEY_MAP_FILTER_SPECIES_ALL to Pair(true, null),
+            Constants.KEY_MAP_FILTER_SPECIES_HUMAN to Pair(false, null),
+            Constants.KEY_MAP_FILTER_SPECIES_HUMANOID to Pair(false, null),
+            Constants.KEY_MAP_FILTER_SPECIES_ALIEN to Pair(false, null),
+            Constants.KEY_MAP_FILTER_SPECIES_ANIMAL to Pair(false, null),
+            Constants.KEY_MAP_FILTER_SPECIES_ROBOT to Pair(false, null),
+            Constants.KEY_MAP_FILTER_SPECIES_POOPY to Pair(false, null),
+            Constants.KEY_MAP_FILTER_SPECIES_CRONENBERG to Pair(false, null),
+            Constants.KEY_MAP_FILTER_SPECIES_MYTH to Pair(false, null),
+    ))
+    val getFilterMap: LiveData<Map<String, Pair<Boolean, String?>>> = filterData
 
-    val characterList: LiveData<PagedList<CharacterModel>>
-            = Transformations.switchMap(_searchQuery) { query ->
-        //if query is null or blank show all results
-        if (query.isNullOrBlank()) {
-            allCharacters
-        }
-        // else -> perform search
-        else characterRepository.searchCharacters(query)
-    }
+    private val mediatorLiveData = FilterMediatorLiveData(_searchQuery, filterData)
+
+    val characterList: LiveData<PagedList<CharacterModel>> =
+            Transformations.switchMap(mediatorLiveData) {
+                //if query is blank and filter == showAll -> show all results
+                if(it.first.isBlank() && showsAll()) {
+                    allCharacters
+                }
+                // else -> perform search and/or filter the data
+                else characterRepository.searchOrFilterCharacters(it.first, it.second, showsAll())
+            }
 
     fun setLayoutManagerState(parcelable: Parcelable?) {
         _rvListPosition.value = parcelable
@@ -50,9 +75,19 @@ constructor(
      * sets the name query and resets the recyclerview list position
      */
     fun setNameQuery(name: String) {
-        Timber.w("setNameQuery: %s", name)
+        Timber.v("setNameQuery: %s", name)
         _rvListPosition.value = null
         _searchQuery.value = name
+    }
+
+    /**
+     * sets the filtering params and resets the recyclerview list position
+     */
+    fun setFilterFlags(filterMap: Map<String, Pair<Boolean, String?>>) {
+        if (filterData.value != filterMap) {
+            _rvListPosition.value = null
+            filterData.value = filterMap
+        } else Timber.v("filter maps are equal")
     }
 
     /**
@@ -70,5 +105,15 @@ constructor(
     suspend fun saveSearchQuery(query: String) {
         characterRepository.saveSearchQuery(query)
     }
+
+    private fun showsAll(): Boolean =
+            filterData.value?.get(Constants.KEY_MAP_FILTER_STATUS_ALIVE_F)?.first!! &&
+                    filterData.value?.get(Constants.KEY_MAP_FILTER_STATUS_DEAD_F)?.first!! &&
+                    filterData.value?.get(Constants.KEY_MAP_FILTER_STATUS_UNKNOWN)?.first!! &&
+                    filterData.value?.get(Constants.KEY_MAP_FILTER_GENDER_FEMALE)?.first!! &&
+                    filterData.value?.get(Constants.KEY_MAP_FILTER_GENDER_MALE)?.first!! &&
+                    filterData.value?.get(Constants.KEY_MAP_FILTER_GENDER_GENDERLESS)?.first!! &&
+                    filterData.value?.get(Constants.KEY_MAP_FILTER_GENDER_UNKNOWN)?.first!! &&
+                    filterData.value?.get(Constants.KEY_MAP_FILTER_SPECIES_ALL)?.first!!
 
 }

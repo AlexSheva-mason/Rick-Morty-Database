@@ -32,7 +32,14 @@
     <string name="dialog_subtitle_status">Filter by status:</string>
     <string name="dialog_subtitle_gender">Filter by gender:</string>
     <string name="dialog_subtitle_species">Filter by species:</string>
-    <string name="dialog_species_other">Other</string>
+    <string name="dialog_species_all">Show all</string>
+    <string name="dialog_positive_button">Apply</string>
+    <string name="dialog_negative_button">Cancel</string>
+    <string name="dialog_error_message">Please, select at least one option in these categories:\n\n</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_error_status">status</string>
+    <string name="dialog_error_gender">gender</string>
+    <string name="dialog_error_species">species</string>
 
     //CharacterListFragment
     <string name="clf_no_results_query">Oops, nothing found :(</string>
@@ -762,7 +769,7 @@
     <string name="character_671">New Improved Galactic Federation Guard</string>
 
     //Database locale character gender
-    <string name="character_gender_genderless">genderless</string>
+    <string name="character_gender_genderless">Genderless</string>
     <string name="character_gender_female">Female</string>
     <string name="character_gender_male">Male</string>
     <string name="character_gender_unknown">unknown</string>
@@ -779,13 +786,10 @@
     <string name="species_Humanoid">Humanoid</string>
     <string name="species_unknown">unknown</string>
     <string name="species_Poopybutthole">Poopybutthole</string>
-    <string name="species_Mytholog">Mytholog</string>
     <string name="species_Animal">Animal</string>
-    <string name="species_Vampire">Vampire</string>
     <string name="species_Robot">Robot</string>
     <string name="species_Cronenberg">Cronenberg</string>
     <string name="species_Disease">Disease</string>
-    <string name="species_Parasite">Parasite</string>
     <string name="species_Planet">Planet</string>
     <string name="species_Mythological_Creature">Mythological Creature</string>
 

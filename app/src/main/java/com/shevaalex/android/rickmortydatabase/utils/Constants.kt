@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.utils
 
+
 class Constants {
     companion object{
         const val DATABASE_NAME = "rmdatabase"
@@ -19,8 +20,34 @@ class Constants {
 
         //SavedInstanceState keys
         const val KEY_ACTIVITY_MAIN_DB_SYNC_BOOL = "main_activity_dbsync"
+        const val KEY_FRAGMENT_CHAR_LIST_QUERY = "fragment_character_list_query"
+        const val KEY_FRAGMENT_CHAR_LIST_FILTER_MAP = "fragment_character_list_filter_map"
+        const val KEY_FRAGMENT_CHAR_LIST_LIST_POSITION = "fragment_character_list_list_position"
 
         //SearchView recent queries list size
         const val SV_RECENT_COUNT = 10
+
+        //Character List Filter map keys
+        const val KEY_MAP_FILTER_STATUS_ALIVE_F = "status_alive_female"
+        const val KEY_MAP_FILTER_STATUS_ALIVE_M = "status_alive_male"
+        const val KEY_MAP_FILTER_STATUS_DEAD_F = "status_dead_female"
+        const val KEY_MAP_FILTER_STATUS_DEAD_M = "status_dead_male"
+        const val KEY_MAP_FILTER_STATUS_UNKNOWN = "status_unknown"
+
+        const val KEY_MAP_FILTER_GENDER_FEMALE = "gender_female"
+        const val KEY_MAP_FILTER_GENDER_MALE = "gender_male"
+        const val KEY_MAP_FILTER_GENDER_GENDERLESS = "gender_genderless"
+        const val KEY_MAP_FILTER_GENDER_UNKNOWN = "gender_unknown"
+
+        const val KEY_MAP_FILTER_SPECIES_ALL = "species_all"
+        const val KEY_MAP_FILTER_SPECIES_HUMAN = "species_human"
+        const val KEY_MAP_FILTER_SPECIES_HUMANOID = "species_humanoid"
+        const val KEY_MAP_FILTER_SPECIES_ALIEN = "species_alien"
+        const val KEY_MAP_FILTER_SPECIES_ANIMAL = "species_animal"
+        const val KEY_MAP_FILTER_SPECIES_ROBOT = "species_robot"
+        const val KEY_MAP_FILTER_SPECIES_POOPY = "species_poopy"
+        const val KEY_MAP_FILTER_SPECIES_CRONENBERG = "species_cronenberg"
+        const val KEY_MAP_FILTER_SPECIES_MYTH = "species_myth"
+
     }
 }

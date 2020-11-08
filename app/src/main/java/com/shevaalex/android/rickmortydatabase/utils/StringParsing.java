@@ -102,7 +102,7 @@ public abstract class StringParsing {
     }
 
     public static String returnCharacterSpeciesLocale (Context context, String speciesEn) {
-        String speciesEnToMatch = SPECIES_RES_KEY + speciesEn;
+        String speciesEnToMatch = SPECIES_RES_KEY + speciesEn.trim().replaceAll("\\s", "_");
         try {
             int resId = context.getResources().getIdentifier(speciesEnToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);

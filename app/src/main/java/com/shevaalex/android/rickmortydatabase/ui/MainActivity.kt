@@ -1,7 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -57,16 +56,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun restoreInstanceState(savedInstanceState: Bundle?) {
         savedInstanceState?.let{savedInstance ->
+            Timber.v("restoreInstanceState: savedInstanceState not null")
             (savedInstance[KEY_ACTIVITY_MAIN_DB_SYNC_BOOL] as Boolean?)?.let {dbSynced ->
+                Timber.v("restoring dbsynced bool: %s", dbSynced)
                 initViewModel.dbIsSynced(dbSynced)
             }
-        }
+        }?: Timber.v("restoreInstanceState: savedInstanceState is null")
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         val dbIsSynced = initViewModel.dbIsSynced.value?: false
         outState.putBoolean(KEY_ACTIVITY_MAIN_DB_SYNC_BOOL, dbIsSynced)
-        super.onSaveInstanceState(outState, outPersistentState)
     }
 
     private fun getInitState() {
