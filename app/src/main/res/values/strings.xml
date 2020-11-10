@@ -41,6 +41,17 @@
     <string name="dialog_error_gender">gender</string>
     <string name="dialog_error_species">species</string>
 
+    //Dialog filter locations
+    <string name="dialog_subtitle_type">Filter by type:</string>
+    <string name="dialog_subtitle_dimension">Filter by dimension:</string>
+
+    //Dialog filter episodes
+    <string name="dialog_subtitle_season">Seasons:</string>
+    <string name="dialog_season_1" translatable="false">S 01</string>
+    <string name="dialog_season_2" translatable="false">S 02</string>
+    <string name="dialog_season_3" translatable="false">S 03</string>
+    <string name="dialog_season_4" translatable="false">S 04</string>
+
     //CharacterListFragment
     <string name="clf_no_results_query">Oops, nothing found :(</string>
     <string name="clf_searchview_query_hint">Enter your query…</string>
@@ -906,11 +917,11 @@
     //Location type
     <string name="location_Planet">Planet</string>
     <string name="location_Cluster">Cluster</string>
-    <string name="location_Space_station">Space_station</string>
+    <string name="location_Space_station">Space station</string>
     <string name="location_Microverse">Microverse</string>
     <string name="location_TV">TV</string>
     <string name="location_Resort">Resort</string>
-    <string name="location_Fantasy_town">Fantasy_town</string>
+    <string name="location_Fantasy_town">Fantasy town</string>
     <string name="location_Dream">Dream</string>
     <string name="location_Dimension">Dimension</string>
     <string name="location_unknown">unknown</string>
@@ -918,12 +929,12 @@
     <string name="location_Game">Game</string>
     <string name="location_Customs">Customs</string>
     <string name="location_Daycare">Daycare</string>
-    <string name="location_Dwarf_planet__Celestial_Dwarf_">Dwarf_planet__Celestial_Dwarf_</string>
+    <string name="location_Dwarf_planet__Celestial_Dwarf_">Dwarf planet Celestial Dwarf</string>
     <string name="location_Miniverse">Miniverse</string>
     <string name="location_Teenyverse">Teenyverse</string>
     <string name="location_Box">Box</string>
     <string name="location_Spacecraft">Spacecraft</string>
-    <string name="location_Artificially_generated_world">Artificially_generated_world</string>
+    <string name="location_Artificially_generated_world">Artificially generated world</string>
     <string name="location_Machine">Machine</string>
     <string name="location_Arcade">Arcade</string>
     <string name="location_Spa">Spa</string>
@@ -934,19 +945,19 @@
     <string name="location_Convention">Convention</string>
     <string name="location_Woods">Woods</string>
     <string name="location_Diegesis">Diegesis</string>
-    <string name="location_Non_Diegetic_Alternative_Reality">Non_Diegetic_Alternative_Reality</string>
+    <string name="location_Non_Diegetic_Alternative_Reality">Non Diegetic Alternative Reality</string>
     <string name="location_Nightmare">Nightmare</string>
     <string name="location_Asteroid">Asteroid</string>
-    <string name="location_Acid_Plant">Acid_Plant</string>
+    <string name="location_Acid_Plant">Acid Plant</string>
     <string name="location_Reality">Reality</string>
-    <string name="location_Death_Star">Death_Star</string>
+    <string name="location_Death_Star">Death Star</string>
     <string name="location_Base">Base</string>
 
     //Location Dimension
-    <string name="location_Dimension_C_137">Dimension_C_137</string>
+    <string name="location_Dimension_C_137">Dimension C-137</string>
     <string name="location_Post_Apocalyptic_Dimension">Post_Apocalyptic_Dimension</string>
-    <string name="location_Replacement_Dimension">Replacement_Dimension</string>
-    <string name="location_Cronenberg_Dimension">Cronenberg_Dimension</string>
+    <string name="location_Replacement_Dimension">Replacement Dimension</string>
+    <string name="location_Cronenberg_Dimension">Cronenberg Dimension</string>
     <string name="location_Fantasy_Dimension">Fantasy_Dimension</string>
     <string name="location_Dimension_5_126">Dimension_5_126</string>
     <string name="location_Testicle_Monster_Dimension">Testicle_Monster_Dimension</string>
