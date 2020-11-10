@@ -49,11 +49,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        if (!isDbCheckNeeded()) initViewModel.dbIsSynced(true)
+        //if database has been recently checked -> skip db sync
+        if (isDbCheckNeeded()) getInitState()
         connectionStatus = ConnectionLiveData(this)
         restoreInstanceState(savedInstanceState)
         setupViews()
-        getInitState()
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle?) {
