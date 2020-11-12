@@ -24,7 +24,7 @@ interface CharacterModelDao {
     suspend fun charactersCount(): Int
 
     /**
-     * gets all names for seacrh suggestions
+     * gets all names for search suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT name FROM CharacterModel")

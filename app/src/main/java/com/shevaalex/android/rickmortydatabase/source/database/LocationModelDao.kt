@@ -28,7 +28,7 @@ interface LocationModelDao {
     suspend fun locationsCount(): Int
 
     /**
-     * gets all names for seacrh suggestions
+     * gets all names for search suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT name FROM LocationModel")
@@ -49,7 +49,7 @@ interface LocationModelDao {
         WHERE name LIKE '%' || :name || '%'
         ORDER BY name
         COLLATE LOCALIZED""")
-    fun searchLocations(name: String?): DataSource.Factory<Int, LocationModel>
+    fun searchLocations(name: String): DataSource.Factory<Int, LocationModel>
 
     /**
      * gets filtered TYPE and DIMENSION
