@@ -70,5 +70,11 @@ class Constants {
         const val KEY_MAP_FILTER_LOC_DIMENS_CRONENBERG = "loc_dimens_cronenberg"
         const val KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN = "loc_dimens_unknown"
 
+        //Episode List Filter map keys
+        const val KEY_MAP_FILTER_EPISODE_S_01 = "s01"
+        const val KEY_MAP_FILTER_EPISODE_S_02 = "s02"
+        const val KEY_MAP_FILTER_EPISODE_S_03 = "s03"
+        const val KEY_MAP_FILTER_EPISODE_S_04 = "s04"
+
     }
 }
