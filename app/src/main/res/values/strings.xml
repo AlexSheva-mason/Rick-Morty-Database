@@ -44,6 +44,8 @@
     //Dialog filter locations
     <string name="dialog_subtitle_type">Filter by type:</string>
     <string name="dialog_subtitle_dimension">Filter by dimension:</string>
+    <string name="dialog_error_type">type</string>
+    <string name="dialog_error_dimension">dimension</string>
 
     //Dialog filter episodes
     <string name="dialog_subtitle_season">Seasons:</string>

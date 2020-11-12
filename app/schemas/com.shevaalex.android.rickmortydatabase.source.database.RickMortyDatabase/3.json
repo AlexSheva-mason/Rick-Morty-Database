@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "412d60509eed32f527a518b897e9d29a",
+    "identityHash": "322efa5d9d2dd58e13d3f9888ccd03ae",
     "entities": [
       {
         "tableName": "CharacterModel",
@@ -179,8 +179,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "CharacterQuery",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "tableName": "RecentQuery",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -191,6 +191,12 @@
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -482,7 +488,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '412d60509eed32f527a518b897e9d29a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '322efa5d9d2dd58e13d3f9888ccd03ae')"
     ]
   }
 }

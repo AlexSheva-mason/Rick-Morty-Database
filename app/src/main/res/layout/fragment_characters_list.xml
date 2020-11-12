@@ -5,8 +5,7 @@
     android:id="@+id/fragment_character_list_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    tools:context="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment">
+    android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
@@ -25,8 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:iconifiedByDefault="true"
-                app:queryHint="@string/clf_searchview_query_hint"
-                />
+                app:queryHint="@string/clf_searchview_query_hint" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -45,13 +43,13 @@
         android:id="@+id/recyclerview_character"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="vertical"
         android:fadeScrollbars="true"
+        android:orientation="vertical"
         android:scrollbarDefaultDelayBeforeFade="500"
         android:scrollbarThumbVertical="@drawable/thumb"
         android:scrollbarTrackVertical="@drawable/track_drawable"
         android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_character" />
 

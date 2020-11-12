@@ -14,8 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -30,10 +28,7 @@ import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding
 import com.shevaalex.android.rickmortydatabase.ui.BaseFragment
-import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.MyViewModelFactory
-import com.shevaalex.android.rickmortydatabase.utils.displayErrorDialog
-import com.shevaalex.android.rickmortydatabase.utils.hideKeyboard
+import com.shevaalex.android.rickmortydatabase.utils.*
 import kotlinx.android.synthetic.main.fragment_characters_list.view.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -101,16 +96,7 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val navController = findNavController()
-        //Set the action bar to show appropriate title, set top level destinations
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.charactersListFragment,
-                R.id.locationsListFragment,
-                R.id.episodesListFragment))
-        binding.toolbarFragmentCharacterList.setupWithNavController(
-                navController,
-                appBarConfiguration
-        )
+        setupToolbarWithNavController(binding.toolbarFragmentCharacterList)
     }
 
     override fun onResume() {
@@ -120,7 +106,7 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
 
     override fun onPause() {
         super.onPause()
-        clearUi()
+        clearUi(binding.toolbarFragmentCharacterList)
         customSaveState()
     }
 
@@ -181,19 +167,13 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
         //set searchView new query suggestions adapter
         characterListViewModel.suggestions.observe(viewLifecycleOwner, { suggestionList ->
             suggestionList?.let {
-                searchSuggestionsAdapter = ArrayAdapter(
-                        requireContext(),
-                        R.layout.item_search_suggestions,
-                        it)
+                searchSuggestionsAdapter = getSearchSuggectionsAdapter(it)
             }
         })
         //set searchView recent suggestions adapter
         characterListViewModel.recentQueries.observe(viewLifecycleOwner, { recentQueries ->
             recentQueries?.let {
-                recentQueriesAdapter = ArrayAdapter(
-                        requireContext(),
-                        R.layout.item_recent_suggestions,
-                        it)
+                recentQueriesAdapter = getRecentQueriesAdapter(it)
             }
         })
     }
@@ -231,9 +211,7 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
                             characterListViewModel.setNameQuery(queryText)
                         }
                     }
-                    searchView.clearFocus()
-                    view?.requestFocus()
-                    view?.hideKeyboard()
+                    clearUi(it)
                     return false
                 }
 
@@ -317,7 +295,7 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
                     }
                     .noAutoDismiss()
                     .customView(
-                            viewRes = R.layout.dialog_filter,
+                            viewRes = R.layout.dialog_filter_character,
                             scrollable = true)
             val dialogView = dialog.getCustomView()
 
@@ -477,7 +455,7 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
                 else Pair(false, null)
         filterMap[Const.KEY_MAP_FILTER_SPECIES_ALL] =
                 if (dialogView.findViewById<MaterialCheckBox>(R.id.species_all).isChecked)
-                    Pair(true, stringMap[Const.KEY_MAP_FILTER_SPECIES_ALL])
+                    Pair(true, null)
                 else Pair(false, null)
         filterMap[Const.KEY_MAP_FILTER_SPECIES_HUMAN] =
                 if (dialogView.findViewById<MaterialCheckBox>(R.id.species_human).isChecked)
@@ -557,19 +535,13 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
         characterListViewModel.searchQuery?.let {
             val searchView: SearchView? = binding.toolbarFragmentCharacterList.search_view
             if (it.isNotBlank()) {
-                searchView?.setQuery(characterListViewModel.searchQuery, false)
+                searchView?.setQuery(it, false)
                 searchView?.isIconified = false
                 searchView?.clearFocus()
             } else {
                 searchView?.isIconified = true
             }
         }
-    }
-
-    private fun clearUi() {
-        binding.toolbarFragmentCharacterList.search_view?.clearFocus()
-        view?.requestFocus()
-        view?.hideKeyboard()
     }
 
     override fun onCharacterClick(position: Int, v: View) {

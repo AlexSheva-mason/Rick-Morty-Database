@@ -40,8 +40,8 @@ object DbModule{
 
     @Singleton
     @Provides
-    fun provideCharacterRecentDao(db: RickMortyDatabase): CharacterRecentDao {
-        return db.characterRecentDao
+    fun provideRecentQueryDao(db: RickMortyDatabase): RecentQueryDao {
+        return db.recentQueryDao
     }
 
 }

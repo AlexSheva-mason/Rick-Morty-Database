@@ -9,12 +9,12 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.Location;
+import com.shevaalex.android.rickmortydatabase.models.location.LocationModel;
 
 import me.zhanghai.android.fastscroll.PopupTextProvider;
 
 public class LocationAdapter
-        extends PagedListAdapter<Location, LocationAdapter.LocationViewHolder>
+        extends PagedListAdapter<LocationModel, LocationAdapter.LocationViewHolder>
         implements PopupTextProvider {
     private final OnLocationClickListener onLocationClickListener;
 
@@ -23,14 +23,15 @@ public class LocationAdapter
         this.onLocationClickListener = clickListener;
     }
 
-    private static final DiffUtil.ItemCallback<Location> DIFF_CALLBACK
-            = new DiffUtil.ItemCallback<Location>() {
+    private static final DiffUtil.ItemCallback<LocationModel> DIFF_CALLBACK
+            = new DiffUtil.ItemCallback<LocationModel>() {
         @Override
-        public boolean areItemsTheSame(@NonNull Location oldItem, @NonNull Location newItem) {
+        public boolean areItemsTheSame(@NonNull LocationModel oldItem, @NonNull LocationModel newItem) {
             return oldItem.getId() == newItem.getId();
         }
+
         @Override
-        public boolean areContentsTheSame(@NonNull Location oldItem, @NonNull Location newItem) {
+        public boolean areContentsTheSame(@NonNull LocationModel oldItem, @NonNull LocationModel newItem) {
             return newItem.equals(oldItem);
         }
     };
@@ -46,7 +47,7 @@ public class LocationAdapter
 
     @Override
     public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
-        Location currentLocation = getItem(position);
+        LocationModel currentLocation = getItem(position);
         if (currentLocation != null) {
             holder.binding.locationNameValue.setText(currentLocation.getName());
             if (holder.binding.locationDimensionValue != null
@@ -60,7 +61,7 @@ public class LocationAdapter
     @NonNull
     @Override
     public String getPopupText(int position) {
-        Location currentLocation = getItem(position);
+        LocationModel currentLocation = getItem(position);
         if (currentLocation != null) {
             return currentLocation.getName().substring(0, 1);
         } else {
@@ -69,7 +70,7 @@ public class LocationAdapter
     }
 
     class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ItemLocationBinding binding;
+        private final ItemLocationBinding binding;
 
         LocationViewHolder(ItemLocationBinding binding) {
             super(binding.getRoot());

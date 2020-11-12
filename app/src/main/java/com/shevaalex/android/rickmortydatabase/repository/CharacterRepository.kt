@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterQuery
+import com.shevaalex.android.rickmortydatabase.models.character.RecentQuery
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterRecentDao
+import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
@@ -18,7 +18,7 @@ class CharacterRepository
 @Inject
 constructor(
         private val characterDao: CharacterModelDao,
-        private val characterRecentDao: CharacterRecentDao
+        private val recentQueryDao: RecentQueryDao
 ) {
 
     fun getAllCharacters(): LiveData<PagedList<CharacterModel>> =
@@ -111,7 +111,11 @@ constructor(
     }
 
     suspend fun saveSearchQuery(query: String) {
-        characterRecentDao.insertAndDeleteInTransaction(CharacterQuery(id = 0, name = query))
+        recentQueryDao.insertAndDeleteInTransaction(RecentQuery(
+                id = 0,
+                name = query,
+                RecentQuery.Type.CHARACTER.type
+        ))
     }
 
     fun getSuggestionsNames(): Flow<List<String>> {
@@ -119,7 +123,7 @@ constructor(
     }
 
     fun getRecentQueries(): Flow<List<String>> {
-        return characterRecentDao.getRecentQueries()
+        return recentQueryDao.getRecentQueries(RecentQuery.Type.CHARACTER.type)
     }
 
 }

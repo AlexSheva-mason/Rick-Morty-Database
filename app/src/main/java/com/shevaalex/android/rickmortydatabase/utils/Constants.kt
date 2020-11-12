@@ -26,6 +26,9 @@ class Constants {
         const val KEY_FRAGMENT_CHAR_LIST_QUERY = "fragment_character_list_query"
         const val KEY_FRAGMENT_CHAR_LIST_FILTER_MAP = "fragment_character_list_filter_map"
         const val KEY_FRAGMENT_CHAR_LIST_LIST_POSITION = "fragment_character_list_list_position"
+        const val KEY_FRAGMENT_LOCATION_LIST_QUERY = "fragment_location_list_query"
+        const val KEY_FRAGMENT_LOCATION_LIST_FILTER_MAP = "fragment_location_list_filter_map"
+        const val KEY_FRAGMENT_LOCATION_LIST_LIST_POSITION = "fragment_location_list_list_position"
 
         //Shared Prefs keys
         const val KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP = "main_activity_bool_true_timestamp"
@@ -54,6 +57,18 @@ class Constants {
         const val KEY_MAP_FILTER_SPECIES_POOPY = "species_poopy"
         const val KEY_MAP_FILTER_SPECIES_CRONENBERG = "species_cronenberg"
         const val KEY_MAP_FILTER_SPECIES_MYTH = "species_myth"
+
+        //Location List Filter map keys
+        const val KEY_MAP_FILTER_LOC_TYPE_ALL = "loc_type_all"
+        const val KEY_MAP_FILTER_LOC_TYPE_PLANET = "loc_type_planet"
+        const val KEY_MAP_FILTER_LOC_TYPE_SPACE_ST = "loc_type_space_station"
+        const val KEY_MAP_FILTER_LOC_TYPE_MICRO = "loc_type_microverse"
+
+        const val KEY_MAP_FILTER_LOC_DIMENS_ALL = "loc_dimens_all"
+        const val KEY_MAP_FILTER_LOC_DIMENS_REPLACE = "loc_dimens_replacement"
+        const val KEY_MAP_FILTER_LOC_DIMENS_C_137 = "loc_dimens_c-137"
+        const val KEY_MAP_FILTER_LOC_DIMENS_CRONENBERG = "loc_dimens_cronenberg"
+        const val KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN = "loc_dimens_unknown"
 
     }
 }
