@@ -1,17 +1,11 @@
 package com.shevaalex.android.rickmortydatabase.ui.character
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -20,118 +14,41 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.checkbox.MaterialCheckBox
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding
-import com.shevaalex.android.rickmortydatabase.ui.BaseFragment
+import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.utils.*
-import kotlinx.android.synthetic.main.fragment_characters_list.view.*
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 
 
-class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListener {
+class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>(), CharacterAdapter.OnCharacterListener {
 
     @Inject
     lateinit var viewModelFactory: MyViewModelFactory<CharacterListViewModel>
 
-    private var _binding: FragmentCharactersListBinding? = null
-
-    private val binding get() = _binding!!
-
-    private val characterListViewModel: CharacterListViewModel by activityViewModels {
+    override val viewModel: CharacterListViewModel by activityViewModels {
         viewModelFactory
     }
 
-    private var searchSuggestionsAdapter: ArrayAdapter<String>? = null
+    override val keyListFilterMap = Const.KEY_FRAGMENT_CHAR_LIST_FILTER_MAP
 
-    private var recentQueriesAdapter: ArrayAdapter<String>? = null
+    override val keyListQuery = Const.KEY_FRAGMENT_CHAR_LIST_QUERY
+
+    override val keyListPosition = Const.KEY_FRAGMENT_CHAR_LIST_LIST_POSITION
 
     private var characterAdapter: CharacterAdapter? = null
 
-    override fun onAttach(context: Context) {
-        //inject fragment
-        activity?.run {
-            (application as RmApplication).appComponent
-        }?.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentCharactersListBinding.inflate(inflater, container, false)
-        val view = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         registerObservers()
-        inflateToolbar()
-        return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //restore the view state
-        savedInstanceState?.let {
-            (savedInstanceState[Const.KEY_FRAGMENT_CHAR_LIST_FILTER_MAP] as String?)?.let {
-                val type = object: TypeToken<Map<String, Pair<Boolean, String?>>>() {}.type
-                val map = Gson().fromJson<Map<String, Pair<Boolean, String?>>>(it, type)
-                Timber.v("savedInstance restoring map: %s", map)
-                characterListViewModel.setFilterFlags(map)
-            }
-            (savedInstanceState[Const.KEY_FRAGMENT_CHAR_LIST_QUERY] as String?)?.let {
-                Timber.v("savedInstance restoring query: %s", it)
-                characterListViewModel.setNameQuery(it)
-            }
-            (savedInstanceState[Const.KEY_FRAGMENT_CHAR_LIST_LIST_POSITION] as Parcelable?)?.let {
-                characterListViewModel.setLayoutManagerState(it)
-            }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupToolbarWithNavController(binding.toolbarFragmentCharacterList)
-    }
-
-    override fun onResume() {
-        restoreSearchViewState()
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        clearUi(binding.toolbarFragmentCharacterList)
-        customSaveState()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.run {
-            characterListViewModel.getFilterMap.value?.let {
-                val jsonMap = Gson().toJson(it)
-                putString(Const.KEY_FRAGMENT_CHAR_LIST_FILTER_MAP, jsonMap)
-                Timber.v("putting map to outState: %s", jsonMap)
-            }
-            characterListViewModel.searchQuery?.let {
-                putString(Const.KEY_FRAGMENT_CHAR_LIST_QUERY, it)
-                Timber.v("putting query to outState: %s", it)
-            }
-            characterListViewModel.rvListPosition.value?.let {
-                putParcelable(Const.KEY_FRAGMENT_CHAR_LIST_LIST_POSITION, it)
-            }
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         characterAdapter = null
-        _binding = null
     }
 
     private fun setRecyclerView() {
@@ -143,13 +60,15 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
         )
         characterAdapter?.stateRestorationPolicy =
                 RecyclerView.Adapter.StateRestorationPolicy.PREVENT
+        //set the adapter to recyclerview
+        binding.recyclerviewCharacter.adapter = characterAdapter
     }
 
     private fun registerObservers() {
         //set data for RV
-        characterListViewModel.characterList.observe(viewLifecycleOwner, { characters ->
+        viewModel.characterList.observe(viewLifecycleOwner, { characters ->
             if (characters.isEmpty()) {
-                characterListViewModel.searchQuery?.let {
+                viewModel.searchQuery?.let {
                     binding.tvNoResults.visibility = View.VISIBLE
                 }
             } else {
@@ -157,136 +76,28 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
             }
             //set data to the adapter
             characterAdapter?.submitList(characters)
-            //set adapter to the recyclerview
-            binding.recyclerviewCharacter.adapter = characterAdapter
-            //restore list position
-            characterListViewModel.rvListPosition.value?.let {
+            //restore list position, or if it has been nulled -> scroll to position 0
+            viewModel.rvListPosition.value?.let {
                 binding.recyclerviewCharacter.layoutManager?.onRestoreInstanceState(it)
-            }
-        })
-        //set searchView new query suggestions adapter
-        characterListViewModel.suggestions.observe(viewLifecycleOwner, { suggestionList ->
-            suggestionList?.let {
-                searchSuggestionsAdapter = getSearchSuggectionsAdapter(it)
-            }
-        })
-        //set searchView recent suggestions adapter
-        characterListViewModel.recentQueries.observe(viewLifecycleOwner, { recentQueries ->
-            recentQueries?.let {
-                recentQueriesAdapter = getRecentQueriesAdapter(it)
-            }
+            }?: binding.recyclerviewCharacter.layoutManager?.scrollToPosition(0)
         })
     }
 
-    private fun inflateToolbar() {
-        val toolbar = binding.toolbarFragmentCharacterList
-        toolbar.inflateMenu(R.menu.menu_filter)
-        setupSearchView()
-        setupMenuButtons()
+    override fun injectFragment() {
+        activity?.run {
+            (application as RmApplication).appComponent
+        }?.inject(this)
     }
 
-    @SuppressLint("RestrictedApi")
-    private fun setupSearchView() {
-        val toolbar: Toolbar? = binding.toolbarFragmentCharacterList
-        toolbar?.let {
-            val searchView: SearchView? = it.search_view
-            val searchPlate: SearchView.SearchAutoComplete? =
-                    searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
-            searchPlate?.setTextAppearance(R.style.TextAppearance_RM_SearchView_Hint)
-            searchPlate?.threshold = 0
-            searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    query?.let {
-                        val queryText = query.trim().toLowerCase(Locale.getDefault())
-                        if (queryText != characterListViewModel.searchQuery) {
-                            // if true - this query has never been logged or saved to db table
-                            if (characterListViewModel.addLogQuery(queryText)) {
-                                //log query to Firebase
-                                firebaseLogQuery(queryText)
-                                //save query for recent suggestions list
-                                lifecycleScope.launch {
-                                    characterListViewModel.saveSearchQuery(queryText)
-                                }
-                            }
-                            characterListViewModel.setNameQuery(queryText)
-                        }
-                    }
-                    clearUi(it)
-                    return false
-                }
+    override fun setBinding(
+            inflater: LayoutInflater,
+            container: ViewGroup?
+    ): FragmentCharactersListBinding =
+            FragmentCharactersListBinding.inflate(inflater, container, false)
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    newText?.let { query ->
-                        //if query is empty -> show all results in RV and set the suggestions adapter
-                        // to show the list of recent queries
-                        if (query.isBlank()) {
-                            if (query != characterListViewModel.searchQuery) {
-                                characterListViewModel.setNameQuery("")
-                            }
-                            recentQueriesAdapter?.let { adapter ->
-                                if (searchPlate?.adapter != adapter) {
-                                    searchPlate?.setAdapter(adapter)
-                                }
-                            }
-                        }
-                        // else set the suggestions adapter with Character names
-                        else {
-                            searchSuggestionsAdapter?.let { adapter ->
-                                if (searchPlate?.adapter != adapter) {
-                                    searchPlate?.setAdapter(adapter)
-                                }
-                            }
-                        }
-                    }
-                    return false
-                }
-            })
-            searchView?.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
-                override fun onSuggestionSelect(position: Int): Boolean {
-                    // do nothing
-                    return true
-                }
+    override fun getToolbar(): Toolbar? = binding.toolbarFragmentCharacterList
 
-                override fun onSuggestionClick(position: Int): Boolean {
-                    val newQuery: String? = searchPlate?.adapter?.getItem(position)?.toString()
-                    newQuery?.let {
-                        searchView.setQuery(newQuery, true)
-                    }
-                    return true
-                }
-            })
-            //after searchPlate gained focus -> set the adapter to recentQueriesAdapter (if hasn't been set)
-            searchPlate?.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus && searchPlate.text.isNullOrBlank()) {
-                    recentQueriesAdapter?.let { adapter ->
-                        if (searchPlate.adapter != adapter) {
-                            searchPlate.setAdapter(adapter)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setupMenuButtons() {
-        val toolbar: Toolbar? = binding.toolbarFragmentCharacterList
-        toolbar?.setOnMenuItemClickListener { item ->
-            when (item?.itemId) {
-                R.id.settings_button -> {
-                    toolbar.menu?.findItem(R.id.search_view)?.collapseActionView()
-                    navigateToSettings()
-                    true
-                }
-                R.id.filter_button -> {
-                    showFilterDialog()
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-
-    private fun showFilterDialog() {
+    override fun showFilterDialog() {
         activity?.let { activity ->
             val dialog = MaterialDialog(activity)
                     .title(R.string.dialog_title)
@@ -367,8 +178,8 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
         }
     }
 
-    private fun restoreCheckBoxState(dialogView: View) {
-        characterListViewModel.getFilterMap.value?.let {
+    override fun restoreCheckBoxState(dialogView: View) {
+        viewModel.getFilterMap()?.let {
             dialogView.findViewById<MaterialCheckBox>(R.id.status_alive).isChecked =
                     it[Constants.KEY_MAP_FILTER_STATUS_ALIVE_F]?.first?: false
             dialogView.findViewById<MaterialCheckBox>(R.id.status_dead).isChecked =
@@ -404,8 +215,8 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
         }
     }
 
-    private fun setupFiltration(dialog: MaterialDialog) {
-        val dialogView = dialog.getCustomView()
+    override fun setupFiltration(mdialog: MaterialDialog) {
+        val dialogView = mdialog.getCustomView()
 
         val stringMap = getStringMap()
         val filterMap = mutableMapOf<String, Pair<Boolean, String?>>()
@@ -490,15 +301,15 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
                     Pair(true, stringMap[Const.KEY_MAP_FILTER_SPECIES_MYTH])
                 else Pair(false, null)
 
-        characterListViewModel.setFilterFlags(filterMap.toMap())
+        viewModel.setFilterFlags(filterMap.toMap())
 
-        dialog.dismiss()
+        mdialog.dismiss()
     }
 
     /**
      * gets the string resources for filter values and maps them to appropriate key constants
      */
-    private fun getStringMap(): Map<String, String> = mapOf(
+    override fun getStringMap(): Map<String, String> = mapOf(
             Const.KEY_MAP_FILTER_STATUS_ALIVE_F to getString(R.string.character_status_alive_female),
             Const.KEY_MAP_FILTER_STATUS_ALIVE_M to getString(R.string.character_status_alive_male),
             Const.KEY_MAP_FILTER_STATUS_DEAD_F to getString(R.string.character_status_dead_female),
@@ -518,29 +329,13 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
             Const.KEY_MAP_FILTER_SPECIES_MYTH to getString(R.string.species_Mythological_Creature),
     )
 
-    private fun navigateToSettings() {
+    override fun navigateToSettings() {
         findNavController().navigate(CharactersListFragmentDirections.toSettingsFragment())
     }
 
-    private fun customSaveState() {
+    override fun saveRvListPosition() {
         binding.recyclerviewCharacter.layoutManager?.onSaveInstanceState()?.let { lmState ->
-            characterListViewModel.setLayoutManagerState(lmState)
-        }
-    }
-
-    /**
-     * restores view state of SearchView and hides softInput keyboard
-     */
-    private fun restoreSearchViewState() {
-        characterListViewModel.searchQuery?.let {
-            val searchView: SearchView? = binding.toolbarFragmentCharacterList.search_view
-            if (it.isNotBlank()) {
-                searchView?.setQuery(it, false)
-                searchView?.isIconified = false
-                searchView?.clearFocus()
-            } else {
-                searchView?.isIconified = true
-            }
+            viewModel.setLayoutManagerState(lmState)
         }
     }
 
@@ -554,13 +349,6 @@ class CharactersListFragment : BaseFragment(), CharacterAdapter.OnCharacterListe
                 action.characterName = clickedChar.name
                 v.findNavController().navigate(action)
             }
-        }
-    }
-
-    private fun firebaseLogQuery(query: String) {
-        Timber.v("logging query to firebase: %s", query)
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH) {
-            param(FirebaseAnalytics.Param.SEARCH_TERM, query)
         }
     }
 
