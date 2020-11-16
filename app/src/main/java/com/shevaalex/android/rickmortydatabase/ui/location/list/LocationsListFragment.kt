@@ -263,18 +263,16 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
     )
 
     override fun onLocationClick(position: Int, v: View) {
-        val locationList = locationAdapter!!.currentList
-        if (locationList != null && !locationList.isEmpty()) {
-            val clickedLocation = locationList[position]
-            val action = LocationsListFragmentDirections.toLocationDetailFragmentAction()
-            clickedLocation?.let {
-                action.setLocationName(it.name)
-                        .setLocationDimension(it.dimension)
-                        .setLocationType(it.type)
-                        //.setLocationResidents(it.characters)
-                        .locationId = it.id
-                v.findNavController().navigate(action)
-            }
+        val locationList = locationAdapter?.currentList
+        val clickedLocation = locationList?.getOrNull(position)
+        clickedLocation?.let {
+            val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(
+                    locationId = it.id,
+                    locationName = it.name,
+                    locationType = it.type,
+                    locationDimension = it.dimension
+            )
+            v.findNavController().navigate(action)
         }
     }
 }

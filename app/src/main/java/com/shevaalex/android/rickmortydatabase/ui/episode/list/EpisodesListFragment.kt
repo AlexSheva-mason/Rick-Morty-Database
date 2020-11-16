@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -212,16 +212,16 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
     )
 
     override fun onEpisodeClick(position: Int, v: View) {
-        val episodeList = episodeAdapter!!.currentList
-        if (episodeList != null && !episodeList.isEmpty()) {
-            val clickedEpisode = episodeList[position]
-            val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction()
-            if (clickedEpisode != null) {
-                action.setEpisodeName(clickedEpisode.name)
-                        .setEpisodeAirDate(clickedEpisode.airDate)
-                        .setEpisodeCode(clickedEpisode.code).id = clickedEpisode.id
-                Navigation.findNavController(v).navigate(action)
-            }
+        val episodeList = episodeAdapter?.currentList
+        val clickedEpisode = episodeList?.getOrNull(position)
+        clickedEpisode?.let {
+            val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(
+                    episodeName = it.name,
+                    episodeAirDate = it.airDate,
+                    episodeCode = it.code,
+                    id = it.id
+            )
+            v.findNavController().navigate(action)
         }
     }
 }

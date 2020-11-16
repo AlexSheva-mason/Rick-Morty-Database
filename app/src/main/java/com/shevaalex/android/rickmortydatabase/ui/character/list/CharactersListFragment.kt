@@ -341,14 +341,13 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
 
     override fun onCharacterClick(position: Int, v: View) {
         val mCharacterList = characterAdapter?.currentList
-        if (mCharacterList != null && !mCharacterList.isEmpty()) {
-            val clickedChar = mCharacterList[position]
-            clickedChar?.let {
-                val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction()
-                action.id = clickedChar.id
-                action.characterName = clickedChar.name
-                v.findNavController().navigate(action)
-            }
+        val clickedChar = mCharacterList?.getOrNull(position)
+        clickedChar?.let {
+            val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(
+                    it.id,
+                    it.name
+            )
+            v.findNavController().navigate(action)
         }
     }
 
