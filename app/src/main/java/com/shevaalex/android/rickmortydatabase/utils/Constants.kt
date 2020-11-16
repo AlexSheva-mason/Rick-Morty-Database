@@ -29,6 +29,9 @@ class Constants {
         const val KEY_FRAGMENT_LOCATION_LIST_QUERY = "fragment_location_list_query"
         const val KEY_FRAGMENT_LOCATION_LIST_FILTER_MAP = "fragment_location_list_filter_map"
         const val KEY_FRAGMENT_LOCATION_LIST_LIST_POSITION = "fragment_location_list_list_position"
+        const val KEY_FRAGMENT_EPISODE_LIST_QUERY = "fragment_episode_list_query"
+        const val KEY_FRAGMENT_EPISODE_LIST_FILTER_MAP = "fragment_episode_list_filter_map"
+        const val KEY_FRAGMENT_EPISODE_LIST_LIST_POSITION = "fragment_episode_list_list_position"
 
         //Shared Prefs keys
         const val KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP = "main_activity_bool_true_timestamp"
@@ -71,10 +74,11 @@ class Constants {
         const val KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN = "loc_dimens_unknown"
 
         //Episode List Filter map keys
-        const val KEY_MAP_FILTER_EPISODE_S_01 = "s01"
-        const val KEY_MAP_FILTER_EPISODE_S_02 = "s02"
-        const val KEY_MAP_FILTER_EPISODE_S_03 = "s03"
-        const val KEY_MAP_FILTER_EPISODE_S_04 = "s04"
+        const val KEY_MAP_FILTER_EPISODE_S_ALL = "episode_season_all"
+        const val KEY_MAP_FILTER_EPISODE_S_01 = "episode_season_s01"
+        const val KEY_MAP_FILTER_EPISODE_S_02 = "episode_season_s02"
+        const val KEY_MAP_FILTER_EPISODE_S_03 = "episode_season_s03"
+        const val KEY_MAP_FILTER_EPISODE_S_04 = "episode_season_s04"
 
     }
 }

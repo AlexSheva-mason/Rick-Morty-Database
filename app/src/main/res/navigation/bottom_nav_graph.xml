@@ -22,7 +22,7 @@
             app:enterAnim="@anim/slide_in_from_top"
             app:exitAnim="@anim/slide_out_to_bottom"
             app:popEnterAnim="@anim/slide_in_from_bottom"
-            app:popExitAnim="@anim/slide_out_to_top"/>
+            app:popExitAnim="@anim/slide_out_to_top" />
     </fragment>
     <fragment
         android:id="@+id/episodesListFragment"
@@ -38,7 +38,11 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_episodesListFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_from_top"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_from_bottom"
+            app:popExitAnim="@anim/slide_out_to_top" />
     </fragment>
     <fragment
         android:id="@+id/locationsListFragment"
@@ -54,9 +58,12 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_locationsListFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_from_top"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_from_bottom"
+            app:popExitAnim="@anim/slide_out_to_top" />
     </fragment>
-    <!--set the fragment's title to characters name passed as an argument-->
     <fragment
         android:id="@+id/characterDetailFragment2"
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterDetailFragment"
@@ -76,21 +83,21 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/toLocationDetailFragmentAction2"
             app:destination="@id/locationDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/toCharacterImageFragment"
             app:destination="@id/characterImageFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"
@@ -123,7 +130,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/episodeDetailFragment"
@@ -152,7 +159,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

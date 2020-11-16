@@ -53,6 +53,7 @@
     <string name="dialog_season_2" translatable="false">S 02</string>
     <string name="dialog_season_3" translatable="false">S 03</string>
     <string name="dialog_season_4" translatable="false">S 04</string>
+    <string name="dialog_error_season">season</string>
 
     //CharacterListFragment
     <string name="clf_no_results_query">Oops, nothing found :(</string>

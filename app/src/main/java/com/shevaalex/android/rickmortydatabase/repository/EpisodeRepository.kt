@@ -8,7 +8,7 @@ import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.source.database.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,13 +53,16 @@ constructor(
                 filterMap[Constants.KEY_MAP_FILTER_EPISODE_S_03]?.second,
                 filterMap[Constants.KEY_MAP_FILTER_EPISODE_S_04]?.second
         )
-        Timber.i("seasons: %s", mapValues)
+        val seasons = mapValues.filterNotNull()
+        Timber.i("seasons: %s", seasons)
+        //put a placeholder if value is null -> due to Room query returning all results when
+        //                                              passing a null value for IS NULL OR check
         return episodeDao.searchFilteredEpisodes(
                 name = name,
-                seasonCode1 = filterMap[Constants.KEY_MAP_FILTER_EPISODE_S_01]?.second,
-                seasonCode2 = filterMap[Constants.KEY_MAP_FILTER_EPISODE_S_02]?.second,
-                seasonCode3 = filterMap[Constants.KEY_MAP_FILTER_EPISODE_S_03]?.second,
-                seasonCode4 = filterMap[Constants.KEY_MAP_FILTER_EPISODE_S_04]?.second
+                seasonCode1 = seasons.getOrElse(0) { "placeholder" },
+                seasonCode2 = seasons.getOrElse(1) { "placeholder" },
+                seasonCode3 = seasons.getOrElse(2) { "placeholder" },
+                seasonCode4 = seasons.getOrElse(3) { "placeholder" }
         ).toLiveData(50)
     }
 
@@ -72,7 +75,9 @@ constructor(
     }
 
     fun getSuggestionsNames(): Flow<List<String>> {
-        return episodeDao.getSuggestionsNames()
+        return episodeDao.getSuggestionsNames().combine(episodeDao.getSuggestionsCodes()) { name, code ->
+                name + code
+        }
     }
 
     fun getRecentQueries(): Flow<List<String>> {

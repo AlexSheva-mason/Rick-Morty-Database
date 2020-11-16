@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding;
-import com.shevaalex.android.rickmortydatabase.source.database.Episode;
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel;
 
 import me.zhanghai.android.fastscroll.PopupTextProvider;
 
 public class EpisodeAdapter
-        extends PagedListAdapter<Episode, EpisodeAdapter.EpisodeViewHolder>
+        extends PagedListAdapter<EpisodeModel, EpisodeAdapter.EpisodeViewHolder>
         implements PopupTextProvider {
     private final OnEpisodeClickListener clickListener;
     private final Context context;
@@ -28,14 +28,15 @@ public class EpisodeAdapter
         this.context = context;
     }
 
-    private static final DiffUtil.ItemCallback<Episode> DIFF_CALLBACK
-            = new DiffUtil.ItemCallback<Episode>() {
+    private static final DiffUtil.ItemCallback<EpisodeModel> DIFF_CALLBACK
+            = new DiffUtil.ItemCallback<EpisodeModel>() {
         @Override
-        public boolean areItemsTheSame(@NonNull Episode oldItem, @NonNull Episode newItem) {
+        public boolean areItemsTheSame(@NonNull EpisodeModel oldItem, @NonNull EpisodeModel newItem) {
             return oldItem.getId() == newItem.getId();
         }
+
         @Override
-        public boolean areContentsTheSame(@NonNull Episode oldItem, @NonNull Episode newItem) {
+        public boolean areContentsTheSame(@NonNull EpisodeModel oldItem, @NonNull EpisodeModel newItem) {
             return newItem.equals(oldItem);
         }
     };
@@ -51,7 +52,7 @@ public class EpisodeAdapter
 
     @Override
     public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
-        Episode currentEpisode = getItem(position);
+        EpisodeModel currentEpisode = getItem(position);
         if (currentEpisode != null) {
             holder.binding.episodeNameValue
                     .setText(String.format(context.getResources().getString(R.string.episode_name_placeholder), currentEpisode.getName()));
@@ -65,9 +66,9 @@ public class EpisodeAdapter
     @NonNull
     @Override
     public String getPopupText(int position) {
-        Episode currentEpisode = getItem(position);
+        EpisodeModel currentEpisode = getItem(position);
         if (currentEpisode != null) {
-            return "s" + currentEpisode.getCode().substring(2,3)
+            return "s" + currentEpisode.getCode().substring(2, 3)
                     + "e" + currentEpisode.getCode().substring(4);
         } else {
             return "";
@@ -75,9 +76,9 @@ public class EpisodeAdapter
     }
 
     class EpisodeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ItemEpisodeBinding binding;
+        private final ItemEpisodeBinding binding;
 
-        EpisodeViewHolder (ItemEpisodeBinding binding) {
+        EpisodeViewHolder(ItemEpisodeBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             itemView.setOnClickListener(this);
@@ -92,6 +93,6 @@ public class EpisodeAdapter
     }
 
     public interface OnEpisodeClickListener {
-        void onEpisodeClick (int position, View v);
+        void onEpisodeClick(int position, View v);
     }
 }

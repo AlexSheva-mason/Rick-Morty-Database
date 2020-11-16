@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,8 @@ import androidx.viewbinding.ViewBinding
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.utils.*
 import kotlinx.android.synthetic.main.fragment_characters_list.view.*
@@ -24,6 +27,12 @@ import java.util.*
 abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
 
     protected abstract val viewModel: BaseListViewModel
+
+    protected abstract val keyListFilterMap: String
+
+    protected abstract val keyListQuery: String
+
+    protected abstract val keyListPosition: String
 
     private var _binding: T? = null
     protected val binding get() = _binding!!
@@ -231,12 +240,41 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
     /**
      * called in onActivityCreated() to restore fragment's view state
      */
-    protected abstract fun restoreViewState(savedInstanceState: Bundle?)
+    private fun restoreViewState(savedInstanceState: Bundle?) {
+        savedInstanceState?.let {
+            (it[keyListFilterMap] as String?)?.let {string ->
+                val type = object: TypeToken<Map<String, Pair<Boolean, String?>>>() {}.type
+                val map = Gson().fromJson<Map<String, Pair<Boolean, String?>>>(string, type)
+                Timber.v("savedInstance restoring map: %s", map)
+                viewModel.setFilterFlags(map)
+            }
+            (it[keyListQuery] as String?)?.let {string ->
+                Timber.v("savedInstance restoring query: %s", string)
+                viewModel.setNameQuery(string)
+            }
+            (it[keyListPosition] as Parcelable?)?.let { parcelable ->
+                viewModel.setLayoutManagerState(parcelable)
+            }
+        }
+    }
 
     /**
      * called in onSaveInstanceState to save fragment's view state
      */
-    protected abstract fun saveViewState(outState: Bundle)
+    private fun saveViewState(outState: Bundle) {
+        outState.run {
+            viewModel.getFilterMap()?.let {
+                val jsonMap = Gson().toJson(it)
+                putString(keyListFilterMap, jsonMap)
+            }
+            viewModel.searchQuery?.let {
+                putString(keyListQuery, it)
+            }
+            viewModel.rvListPosition.value?.let {
+                putParcelable(keyListPosition, it)
+            }
+        }
+    }
 
     /**
      * called in onPause to save RV list position in ViewModel

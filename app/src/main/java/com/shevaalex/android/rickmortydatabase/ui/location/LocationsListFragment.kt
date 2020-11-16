@@ -1,37 +1,24 @@
 package com.shevaalex.android.rickmortydatabase.ui.location
 
-import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.checkbox.MaterialCheckBox
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding
 import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.ui.location.LocationAdapter.OnLocationClickListener
-import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration
-import com.shevaalex.android.rickmortydatabase.utils.MyViewModelFactory
-import com.shevaalex.android.rickmortydatabase.utils.displayErrorDialog
-import me.zhanghai.android.fastscroll.FastScrollerBuilder
-import timber.log.Timber
+import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 
 class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), OnLocationClickListener {
@@ -43,52 +30,27 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
         viewModelFactory
     }
 
+    override val keyListFilterMap = Constants.KEY_FRAGMENT_LOCATION_LIST_FILTER_MAP
+
+    override val keyListQuery = Constants.KEY_FRAGMENT_LOCATION_LIST_QUERY
+
+    override val keyListPosition = Constants.KEY_FRAGMENT_LOCATION_LIST_LIST_POSITION
+
     private var locationAdapter: LocationAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setRecyclerView()
+        locationAdapter = LocationAdapter(this)
+        setGridOrLinearRecyclerView(
+                binding.recyclerviewLocation,
+                locationAdapter
+        )
         registerObservers()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         locationAdapter = null
-    }
-
-    private fun setRecyclerView() {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            activity?.let {
-                val spanCount = it.applicationContext.resources.getInteger(R.integer.grid_span_count)
-                val gridLayoutManager =
-                        GridLayoutManager(
-                                it.applicationContext,
-                                spanCount,
-                                RecyclerView.HORIZONTAL,
-                                false)
-                binding.recyclerviewLocation.layoutManager = gridLayoutManager
-                // apply spacing to gridlayout
-                val itemDecoration = CustomItemDecoration(it, false)
-                binding.recyclerviewLocation.addItemDecoration(itemDecoration)
-            }
-        } else {
-            val linearLayoutManager = LinearLayoutManager(this.activity)
-            binding.recyclerviewLocation.layoutManager = linearLayoutManager
-            activity?.let {
-                ResourcesCompat
-                        .getDrawable(it.resources, R.drawable.track_drawable, it.theme)
-                        ?.let { drawable ->
-                            FastScrollerBuilder(binding.recyclerviewLocation)
-                            .setTrackDrawable(drawable)
-                            .build()
-                        }
-            }
-        }
-        binding.recyclerviewLocation.setHasFixedSize(true)
-        //instantiate an adapter and set this fragment as a listener for onClick
-        locationAdapter = LocationAdapter(this)
-        locationAdapter?.stateRestorationPolicy =
-                RecyclerView.Adapter.StateRestorationPolicy.PREVENT
     }
 
     private fun registerObservers() {
@@ -102,12 +64,10 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
             }
             //set data to the adapter
             locationAdapter?.submitList(it)
-            //set adapter to the recyclerview
-            binding.recyclerviewLocation.adapter = locationAdapter
-            //restore list position
+            //restore list position, or if it has been nulled -> scroll to position 0
             viewModel.rvListPosition.value?.let {state ->
                 binding.recyclerviewLocation.layoutManager?.onRestoreInstanceState(state)
-            }
+            }?: binding.recyclerviewLocation.layoutManager?.scrollToPosition(0)
         })
     }
 
@@ -123,42 +83,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
     ): FragmentLocationsListBinding =
             FragmentLocationsListBinding.inflate(inflater, container, false)
 
-    override fun getToolbar(): Toolbar? {
-        return binding.toolbarFragmentLocationList
-    }
-
-    override fun restoreViewState(savedInstanceState: Bundle?) {
-        savedInstanceState?.let {
-            (savedInstanceState[Constants.KEY_FRAGMENT_LOCATION_LIST_FILTER_MAP] as String?)?.let {
-                val type = object: TypeToken<Map<String, Pair<Boolean, String?>>>() {}.type
-                val map = Gson().fromJson<Map<String, Pair<Boolean, String?>>>(it, type)
-                Timber.v("savedInstance restoring map: %s", map)
-                viewModel.setFilterFlags(map)
-            }
-            (savedInstanceState[Constants.KEY_FRAGMENT_LOCATION_LIST_QUERY] as String?)?.let {
-                Timber.v("savedInstance restoring query: %s", it)
-                viewModel.setNameQuery(it)
-            }
-            (savedInstanceState[Constants.KEY_FRAGMENT_LOCATION_LIST_LIST_POSITION] as Parcelable?)?.let {
-                viewModel.setLayoutManagerState(it)
-            }
-        }
-    }
-
-    override fun saveViewState(outState: Bundle) {
-        outState.run {
-            viewModel.getFilterMap.value?.let {
-                val jsonMap = Gson().toJson(it)
-                putString(Constants.KEY_FRAGMENT_LOCATION_LIST_FILTER_MAP, jsonMap)
-            }
-            viewModel.searchQuery?.let {
-                putString(Constants.KEY_FRAGMENT_LOCATION_LIST_QUERY, it)
-            }
-            viewModel.rvListPosition.value?.let {
-                putParcelable(Constants.KEY_FRAGMENT_LOCATION_LIST_LIST_POSITION, it)
-            }
-        }
-    }
+    override fun getToolbar(): Toolbar? = binding.toolbarFragmentLocationList
 
     override fun saveRvListPosition() {
         binding.recyclerviewLocation.layoutManager?.onSaveInstanceState()?.let { lmState ->
@@ -305,7 +230,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
     }
 
     override fun restoreCheckBoxState(dialogView: View) {
-        viewModel.getFilterMap.value?.let {
+        viewModel.getFilterMap()?.let {
             dialogView.findViewById<MaterialCheckBox>(R.id.type_all).isChecked =
                     it[Constants.KEY_MAP_FILTER_LOC_TYPE_ALL]?.first?: false
             dialogView.findViewById<MaterialCheckBox>(R.id.type_planet).isChecked =

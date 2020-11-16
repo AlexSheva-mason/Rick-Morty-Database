@@ -30,7 +30,6 @@ constructor(
             Constants.KEY_MAP_FILTER_LOC_TYPE_ALL to Pair(true, null),
             Constants.KEY_MAP_FILTER_LOC_DIMENS_ALL to Pair(true, null)
     ))
-    val getFilterMap: LiveData<Map<String, Pair<Boolean, String?>>> = filterData
 
     override val mediatorLiveData = FilterMediatorLiveData(_searchQuery, filterData)
 

@@ -49,6 +49,10 @@ abstract class BaseListViewModel: ViewModel() {
         } else Timber.v("filter maps are equal")
     }
 
+    fun getFilterMap(): Map<String, Pair<Boolean, String?>>? {
+        return filterData.value
+    }
+
     /**
      * adds a text to list of queries
      * @return `true` -> if text has been added to existing list
