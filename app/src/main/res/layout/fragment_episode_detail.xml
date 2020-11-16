@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.episode.EpisodeDetailFragment">
+    tools:context=".ui.episode.detail.EpisodeDetailFragment">
 
     <include
         layout="@layout/partial_toolbar_simple"

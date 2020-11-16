@@ -3,9 +3,6 @@ package com.shevaalex.android.rickmortydatabase.utils;
 import android.content.Context;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants;
-
-import java.util.ArrayList;
 
 public abstract class StringParsing {
     private static final String CHAR_GENDER_FEMALE = "female";
@@ -19,39 +16,6 @@ public abstract class StringParsing {
     private static final String LOCATION_RES_KEY = "location_";
     private static final String EPISODE_RES_KEY = "episode_";
     public static final String KEY_NULL = "null";
-
-    public static String rearrangeSearchQuery (String query) {
-        String [] splitQuery = query.split(" ");
-        if(splitQuery.length > 1) {
-            return splitQuery[1] + " " + splitQuery[0];
-        }
-        return query;
-    }
-
-    public static String returnStringOfIds (String string) {
-        return string.replaceAll("[a-zA-Z:\\\\/.\"\\[\\]]", "");
-    }
-
-
-    public static ArrayList<Integer> parseIdsFromString(String stringUnSplit) {
-        ArrayList<Integer> parsedIdList = new ArrayList<>();
-        String[] splitArray = stringUnSplit.split(",");
-        for (String arrayElement : splitArray) {
-            if (!arrayElement.isEmpty()) {
-                parsedIdList.add(Integer.parseInt(arrayElement));
-            }
-        }
-        return parsedIdList;
-    }
-
-    public static int parseLocationId (String locationUrl) {
-        int lastKnownLocId = 0;
-        if (locationUrl.contains(ApiConstants.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING)) {
-            int slashId = locationUrl.lastIndexOf("/");
-            lastKnownLocId = Integer.parseInt(locationUrl.substring(slashId+1));
-        }
-        return lastKnownLocId;
-    }
 
     public static String parseCharacterName (String characterName) {
         return (characterName.trim().replaceAll("\\s", "_") + "_");

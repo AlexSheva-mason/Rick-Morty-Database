@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.location;
+package com.shevaalex.android.rickmortydatabase.ui.location.detail;
 
 import android.app.Application;
 

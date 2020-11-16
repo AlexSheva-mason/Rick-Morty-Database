@@ -6,7 +6,7 @@
     app:startDestination="@+id/charactersListFragment">
     <fragment
         android:id="@+id/charactersListFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.character.list.CharactersListFragment"
         android:label=""
         tools:layout="@layout/fragment_characters_list">
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/episodesListFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodesListFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.list.EpisodesListFragment"
         android:label=""
         tools:layout="@layout/fragment_episodes_list">
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/locationsListFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.location.LocationsListFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.location.list.LocationsListFragment"
         android:label=""
         tools:layout="@layout/fragment_locations_list">
         <action
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/characterDetailFragment2"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterDetailFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.character.detail.CharacterDetailFragment"
         android:label="{character_name}"
         tools:layout="@layout/fragment_character_detail">
         <argument
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.location.LocationDetailFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.location.detail.LocationDetailFragment"
         android:label="{location_name}"
         tools:layout="@layout/fragment_location_detail">
         <argument
@@ -134,7 +134,7 @@
     </fragment>
     <fragment
         android:id="@+id/episodeDetailFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodeDetailFragment"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.detail.EpisodeDetailFragment"
         android:label="{episode_code}"
         tools:layout="@layout/fragment_episode_detail">
         <argument

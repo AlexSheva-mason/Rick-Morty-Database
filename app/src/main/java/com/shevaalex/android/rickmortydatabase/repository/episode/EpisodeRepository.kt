@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.repository
+package com.shevaalex.android.rickmortydatabase.repository.episode
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList

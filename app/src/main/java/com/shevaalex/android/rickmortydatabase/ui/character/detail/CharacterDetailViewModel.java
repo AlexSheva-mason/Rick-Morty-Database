@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.character;
+package com.shevaalex.android.rickmortydatabase.ui.character.detail;
 
 import android.app.Application;
 

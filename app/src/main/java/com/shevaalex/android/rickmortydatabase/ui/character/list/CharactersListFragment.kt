@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.character
+package com.shevaalex.android.rickmortydatabase.ui.character.list
 
 import android.os.Bundle
 import android.view.LayoutInflater

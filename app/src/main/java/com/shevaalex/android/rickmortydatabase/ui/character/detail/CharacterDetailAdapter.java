@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.character;
+package com.shevaalex.android.rickmortydatabase.ui.character.detail;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -177,7 +177,8 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else if (v.getId() == binding.buttonOriginLocation.getId()) {
                 clickedLocation = originLocation;
             }
-            CharacterDetailFragmentDirections.ToLocationDetailFragmentAction2 action =
+            //TODO fix navigation
+            /*CharacterDetailFragmentDirections.ToLocationDetailFragmentAction2 action =
                     CharacterDetailFragmentDirections.toLocationDetailFragmentAction2();
             if (clickedLocation != null) {
                 action.setLocationName(clickedLocation.getName())
@@ -186,11 +187,11 @@ public class CharacterDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         .setLocationResidents(clickedLocation.getResidentsList())
                         .setLocationId(clickedLocation.getId());
                 Navigation.findNavController(v).navigate(action);
-            }
+            }*/
         }
     }
 
-    public interface OnEpisodeListener {
+    interface OnEpisodeListener {
         void onEpisodeClick(int position, View v);
     }
 }

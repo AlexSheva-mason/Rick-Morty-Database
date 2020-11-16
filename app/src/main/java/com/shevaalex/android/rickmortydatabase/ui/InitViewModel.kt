@@ -1,7 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
 import androidx.lifecycle.*
-import com.shevaalex.android.rickmortydatabase.repository.InitRepository
+import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status

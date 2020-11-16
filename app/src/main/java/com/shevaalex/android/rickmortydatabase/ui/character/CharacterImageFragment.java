@@ -99,7 +99,7 @@ public class CharacterImageFragment extends BaseFragment implements View.OnClick
     }
 
     private void createOptionsMenu(Toolbar toolbar) {
-        toolbar.inflateMenu(R.menu.toolbar_fragment_character_image);
+        toolbar.inflateMenu(R.menu.menu_fragment_character_image);
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.share_button) {
                 shareImage();

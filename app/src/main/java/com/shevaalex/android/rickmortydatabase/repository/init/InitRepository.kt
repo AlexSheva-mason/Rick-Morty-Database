@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.repository
+package com.shevaalex.android.rickmortydatabase.repository.init
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -125,7 +125,7 @@ constructor(
      * Initialises a Location table in the database
      */
     private suspend fun initLocations(): StateResource {
-        return object: InitManager<LocationModel, LocationPageModel> (
+        return object: InitManager<LocationModel, LocationPageModel>(
                 context = application
         ) {
             override suspend fun callLastApiModel(lastModelId: Int): ApiResult<LocationModel> {

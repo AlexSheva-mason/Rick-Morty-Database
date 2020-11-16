@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.location
+package com.shevaalex.android.rickmortydatabase.ui.location.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.asLiveData
 import androidx.paging.PagedList
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.repository.LocationRepository
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
 import com.shevaalex.android.rickmortydatabase.ui.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData

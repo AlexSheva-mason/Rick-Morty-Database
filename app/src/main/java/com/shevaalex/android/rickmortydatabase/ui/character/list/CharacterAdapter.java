@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.character;
+package com.shevaalex.android.rickmortydatabase.ui.character.list;
 
 import android.content.Context;
 import android.content.res.Configuration;

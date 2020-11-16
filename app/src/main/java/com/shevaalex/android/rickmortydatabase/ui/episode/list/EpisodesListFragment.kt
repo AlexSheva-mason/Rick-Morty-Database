@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.episode
+package com.shevaalex.android.rickmortydatabase.ui.episode.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding
 import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
-import com.shevaalex.android.rickmortydatabase.ui.episode.EpisodeAdapter.OnEpisodeClickListener
+import com.shevaalex.android.rickmortydatabase.ui.episode.list.EpisodeAdapter.OnEpisodeClickListener
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 

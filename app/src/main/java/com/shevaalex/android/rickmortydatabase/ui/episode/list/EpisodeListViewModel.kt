@@ -1,9 +1,9 @@
-package com.shevaalex.android.rickmortydatabase.ui.episode
+package com.shevaalex.android.rickmortydatabase.ui.episode.list
 
 import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.repository.EpisodeRepository
+import com.shevaalex.android.rickmortydatabase.repository.episode.EpisodeRepository
 import com.shevaalex.android.rickmortydatabase.ui.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData

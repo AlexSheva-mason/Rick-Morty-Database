@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui.episode;
+package com.shevaalex.android.rickmortydatabase.ui.episode.detail;
 
 import android.content.Context;
 import android.content.res.Configuration;

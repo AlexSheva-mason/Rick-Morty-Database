@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.repository
+package com.shevaalex.android.rickmortydatabase.repository.init
 
 import android.content.Context
 import androidx.annotation.MainThread
