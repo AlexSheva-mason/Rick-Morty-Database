@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -276,6 +277,10 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
         }
     }
 
+    private fun navigateToSettings() {
+        findNavController().navigate(R.id.action_global_settingsFragment)
+    }
+
     /**
      * called in onPause to save RV list position in ViewModel
      */
@@ -298,8 +303,6 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
     protected abstract fun setBinding(inflater: LayoutInflater, container: ViewGroup?): T
 
     protected abstract fun getToolbar(): Toolbar?
-
-    protected abstract fun navigateToSettings()
 
     protected abstract fun showFilterDialog()
 

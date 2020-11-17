@@ -9,7 +9,7 @@ import com.google.firebase.ktx.Firebase
 
 abstract class BaseFragment : Fragment() {
 
-    lateinit var firebaseAnalytics: FirebaseAnalytics
+    protected lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

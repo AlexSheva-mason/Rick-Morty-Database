@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -329,25 +329,18 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
             Const.KEY_MAP_FILTER_SPECIES_MYTH to getString(R.string.species_Mythological_Creature),
     )
 
-    override fun navigateToSettings() {
-        findNavController().navigate(CharactersListFragmentDirections.toSettingsFragment())
-    }
-
     override fun saveRvListPosition() {
         binding.recyclerviewCharacter.layoutManager?.onSaveInstanceState()?.let { lmState ->
             viewModel.setLayoutManagerState(lmState)
         }
     }
 
-    override fun onCharacterClick(position: Int, v: View) {
+    override fun onCharacterClick(position: Int, imageView: ImageView) {
         val mCharacterList = characterAdapter?.currentList
         val clickedChar = mCharacterList?.getOrNull(position)
         clickedChar?.let {
-            val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(
-                    it.id,
-                    it.name
-            )
-            v.findNavController().navigate(action)
+            val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(it)
+            findNavController().navigate(action)
         }
     }
 

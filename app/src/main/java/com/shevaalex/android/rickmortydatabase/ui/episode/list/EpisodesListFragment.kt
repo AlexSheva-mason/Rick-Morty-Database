@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -89,12 +88,6 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
         binding.recyclerviewEpisode.layoutManager?.onSaveInstanceState()?.let { lmState ->
             viewModel.setLayoutManagerState(lmState)
         }
-    }
-
-    override fun navigateToSettings() {
-        findNavController().navigate(
-                EpisodesListFragmentDirections.actionEpisodesListFragmentToSettingsFragment()
-        )
     }
 
     override fun showFilterDialog() {
@@ -221,7 +214,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
                     episodeCode = it.code,
                     id = it.id
             )
-            v.findNavController().navigate(action)
+            findNavController().navigate(action)
         }
     }
 }
