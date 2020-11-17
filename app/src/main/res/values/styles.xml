@@ -18,7 +18,7 @@
         <item name="android:paddingStart">@dimen/item_character_name_padding_start</item>
         <item name="android:paddingEnd">@dimen/item_character_name_padding_end</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textAppearance">?attr/textAppearanceSubtitle1</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
     </style>
@@ -35,12 +35,6 @@
         <item name="itemIconTint">@color/bottom_nav_element</item>
         <item name="itemTextColor">@color/bottom_nav_element</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.RM.BottomNavigation</item>
-    </style>
-
-    <!--Button style-->
-    <style name="Widget.RM.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="iconPadding">1dp</item>
-        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>

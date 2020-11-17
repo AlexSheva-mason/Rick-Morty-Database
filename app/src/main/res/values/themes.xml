@@ -14,7 +14,6 @@
         <item name="textAppearanceSubtitle2">@style/TextAppearance.RM.Subtitle2</item>
         <item name="textAppearanceBody1">@style/TextAppearance.RM.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.RM.Body2</item>
-        <item name="textAppearanceButton">@style/TextAppearance.RM.Button</item>
         <item name="textAppearanceCaption">@style/TextAppearance.RM.Caption</item>
         <item name="textAppearanceOverline">@style/TextAppearance.RM.Overline</item>
 
@@ -26,7 +25,6 @@
         <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
         <item name="actionOverflowMenuStyle">@style/Widget.RM.PopupMenu.Overflow</item>
-        <item name="buttonStyle">@style/Widget.RM.Button.TextButton</item>
         <item name="preferenceTheme">@style/RM.PreferenceThemeOverlay</item>
 
     </style>
@@ -37,6 +35,7 @@
     <style name="RM.GreenGrey">
         <item name="colorPrimaryDark">@color/rm_green_600</item>
         <item name="colorPrimary">@color/rm_green_500</item>
+        <item name="colorSurface">@color/rm_green_50</item>
         <item name="colorSecondary">@color/rm_grey_blue_900</item>
         <item name="colorSecondaryVariant">@color/rm_grey_blue_900</item>
         <item name="colorOnPrimary">@color/rm_white_50</item>

@@ -23,11 +23,11 @@
             android:contentDescription="@string/img_location_description"
             android:scaleType="fitCenter"
             android:src="@drawable/locations_24dp"
-            android:tint="?attr/colorSecondaryVariant"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline_icon_location"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorSecondaryVariant" />
 
         <TextView
             android:id="@+id/location_name_value"
@@ -39,7 +39,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:text="@string/tv_character_name"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintBottom_toTopOf="@+id/location_dimension"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

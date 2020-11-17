@@ -23,11 +23,11 @@
             android:contentDescription="@string/img_episode_description"
             android:scaleType="fitCenter"
             android:src="@drawable/episodes_24dp"
-            android:tint="?attr/colorSecondaryVariant"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline_icon_episode"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorSecondaryVariant" />
 
         <TextView
             android:id="@+id/episode_code_value"
@@ -63,7 +63,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:text="@string/tv_character_name"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintBottom_toTopOf="@+id/episode_air_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
