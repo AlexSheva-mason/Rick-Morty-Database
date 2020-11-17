@@ -1,10 +1,15 @@
 package com.shevaalex.android.rickmortydatabase.models.character
 
+import android.os.Parcelable
+import androidx.annotation.Keep
+import kotlinx.android.parcel.Parcelize
 
+@Keep
+@Parcelize
 class LinkedLocationModel(
         val name: String,
         val url: String
-) {
+): Parcelable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is LinkedLocationModel) return false

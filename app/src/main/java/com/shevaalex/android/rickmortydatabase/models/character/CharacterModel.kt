@@ -1,13 +1,18 @@
 package com.shevaalex.android.rickmortydatabase.models.character
 
+import android.os.Parcelable
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants.ApiCallCharacterKeys
+import kotlinx.android.parcel.Parcelize
 
 @Entity
+@Keep
+@Parcelize
 data class CharacterModel(
 
         @PrimaryKey
@@ -36,14 +41,14 @@ data class CharacterModel(
         @SerializedName(ApiCallCharacterKeys.CHARACTER_EPISODE_LIST)
         val episodeList: Array<String>
 
-): ApiObjectModel {
+): ApiObjectModel, Parcelable {
 
-    val episodes: List<String>
+    val episodes: List<Int>
         get() {
             return episodeList.map {
                 it.dropWhile {char ->
                     !char.isDigit()
-                }
+                }.toInt()
             }
         }
 
