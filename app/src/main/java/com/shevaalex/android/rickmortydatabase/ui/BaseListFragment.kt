@@ -89,6 +89,8 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        searchSuggestionsAdapter = null
+        recentQueriesAdapter = null
     }
 
     private fun registerObservers() {
