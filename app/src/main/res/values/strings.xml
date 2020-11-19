@@ -91,12 +91,14 @@
     <string name="img_character_description">Character image</string>
     <string name="tv_character_name">Name:</string>
     <string name="tv_character_status">Status:</string>
+    <string name="tv_character_detail_status_unknown">Unknown</string>
     <string name="tv_character_species">Species:</string>
+    <string name="tv_character_detail_species_unknown">Unknown</string>
     <string name="tv_character_gender">Gender:</string>
+    <string name="tv_character_detail_gender_unknown">Unknown</string>
     <string name="tv_character_origin">Origin:</string>
     <string name="tv_character_last_loc">Last location:</string>
-    <string name="tv_character_last_loc_unknown_value">Unknown</string>
-    <string name="tv_character_location_unknown">unknown</string>
+    <string name="tv_character_last_loc_unknown_value">Location unknown</string>
     <string name="tv_character_episode_list">Seen in episodes:</string>
     <string name="tv_character_list_pb">Aw Jeez…</string>
     <string name="img_location_description">Location image placeholder</string>
@@ -105,6 +107,7 @@
     <string name="tv_location_dimension">Dimension:</string>
     <string name="tv_location_residents">Residents in this location:</string>
     <string name="tv_location_residents_unknown">Unknown</string>
+    <string name="tv_episode_name">Name</string>
     <string name="tv_episode_code">S03E09</string>
     <string name="tv_episode_air_date">Air Date:</string>
     <string name="tv_episode_characters_list">Characters, seen in the episode:</string>

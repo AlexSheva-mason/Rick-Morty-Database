@@ -51,28 +51,24 @@
         <item name="fontFamily">@font/neucha_regular</item>
         <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">@color/material_on_surface_emphasis_high_type</item>
-        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextAppearance.RM.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="fontFamily">@font/neucha_regular</item>
         <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">@color/material_on_surface_emphasis_high_type</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextAppearance.RM.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/neucha_regular</item>
         <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">@color/material_on_surface_emphasis_high_type</item>
-        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextAppearance.RM.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/neucha_regular</item>
         <item name="android:fontFamily">@font/neucha_regular</item>
         <item name="android:textColor">@color/material_on_surface_emphasis_high_type</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextAppearance.RM.Caption" parent="TextAppearance.MaterialComponents.Caption">
