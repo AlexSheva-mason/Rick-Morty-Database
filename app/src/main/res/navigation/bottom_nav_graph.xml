@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/characterDetailFragment2"
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.detail.CharacterDetailFragment"
-        android:label="{character_name}"
+        android:label=""
         tools:layout="@layout/fragment_character_detail">
         <action
             android:id="@+id/toCharacterImageFragment"
@@ -64,7 +64,7 @@
     <fragment
         android:id="@+id/locationDetailFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.location.detail.LocationDetailFragment"
-        android:label="{location_name}"
+        android:label=""
         tools:layout="@layout/fragment_location_detail">
         <argument
             android:name="location_id"
@@ -90,7 +90,7 @@
     <fragment
         android:id="@+id/episodeDetailFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.episode.detail.EpisodeDetailFragment"
-        android:label="{episode_code}"
+        android:label=""
         tools:layout="@layout/fragment_episode_detail">
         <argument
             android:name="episode_name"
