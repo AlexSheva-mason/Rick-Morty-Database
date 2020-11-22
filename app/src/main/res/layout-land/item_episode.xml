@@ -5,7 +5,8 @@
     android:id="@+id/episode_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardElevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
