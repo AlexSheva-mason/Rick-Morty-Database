@@ -55,9 +55,13 @@
     <string name="dialog_season_4" translatable="false">S 04</string>
     <string name="dialog_error_season">season</string>
 
-    //CharacterListFragment
+    //CharactersListFragment
     <string name="clf_no_results_query">Oops, nothing found :(</string>
-    <string name="clf_searchview_query_hint">Enter your query…</string>
+    <string name="clf_searchview_query_hint"><font size="14">Search characters</font></string>
+    //LocationsListFragment
+    <string name="llf_searchview_query_hint"><font size="14">Search locations</font></string>
+    //EpisodesListFragment
+    <string name="elf_searchview_query_hint"><font size="14">Search episodes</font></string>
 
     //EpisodeAdapter
     <string name="episode_name_placeholder" translatable="false">\"%1$s\"</string>
