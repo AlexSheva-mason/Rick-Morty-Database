@@ -7,11 +7,10 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_fragment_location_list"
-        style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+        style="@style/Widget.RM.Toolbar.PrimarySurface"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +23,7 @@
             app:iconifiedByDefault="true"
             app:queryHint="@string/clf_searchview_query_hint" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
         android:id="@+id/tv_no_results"

@@ -37,4 +37,11 @@
         <item name="itemTextAppearanceActive">@style/TextAppearance.RM.BottomNavigation</item>
     </style>
 
+    <!--Toolbar style to work with light / dark theme-->
+    <style name="Widget.RM.Toolbar.PrimarySurface" parent="@style/Widget.MaterialComponents.Toolbar.PrimarySurface">
+        <item name="android:elevation">4dp</item>
+        <item name="android:background">?attr/colorPrimarySurface</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+    </style>
+
 </resources>
