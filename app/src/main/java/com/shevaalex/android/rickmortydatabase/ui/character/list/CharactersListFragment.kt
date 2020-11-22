@@ -95,7 +95,7 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
     ): FragmentCharactersListBinding =
             FragmentCharactersListBinding.inflate(inflater, container, false)
 
-    override fun getToolbar(): Toolbar? = binding.toolbarFragmentCharacterList
+    override fun getToolbar() = binding.toolbarFragmentCharacterList as Toolbar
 
     override fun showFilterDialog() {
         activity?.let { activity ->
