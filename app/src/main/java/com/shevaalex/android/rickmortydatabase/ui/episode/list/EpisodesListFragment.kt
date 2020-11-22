@@ -82,7 +82,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
     ): FragmentEpisodesListBinding =
             FragmentEpisodesListBinding.inflate(inflater, container, false)
 
-    override fun getToolbar(): Toolbar? = binding.toolbarFragmentEpisodeList
+    override fun getToolbar() = binding.toolbarFragmentEpisodeList as Toolbar?
 
     override fun saveRvListPosition() {
         binding.recyclerviewEpisode.layoutManager?.onSaveInstanceState()?.let { lmState ->

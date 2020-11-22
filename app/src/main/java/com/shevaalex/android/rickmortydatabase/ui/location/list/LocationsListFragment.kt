@@ -82,7 +82,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
     ): FragmentLocationsListBinding =
             FragmentLocationsListBinding.inflate(inflater, container, false)
 
-    override fun getToolbar(): Toolbar? = binding.toolbarFragmentLocationList
+    override fun getToolbar() = binding.toolbarFragmentLocationList as Toolbar?
 
     override fun saveRvListPosition() {
         binding.recyclerviewLocation.layoutManager?.onSaveInstanceState()?.let { lmState ->
