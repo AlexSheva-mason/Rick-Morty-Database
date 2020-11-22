@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/progress_bar"
     android:layout_width="wrap_content"
@@ -9,11 +9,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
+        android:orientation="vertical"
         android:paddingStart="10dp"
+        android:paddingTop="4dp"
         android:paddingEnd="10dp"
-        android:orientation="vertical">
+        android:paddingBottom="4dp">
 
         <ProgressBar
             android:id="@+id/pb"
@@ -34,4 +34,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

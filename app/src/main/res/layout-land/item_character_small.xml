@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/character_item"
@@ -23,25 +23,25 @@
             android:contentDescription="@string/img_character_description"
             android:scaleType="fitCenter"
             android:src="@drawable/picasso_placeholder_error"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/character_name_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
             android:background="@color/rm_grey_blue_900_alpha_60"
-            android:textColor="?attr/colorOnPrimary"
+            android:ellipsize="end"
             android:gravity="center_horizontal"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
