@@ -154,8 +154,13 @@
                 motion:motionTarget="@id/background_button_share" />
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="90"
+                motion:framePosition="50"
                 motion:motionTarget="@id/image_toolbar_background" />
+            <KeyPosition
+                motion:framePosition="80"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/image_toolbar_background"
+                motion:percentY="0.5" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="1"

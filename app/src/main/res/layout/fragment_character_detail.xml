@@ -35,9 +35,9 @@
         app:cardCornerRadius="0dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="@id/image_character"
-        app:layout_constraintEnd_toEndOf="@id/image_character"
-        app:layout_constraintStart_toStartOf="@id/image_character"
-        app:layout_constraintTop_toTopOf="@id/image_character" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/button_back"
