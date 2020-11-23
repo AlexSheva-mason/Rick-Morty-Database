@@ -6,22 +6,222 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_character_detail"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:scrollbars="none"
-        app:fastScrollEnabled="true"
-        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_episode" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_character"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/img_character_description"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/picasso_placeholder_error" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.35" />
+
+                <TextView
+                    android:id="@+id/character_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="5"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="4dp"
+                    android:textAppearance="@style/TextAppearance.RM.Headline5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="HOLE IN THE WALL WHERE ALL MEN CAN SEE IT ALL" />
+
+                <TextView
+                    android:id="@+id/character_status_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/tv_character_status"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintStart_toStartOf="@id/guideline_image"
+                    app:layout_constraintTop_toBottomOf="@id/character_name" />
+
+                <TextView
+                    android:id="@+id/character_species_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_character_species"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintStart_toStartOf="@+id/character_status_title"
+                    app:layout_constraintTop_toBottomOf="@+id/character_status_title" />
+
+                <TextView
+                    android:id="@+id/character_gender_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_character_gender"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintStart_toStartOf="@+id/character_species_title"
+                    app:layout_constraintTop_toBottomOf="@+id/character_species_title" />
+
+                <TextView
+                    android:id="@+id/character_origin_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/tv_character_origin"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintStart_toStartOf="@+id/character_gender_title"
+                    app:layout_constraintTop_toBottomOf="@id/character_gender_title" />
+
+                <TextView
+                    android:id="@+id/character_last_location_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/tv_character_last_loc"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintStart_toStartOf="@+id/character_origin_title"
+                    app:layout_constraintTop_toBottomOf="@id/character_origin_title" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_text_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.72" />
+
+                <TextView
+                    android:id="@+id/character_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:text="@string/tv_character_detail_status_unknown"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guideline_text_value"
+                    app:layout_constraintTop_toTopOf="@id/character_status_title" />
+
+                <TextView
+                    android:id="@+id/character_species"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:text="@string/tv_character_detail_species_unknown"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/character_status"
+                    app:layout_constraintTop_toBottomOf="@+id/character_status" />
+
+                <TextView
+                    android:id="@+id/character_gender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:text="@string/tv_character_detail_gender_unknown"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/character_status"
+                    app:layout_constraintTop_toBottomOf="@+id/character_species" />
+
+                <TextView
+                    android:id="@+id/character_origin_value"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:ellipsize="end"
+                    android:gravity="start|center"
+                    android:maxLines="1"
+                    android:text="@string/tv_character_last_loc_unknown_value"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="@color/material_on_background_emphasis_medium"
+                    app:layout_constraintBottom_toBottomOf="@id/character_origin_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/character_last_location_title"
+                    app:layout_constraintTop_toTopOf="@id/character_origin_title" />
+
+                <TextView
+                    android:id="@+id/character_last_loc_value"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:ellipsize="end"
+                    android:gravity="start|center"
+                    android:maxLines="1"
+                    android:text="@string/tv_character_last_loc_unknown_value"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="@color/material_on_background_emphasis_medium"
+                    app:layout_constraintBottom_toBottomOf="@id/character_last_location_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/character_origin_value"
+                    app:layout_constraintTop_toTopOf="@id/character_last_location_title" />
+
+                <TextView
+                    android:id="@+id/character_episodes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:maxLines="1"
+                    android:text="@string/tv_character_episode_list"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/character_last_location_title"
+                    app:layout_constraintTop_toBottomOf="@id/character_last_location_title"
+                    app:layout_constraintVertical_bias="1.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_character_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/item_episode" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
