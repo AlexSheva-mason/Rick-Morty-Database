@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_fragment_character_detail"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_character_detail_scene">
 
     <ImageView
         android:id="@+id/image_character"
@@ -12,53 +13,113 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:contentDescription="@string/img_character_description"
+        android:elevation="4dp"
         android:scaleType="centerCrop"
-        android:src="@color/ic_launcher_background"
+        android:src="@drawable/picasso_placeholder_error"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="?attr/actionBarSize" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/image_toolbar_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="?attr/colorPrimarySurface"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_character"
+        app:layout_constraintEnd_toEndOf="@id/image_character"
+        app:layout_constraintStart_toStartOf="@id/image_character"
+        app:layout_constraintTop_toTopOf="@id/image_character" />
 
     <ImageView
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_back_arrw"
+        android:layout_marginStart="10dp"
+        android:elevation="8dp"
+        android:src="@drawable/ic_baseline_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/background_button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:src="@drawable/circle_background"
+        app:layout_constraintBottom_toBottomOf="@id/button_back"
+        app:layout_constraintEnd_toEndOf="@id/button_back"
+        app:layout_constraintStart_toStartOf="@id/button_back"
+        app:layout_constraintTop_toTopOf="@id/button_back"
         tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/button_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="10dp"
+        android:elevation="8dp"
         android:src="@drawable/ic_share"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
+    <ImageView
+        android:id="@+id/background_button_share"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:elevation="4dp"
+        android:src="@drawable/circle_background"
+        app:layout_constraintBottom_toBottomOf="@id/button_share"
+        app:layout_constraintEnd_toEndOf="@id/button_share"
+        app:layout_constraintStart_toStartOf="@id/button_share"
+        app:layout_constraintTop_toTopOf="@id/button_share"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/character_name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:elevation="8dp"
         android:ellipsize="end"
-        android:maxLines="5"
-        android:shadowColor="@android:color/black"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="4"
+        android:maxLines="4"
+        android:outlineProvider="background"
+        android:padding="4dp"
         android:textAppearance="@style/TextAppearance.RM.Headline4"
         android:textColor="?attr/colorOnPrimary"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@id/image_character"
         app:layout_constraintEnd_toEndOf="@id/image_character"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/image_character"
-        tools:text="HOLE IN THE WALL WHERE ALL MEN CAN SEE IT ALL" />
+        tools:text="HOLE IN THE WALL HOLE IN THE WALL HOLE IN THE WALL" />
+
+    <ImageView
+        android:id="@+id/background_character_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/rm_grey_blue_900_alpha_30"
+        android:elevation="4dp"
+        android:paddingStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/character_name"
+        app:layout_constraintEnd_toEndOf="@id/character_name"
+        app:layout_constraintStart_toStartOf="@id/character_name"
+        app:layout_constraintTop_toTopOf="@id/character_name"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/character_status_dot"
@@ -313,4 +374,4 @@
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_4"
         tools:listitem="@layout/item_episode" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
