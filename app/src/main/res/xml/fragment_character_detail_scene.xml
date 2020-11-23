@@ -138,6 +138,7 @@
         android:id="@+id/middleToBottom"
         motion:constraintSetEnd="@+id/bottom"
         motion:constraintSetStart="@id/middle"
+        motion:duration="500"
         motion:motionInterpolator="linear">
         <OnClick
             motion:clickAction="toggle"
@@ -153,7 +154,7 @@
                 motion:motionTarget="@id/background_button_share" />
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="70"
+                motion:framePosition="90"
                 motion:motionTarget="@id/image_toolbar_background" />
             <KeyAttribute
                 android:alpha="0"
@@ -161,63 +162,91 @@
                 motion:motionTarget="@id/character_name" />
             <KeyAttribute
                 android:alpha="0"
+                motion:framePosition="90"
+                motion:motionTarget="@id/character_name" />
+            <KeyAttribute
+                android:alpha="0"
                 motion:framePosition="1"
                 motion:motionTarget="@id/background_character_name" />
             <KeyAttribute
                 android:alpha="1"
-                motion:framePosition="93"
+                motion:framePosition="95"
                 motion:motionTarget="@id/character_name" />
             <KeyAttribute
-                android:alpha="0"
+                android:alpha="1"
                 motion:framePosition="90"
                 motion:motionTarget="@id/character_status_dot" />
             <KeyAttribute
-                android:alpha="0"
+                android:alpha="1"
                 motion:framePosition="90"
                 motion:motionTarget="@id/character_status" />
             <KeyAttribute
-                android:alpha="0"
+                android:alpha="1"
                 motion:framePosition="90"
                 motion:motionTarget="@id/character_species_icon" />
             <KeyAttribute
-                android:alpha="0"
+                android:alpha="1"
                 motion:framePosition="90"
                 motion:motionTarget="@id/character_species" />
             <KeyAttribute
-                android:alpha="0"
+                android:alpha="1"
                 motion:framePosition="90"
                 motion:motionTarget="@id/character_gender_icon" />
             <KeyAttribute
-                android:alpha="0"
+                android:alpha="1"
                 motion:framePosition="90"
                 motion:motionTarget="@id/character_gender" />
             <KeyAttribute
-                android:alpha="0"
-                motion:framePosition="85"
+                android:alpha="1"
+                motion:framePosition="40"
                 motion:motionTarget="@id/character_origin_title" />
             <KeyAttribute
-                android:alpha="0"
-                motion:framePosition="85"
+                android:alpha="1"
+                motion:framePosition="40"
                 motion:motionTarget="@id/origin_icon" />
             <KeyAttribute
-                android:alpha="0"
-                motion:framePosition="85"
+                android:alpha="1"
+                motion:framePosition="40"
                 motion:motionTarget="@id/character_origin_value" />
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="80"
+                motion:framePosition="90"
+                motion:motionTarget="@id/character_origin_title" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="90"
+                motion:motionTarget="@id/origin_icon" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="90"
+                motion:motionTarget="@id/character_origin_value" />
+            <KeyAttribute
+                android:alpha="1"
+                motion:framePosition="30"
                 motion:motionTarget="@id/character_last_title" />
             <KeyAttribute
-                android:alpha="0"
-                motion:framePosition="80"
+                android:alpha="1"
+                motion:framePosition="30"
                 motion:motionTarget="@id/last_loc_icon" />
             <KeyAttribute
-                android:alpha="0"
-                motion:framePosition="80"
+                android:alpha="1"
+                motion:framePosition="30"
                 motion:motionTarget="@id/character_last_loc_value" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="60"
+                motion:motionTarget="@id/character_last_title" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@id/last_loc_icon" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@id/character_last_loc_value" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="50"
                 motion:motionTarget="@id/episode_list" />
             <KeyAttribute
                 android:alpha="0"
@@ -433,113 +462,45 @@
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_status_dot">
-            <Layout
-                android:layout_marginStart="8dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintEnd_toStartOf="parent"
-                motion:layout_constraintStart_toStartOf="parent" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_status">
-            <Layout
-                motion:layout_constraintBottom_toBottomOf="@id/character_status_dot"
-                motion:layout_constraintEnd_toStartOf="@id/guideline_vertical_1"
-                motion:layout_constraintStart_toEndOf="@+id/character_status_dot" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_species_icon">
-            <Layout
-                motion:layout_constraintBottom_toBottomOf="@id/character_status_dot"
-                motion:layout_constraintEnd_toStartOf="@id/character_species"
-                motion:layout_constraintStart_toStartOf="@id/guideline_vertical_1" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_species">
-            <Layout
-                motion:layout_constraintBottom_toBottomOf="@id/character_status_dot"
-                motion:layout_constraintEnd_toStartOf="@+id/guideline_vertical_2"
-                motion:layout_constraintStart_toEndOf="@+id/character_species_icon" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_gender_icon">
-            <Layout
-                motion:layout_constraintBottom_toBottomOf="@id/character_status_dot"
-                motion:layout_constraintEnd_toStartOf="@id/character_gender"
-                motion:layout_constraintStart_toStartOf="@id/guideline_vertical_2" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_gender">
-            <Layout
-                motion:layout_constraintBottom_toBottomOf="@id/character_status_dot"
-                motion:layout_constraintEnd_toEndOf="parent"
-                motion:layout_constraintStart_toEndOf="@id/character_gender_icon" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_origin_title">
-            <Layout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintStart_toStartOf="parent"
-                motion:layout_constraintTop_toBottomOf="parent" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/origin_icon">
-            <Layout
-                android:layout_marginStart="4dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintStart_toEndOf="@id/character_last_title" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_origin_value">
-            <Layout
-                android:layout_marginStart="4dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintEnd_toEndOf="parent"
-                motion:layout_constraintStart_toEndOf="@id/origin_icon" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_last_title">
-            <Layout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintStart_toStartOf="parent"
-                motion:layout_constraintTop_toBottomOf="parent" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/last_loc_icon">
-            <Layout
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintStart_toStartOf="@id/origin_icon" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_last_loc_value">
-            <Layout
-                android:layout_marginStart="4dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintEnd_toEndOf="parent"
-                motion:layout_constraintStart_toEndOf="@id/last_loc_icon" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/episode_list">
-            <Layout
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintStart_toStartOf="parent" />
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/recyclerview_character_detail">
-            <Layout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintEnd_toEndOf="parent"
-                motion:layout_constraintStart_toStartOf="parent"
-                motion:layout_constraintTop_toBottomOf="@id/episode_list" />
             <PropertySet android:alpha="0" />
         </Constraint>
     </ConstraintSet>
