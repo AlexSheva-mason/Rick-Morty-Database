@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.database
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -91,5 +92,14 @@ interface LocationModelDao {
             name: String? = null,
             dimensions: List<String>
     ): DataSource.Factory<Int, LocationModel>
+
+    /**
+     * gets a location by ID
+     */
+    @Query("""SELECT * FROM LocationModel
+        WHERE id = :id
+        ORDER BY name
+        COLLATE LOCALIZED""")
+    fun getLocationById(id: Int): LiveData<LocationModel>
 
 }

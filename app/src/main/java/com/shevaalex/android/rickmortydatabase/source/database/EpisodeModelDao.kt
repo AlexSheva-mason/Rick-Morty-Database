@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.database
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
@@ -71,5 +72,13 @@ interface EpisodeModelDao {
             seasonCode3: String,
             seasonCode4: String
     ): DataSource.Factory<Int, EpisodeModel>
+
+    /**
+     * gets episodes with provided ids
+     */
+    @Query("""SELECT * FROM EpisodeModel
+        WHERE id IN (:idList)
+        ORDER BY code""")
+    fun getEpisodesByIds(idList: List<Int>): LiveData<List<EpisodeModel>>
 
 }
