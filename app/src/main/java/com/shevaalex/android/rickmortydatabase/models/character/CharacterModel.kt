@@ -43,12 +43,12 @@ data class CharacterModel(
 
 ): ApiObjectModel, Parcelable {
 
-    val episodes: List<Int>
+    val episodeIds: List<Int>
         get() {
-            return episodeList.map {
-                it.dropWhile {char ->
+            return episodeList.mapNotNull {episodeUrl ->
+                episodeUrl.dropWhile {char ->
                     !char.isDigit()
-                }.toInt()
+                }.toIntOrNull()
             }
         }
 

@@ -8,8 +8,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class LinkedLocationModel(
         val name: String,
-        val url: String
+        val url: String,
 ): Parcelable {
+
+    val id: Int get() {
+        return url.substringAfterLast("/").toIntOrNull()?:-1
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is LinkedLocationModel) return false
