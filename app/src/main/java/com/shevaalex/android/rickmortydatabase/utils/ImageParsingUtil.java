@@ -16,7 +16,8 @@ public abstract class ImageParsingUtil {
         try {
             File file =  File.createTempFile(characterName + System.currentTimeMillis(), ".png", context.getCacheDir());
             FileOutputStream out = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
             out.close();
             imageUri = getUriForFile(context, "com.shevaalex.android.rickmortydatabase.fileprovider", file);
         } catch (IOException e) {
