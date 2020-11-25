@@ -107,6 +107,8 @@
     <string name="tv_character_list_pb">Aw Jeez…</string>
     <string name="img_location_description">Location image placeholder</string>
     <string name="img_episode_description">Episode image placeholder</string>
+    <string name="tv_location_detail_dimension_unknown">Dimension unknown</string>
+    <string name="tv_location_detail_type_unknown">Type unknown</string>
     <string name="tv_location_type">Type:</string>
     <string name="tv_location_dimension">Dimension:</string>
     <string name="tv_location_residents">Residents in this location:</string>
