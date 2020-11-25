@@ -48,13 +48,6 @@
         android:name="com.shevaalex.android.rickmortydatabase.ui.character.detail.CharacterDetailFragment"
         android:label=""
         tools:layout="@layout/fragment_character_detail">
-        <action
-            android:id="@+id/toCharacterImageFragment"
-            app:destination="@id/characterImageFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="character_object"
             android:defaultValue="@null"
@@ -114,30 +107,20 @@
         android:name="com.shevaalex.android.rickmortydatabase.ui.SettingsFragment"
         android:label="@string/fragment_settings"
         tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/characterImageFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterImageFragment"
-        android:label=""
-        tools:layout="@layout/fragment_character_image">
-        <argument
-            android:name="character_image_url"
-            android:defaultValue="none"
-            app:argType="string" />
-        <argument
-            android:name="character_name"
-            android:defaultValue="none"
-            app:argType="string" />
-    </fragment>
-    <action android:id="@+id/action_global_settingsFragment"
+    <action
+        android:id="@+id/action_global_settingsFragment"
         app:destination="@id/settingsFragment"
         app:enterAnim="@anim/slide_in_from_top"
         app:exitAnim="@anim/slide_out_to_bottom"
         app:popEnterAnim="@anim/slide_in_from_bottom"
-        app:popExitAnim="@anim/slide_out_to_top"/>
-    <action android:id="@+id/action_global_episodeDetailFragment"
-        app:destination="@id/episodeDetailFragment"/>
-    <action android:id="@+id/action_global_locationDetailFragment"
-        app:destination="@id/locationDetailFragment"/>
-    <action android:id="@+id/action_global_characterDetailFragment2"
-        app:destination="@id/characterDetailFragment2"/>
+        app:popExitAnim="@anim/slide_out_to_top" />
+    <action
+        android:id="@+id/action_global_episodeDetailFragment"
+        app:destination="@id/episodeDetailFragment" />
+    <action
+        android:id="@+id/action_global_locationDetailFragment"
+        app:destination="@id/locationDetailFragment" />
+    <action
+        android:id="@+id/action_global_characterDetailFragment2"
+        app:destination="@id/characterDetailFragment2" />
 </navigation>
