@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.di
 
 import android.app.Application
 import com.shevaalex.android.rickmortydatabase.ui.MainActivity
+import com.shevaalex.android.rickmortydatabase.ui.character.detail.CharacterDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.character.list.CharactersListFragment
 import com.shevaalex.android.rickmortydatabase.ui.episode.list.EpisodesListFragment
 import com.shevaalex.android.rickmortydatabase.ui.location.list.LocationsListFragment
@@ -31,4 +32,7 @@ interface AppComponent {
 
     //inject into EpisodesListFragment
     fun inject(fragment: EpisodesListFragment)
+
+    //inject into CharacterDetailFragment
+    fun inject(fragment: CharacterDetailFragment)
 }
