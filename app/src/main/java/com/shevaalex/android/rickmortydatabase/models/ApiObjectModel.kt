@@ -1,6 +1,8 @@
 package com.shevaalex.android.rickmortydatabase.models
 
-interface ApiObjectModel {
+import android.os.Parcelable
+
+interface ApiObjectModel: Parcelable {
 
     val id: Int
 

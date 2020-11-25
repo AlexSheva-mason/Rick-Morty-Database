@@ -1,13 +1,17 @@
 package com.shevaalex.android.rickmortydatabase.models.location
 
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants.ApiCallLocationKeys.LOCATION_RESIDENTS
+import kotlinx.android.parcel.Parcelize
 
 @Entity
+@Keep
+@Parcelize
 data class LocationModel(
 
         @PrimaryKey
