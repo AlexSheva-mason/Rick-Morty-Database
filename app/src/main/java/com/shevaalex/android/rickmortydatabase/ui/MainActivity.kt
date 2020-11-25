@@ -134,8 +134,7 @@ class MainActivity : AppCompatActivity() {
                 { integer: Int -> binding.bottomPanel.labelVisibilityMode = integer })
         // monitor navigation and remove BottomNavigationView in Detail fragments
         navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
-            if (destination.id == R.id.settingsFragment
-                    || destination.id == R.id.characterImageFragment) {
+            if (destination.id == R.id.settingsFragment) {
                 Timer().schedule(100){
                     botNavViewModel.hideBottomNav()
                 }

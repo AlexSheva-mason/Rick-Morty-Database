@@ -17,10 +17,6 @@ public abstract class StringParsing {
     private static final String EPISODE_RES_KEY = "episode_";
     public static final String KEY_NULL = "null";
 
-    public static String parseCharacterName (String characterName) {
-        return (characterName.trim().replaceAll("\\s", "_") + "_");
-    }
-
     public static String returnCharacterNameLocale(Context context, int id) {
         String characterIdToMatch = CHARACTER_RES_KEY + id;
         try {
