@@ -153,17 +153,13 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
     }
 
     private fun setCharacterImage(character: CharacterModel) {
-        activity?.let { a ->
-            binding.imageCharacter.let { imageView ->
-                Glide.with(a)
-                        .load(character.imageUrl)
-                        .apply(RequestOptions()
-                                .placeholder(R.drawable.picasso_placeholder_error)
-                                .error(R.drawable.picasso_placeholder_error)
-                        )
-                        .into(imageView)
-            }
-        }
+        Glide.with(this)
+                .load(character.imageUrl)
+                .apply(RequestOptions()
+                        .placeholder(R.drawable.picasso_placeholder_error)
+                        .error(R.drawable.picasso_placeholder_error)
+                )
+                .into(binding.imageCharacter)
     }
 
     private fun registerObservers() {
@@ -194,10 +190,8 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
     }
 
     private fun setShareButton(character: CharacterModel) {
-        activity?.let { a ->
-                binding.buttonShare?.setOnClickListener {
-                    shareImageWithGlide(a, character.name, character.imageUrl)
-                }
+        binding.buttonShare?.setOnClickListener {
+            shareImageWithGlide(character.name, character.imageUrl)
         }
     }
 

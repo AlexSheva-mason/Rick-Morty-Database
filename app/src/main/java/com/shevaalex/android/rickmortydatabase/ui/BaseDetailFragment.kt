@@ -1,6 +1,5 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -56,8 +55,8 @@ abstract class BaseDetailFragment<T: ViewBinding, S: ApiObjectModel>: BaseFragme
         _binding = null
     }
 
-    protected fun shareImageWithGlide(a: Activity, detailObjectName: String, imageUrl: String) {
-        Glide.with(a)
+    protected fun shareImageWithGlide(detailObjectName: String, imageUrl: String) {
+        Glide.with(this)
                 .asBitmap()
                 .load(imageUrl)
                 .apply(RequestOptions()
@@ -79,17 +78,17 @@ abstract class BaseDetailFragment<T: ViewBinding, S: ApiObjectModel>: BaseFragme
                         shareIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                         shareIntent.flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                         val uri: Uri = ImageParsingUtil
-                                .parseBitmapToUri(resource, underscoredName, a)
+                                .parseBitmapToUri(resource, underscoredName, requireActivity())
                         shareIntent.data = uri
                         //put extra for compatability with older apps
                         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
                         val chooser = Intent
                                 .createChooser(
                                         shareIntent,
-                                        a.getString(R.string.share_title)
+                                        requireActivity().getString(R.string.share_title)
                                 )
                         //get a list of ResolveInfo for this share intent (chooser)
-                        val resInfoList: List<ResolveInfo> = a
+                        val resInfoList: List<ResolveInfo> = requireActivity()
                                 .packageManager
                                 .queryIntentActivities(
                                         chooser,
@@ -98,7 +97,7 @@ abstract class BaseDetailFragment<T: ViewBinding, S: ApiObjectModel>: BaseFragme
                         //set the uri permissions for the activity and current ResolveInfo
                         resInfoList.forEach {
                             val packageName: String = it.activityInfo.packageName
-                            a.grantUriPermission(
+                            requireActivity().grantUriPermission(
                                     packageName,
                                     uri,
                                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -119,8 +118,8 @@ abstract class BaseDetailFragment<T: ViewBinding, S: ApiObjectModel>: BaseFragme
 
                     override fun onLoadFailed(errorDrawable: Drawable?) {
                         Toast.makeText(
-                                a,
-                                a.resources.getString(R.string.error_share_no_network),
+                                requireActivity(),
+                                requireActivity().resources.getString(R.string.error_share_no_network),
                                 Toast.LENGTH_SHORT
                         ).show()
                         super.onLoadFailed(errorDrawable)
