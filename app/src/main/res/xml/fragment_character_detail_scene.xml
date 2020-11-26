@@ -287,20 +287,6 @@
         <Constraint android:id="@+id/background_character_name">
             <PropertySet android:alpha="1" />
         </Constraint>
-        <Constraint android:id="@+id/character_status_dot" />
-        <Constraint android:id="@+id/character_status" />
-        <Constraint android:id="@+id/character_species_icon" />
-        <Constraint android:id="@+id/character_species" />
-        <Constraint android:id="@+id/character_gender_icon" />
-        <Constraint android:id="@+id/character_gender" />
-        <Constraint android:id="@+id/guideline_horizontal_1" />
-        <Constraint android:id="@+id/character_origin_title" />
-        <Constraint android:id="@+id/origin_icon" />
-        <Constraint android:id="@+id/character_origin_value" />
-        <Constraint android:id="@+id/guideline_horizontal_2" />
-        <Constraint android:id="@+id/character_last_title" />
-        <Constraint android:id="@+id/last_loc_icon" />
-        <Constraint android:id="@+id/character_last_loc_value" />
         <Constraint android:id="@+id/recyclerview_character_detail">
             <Layout
                 android:layout_width="0dp"
@@ -320,6 +306,7 @@
             <Layout
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
+                motion:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
                 motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toStartOf="parent"
                 motion:layout_constraintTop_toTopOf="parent" />
@@ -345,7 +332,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="0dp"
                 motion:layout_constraintBottom_toBottomOf="@id/image_character"
-                motion:layout_constraintEnd_toStartOf="@+id/button_share"
+                motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toEndOf="@+id/button_back"
                 motion:layout_constraintTop_toTopOf="parent" />
             <CustomAttribute
