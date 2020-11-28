@@ -56,10 +56,10 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
         viewModel.episodeList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 viewModel.searchQuery?.let {
-                    binding.tvNoResults?.visibility = View.VISIBLE
+                    binding.tvNoResults.visibility = View.VISIBLE
                 }
             } else {
-                binding.tvNoResults?.visibility = View.GONE
+                binding.tvNoResults.visibility = View.GONE
             }
             //set data to the adapter
             episodeAdapter?.submitList(it)
@@ -209,10 +209,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
         val clickedEpisode = episodeList?.getOrNull(position)
         clickedEpisode?.let {
             val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(
-                    episodeName = it.name,
-                    episodeAirDate = it.airDate,
-                    episodeCode = it.code,
-                    id = it.id
+                    episodeObject = it
             )
             findNavController().navigate(action)
         }

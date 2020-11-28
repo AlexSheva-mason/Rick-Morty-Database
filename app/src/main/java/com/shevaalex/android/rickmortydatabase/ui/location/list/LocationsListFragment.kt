@@ -56,10 +56,10 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
         viewModel.locationList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 viewModel.searchQuery?.let {
-                    binding.tvNoResults?.visibility = View.VISIBLE
+                    binding.tvNoResults.visibility = View.VISIBLE
                 }
             } else {
-                binding.tvNoResults?.visibility = View.GONE
+                binding.tvNoResults.visibility = View.GONE
             }
             //set data to the adapter
             locationAdapter?.submitList(it)
@@ -260,10 +260,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
         val clickedLocation = locationList?.getOrNull(position)
         clickedLocation?.let {
             val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(
-                    locationId = it.id,
-                    locationName = it.name,
-                    locationType = it.type,
-                    locationDimension = it.dimension
+                    locationObject = it
             )
             findNavController().navigate(action)
         }
