@@ -158,13 +158,14 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
     }
 
     protected fun setMainImage(imageUrl: String?, imageView: ImageView) {
-        Glide.with(this)
-                .load(imageUrl)
-                .apply(RequestOptions()
-                        .placeholder(R.drawable.picasso_placeholder_error)
-                        .error(R.drawable.picasso_placeholder_error)
-                )
-                .into(imageView)
+        imageUrl?.let {
+            Glide.with(this)
+                    .load(it)
+                    .apply(RequestOptions()
+                            .placeholder(R.drawable.picasso_placeholder_error)
+                    )
+                    .into(imageView)
+        }
     }
 
     protected fun setBackButton(backBtn: ImageView) {
