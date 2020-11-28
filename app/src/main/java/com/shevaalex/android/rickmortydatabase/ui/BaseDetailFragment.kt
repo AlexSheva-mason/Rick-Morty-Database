@@ -61,6 +61,10 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
     }
 
     protected fun shareImageWithGlide(detailObjectName: String, imageUrl: String?) {
+        // fragment's class name for firebase logging
+        val className = "_"
+                .plus(this.javaClass.simpleName)
+                .toLowerCase(Locale.ROOT)
         //get the bitmap from glide
         val futureBitmap: FutureTarget<Bitmap> =
                 Glide.with(this)
@@ -111,12 +115,8 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
                 //start share intent
                 startActivity(chooser)
                 //log share intent with firebase
-                val className = "_"
-                        .plus(this.javaClass.simpleName)
-                        .toLowerCase(Locale.ROOT)
                 firebaseAnalytics
                         .logEvent(FirebaseAnalytics.Event.SHARE.plus(className)) {
-                            param(FirebaseAnalytics.Param.CONTENT_TYPE, Constants.SHARE_TYPE)
                             param(FirebaseAnalytics.Param.ITEM_ID, detailObjectName)
                         }
                 //clear the bitmap

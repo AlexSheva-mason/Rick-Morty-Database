@@ -18,9 +18,11 @@ abstract class BaseFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // fragment's class name for firebase logging
+        val className = this.javaClass.simpleName
         //log screen view to firebase
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, className)
         }
     }
 }
