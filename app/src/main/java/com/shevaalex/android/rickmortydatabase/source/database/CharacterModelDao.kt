@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.source.database
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
@@ -123,5 +124,14 @@ interface CharacterModelDao {
             statuses: List<String>,
             genders: List<String>
     ): DataSource.Factory<Int, CharacterModel>
+
+    /**
+     * gets characters with provided ids
+     */
+    @Query("""SELECT * FROM CharacterModel
+        WHERE id IN (:idList)
+        ORDER BY name
+        COLLATE LOCALIZED""")
+    fun getCharactersByIds(idList: List<Int>): LiveData<List<CharacterModel>>
 
 }
