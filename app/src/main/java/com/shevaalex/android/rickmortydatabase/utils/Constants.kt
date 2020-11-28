@@ -36,6 +36,8 @@ class Constants {
         const val KEY_FRAGMENT_EPISODE_LIST_FILTER_MAP = "fragment_episode_list_filter_map"
         const val KEY_FRAGMENT_EPISODE_LIST_LIST_POSITION = "fragment_episode_list_list_position"
         const val KEY_FRAGMENT_CHAR_DETAIL_OBJECT = "fragment_character_detail_object"
+        const val KEY_FRAGMENT_LOCATION_DETAIL_OBJECT = "fragment_location_detail_object"
+        const val KEY_FRAGMENT_EPISODE_DETAIL_OBJECT = "fragment_episode_detail_object"
 
         //Shared Prefs keys
         const val KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP = "main_activity_bool_true_timestamp"
