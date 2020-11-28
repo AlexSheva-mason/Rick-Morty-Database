@@ -72,7 +72,7 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
         binding.imageLocation?.let {
             setMainImage(location.imageUrl, it)
         }
-        binding.locationName?.text = location.name
+        binding.locationName.text = location.name
         binding.locationTypeValue.text = location.type
         binding.locationDimensionValue.text = location.dimension
     }
