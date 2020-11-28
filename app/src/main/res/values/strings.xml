@@ -117,6 +117,12 @@
     <string name="tv_episode_code">S03E09</string>
     <string name="tv_episode_air_date">Air Date:</string>
     <string name="tv_episode_characters_list">Characters, seen in the episode:</string>
+    <string name="tv_episode_descr_lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Ut vitae lacus euismod, tincidunt est nec, tincidunt dolor.
+        Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Phasellus mattis iaculis nibh vel congue. Vestibulum finibus ac turpis eu elementum.
+        Aliquam volutpat, tellus ac eleifend pellentesque, orci sem mollis tellus, id viverra felis orci quis enim.
+        Phasellus suscipit lorem quis elit rutrum tristique.</string>
 
     //Database locale character names
     <string name="character_1">Rick Sanchez</string>
