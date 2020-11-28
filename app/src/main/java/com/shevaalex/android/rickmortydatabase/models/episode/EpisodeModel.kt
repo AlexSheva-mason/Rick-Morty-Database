@@ -37,6 +37,15 @@ class EpisodeModel(
 
 ): ApiObjectModel {
 
+    val characterIds: List<Int>
+        get() {
+            return charactersList.mapNotNull {characterUrl ->
+                characterUrl.dropWhile {char ->
+                    !char.isDigit()
+                }.toIntOrNull()
+            }
+        }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is EpisodeModel) return false
