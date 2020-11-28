@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "322efa5d9d2dd58e13d3f9888ccd03ae",
+    "identityHash": "bd0bb9c44418ec00156d4a440a0698c9",
     "entities": [
       {
         "tableName": "CharacterModel",
@@ -80,7 +80,7 @@
       },
       {
         "tableName": "LocationModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `type` TEXT NOT NULL, `dimension` TEXT NOT NULL, `characters` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `type` TEXT NOT NULL, `dimension` TEXT NOT NULL, `imageUrl` TEXT, `characters` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -113,6 +113,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "characters",
             "columnName": "characters",
             "affinity": "TEXT",
@@ -130,7 +136,7 @@
       },
       {
         "tableName": "EpisodeModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `airDate` TEXT NOT NULL, `code` TEXT NOT NULL, `charactersList` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `airDate` TEXT NOT NULL, `code` TEXT NOT NULL, `imageUrl` TEXT, `description` TEXT, `charactersList` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -161,6 +167,18 @@
             "columnName": "code",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "charactersList",
@@ -488,7 +506,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '322efa5d9d2dd58e13d3f9888ccd03ae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bd0bb9c44418ec00156d4a440a0698c9')"
     ]
   }
 }

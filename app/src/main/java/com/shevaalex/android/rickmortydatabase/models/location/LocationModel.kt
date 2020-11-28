@@ -26,6 +26,8 @@ data class LocationModel(
 
         var dimension: String,
 
+        override val imageUrl: String?,
+
         @SerializedName(LOCATION_RESIDENTS)
         val characters: Array<String>
 

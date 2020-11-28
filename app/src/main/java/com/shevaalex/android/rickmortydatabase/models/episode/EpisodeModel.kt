@@ -28,6 +28,10 @@ class EpisodeModel(
         @SerializedName(ApiConstants.ApiCallEpisodeKeys.EPISODE_CODE)
         val code: String,
 
+        override val imageUrl: String?,
+
+        val description: String?,
+
         @SerializedName(ApiConstants.ApiCallEpisodeKeys.EPISODE_CHARACTERS)
         val charactersList: Array<String>
 

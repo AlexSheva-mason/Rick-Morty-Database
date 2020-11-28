@@ -36,7 +36,7 @@ data class CharacterModel(
         val lastLocation: LinkedLocationModel,
 
         @SerializedName(ApiCallCharacterKeys.CHARACTER_IMAGE_URL)
-        val imageUrl: String,
+        override val imageUrl: String,
 
         @SerializedName(ApiCallCharacterKeys.CHARACTER_EPISODE_LIST)
         val episodeList: Array<String>
