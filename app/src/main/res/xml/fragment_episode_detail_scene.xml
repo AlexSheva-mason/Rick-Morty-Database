@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        android:id="@+id/middleToTop"
+        motion:constraintSetEnd="@+id/top"
+        motion:constraintSetStart="@id/middle"
+        motion:motionInterpolator="linear">
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:onTouchUp="autoComplete"
+            motion:touchAnchorId="@+id/image_episode"
+            motion:touchAnchorSide="bottom" />
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="90"
+                motion:motionTarget="@id/background_button_back" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="10"
+                motion:motionTarget="@id/background_button_share" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="10"
+                motion:motionTarget="@id/button_share" />
+            <KeyAttribute
+                android:alpha="1"
+                motion:framePosition="70"
+                motion:motionTarget="@id/image_episode" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="70"
+                motion:motionTarget="@id/image_toolbar_background" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="15"
+                motion:motionTarget="@id/background_episode_name" />
+        </KeyFrameSet>
+    </Transition>
+
+    <Transition
+        android:id="@+id/middleToBottom"
+        motion:constraintSetEnd="@+id/bottom"
+        motion:constraintSetStart="@id/middle"
+        motion:duration="500"
+        motion:motionInterpolator="linear">
+        <OnClick
+            motion:clickAction="toggle"
+            motion:targetId="@id/image_episode" />
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="10"
+                motion:motionTarget="@id/background_button_back" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="10"
+                motion:motionTarget="@id/background_button_share" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="50"
+                motion:motionTarget="@id/image_toolbar_background" />
+            <KeyPosition
+                motion:framePosition="80"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/image_toolbar_background"
+                motion:percentY="0.5" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="1"
+                motion:motionTarget="@id/episode_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="90"
+                motion:motionTarget="@id/episode_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="1"
+                motion:motionTarget="@id/background_episode_name" />
+            <KeyAttribute
+                android:alpha="1"
+                motion:framePosition="95"
+                motion:motionTarget="@id/episode_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="0"
+                motion:motionTarget="@id/recyclerview_episode_detail" />
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/middle">
+        <Constraint android:id="@+id/image_episode">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+        <Constraint android:id="@+id/image_toolbar_background">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/background_button_back">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+        <Constraint android:id="@+id/button_share">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+        <Constraint android:id="@+id/background_button_share">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_name">
+            <CustomAttribute
+                motion:attributeName="maxLines"
+                motion:customIntegerValue="4" />
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="34" />
+        </Constraint>
+        <Constraint android:id="@+id/background_episode_name">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+    </ConstraintSet>
+
+
+    <ConstraintSet
+        android:id="@+id/top"
+        motion:deriveConstraintsFrom="@id/middle">
+        <Constraint android:id="@+id/image_episode">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                motion:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toTopOf="parent" />
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/image_toolbar_background">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+        <Constraint android:id="@+id/background_button_back">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/button_share">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/background_button_share">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_name">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="0dp"
+                motion:layout_constraintBottom_toBottomOf="@id/image_location"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toEndOf="@+id/button_back"
+                motion:layout_constraintTop_toTopOf="parent" />
+            <CustomAttribute
+                motion:attributeName="maxLines"
+                motion:customIntegerValue="1" />
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="24" />
+        </Constraint>
+        <Constraint android:id="@+id/background_episode_name">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_character_description">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/episode_code_value" />
+        </Constraint>
+    </ConstraintSet>
+
+
+    <ConstraintSet
+        android:id="@+id/bottom"
+        motion:deriveConstraintsFrom="@id/middle">
+        <Constraint android:id="@+id/image_episode">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/image_toolbar_background" />
+        </Constraint>
+        <Constraint android:id="@+id/image_toolbar_background">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                motion:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toTopOf="parent" />
+            <PropertySet android:alpha="1" />
+        </Constraint>
+        <Constraint android:id="@+id/background_button_back">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/background_button_share">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_name">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="0dp"
+                motion:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
+                motion:layout_constraintEnd_toStartOf="@+id/button_share"
+                motion:layout_constraintStart_toEndOf="@+id/button_back"
+                motion:layout_constraintTop_toTopOf="parent" />
+            <CustomAttribute
+                motion:attributeName="maxLines"
+                motion:customIntegerValue="1" />
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="24" />
+            <PropertySet android:alpha="1" />
+        </Constraint>
+        <Constraint android:id="@+id/background_episode_name">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_code_value">
+            <Transform
+                android:scaleX="0.6"
+                android:scaleY="0.6" />
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_air_date_value">
+            <Transform
+                android:scaleX="0.6"
+                android:scaleY="0.6" />
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_character_description">
+            <Transform
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_character_list">
+            <Transform
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/recyclerview_episode_detail">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+    </ConstraintSet>
+
+</MotionScene>
