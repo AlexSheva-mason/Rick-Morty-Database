@@ -9,13 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding
@@ -43,10 +40,13 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         setViews()
         registerObservers()
-        setBackButton()
+        binding.buttonBack?.let {
+            setBackButton(it)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -101,7 +101,7 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
         character?.let {
             setShareButton(it)
             viewModel.setDetailObject(it)
-            setCharacterImage(it)
+            setMainImage(it.imageUrl, binding.imageCharacter)
             binding.characterName.text = it.name
             if (it.status != activity?.resources?.getString(R.string.species_unknown)) {
                 val color = TextColourUtil.getStatusColour(it.status, context)
@@ -152,16 +152,6 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
         }
     }
 
-    private fun setCharacterImage(character: CharacterModel) {
-        Glide.with(this)
-                .load(character.imageUrl)
-                .apply(RequestOptions()
-                        .placeholder(R.drawable.picasso_placeholder_error)
-                        .error(R.drawable.picasso_placeholder_error)
-                )
-                .into(binding.imageCharacter)
-    }
-
     private fun registerObservers() {
         //observe Episode list
         viewModel.episodes.observe(viewLifecycleOwner, {
@@ -182,11 +172,6 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
                 }
             }
         })
-    }
-
-
-    private fun setBackButton() {
-        binding.buttonBack?.setOnClickListener { findNavController().navigateUp() }
     }
 
     private fun setShareButton(character: CharacterModel) {

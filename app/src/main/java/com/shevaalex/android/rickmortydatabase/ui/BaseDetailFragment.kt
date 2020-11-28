@@ -10,11 +10,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.FutureTarget
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.shevaalex.android.rickmortydatabase.R
@@ -57,7 +60,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
         _binding = null
     }
 
-    protected fun shareImageWithGlide(detailObjectName: String, imageUrl: String) {
+    protected fun shareImageWithGlide(detailObjectName: String, imageUrl: String?) {
         //get the bitmap from glide
         val futureBitmap: FutureTarget<Bitmap> =
                 Glide.with(this)
@@ -152,6 +155,20 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
                 putParcelable(keyDetailObject, it)
             }
         }
+    }
+
+    protected fun setMainImage(imageUrl: String?, imageView: ImageView) {
+        Glide.with(this)
+                .load(imageUrl)
+                .apply(RequestOptions()
+                        .placeholder(R.drawable.picasso_placeholder_error)
+                        .error(R.drawable.picasso_placeholder_error)
+                )
+                .into(imageView)
+    }
+
+    protected fun setBackButton(backBtn: ImageView) {
+        backBtn.setOnClickListener { findNavController().navigateUp() }
     }
 
     protected abstract fun injectFragment()
