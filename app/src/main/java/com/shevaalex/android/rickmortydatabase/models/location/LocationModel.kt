@@ -33,6 +33,15 @@ data class LocationModel(
 
 ): ApiObjectModel {
 
+    val characterIds: List<Int>
+        get() {
+            return characters.mapNotNull {characterUrl ->
+                characterUrl.dropWhile {char ->
+                    !char.isDigit()
+                }.toIntOrNull()
+            }
+        }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is LocationModel) return false
