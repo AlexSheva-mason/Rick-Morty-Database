@@ -165,7 +165,7 @@
         tools:text="December 2, 2013" />
 
     <TextView
-        android:id="@+id/episode_character_description"
+        android:id="@+id/episode_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -189,7 +189,7 @@
         android:textAppearance="?attr/textAppearanceSubtitle1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/episode_character_description" />
+        app:layout_constraintTop_toBottomOf="@id/episode_description" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_episode_detail"
