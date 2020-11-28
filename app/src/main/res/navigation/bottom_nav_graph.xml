@@ -60,25 +60,10 @@
         android:label=""
         tools:layout="@layout/fragment_location_detail">
         <argument
-            android:name="location_id"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="location_name"
-            android:defaultValue="Name"
-            app:argType="string" />
-        <argument
-            android:name="location_type"
-            android:defaultValue="Type"
-            app:argType="string" />
-        <argument
-            android:name="location_dimension"
-            android:defaultValue="Dimension"
-            app:argType="string" />
-        <argument
-            android:name="location_residents"
-            android:defaultValue="zzz"
-            app:argType="string" />
+            android:name="location_object"
+            android:defaultValue="@null"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.location.LocationModel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/episodeDetailFragment"
@@ -86,21 +71,10 @@
         android:label=""
         tools:layout="@layout/fragment_episode_detail">
         <argument
-            android:name="episode_name"
-            android:defaultValue="Name"
-            app:argType="string" />
-        <argument
-            android:name="episode_air_date"
-            android:defaultValue="01/01/2020"
-            app:argType="string" />
-        <argument
-            android:name="episode_code"
-            android:defaultValue="Dimension"
-            app:argType="string" />
-        <argument
-            android:name="id"
-            android:defaultValue="0"
-            app:argType="integer" />
+            android:name="episode_object"
+            android:defaultValue="@null"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
