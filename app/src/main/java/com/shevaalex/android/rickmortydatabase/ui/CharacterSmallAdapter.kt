@@ -12,7 +12,7 @@ import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil
 
 class CharacterSmallAdapter(
         private val characterListener: CharacterClickListener
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<CharacterSmallAdapter.CharacterSmallViewHolder>() {
 
     private var characterList: List<CharacterModel>? = null
 
@@ -20,7 +20,7 @@ class CharacterSmallAdapter(
         this.characterList = characterList
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterSmallViewHolder {
         val itemBind = ItemCharacterSmallBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -29,25 +29,23 @@ class CharacterSmallAdapter(
         return CharacterSmallViewHolder(itemBind)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CharacterSmallViewHolder, position: Int) {
         val character: CharacterModel? = characterList?.get(position)
-        when (holder) {
-            is CharacterSmallViewHolder -> character?.let {
-                holder.bind(
-                        character = it,
-                        characterListener = characterListener
-                )
-            }
+        character?.let {
+            holder.bind(
+                    character = it,
+                    characterListener = characterListener
+            )
         }
     }
 
     override fun getItemCount(): Int {
-        return characterList?.size?:0
+        return characterList?.size ?: 0
     }
 
     class CharacterSmallViewHolder(
             private val itemBind: ItemCharacterSmallBinding
-    ): RecyclerView.ViewHolder(itemBind.root) {
+    ) : RecyclerView.ViewHolder(itemBind.root) {
 
         fun bind(character: CharacterModel, characterListener: CharacterClickListener) {
             val context = itemBind.root.context
@@ -58,7 +56,6 @@ class CharacterSmallAdapter(
                     .load(character.imageUrl)
                     .apply(RequestOptions()
                             .placeholder(R.drawable.picasso_placeholder_error)
-                            .error(R.drawable.picasso_placeholder_error)
                     )
                     .into(itemBind.characterImage)
             itemBind.characterNameValue.text = character.name

@@ -9,7 +9,7 @@ import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 class CharacterDetailAdapter(
         private val placeHolderString: String,
         private val episodeListener: EpisodeListener
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<CharacterDetailAdapter.EpisodeViewHolder>() {
 
     private var episodeList: List<EpisodeModel>? = null
 
@@ -17,7 +17,7 @@ class CharacterDetailAdapter(
         this.episodeList = episodeList
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {
         val itemBind = ItemEpisodeBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -26,24 +26,24 @@ class CharacterDetailAdapter(
         return EpisodeViewHolder(itemBind)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
         val episode: EpisodeModel? = episodeList?.get(position)
-        when (holder) {
-            is EpisodeViewHolder -> episode?.let { holder.bind(
+        episode?.let {
+            holder.bind(
                     episode = it,
                     placeHolderString = placeHolderString,
                     episodeListener = episodeListener
-            ) }
+            )
         }
     }
 
     override fun getItemCount(): Int {
-        return episodeList?.size?:0
+        return episodeList?.size ?: 0
     }
 
     class EpisodeViewHolder(
             private val itemBind: ItemEpisodeBinding
-    ): RecyclerView.ViewHolder(itemBind.root) {
+    ) : RecyclerView.ViewHolder(itemBind.root) {
 
         fun bind(episode: EpisodeModel, placeHolderString: String, episodeListener: EpisodeListener) {
             itemBind.root.setOnClickListener {
