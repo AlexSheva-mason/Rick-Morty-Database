@@ -142,9 +142,6 @@ dependencies {
     // Recyclerview
     implementation "androidx.recyclerview:recyclerview:1.2.0-alpha02"
 
-    // Volley
-    implementation 'com.android.volley:volley:1.1.1'
-
     // Retrofit, Gson
     def retrofitVersion = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
