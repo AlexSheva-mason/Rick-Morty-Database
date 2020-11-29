@@ -7,7 +7,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.shevaalex.android.rickmortydatabase.R
 import kotlinx.android.synthetic.main.fragment_characters_list.view.*
-import me.zhanghai.android.fastscroll.FastScrollerBuilder
 
 /**
  * Use everywhere except from Activity (Custom View, Fragment, Dialogs, DialogFragments).
@@ -75,32 +73,22 @@ fun <T : RecyclerView.ViewHolder> Fragment.setGridOrLinearRecyclerView(
         recyclerView: RecyclerView,
         adapter: RecyclerView.Adapter<T>?) {
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        activity?.let {
-            val spanCount = it.applicationContext
-                    .resources
-                    .getInteger(R.integer.grid_span_count)
-            val gridLayoutManager = GridLayoutManager(
-                    it.applicationContext,
-                    spanCount,
-                    RecyclerView.HORIZONTAL,
-                    false
-            )
-            recyclerView.layoutManager = gridLayoutManager
-            // apply spacing to gridlayout
-            val itemDecoration = CustomItemDecoration(it, false)
-            recyclerView.addItemDecoration(itemDecoration)
-        }
+        val spanCount = requireContext()
+                .resources
+                .getInteger(R.integer.grid_span_count)
+        val gridLayoutManager = GridLayoutManager(
+                requireContext(),
+                spanCount,
+                RecyclerView.HORIZONTAL,
+                false
+        )
+        recyclerView.layoutManager = gridLayoutManager
+        // apply spacing to gridlayout
+        val itemDecoration = CustomItemDecoration(requireActivity(), false)
+        recyclerView.addItemDecoration(itemDecoration)
     } else {
-        activity?.let {
-            val linearLayoutManager = LinearLayoutManager(it)
-            recyclerView.layoutManager = linearLayoutManager
-            val drawable = ContextCompat.getDrawable(it, R.drawable.track_drawable)
-            drawable?.let {track ->
-                FastScrollerBuilder(recyclerView)
-                        .setTrackDrawable(track)
-                        .build()
-            }
-        }
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = linearLayoutManager
     }
     recyclerView.setHasFixedSize(true)
     //prevent the adapter to restore the list position
