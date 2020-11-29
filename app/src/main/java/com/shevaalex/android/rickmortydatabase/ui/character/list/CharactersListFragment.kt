@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,13 +16,14 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 
 
-class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>(), CharacterAdapter.OnCharacterListener {
+class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>() {
 
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<CharacterListViewModel>
@@ -55,8 +55,11 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         binding.recyclerviewCharacter.setHasFixedSize(true)
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = CharacterAdapter(
-                requireActivity(),
-                this
+                object: CharacterAdapter.CharacterListener{
+                    override fun onCharacterClick(character: CharacterModel) {
+                        navigateCharacterDetail(character)
+                    }
+                }
         )
         characterAdapter?.stateRestorationPolicy =
                 RecyclerView.Adapter.StateRestorationPolicy.PREVENT
@@ -335,13 +338,9 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         }
     }
 
-    override fun onCharacterClick(position: Int, imageView: ImageView) {
-        val mCharacterList = characterAdapter?.currentList
-        val clickedChar = mCharacterList?.getOrNull(position)
-        clickedChar?.let {
-            val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(it)
-            findNavController().navigate(action)
-        }
+    private fun navigateCharacterDetail(character: CharacterModel) {
+        val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(character)
+        findNavController().navigate(action)
     }
 
 }
