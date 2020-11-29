@@ -148,11 +148,6 @@ class MainActivity : AppCompatActivity() {
                 botNavViewModel.setLabelSelected()
             }
         }
-        // add bottom menu listener to prevent posibbility of double clicking the same item
-        // and refreshing or backing up the old search
-        binding.bottomPanel.setOnNavigationItemReselectedListener {
-            // do nothing
-        }
     }
 
     private fun composeMessage(stateResource: StateResource, snackColor: Int? = null) {
