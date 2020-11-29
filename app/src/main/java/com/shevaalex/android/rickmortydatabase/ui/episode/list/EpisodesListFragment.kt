@@ -23,7 +23,7 @@ import javax.inject.Inject
 class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), OnEpisodeClickListener {
 
     @Inject
-    lateinit var viewModelFactory: MyViewModelFactory<EpisodeListViewModel>
+    lateinit var viewModelFactory: DiViewModelFactory<EpisodeListViewModel>
 
     override val viewModel: EpisodeListViewModel by activityViewModels {
         viewModelFactory

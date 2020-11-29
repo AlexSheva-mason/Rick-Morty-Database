@@ -18,13 +18,13 @@ import com.shevaalex.android.rickmortydatabase.ui.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter.CharacterClickListener
 import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.MyViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
 import javax.inject.Inject
 
 class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, EpisodeModel>() {
 
     @Inject
-    lateinit var viewModelFactory: MyViewModelFactory<EpisodeDetailViewModel>
+    lateinit var viewModelFactory: DiViewModelFactory<EpisodeDetailViewModel>
 
     private var adapter: CharacterSmallAdapter? = null
 

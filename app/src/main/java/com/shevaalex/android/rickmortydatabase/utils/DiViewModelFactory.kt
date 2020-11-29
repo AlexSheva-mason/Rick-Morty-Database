@@ -7,7 +7,7 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
-class MyViewModelFactory<VM : ViewModel> @Inject constructor(
+class DiViewModelFactory<VM : ViewModel> @Inject constructor(
     private val viewModelProvider: @JvmSuppressWildcards Provider<VM>
 ) : ViewModelProvider.Factory {
 

@@ -17,13 +17,13 @@ import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
 import com.shevaalex.android.rickmortydatabase.ui.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter
 import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.MyViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
 import javax.inject.Inject
 
 class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding, LocationModel>() {
 
     @Inject
-    lateinit var viewModelFactory: MyViewModelFactory<LocationDetailViewModel>
+    lateinit var viewModelFactory: DiViewModelFactory<LocationDetailViewModel>
 
     private var adapter: CharacterSmallAdapter? = null
 

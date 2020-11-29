@@ -12,9 +12,9 @@ import com.shevaalex.android.rickmortydatabase.models.location.LocationPageModel
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
-import com.shevaalex.android.rickmortydatabase.source.network.requests.CharacterApi
-import com.shevaalex.android.rickmortydatabase.source.network.requests.EpisodeApi
-import com.shevaalex.android.rickmortydatabase.source.network.requests.LocationApi
+import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
+import com.shevaalex.android.rickmortydatabase.source.remote.EpisodeApi
+import com.shevaalex.android.rickmortydatabase.source.remote.LocationApi
 import com.shevaalex.android.rickmortydatabase.utils.UiTranslateUtils
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource

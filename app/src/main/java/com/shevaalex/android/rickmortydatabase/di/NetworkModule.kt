@@ -1,9 +1,9 @@
 package com.shevaalex.android.rickmortydatabase.di
 
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants
-import com.shevaalex.android.rickmortydatabase.source.network.requests.CharacterApi
-import com.shevaalex.android.rickmortydatabase.source.network.requests.EpisodeApi
-import com.shevaalex.android.rickmortydatabase.source.network.requests.LocationApi
+import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
+import com.shevaalex.android.rickmortydatabase.source.remote.EpisodeApi
+import com.shevaalex.android.rickmortydatabase.source.remote.LocationApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.CONNECTION_TIMEOUT
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.READ_TIMEOUT
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.WRITE_TIMEOUT

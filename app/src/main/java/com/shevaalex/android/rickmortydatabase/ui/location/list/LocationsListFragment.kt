@@ -23,7 +23,7 @@ import javax.inject.Inject
 class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), OnLocationClickListener {
 
     @Inject
-    lateinit var viewModelFactory: MyViewModelFactory<LocationListViewModel>
+    lateinit var viewModelFactory: DiViewModelFactory<LocationListViewModel>
 
     override val viewModel: LocationListViewModel by activityViewModels {
         viewModelFactory

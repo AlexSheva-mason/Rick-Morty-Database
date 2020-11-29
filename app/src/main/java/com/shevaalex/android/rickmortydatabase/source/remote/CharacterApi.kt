@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.source.network.requests
+package com.shevaalex.android.rickmortydatabase.source.remote
 
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterPageModel

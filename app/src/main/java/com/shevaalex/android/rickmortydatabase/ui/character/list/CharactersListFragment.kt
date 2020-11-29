@@ -26,7 +26,7 @@ import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Cons
 class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>(), CharacterAdapter.OnCharacterListener {
 
     @Inject
-    lateinit var viewModelFactory: MyViewModelFactory<CharacterListViewModel>
+    lateinit var viewModelFactory: DiViewModelFactory<CharacterListViewModel>
 
     override val viewModel: CharacterListViewModel by activityViewModels {
         viewModelFactory

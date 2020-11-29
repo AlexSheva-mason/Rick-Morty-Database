@@ -18,7 +18,7 @@ import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
-import com.shevaalex.android.rickmortydatabase.utils.MyViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
@@ -31,7 +31,7 @@ import kotlin.concurrent.schedule
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var viewModelFactory: MyViewModelFactory<InitViewModel>
+    lateinit var viewModelFactory: DiViewModelFactory<InitViewModel>
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var connectionStatus: ConnectionLiveData

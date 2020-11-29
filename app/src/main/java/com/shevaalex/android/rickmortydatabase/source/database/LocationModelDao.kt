@@ -20,7 +20,7 @@ interface LocationModelDao {
      * gets the last location to compare databases
       */
     @Query("SELECT * FROM LocationModel ORDER BY id DESC LIMIT 1")
-    suspend fun getLastInLocationTable(): LocationModel
+    suspend fun getLastInLocationTable(): LocationModel?
 
     /**
      * gets the entry count to compare databases

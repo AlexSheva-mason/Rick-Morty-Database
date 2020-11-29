@@ -16,7 +16,7 @@ interface CharacterModelDao {
      * gets the last character to compare databases
      */
     @Query("SELECT * FROM CharacterModel ORDER BY id DESC LIMIT 1")
-    suspend fun getLastInCharacterTable(): CharacterModel
+    suspend fun getLastInCharacterTable(): CharacterModel?
 
     /**
      * gets the entry count to compare databases
