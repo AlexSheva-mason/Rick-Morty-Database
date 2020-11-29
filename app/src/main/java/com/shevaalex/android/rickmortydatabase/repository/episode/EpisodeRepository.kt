@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.episode
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.shevaalex.android.rickmortydatabase.models.character.RecentQuery
+import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.source.database.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao

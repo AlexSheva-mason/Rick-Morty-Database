@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.location
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.shevaalex.android.rickmortydatabase.models.character.RecentQuery
+import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
 import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao

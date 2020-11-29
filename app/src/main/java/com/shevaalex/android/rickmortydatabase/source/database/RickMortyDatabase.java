@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
-import com.shevaalex.android.rickmortydatabase.models.character.RecentQuery;
+import com.shevaalex.android.rickmortydatabase.models.RecentQuery;
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel;
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel;
 

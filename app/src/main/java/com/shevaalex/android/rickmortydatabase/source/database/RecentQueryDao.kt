@@ -1,7 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.source.database
 
 import androidx.room.*
-import com.shevaalex.android.rickmortydatabase.models.character.RecentQuery
+import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.flow.Flow
 

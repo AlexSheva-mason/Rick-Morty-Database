@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.character.RecentQuery
+import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants

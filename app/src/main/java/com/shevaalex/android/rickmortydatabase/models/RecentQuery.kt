@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.models.character
+package com.shevaalex.android.rickmortydatabase.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
