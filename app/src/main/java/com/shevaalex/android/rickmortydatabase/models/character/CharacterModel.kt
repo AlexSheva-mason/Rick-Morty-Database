@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants.ApiCallCharacterKeys
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Entity
 @Keep

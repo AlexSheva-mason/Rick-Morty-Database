@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.models.character
 
 import android.os.Parcelable
 import androidx.annotation.Keep
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Keep
 @Parcelize

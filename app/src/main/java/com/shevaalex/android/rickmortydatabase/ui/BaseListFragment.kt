@@ -20,7 +20,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.utils.*
-import kotlinx.android.synthetic.main.fragment_characters_list.view.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
@@ -119,7 +118,7 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
     private fun setupSearchView() {
         val toolbar: Toolbar? = getToolbar()
         toolbar?.let {
-            val searchView: SearchView? = it.search_view
+            val searchView: SearchView? = it.findViewById(R.id.search_view)
             val searchPlate: SearchView.SearchAutoComplete? =
                     searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
             searchPlate?.setTextAppearance(R.style.TextAppearance_RM_SearchView_Hint)
@@ -221,7 +220,7 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
      */
     private fun restoreSearchViewState() {
         viewModel.searchQuery?.let {
-            val searchView: SearchView? = getToolbar()?.search_view
+            val searchView: SearchView? = getToolbar()?.findViewById(R.id.search_view)
             if (it.isNotBlank()) {
                 searchView?.setQuery(it, false)
                 searchView?.isIconified = false

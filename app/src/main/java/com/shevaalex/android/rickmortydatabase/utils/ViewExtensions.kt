@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.shevaalex.android.rickmortydatabase.R
-import kotlinx.android.synthetic.main.fragment_characters_list.view.*
 
 /**
  * Use everywhere except from Activity (Custom View, Fragment, Dialogs, DialogFragments).
@@ -64,7 +64,7 @@ fun <T> Fragment.getRecentQueriesAdapter(list: List<T>): ArrayAdapter<T> =
                 list)
 
 fun Fragment.clearUi(toolbar: Toolbar) {
-    toolbar.search_view?.clearFocus()
+    toolbar.findViewById<SearchView>(R.id.search_view)?.clearFocus()
     view?.requestFocus()
     view?.hideKeyboard()
 }
