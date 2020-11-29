@@ -85,7 +85,7 @@
                 motion:motionTarget="@id/episode_name" />
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="0"
+                motion:framePosition="1"
                 motion:motionTarget="@id/recyclerview_episode_detail" />
         </KeyFrameSet>
     </Transition>
@@ -152,7 +152,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="0dp"
-                motion:layout_constraintBottom_toBottomOf="@id/image_location"
+                motion:layout_constraintBottom_toBottomOf="@id/image_episode"
                 motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toEndOf="@+id/button_back"
                 motion:layout_constraintTop_toTopOf="parent" />
@@ -166,7 +166,7 @@
         <Constraint android:id="@+id/background_episode_name">
             <PropertySet android:alpha="0" />
         </Constraint>
-        <Constraint android:id="@+id/episode_character_description">
+        <Constraint android:id="@+id/episode_description">
             <Layout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -242,7 +242,7 @@
                 android:scaleY="0.6" />
             <PropertySet android:alpha="0" />
         </Constraint>
-        <Constraint android:id="@+id/episode_character_description">
+        <Constraint android:id="@+id/episode_description">
             <Transform
                 android:scaleX="0.8"
                 android:scaleY="0.8" />

@@ -169,38 +169,41 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="@color/material_on_background_emphasis_medium"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/episode_character_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/episode_code_value"
         tools:text="@string/tv_episode_descr_lorem_ipsum" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="episode_description,episode_code_value" />
 
     <TextView
         android:id="@+id/episode_character_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:text="@string/tv_episode_characters_list"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/episode_description" />
+        app:layout_constraintTop_toBottomOf="@id/barrier1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_episode_detail"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
-        app:fastScrollEnabled="true"
-        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
