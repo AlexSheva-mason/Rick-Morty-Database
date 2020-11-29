@@ -15,12 +15,12 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
-import com.shevaalex.android.rickmortydatabase.ui.episode.list.EpisodeAdapter.OnEpisodeClickListener
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 
-class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), OnEpisodeClickListener {
+class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
 
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<EpisodeListViewModel>
@@ -39,7 +39,14 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        episodeAdapter = EpisodeAdapter(requireContext(), this)
+        episodeAdapter = EpisodeAdapter(
+                placeHolderString = getString(R.string.episode_name_placeholder),
+                episodeListener = object: EpisodeAdapter.EpisodeListener{
+                    override fun onEpisodeClick(episode: EpisodeModel) {
+                        navigateEpisodeDetail(episode)
+                    }
+                }
+        )
         setGridOrLinearRecyclerView(
                 binding.recyclerviewEpisode,
                 episodeAdapter
@@ -204,14 +211,11 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>(), On
             Constants.KEY_MAP_FILTER_EPISODE_S_04 to "S04"
     )
 
-    override fun onEpisodeClick(position: Int, v: View) {
-        val episodeList = episodeAdapter?.currentList
-        val clickedEpisode = episodeList?.getOrNull(position)
-        clickedEpisode?.let {
-            val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(
-                    episodeObject = it
-            )
-            findNavController().navigate(action)
-        }
+    private fun navigateEpisodeDetail(episode: EpisodeModel) {
+        val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(
+                episodeObject = episode
+        )
+        findNavController().navigate(action)
     }
+
 }
