@@ -15,12 +15,12 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding
+import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
 import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
-import com.shevaalex.android.rickmortydatabase.ui.location.list.LocationAdapter.OnLocationClickListener
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 
-class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), OnLocationClickListener {
+class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
 
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<LocationListViewModel>
@@ -39,7 +39,11 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        locationAdapter = LocationAdapter(this)
+        locationAdapter = LocationAdapter(object: LocationAdapter.LocationListener{
+            override fun onLocationClick(location: LocationModel) {
+                navigateLocationDetail(location)
+            }
+        })
         setGridOrLinearRecyclerView(
                 binding.recyclerviewLocation,
                 locationAdapter
@@ -255,14 +259,11 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>(), 
             Constants.KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN to getString(R.string.character_gender_unknown)
     )
 
-    override fun onLocationClick(position: Int, v: View) {
-        val locationList = locationAdapter?.currentList
-        val clickedLocation = locationList?.getOrNull(position)
-        clickedLocation?.let {
-            val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(
-                    locationObject = it
-            )
-            findNavController().navigate(action)
-        }
+    private fun navigateLocationDetail(location: LocationModel) {
+        val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(
+                locationObject = location
+        )
+        findNavController().navigate(action)
     }
+
 }
