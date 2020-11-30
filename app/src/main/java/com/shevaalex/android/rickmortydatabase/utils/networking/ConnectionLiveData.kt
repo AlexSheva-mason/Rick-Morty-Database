@@ -1,46 +1,43 @@
-package com.shevaalex.android.rickmortydatabase.utils.networking;
+package com.shevaalex.android.rickmortydatabase.utils.networking
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.Context
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkCapabilities.*
+import androidx.lifecycle.LiveData
 
-import androidx.lifecycle.LiveData;
+class ConnectionLiveData(private val context: Context) : LiveData<Boolean>() {
 
-import timber.log.Timber;
+    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
 
-public class ConnectionLiveData extends LiveData<Boolean> {
-    private final Context context;
-    private final ConnectivityManager connectivityManager;
-
-    public ConnectionLiveData(Context context) {
-        this.context = context;
-        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    override fun onActive() {
+        val cm = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        networkCallback = createNetworkCallback()
+        cm.registerDefaultNetworkCallback(networkCallback)
     }
 
-    @Override
-    protected void onActive() {
-        super.onActive();
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        context.registerReceiver(networkReceiver, filter);
+    override fun onInactive() {
+        val cm = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        cm.unregisterNetworkCallback(networkCallback)
     }
 
-    @Override
-    protected void onInactive() {
-        super.onInactive();
-        Timber.d("onInactive: unregistering the BroadcastReceiver");
-        context.unregisterReceiver(networkReceiver);
-    }
+    private fun createNetworkCallback() = object : ConnectivityManager.NetworkCallback() {
 
-    private final BroadcastReceiver networkReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-            boolean isConnected = activeNetwork != null &&
-                    activeNetwork.isConnectedOrConnecting();
-            postValue(isConnected);
+        override fun onCapabilitiesChanged(
+                network: Network,
+                networkCapabilities: NetworkCapabilities
+        ) {
+            val isInternet = networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET)
+            val isValidated = networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED)
+            postValue(isInternet && isValidated)
         }
-    };
+
+        override fun onLost(network: Network) {
+            postValue(false)
+        }
+
+    }
+
 }

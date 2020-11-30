@@ -5,6 +5,8 @@ import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,12 +22,26 @@ constructor(
     private val _dbIsSynced = MutableLiveData(false)
     val dbIsSynced: LiveData<Boolean> get() = _dbIsSynced
 
+    init {
+        viewModelScope.launch {
+            /*
+            waits 1sec and sets isNetworkAvailable to false (starting an app in a flight mode
+            or with internet switched off doesn't trigger ConnectivityManager.NetworkCallback()
+            in ConnectionLiveData to post any value
+            */
+            delay(1000)
+            if (isNetworkAvailable.value == null) {
+                isNetworkAvailable.value = false
+            }
+        }
+    }
+
     //emits dummy livedata with network error (no internet connection)
     private val noInternetError: LiveData<StateResource> = liveData {
         emit(StateResource(Status.Error, Message.NoInternet))
     }
 
-    val test: LiveData<StateResource> = Transformations.switchMap(isNetworkAvailable) { isNetworkAvailable ->
+    val init: LiveData<StateResource> = Transformations.switchMap(isNetworkAvailable) { isNetworkAvailable ->
         if (isNetworkAvailable) {
             Timber.i("CONNECTED")
             initRepository.getDbStateResource()
@@ -40,7 +56,9 @@ constructor(
     }
 
     fun isNetworkAvailable(isConnected: Boolean) {
-        isNetworkAvailable.value = isConnected
+        if (isNetworkAvailable.value != isConnected) {
+            isNetworkAvailable.value = isConnected
+        }
     }
 
 }

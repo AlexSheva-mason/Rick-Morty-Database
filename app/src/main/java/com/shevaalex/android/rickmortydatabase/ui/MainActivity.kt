@@ -46,13 +46,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as RmApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
+        restoreInstanceState(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        connectionStatus = ConnectionLiveData(this)
         //if database has been recently checked -> skip db sync
         if (isDbCheckNeeded()) getInitState()
-        connectionStatus = ConnectionLiveData(this)
-        restoreInstanceState(savedInstanceState)
         setupViews()
     }
 
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun dbInit() {
-        initViewModel.test.observe(this, {
+        initViewModel.init.observe(this, {
             it?.let {stateResource ->
                 val snackColor: Int?
                 when (stateResource.status) {
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun unSubscribe() {
         connectionStatus.removeObservers(this)
-        initViewModel.test.removeObservers(this)
+        initViewModel.init.removeObservers(this)
     }
 
     private fun setupViews() {
