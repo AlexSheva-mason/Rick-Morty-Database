@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.*
+import android.os.Build
 import androidx.lifecycle.LiveData
 
 class ConnectionLiveData(private val context: Context) : LiveData<Boolean>() {
@@ -24,6 +25,18 @@ class ConnectionLiveData(private val context: Context) : LiveData<Boolean>() {
     }
 
     private fun createNetworkCallback() = object : ConnectivityManager.NetworkCallback() {
+
+        override fun onAvailable(network: Network) {
+            /* only starting from version Build.VERSION_CODES.O onAvailable() will always immediately
+             be followed by a call to onCapabilitiesChanged.
+             On versions below Build.VERSION_CODES.O when app is started with internet connection
+             nothing apart from onAvailable() is being called, thus we need to pass postValue(true)
+             here (although in some cases it could be false positive)
+             */
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                postValue(true)
+            }
+        }
 
         override fun onCapabilitiesChanged(
                 network: Network,
