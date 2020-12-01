@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    //CharacterDetailFragment toolbar
-    <dimen name="cdf_toolbar_expanded_title_text_spacing">0dp</dimen>
-</resources>
