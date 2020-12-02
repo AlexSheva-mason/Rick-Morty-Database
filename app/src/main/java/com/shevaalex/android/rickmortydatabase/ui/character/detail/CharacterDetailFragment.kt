@@ -157,7 +157,11 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
     private fun registerObservers() {
         //observe Episode list
         viewModel.episodes.observe(viewLifecycleOwner, {
-            it?.let { adapter?.setEpisodeList(it) }
+            it?.let {
+                adapter?.setEpisodeList(it)
+                //explicilty reset the RV adapter, otherwise RV is invisible at the start of transition or landscape
+                binding.recyclerviewCharacterDetail.adapter = adapter
+            }
         })
         //observe Locations and set click listeners
         viewModel.lastLocation.observe(viewLifecycleOwner, {

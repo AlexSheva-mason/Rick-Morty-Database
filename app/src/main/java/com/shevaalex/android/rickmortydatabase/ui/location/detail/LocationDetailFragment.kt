@@ -100,6 +100,8 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
         viewModel.characters.observe(viewLifecycleOwner, { characters ->
             characters?.let {
                 adapter?.setCharacterList(it)
+                //explicilty reset the RV adapter, otherwise RV is invisible at the start of transition or landscape
+                binding.recyclerviewLocationDetail.adapter = adapter
             }
             binding.locationResidentsNone.visibility = characters?.let {
                 View.GONE
