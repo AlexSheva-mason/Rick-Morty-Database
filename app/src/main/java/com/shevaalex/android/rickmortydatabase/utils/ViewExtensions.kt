@@ -73,9 +73,7 @@ fun <T : RecyclerView.ViewHolder> Fragment.setGridOrLinearRecyclerView(
         recyclerView: RecyclerView,
         adapter: RecyclerView.Adapter<T>?) {
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        val spanCount = requireContext()
-                .resources
-                .getInteger(R.integer.grid_span_count)
+        val spanCount = calculateNumberOfRows(requireContext())
         val gridLayoutManager = GridLayoutManager(
                 requireContext(),
                 spanCount,
@@ -84,7 +82,11 @@ fun <T : RecyclerView.ViewHolder> Fragment.setGridOrLinearRecyclerView(
         )
         recyclerView.layoutManager = gridLayoutManager
         // apply spacing to gridlayout
-        val itemDecoration = CustomItemDecoration(requireActivity(), false)
+        val rowSpacing = getDimensPx(requireContext(), R.dimen.item_grid_spacing)
+        val itemDecoration = CustomItemDecoration(
+                spanCount = spanCount,
+                minimalSpacing = rowSpacing
+        )
         recyclerView.addItemDecoration(itemDecoration)
     } else {
         val linearLayoutManager = LinearLayoutManager(requireContext())

@@ -20,9 +20,7 @@ import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
 import com.shevaalex.android.rickmortydatabase.ui.BaseDetailFragment
-import com.shevaalex.android.rickmortydatabase.utils.CustomItemDecoration
-import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
-import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil
+import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 
@@ -66,11 +64,15 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
         // GridLayout in landscape mode
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             activity?.let {
-                val spanCount = it.resources.getInteger(R.integer.grid_span_count)
+                val spanCount = calculateNumberOfColumns(requireContext())
                 val gridLayoutManager = GridLayoutManager(it, spanCount)
                 binding.recyclerviewCharacterDetail.layoutManager = gridLayoutManager
                 // apply spacing to gridlayout
-                val itemDecoration = CustomItemDecoration(it, false)
+                val columnSpacing = getDimensPx(requireContext(), R.dimen.item_grid_spacing)
+                val itemDecoration = CustomItemDecoration(
+                        spanCount = spanCount,
+                        minimalSpacing = columnSpacing
+                )
                 binding.recyclerviewCharacterDetail.addItemDecoration(itemDecoration)
             }
         // LinearLayout in portrait mode
