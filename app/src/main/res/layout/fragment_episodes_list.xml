@@ -21,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:iconifiedByDefault="true"
-            app:queryHint="@string/elf_searchview_query_hint" />
+            app:queryHint="@string/elf_searchview_query_hint"
+            tools:ignore="InconsistentLayout" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 

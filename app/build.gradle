@@ -92,10 +92,12 @@ android {
 
 }
 
+@SuppressWarnings('GrMethodMayBeStatic')
 def generateVersionCode() {
     return ext.minimumSdkVersion * 10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
 }
 
+@SuppressWarnings('GrMethodMayBeStatic')
 def generateVersionName() {
     String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
     if (ext.versionClassifier != null && !ext.versionClassifier.isEmpty()) {
@@ -140,7 +142,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Recyclerview
-    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha02"
+    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha06"
 
     // Retrofit, Gson
     def retrofitVersion = "2.9.0"

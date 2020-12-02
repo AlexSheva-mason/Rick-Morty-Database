@@ -1,3 +1,5 @@
+@file:Suppress("PropertyName")
+
 package com.shevaalex.android.rickmortydatabase.ui
 
 import androidx.lifecycle.*
