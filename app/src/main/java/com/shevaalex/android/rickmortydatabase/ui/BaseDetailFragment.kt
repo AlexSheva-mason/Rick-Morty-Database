@@ -162,7 +162,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
             Glide.with(this)
                     .load(it)
                     .apply(RequestOptions()
-                            .placeholder(R.drawable.picasso_placeholder_error)
+                            .placeholder(R.drawable.image_placeholder_error)
                     )
                     .into(imageView)
         }

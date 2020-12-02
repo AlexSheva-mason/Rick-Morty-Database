@@ -14,7 +14,7 @@
         android:adjustViewBounds="true"
         android:elevation="4dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/picasso_placeholder_error"
+        android:src="@drawable/image_placeholder_error"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

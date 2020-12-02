@@ -58,7 +58,7 @@ class CharacterAdapter(
             Glide.with(context)
                     .load(character.imageUrl)
                     .apply(RequestOptions()
-                            .placeholder(R.drawable.picasso_placeholder_error)
+                            .placeholder(R.drawable.image_placeholder_error)
                     )
                     .into(itemBind.characterImage)
             itemBind.characterName.text = character.name
