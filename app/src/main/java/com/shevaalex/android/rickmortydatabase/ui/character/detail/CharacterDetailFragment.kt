@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +24,7 @@ import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 
-class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding, CharacterModel>() {
+class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBinding, CharacterModel>() {
 
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<CharacterDetailViewModel>
@@ -75,7 +75,7 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
                 )
                 binding.recyclerviewCharacterDetail.addItemDecoration(itemDecoration)
             }
-        // LinearLayout in portrait mode
+            // LinearLayout in portrait mode
         } else {
             activity?.let {
                 binding.recyclerviewCharacterDetail.layoutManager = LinearLayoutManager(it)
@@ -96,7 +96,7 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
         binding.recyclerviewCharacterDetail.adapter = adapter
     }
 
-    private fun setViews(){
+    private fun setViews() {
         // retrieve data from the list fragment
         val args: CharacterDetailFragmentArgs by navArgs()
         val character: CharacterModel? = args.characterObject
@@ -187,13 +187,13 @@ class CharacterDetailFragment: BaseDetailFragment<FragmentCharacterDetailBinding
     }
 
     private fun navigateLocationDetail(location: LocationModel) {
-        Toast.makeText(requireContext(), location.name, Toast.LENGTH_SHORT).show()
-        // do nothing for now
+        val action = CharacterDetailFragmentDirections.actionGlobalLocationDetailFragment(location)
+        findNavController().navigate(action)
     }
 
     private fun navigateEpisodeDetail(episodeModel: EpisodeModel) {
-        Toast.makeText(requireContext(), episodeModel.name, Toast.LENGTH_SHORT).show()
-        // do nothing for now
+        val action = CharacterDetailFragmentDirections.actionGlobalEpisodeDetailFragment(episodeModel)
+        findNavController().navigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {
