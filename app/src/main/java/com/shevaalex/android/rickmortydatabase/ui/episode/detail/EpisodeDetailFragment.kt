@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -137,5 +138,17 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?) =
             FragmentEpisodeDetailBinding.inflate(inflater, container, false)
+
+    /**
+     * returns MotionLayout. cast needed due to layout being ConstraintLayout in landscape mode
+     */
+    @Suppress("USELESS_CAST")
+    override fun getMotionLayout(): MotionLayout? {
+        return try {
+            binding.layoutFragmentEpisodeDetail as MotionLayout
+        } catch (e: Exception) {
+            null
+        }
+    }
 
 }

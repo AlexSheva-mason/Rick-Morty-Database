@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -212,5 +213,17 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?) =
             FragmentCharacterDetailBinding.inflate(inflater, container, false)
+
+    /**
+     * returns MotionLayout. cast needed due to layout being ConstraintLayout in landscape mode
+     */
+    @Suppress("USELESS_CAST")
+    override fun getMotionLayout(): MotionLayout? {
+        return try {
+            binding.layoutFragmentCharacterDetail as MotionLayout
+        } catch (e: Exception) {
+            null
+        }
+    }
 
 }

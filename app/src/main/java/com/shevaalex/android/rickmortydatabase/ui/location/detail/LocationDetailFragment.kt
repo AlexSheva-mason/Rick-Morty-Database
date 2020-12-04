@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -136,5 +137,17 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?) =
             FragmentLocationDetailBinding.inflate(inflater, container, false)
+
+    /**
+     * returns MotionLayout. cast needed due to layout being ConstraintLayout in landscape mode
+     */
+    @Suppress("USELESS_CAST")
+    override fun getMotionLayout(): MotionLayout? {
+        return try {
+            binding.layoutFragmentLocationDetail as MotionLayout
+        } catch (e: Exception) {
+            null
+        }
+    }
 
 }

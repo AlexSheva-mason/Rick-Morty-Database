@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
@@ -48,6 +49,16 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = setBinding(inflater, container)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        restoreMotionState()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveMotionState()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -157,12 +168,30 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
         }
     }
 
+    /**
+     * called in onPause() to save the MotionLayout's transition state
+     */
+    private fun saveMotionState() {
+        viewModel.setMotionStateId(getMotionLayout()?.currentState)
+    }
+
+    /**
+     * called in onResume() to restore the MotionLayout's transition end state
+     */
+    private fun restoreMotionState() {
+        viewModel.motionStateId.value?.let {
+            getMotionLayout()?.setTransitionDuration(1)
+            getMotionLayout()?.transitionToState(it)
+        }
+    }
+
     protected fun setMainImage(imageUrl: String?, imageView: ImageView) {
         imageUrl?.let {
             Glide.with(this)
                     .load(it)
                     .apply(RequestOptions()
                             .placeholder(R.drawable.image_placeholder_error)
+                            .override(300, 300)
                     )
                     .into(imageView)
         }
@@ -175,5 +204,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
     protected abstract fun injectFragment()
 
     protected abstract fun setBinding(inflater: LayoutInflater, container: ViewGroup?): T
+
+    protected abstract fun getMotionLayout(): MotionLayout?
 
 }
