@@ -36,6 +36,38 @@ interface LocationModelDao {
     fun getSuggestionsNames(): Flow<List<String>>
 
     /**
+     * gets filtered (type and dimensions) names for search suggestions
+     */
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("""SELECT name FROM LocationModel
+        WHERE type IN (:types)
+        AND dimension IN (:dimensions)""")
+    fun getSuggestionsNamesTypeAndDimensFiltered(
+            types: List<String>,
+            dimensions: List<String>
+    ): Flow<List<String>>
+
+    /**
+     * gets filtered (by type only) names for search suggestions
+     */
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("""SELECT name FROM LocationModel
+        WHERE type IN (:types)""")
+    fun getSuggestionsNamesTypeFiltered(
+            types: List<String>
+    ): Flow<List<String>>
+
+    /**
+     * gets filtered (by dimension only) names for search suggestions
+     */
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("""SELECT name FROM LocationModel
+        WHERE dimension IN (:dimensions)""")
+    fun getSuggestionsNamesDimensFiltered(
+            dimensions: List<String>
+    ): Flow<List<String>>
+
+    /**
      * gets all locations
      */
     @Query("""SELECT * FROM LocationModel

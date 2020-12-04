@@ -18,9 +18,6 @@ constructor(
         private val locationRepository: LocationRepository
 ): BaseListViewModel(){
 
-    override val suggestions: LiveData<List<String>> =
-            locationRepository.getSuggestionsNames().asLiveData()
-
     override val recentQueries: LiveData<List<String>> =
             locationRepository.getRecentQueries().asLiveData()
 
@@ -30,6 +27,13 @@ constructor(
             Constants.KEY_MAP_FILTER_LOC_TYPE_ALL to Pair(true, null),
             Constants.KEY_MAP_FILTER_LOC_DIMENS_ALL to Pair(true, null)
     ))
+
+    override val suggestions: LiveData<List<String>> =
+            Transformations.switchMap(filterData) {
+                if (showsAll()) {
+                    locationRepository.getSuggestionsNames().asLiveData()
+                } else locationRepository.getSuggestionsNamesFiltered(it).asLiveData()
+            }
 
     override val mediatorLiveData = FilterMediatorLiveData(_searchQuery, filterData)
 
