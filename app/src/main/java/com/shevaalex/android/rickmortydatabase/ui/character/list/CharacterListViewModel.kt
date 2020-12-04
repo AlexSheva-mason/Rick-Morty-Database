@@ -15,9 +15,6 @@ constructor(
         private val characterRepository: CharacterRepository
 ): BaseListViewModel() {
 
-    override val suggestions: LiveData<List<String>>
-            = characterRepository.getSuggestionsNames().asLiveData()
-
     override val recentQueries: LiveData<List<String>>
             = characterRepository.getRecentQueries().asLiveData()
 
@@ -43,6 +40,13 @@ constructor(
             Constants.KEY_MAP_FILTER_SPECIES_CRONENBERG to Pair(false, null),
             Constants.KEY_MAP_FILTER_SPECIES_MYTH to Pair(false, null),
     ))
+
+    override val suggestions: LiveData<List<String>> =
+            Transformations.switchMap(filterData) {
+                if (showsAll()) {
+                    characterRepository.getSuggestionsNames().asLiveData()
+                } else characterRepository.getSuggestionsNamesFiltered(it).asLiveData()
+            }
 
     override val mediatorLiveData = FilterMediatorLiveData(_searchQuery, filterData)
 

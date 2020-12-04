@@ -55,32 +55,9 @@ constructor(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>
     ): LiveData<PagedList<CharacterModel>> {
-        val statusesWithNulls = listOf(
-                filterMap[Constants.KEY_MAP_FILTER_STATUS_ALIVE_F]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_STATUS_ALIVE_M]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_STATUS_DEAD_F]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_STATUS_DEAD_M]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_STATUS_UNKNOWN]?.second
-        )
-        val statuses = statusesWithNulls.filterNotNull()
-        val gendersWithNulls = listOf(
-                filterMap[Constants.KEY_MAP_FILTER_GENDER_FEMALE]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_GENDER_MALE]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_GENDER_GENDERLESS]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_GENDER_UNKNOWN]?.second
-        )
-        val genders = gendersWithNulls.filterNotNull()
-        val speciesWithNulls = listOf(
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_HUMAN]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_HUMANOID]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_ALIEN]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_ANIMAL]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_ROBOT]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_POOPY]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_CRONENBERG]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_SPECIES_MYTH]?.second
-        )
-        val species = speciesWithNulls.filterNotNull()
+        val statuses = getStatusList(filterMap)
+        val genders = getGenderList(filterMap)
+        val species = getSpeciesList(filterMap)
         Timber.i("statuses: %s \n genders: %s \n species: %s", statuses, genders, species)
         //filter only
         if (query.isBlank()) {
@@ -122,8 +99,57 @@ constructor(
         return characterDao.getSuggestionsNames()
     }
 
+    fun getSuggestionsNamesFiltered(filterMap: Map<String, Pair<Boolean, String?>>): Flow<List<String>> {
+        val statuses = getStatusList(filterMap)
+        val genders = getGenderList(filterMap)
+        val species = getSpeciesList(filterMap)
+        //check if key KEY_MAP_FILTER_SPECIES_ALL == true
+        filterMap[Constants.KEY_MAP_FILTER_SPECIES_ALL]?.first?.let {
+            //perform a filtering without filtering by species (species == ALL)
+            if (it)
+                return characterDao.getSuggestionsNamesFiltered(statuses, genders)
+        }
+        //perform a filtering with species filtered
+        return characterDao.getSuggestionsNamesFiltered(statuses, genders, species)
+    }
+
     fun getRecentQueries(): Flow<List<String>> {
         return recentQueryDao.getRecentQueries(RecentQuery.Type.CHARACTER.type)
+    }
+
+    private fun getStatusList(filterMap: Map<String, Pair<Boolean, String?>>): List<String> {
+        val statusesWithNulls = listOf(
+                filterMap[Constants.KEY_MAP_FILTER_STATUS_ALIVE_F]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_STATUS_ALIVE_M]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_STATUS_DEAD_F]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_STATUS_DEAD_M]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_STATUS_UNKNOWN]?.second
+        )
+        return statusesWithNulls.filterNotNull()
+    }
+
+    private fun getGenderList(filterMap: Map<String, Pair<Boolean, String?>>): List<String> {
+        val gendersWithNulls = listOf(
+                filterMap[Constants.KEY_MAP_FILTER_GENDER_FEMALE]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_GENDER_MALE]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_GENDER_GENDERLESS]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_GENDER_UNKNOWN]?.second
+        )
+        return gendersWithNulls.filterNotNull()
+    }
+
+    private fun getSpeciesList(filterMap: Map<String, Pair<Boolean, String?>>): List<String> {
+        val speciesWithNulls = listOf(
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_HUMAN]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_HUMANOID]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_ALIEN]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_ANIMAL]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_ROBOT]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_POOPY]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_CRONENBERG]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_SPECIES_MYTH]?.second
+        )
+        return speciesWithNulls.filterNotNull()
     }
 
 }
