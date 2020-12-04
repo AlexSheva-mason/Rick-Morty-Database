@@ -32,6 +32,32 @@ interface CharacterModelDao {
     fun getSuggestionsNames(): Flow<List<String>>
 
     /**
+     * gets filtered names for search suggestions (species filtered)
+     */
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("""SELECT name FROM CharacterModel
+        WHERE status IN (:statuses)
+        AND gender IN (:genders)
+        AND species IN (:species)""")
+    fun getSuggestionsNamesFiltered(
+            statuses: List<String>,
+            genders: List<String>,
+            species: List<String>
+    ): Flow<List<String>>
+
+    /**
+     * gets filtered names for search suggestions (species show ALL)
+     */
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("""SELECT name FROM CharacterModel
+        WHERE status IN (:statuses)
+        AND gender IN (:genders)""")
+    fun getSuggestionsNamesFiltered(
+            statuses: List<String>,
+            genders: List<String>
+    ): Flow<List<String>>
+
+    /**
      * gets all characters
      */
     @Query("""SELECT * FROM CharacterModel
