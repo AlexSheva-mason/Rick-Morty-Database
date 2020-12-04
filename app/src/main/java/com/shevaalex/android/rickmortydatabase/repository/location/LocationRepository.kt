@@ -47,19 +47,8 @@ constructor(
             name: String?,
             filterMap: Map<String, Pair<Boolean, String?>>
     ): LiveData<PagedList<LocationModel>> {
-        val typesWithNulls = listOf(
-                filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_PLANET]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_SPACE_ST]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_MICRO]?.second,
-        )
-        val types = typesWithNulls.filterNotNull()
-        val dimensWithNulls = listOf(
-                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_REPLACE]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_C_137]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_CRONENBERG]?.second,
-                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN]?.second
-        )
-        val dimensions = dimensWithNulls.filterNotNull()
+        val types = getTypeList(filterMap)
+        val dimensions = getDimensionList(filterMap)
         Timber.i("types: %s \n dimensions: %s", types, dimensions)
         // if type == show all -> filter dimensions only
         filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_ALL]?.let {
@@ -94,7 +83,45 @@ constructor(
         return locationDao.getSuggestionsNames()
     }
 
+    fun getSuggestionsNamesFiltered(filterMap: Map<String, Pair<Boolean, String?>>): Flow<List<String>> {
+        val types = getTypeList(filterMap)
+        val dimensions = getDimensionList(filterMap)
+        // if type == show all -> filter dimensions only
+        filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_ALL]?.let {
+            if (it.first) {
+                return locationDao.getSuggestionsNamesDimensFiltered(dimensions)
+            }
+        }
+        // if dimensions == show all -> filter types only
+        filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_ALL]?.let {
+            if (it.first) {
+                return locationDao.getSuggestionsNamesTypeFiltered(types)
+            }
+        }
+        return locationDao.getSuggestionsNamesTypeAndDimensFiltered(types, dimensions)
+    }
+
     fun getRecentQueries(): Flow<List<String>> {
         return recentQueryDao.getRecentQueries(RecentQuery.Type.LOCATION.type)
     }
+
+    private fun getTypeList(filterMap: Map<String, Pair<Boolean, String?>>): List<String> {
+        val typesWithNulls = listOf(
+                filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_PLANET]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_SPACE_ST]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_LOC_TYPE_MICRO]?.second,
+        )
+        return typesWithNulls.filterNotNull()
+    }
+
+    private fun getDimensionList(filterMap: Map<String, Pair<Boolean, String?>>): List<String> {
+        val dimensWithNulls = listOf(
+                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_REPLACE]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_C_137]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_CRONENBERG]?.second,
+                filterMap[Constants.KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN]?.second
+        )
+        return dimensWithNulls.filterNotNull()
+    }
+
 }
