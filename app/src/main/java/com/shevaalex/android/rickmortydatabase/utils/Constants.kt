@@ -79,12 +79,16 @@ class Constants {
         const val KEY_MAP_FILTER_LOC_DIMENS_CRONENBERG = "loc_dimens_cronenberg"
         const val KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN = "loc_dimens_unknown"
 
-        //Episode List Filter map keys
+        //Episode List Filter map keys + values
         const val KEY_MAP_FILTER_EPISODE_S_ALL = "episode_season_all"
         const val KEY_MAP_FILTER_EPISODE_S_01 = "episode_season_s01"
         const val KEY_MAP_FILTER_EPISODE_S_02 = "episode_season_s02"
         const val KEY_MAP_FILTER_EPISODE_S_03 = "episode_season_s03"
         const val KEY_MAP_FILTER_EPISODE_S_04 = "episode_season_s04"
+        const val VALUE_MAP_FILTER_EPISODE_S_01 = "S01"
+        const val VALUE_MAP_FILTER_EPISODE_S_02 = "S02"
+        const val VALUE_MAP_FILTER_EPISODE_S_03 = "S03"
+        const val VALUE_MAP_FILTER_EPISODE_S_04 = "S04"
 
     }
 }

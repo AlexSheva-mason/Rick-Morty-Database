@@ -41,7 +41,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
         super.onViewCreated(view, savedInstanceState)
         episodeAdapter = EpisodeAdapter(
                 placeHolderString = getString(R.string.episode_name_placeholder),
-                episodeListener = object: EpisodeAdapter.EpisodeListener{
+                episodeListener = object : EpisodeAdapter.EpisodeListener {
                     override fun onEpisodeClick(episode: EpisodeModel) {
                         navigateEpisodeDetail(episode)
                     }
@@ -71,9 +71,9 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
             //set data to the adapter
             episodeAdapter?.submitList(it)
             //restore list position, or if it has been nulled -> scroll to position 0
-            viewModel.rvListPosition.value?.let {state ->
+            viewModel.rvListPosition.value?.let { state ->
                 binding.recyclerviewEpisode.layoutManager?.onRestoreInstanceState(state)
-            }?: binding.recyclerviewEpisode.layoutManager?.scrollToPosition(0)
+            } ?: binding.recyclerviewEpisode.layoutManager?.scrollToPosition(0)
         })
     }
 
@@ -192,23 +192,23 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
     override fun restoreCheckBoxState(dialogView: View) {
         viewModel.getFilterMap()?.let {
             dialogView.findViewById<MaterialCheckBox>(R.id.season_all).isChecked =
-                    it[Constants.KEY_MAP_FILTER_EPISODE_S_ALL]?.first?: false
+                    it[Constants.KEY_MAP_FILTER_EPISODE_S_ALL]?.first ?: false
             dialogView.findViewById<MaterialCheckBox>(R.id.season_1).isChecked =
-                    it[Constants.KEY_MAP_FILTER_EPISODE_S_01]?.first?: false
+                    it[Constants.KEY_MAP_FILTER_EPISODE_S_01]?.first ?: false
             dialogView.findViewById<MaterialCheckBox>(R.id.season_2).isChecked =
-                    it[Constants.KEY_MAP_FILTER_EPISODE_S_02]?.first?: false
+                    it[Constants.KEY_MAP_FILTER_EPISODE_S_02]?.first ?: false
             dialogView.findViewById<MaterialCheckBox>(R.id.season_3).isChecked =
-                    it[Constants.KEY_MAP_FILTER_EPISODE_S_03]?.first?: false
+                    it[Constants.KEY_MAP_FILTER_EPISODE_S_03]?.first ?: false
             dialogView.findViewById<MaterialCheckBox>(R.id.season_4).isChecked =
-                    it[Constants.KEY_MAP_FILTER_EPISODE_S_04]?.first?: false
+                    it[Constants.KEY_MAP_FILTER_EPISODE_S_04]?.first ?: false
         }
     }
 
     override fun getStringMap() = mapOf(
-            Constants.KEY_MAP_FILTER_EPISODE_S_01 to "S01",
-            Constants.KEY_MAP_FILTER_EPISODE_S_02 to "S02",
-            Constants.KEY_MAP_FILTER_EPISODE_S_03 to "S03",
-            Constants.KEY_MAP_FILTER_EPISODE_S_04 to "S04"
+            Constants.KEY_MAP_FILTER_EPISODE_S_01 to Constants.VALUE_MAP_FILTER_EPISODE_S_01,
+            Constants.KEY_MAP_FILTER_EPISODE_S_02 to Constants.VALUE_MAP_FILTER_EPISODE_S_02,
+            Constants.KEY_MAP_FILTER_EPISODE_S_03 to Constants.VALUE_MAP_FILTER_EPISODE_S_03,
+            Constants.KEY_MAP_FILTER_EPISODE_S_04 to Constants.VALUE_MAP_FILTER_EPISODE_S_04
     )
 
     private fun navigateEpisodeDetail(episode: EpisodeModel) {
