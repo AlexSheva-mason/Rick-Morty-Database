@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui.character.list
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -53,14 +54,17 @@ class CharacterAdapter(
         fun bind(character: CharacterModel, characterListener: CharacterListener) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
-                characterListener.onCharacterClick(character)
+                characterListener.onCharacterClick(character, itemBind.characterImage)
             }
-            Glide.with(context)
-                    .load(character.imageUrl)
-                    .apply(RequestOptions()
-                            .placeholder(R.drawable.image_placeholder_error)
-                    )
-                    .into(itemBind.characterImage)
+            itemBind.characterImage.apply {
+                transitionName = character.imageUrl
+                Glide.with(context)
+                        .load(character.imageUrl)
+                        .apply(RequestOptions()
+                                .placeholder(R.drawable.image_placeholder_error)
+                        )
+                        .into(this)
+            }
             itemBind.characterName.text = character.name
             itemBind.characterGenderValue?.let {
                 it.text = character.gender
@@ -87,7 +91,7 @@ class CharacterAdapter(
     }
 
     interface CharacterListener {
-        fun onCharacterClick(character: CharacterModel)
+        fun onCharacterClick(character: CharacterModel, charImageView: ImageView)
     }
 
 }

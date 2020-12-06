@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.transition.MaterialElevationScale
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.gson.Gson
@@ -62,6 +64,9 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
         getToolbar()?.let {
             setupToolbarWithNavController(it)
         }
@@ -280,6 +285,18 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
 
     private fun navigateToSettings() {
         findNavController().navigate(R.id.action_global_settingsFragment)
+    }
+
+    /**
+     * sets the recyclerview animation on exit and reenter during fragment transition
+     */
+    protected fun setExitAndReenterAnimation(){
+        exitTransition = MaterialElevationScale(false).apply {
+            duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+        }
+        reenterTransition = MaterialElevationScale(true).apply {
+            duration = resources.getInteger(R.integer.rm_motion_duration_medium).toLong()
+        }
     }
 
     /**

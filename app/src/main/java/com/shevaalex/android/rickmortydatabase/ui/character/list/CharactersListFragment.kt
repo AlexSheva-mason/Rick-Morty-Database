@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -56,8 +58,11 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = CharacterAdapter(
                 object: CharacterAdapter.CharacterListener{
-                    override fun onCharacterClick(character: CharacterModel) {
-                        navigateCharacterDetail(character)
+                    override fun onCharacterClick(
+                            character: CharacterModel,
+                            charImageView: ImageView
+                    ) {
+                        navigateCharacterDetail(character, charImageView)
                     }
                 }
         )
@@ -338,9 +343,11 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         }
     }
 
-    private fun navigateCharacterDetail(character: CharacterModel) {
+    private fun navigateCharacterDetail(character: CharacterModel, charImageView: ImageView) {
+        setExitAndReenterAnimation()
+        val extras = FragmentNavigatorExtras(charImageView to character.imageUrl)
         val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(character)
-        findNavController().navigate(action)
+        findNavController().navigate(action , extras)
     }
 
 }
