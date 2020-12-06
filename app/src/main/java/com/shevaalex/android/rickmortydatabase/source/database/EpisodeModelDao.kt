@@ -20,7 +20,7 @@ interface EpisodeModelDao {
 
     /**
      * gets the entry count to compare databases
-      */
+     */
     @Query("SELECT COUNT(id) FROM EpisodeModel")
     suspend fun episodesCount(): Int
 
@@ -32,11 +32,43 @@ interface EpisodeModelDao {
     fun getSuggestionsNames(): Flow<List<String>>
 
     /**
+     * gets filtered names for search suggestions
+     */
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("""SELECT name FROM EpisodeModel
+        WHERE (code LIKE :seasonCode1 || '___' 
+            OR code LIKE :seasonCode2 || '___'
+            OR code LIKE :seasonCode3 || '___'
+            OR code LIKE :seasonCode4 || '___')""")
+    fun getSuggestionsNamesFiltered(
+            seasonCode1: String,
+            seasonCode2: String,
+            seasonCode3: String,
+            seasonCode4: String
+    ): Flow<List<String>>
+
+    /**
      * gets all codes for search suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT code FROM EpisodeModel")
     fun getSuggestionsCodes(): Flow<List<String>>
+
+    /**
+     * gets filtered codes for search suggestions
+     */
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("""SELECT code FROM EpisodeModel
+        WHERE (code LIKE :seasonCode1 || '___' 
+            OR code LIKE :seasonCode2 || '___'
+            OR code LIKE :seasonCode3 || '___'
+            OR code LIKE :seasonCode4 || '___')""")
+    fun getSuggestionsCodesFiltered(
+            seasonCode1: String,
+            seasonCode2: String,
+            seasonCode3: String,
+            seasonCode4: String
+    ): Flow<List<String>>
 
     /**
      * gets all episodes

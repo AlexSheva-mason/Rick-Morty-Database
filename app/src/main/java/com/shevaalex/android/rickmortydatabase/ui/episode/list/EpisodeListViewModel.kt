@@ -15,9 +15,6 @@ constructor(
         private val episodeRepository: EpisodeRepository
 ): BaseListViewModel() {
 
-    override val suggestions: LiveData<List<String>> =
-            episodeRepository.getSuggestionsNames().asLiveData()
-
     override val recentQueries: LiveData<List<String>> =
             episodeRepository.getRecentQueries().asLiveData()
 
@@ -27,6 +24,14 @@ constructor(
             MutableLiveData(mapOf(
                     Constants.KEY_MAP_FILTER_EPISODE_S_ALL to Pair(true, null)
             ))
+
+    override val suggestions: LiveData<List<String>> =
+            Transformations.switchMap(filterData) {
+                if (showsAll()) {
+                    episodeRepository.getSuggestionsNames().asLiveData()
+                } else episodeRepository.getSuggestionsNamesFiltered(it).asLiveData()
+            }
+
 
     override val mediatorLiveData = FilterMediatorLiveData(_searchQuery, filterData)
 
