@@ -104,7 +104,11 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         character?.let {
             setShareButton(it)
             viewModel.setDetailObject(it)
-            setMainImage(it.imageUrl, binding.imageCharacter)
+            setMainImage(
+                    imageUrl = it.imageUrl,
+                    imageView = binding.imageCharacter,
+                    imageTransitionName = Constants.TRANSITION_CHARACTER.plus(character.id)
+            )
             binding.characterName.text = it.name
             if (it.status != activity?.resources?.getString(R.string.species_unknown)) {
                 val color = TextColourUtil.getStatusColour(it.status, context)

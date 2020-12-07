@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil
 
 class CharacterAdapter(
@@ -57,7 +58,7 @@ class CharacterAdapter(
                 characterListener.onCharacterClick(character, itemBind.characterImage)
             }
             itemBind.characterImage.apply {
-                transitionName = character.imageUrl
+                transitionName = Constants.TRANSITION_CHARACTER.plus(character.id)
                 Glide.with(context)
                         .load(character.imageUrl)
                         .apply(RequestOptions()

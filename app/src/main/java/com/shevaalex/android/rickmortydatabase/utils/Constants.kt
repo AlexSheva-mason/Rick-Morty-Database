@@ -90,5 +90,10 @@ class Constants {
         const val VALUE_MAP_FILTER_EPISODE_S_03 = "S03"
         const val VALUE_MAP_FILTER_EPISODE_S_04 = "S04"
 
+        //Transition names
+        const val TRANSITION_CHARACTER = "character_transition_"
+        const val TRANSITION_LOCATION = "location_transition_"
+        const val TRANSITION_EPISODE = "episode_transition_"
+
     }
 }

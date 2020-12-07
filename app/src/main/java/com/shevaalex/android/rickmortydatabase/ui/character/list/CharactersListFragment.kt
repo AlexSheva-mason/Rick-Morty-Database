@@ -345,7 +345,9 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
 
     private fun navigateCharacterDetail(character: CharacterModel, charImageView: ImageView) {
         setExitAndReenterAnimation()
-        val extras = FragmentNavigatorExtras(charImageView to character.imageUrl)
+        val extras = FragmentNavigatorExtras(
+                charImageView to Constants.TRANSITION_CHARACTER.plus(character.id)
+        )
         val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(character)
         findNavController().navigate(action , extras)
     }
