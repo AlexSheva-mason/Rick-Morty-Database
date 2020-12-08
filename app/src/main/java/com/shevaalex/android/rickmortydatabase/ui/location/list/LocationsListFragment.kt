@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -40,8 +42,8 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         locationAdapter = LocationAdapter(object: LocationAdapter.LocationListener{
-            override fun onLocationClick(location: LocationModel) {
-                navigateLocationDetail(location)
+            override fun onLocationClick(location: LocationModel, locImageView: ImageView) {
+                navigateLocationDetail(location, locImageView)
             }
         })
         setGridOrLinearRecyclerView(
@@ -259,11 +261,13 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
             Constants.KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN to getString(R.string.character_gender_unknown)
     )
 
-    private fun navigateLocationDetail(location: LocationModel) {
-        val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(
-                locationObject = location
+    private fun navigateLocationDetail(location: LocationModel, locImageView: ImageView) {
+        setExitAndReenterAnimation()
+        val extras = FragmentNavigatorExtras(
+                locImageView to Constants.TRANSITION_LOCATION.plus(location.id)
         )
-        findNavController().navigate(action)
+        val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(location)
+        findNavController().navigate(action, extras)
     }
 
 }

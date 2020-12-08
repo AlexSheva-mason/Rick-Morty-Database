@@ -38,7 +38,7 @@ import java.util.*
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutionException
 
-abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFragment() {
+abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFragment() {
 
     private var _binding: T? = null
     protected val binding get() = _binding!!
@@ -91,9 +91,9 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
         //get the bitmap from glide
         val futureBitmap: FutureTarget<Bitmap> =
                 Glide.with(this)
-                .asBitmap()
-                .load(imageUrl)
-                .submit()
+                        .asBitmap()
+                        .load(imageUrl)
+                        .submit()
         lifecycleScope.launch(Dispatchers.IO) {
             //try get the bitmap from future object
             try {
@@ -197,42 +197,39 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel>: BaseFrag
         }
     }
 
-    protected fun setMainImage(imageUrl: String?, imageView: ImageView) {
+    protected fun setMainImage(imageUrl: String?, imageView: ImageView, imageTransitionName: String) {
         //set the listener to startPostponedEnterTransition() when image is loaded or failed
         val listener = object : RequestListener<Drawable> {
             override fun onLoadFailed(e: GlideException?,
                                       model: Any?,
                                       target: Target<Drawable>?,
-                                      isFirstResource: Boolean
-            ): Boolean {
+                                      isFirstResource: Boolean): Boolean {
                 startPostponedEnterTransition()
                 return false
             }
 
             override fun onResourceReady(resource: Drawable?,
-                                         model: Any?, target: Target<Drawable>?,
+                                         model: Any?,
+                                         target: Target<Drawable>?,
                                          dataSource: DataSource?,
-                                         isFirstResource: Boolean
-            ): Boolean {
+                                         isFirstResource: Boolean): Boolean {
                 startPostponedEnterTransition()
                 return false
             }
         }
-        imageUrl?.let {
-            imageView.apply {
-                transitionName = imageUrl
-                Glide.with(context)
-                        .load(it)
-                        .apply(RequestOptions()
-                                .placeholder(R.drawable.image_placeholder_error)
-                                .dontTransform()
-                                .dontAnimate()
-                                .skipMemoryCache(true)
-                                .override(300, 300)
-                        )
-                        .listener(listener)
-                        .into(this)
-            }
+        imageView.apply {
+            transitionName = imageTransitionName
+            Glide.with(context)
+                    .load(imageUrl)
+                    .apply(RequestOptions()
+                            .error(R.drawable.image_placeholder_error)
+                            .dontTransform()
+                            .dontAnimate()
+                            .skipMemoryCache(true)
+                            .override(300, 300)
+                    )
+                    .listener(listener)
+                    .into(this)
         }
     }
 
