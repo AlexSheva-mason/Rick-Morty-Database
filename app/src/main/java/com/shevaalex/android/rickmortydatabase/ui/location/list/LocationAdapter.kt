@@ -2,13 +2,13 @@ package com.shevaalex.android.rickmortydatabase.ui.location.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.card.MaterialCardView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
@@ -53,10 +53,10 @@ class LocationAdapter(
         fun bind(location: LocationModel, locationListener: LocationListener) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
-                locationListener.onLocationClick(location, itemBind.locationImage)
+                locationListener.onLocationClick(location, itemBind.locationItem)
             }
+            itemBind.locationItem.transitionName = TRANSITION_LOCATION.plus(location.id)
             itemBind.locationImage.apply {
-                transitionName = TRANSITION_LOCATION.plus(location.id)
                 Glide.with(context)
                         .load("https://rickandmortyapi.com/api/character/avatar/249.jpeg")
                         .apply(RequestOptions()
@@ -77,7 +77,7 @@ class LocationAdapter(
     }
 
     interface LocationListener{
-        fun onLocationClick(location: LocationModel, locImageView: ImageView)
+        fun onLocationClick(location: LocationModel, locationCard: MaterialCardView)
     }
 
 }

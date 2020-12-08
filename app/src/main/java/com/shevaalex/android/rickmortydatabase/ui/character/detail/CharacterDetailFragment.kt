@@ -104,10 +104,11 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         character?.let {
             setShareButton(it)
             viewModel.setDetailObject(it)
+            binding.layoutFragmentCharacterDetail.transitionName =
+                    Constants.TRANSITION_CHARACTER.plus(it.id)
             setMainImage(
                     imageUrl = it.imageUrl,
-                    imageView = binding.imageCharacter,
-                    imageTransitionName = Constants.TRANSITION_CHARACTER.plus(character.id)
+                    imageView = binding.imageCharacter
             )
             binding.characterName.text = it.name
             if (it.status != activity?.resources?.getString(R.string.species_unknown)) {

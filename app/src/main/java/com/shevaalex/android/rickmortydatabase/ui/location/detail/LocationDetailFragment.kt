@@ -70,11 +70,12 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
     private fun setupViews(location: LocationModel) {
         setShareButton(location)
         viewModel.setDetailObject(location)
+        binding.layoutFragmentLocationDetail.transitionName =
+                Constants.TRANSITION_LOCATION.plus(location.id)
         binding.imageLocation?.let {
             setMainImage(
                     imageUrl = "https://rickandmortyapi.com/api/character/avatar/249.jpeg",
-                    imageView = it,
-                    imageTransitionName = Constants.TRANSITION_LOCATION.plus(location.id)
+                    imageView = it
             )
         }
         binding.locationName.text = location.name

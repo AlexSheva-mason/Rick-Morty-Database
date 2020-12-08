@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -14,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
@@ -58,11 +58,10 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = CharacterAdapter(
                 object: CharacterAdapter.CharacterListener{
-                    override fun onCharacterClick(
-                            character: CharacterModel,
-                            charImageView: ImageView
+                    override fun onCharacterClick(character: CharacterModel,
+                                                  characterCard: MaterialCardView
                     ) {
-                        navigateCharacterDetail(character, charImageView)
+                        navigateCharacterDetail(character, characterCard)
                     }
                 }
         )
@@ -343,10 +342,10 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         }
     }
 
-    private fun navigateCharacterDetail(character: CharacterModel, charImageView: ImageView) {
+    private fun navigateCharacterDetail(character: CharacterModel, characterCard: MaterialCardView) {
         setExitAndReenterAnimation()
         val extras = FragmentNavigatorExtras(
-                charImageView to Constants.TRANSITION_CHARACTER.plus(character.id)
+                characterCard to Constants.TRANSITION_CHARACTER.plus(character.id)
         )
         val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(character)
         findNavController().navigate(action , extras)

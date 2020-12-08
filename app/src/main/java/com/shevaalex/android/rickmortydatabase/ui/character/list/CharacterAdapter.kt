@@ -3,13 +3,13 @@ package com.shevaalex.android.rickmortydatabase.ui.character.list
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.card.MaterialCardView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
@@ -56,10 +56,10 @@ class CharacterAdapter(
         fun bind(character: CharacterModel, characterListener: CharacterListener) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
-                characterListener.onCharacterClick(character, itemBind.characterImage)
+                characterListener.onCharacterClick(character, itemBind.characterItem)
             }
+            itemBind.characterItem.transitionName = Constants.TRANSITION_CHARACTER.plus(character.id)
             itemBind.characterImage.apply {
-                transitionName = Constants.TRANSITION_CHARACTER.plus(character.id)
                 Glide.with(context)
                         .load(character.imageUrl)
                         .apply(RequestOptions()
@@ -94,7 +94,7 @@ class CharacterAdapter(
     }
 
     interface CharacterListener {
-        fun onCharacterClick(character: CharacterModel, charImageView: ImageView)
+        fun onCharacterClick(character: CharacterModel, characterCard: MaterialCardView)
     }
 
 }

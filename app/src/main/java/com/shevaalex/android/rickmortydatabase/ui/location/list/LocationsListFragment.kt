@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -13,6 +12,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
@@ -42,8 +42,8 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         locationAdapter = LocationAdapter(object: LocationAdapter.LocationListener{
-            override fun onLocationClick(location: LocationModel, locImageView: ImageView) {
-                navigateLocationDetail(location, locImageView)
+            override fun onLocationClick(location: LocationModel, locationCard: MaterialCardView) {
+                navigateLocationDetail(location, locationCard)
             }
         })
         setGridOrLinearRecyclerView(
@@ -261,10 +261,10 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
             Constants.KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN to getString(R.string.character_gender_unknown)
     )
 
-    private fun navigateLocationDetail(location: LocationModel, locImageView: ImageView) {
+    private fun navigateLocationDetail(location: LocationModel, locationCard: MaterialCardView) {
         setExitAndReenterAnimation()
         val extras = FragmentNavigatorExtras(
-                locImageView to Constants.TRANSITION_LOCATION.plus(location.id)
+                locationCard to Constants.TRANSITION_LOCATION.plus(location.id)
         )
         val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(location)
         findNavController().navigate(action, extras)
