@@ -8,6 +8,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding
@@ -63,6 +64,7 @@ class CharacterAdapter(
                         .load(character.imageUrl)
                         .apply(RequestOptions()
                                 .placeholder(R.drawable.image_placeholder_error)
+                                .diskCacheStrategy(DiskCacheStrategy.DATA)
                         )
                         .into(this)
             }
