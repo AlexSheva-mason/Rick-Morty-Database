@@ -65,7 +65,6 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
         getToolbar()?.let {
             setupToolbarWithNavController(it)
@@ -292,11 +291,12 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
      */
     protected fun setExitAndReenterAnimation(){
         exitTransition = MaterialElevationScale(false).apply {
-            duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+            duration = resources.getInteger(R.integer.rm_motion_duration_medium).toLong()
         }
         reenterTransition = MaterialElevationScale(true).apply {
             duration = resources.getInteger(R.integer.rm_motion_duration_medium).toLong()
         }
+        postponeEnterTransition()
     }
 
     /**
