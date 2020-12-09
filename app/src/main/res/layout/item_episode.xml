@@ -21,14 +21,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/img_episode_description"
-            android:scaleType="fitCenter"
-            android:src="@drawable/episodes_24dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_placeholder_error"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline_icon_episode"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorSecondaryVariant" />
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/episode_code_value"

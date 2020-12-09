@@ -5,8 +5,14 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.card.MaterialCardView
+import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSITION_EPISODE
 
 class EpisodeAdapter(
         private val placeHolderString: String,
@@ -46,8 +52,19 @@ class EpisodeAdapter(
     ): RecyclerView.ViewHolder(itemBind.root) {
 
         fun bind(episode: EpisodeModel, episodeListener: EpisodeListener, placeHolderString: String) {
+            val context = itemBind.root.context
             itemBind.root.setOnClickListener {
-                episodeListener.onEpisodeClick(episode)
+                episodeListener.onEpisodeClick(episode, itemBind.episodeItem)
+            }
+            itemBind.episodeItem.transitionName = TRANSITION_EPISODE.plus(episode.id)
+            itemBind.episodeImage.apply {
+                Glide.with(context)
+                        .load("https://rickandmortyapi.com/api/character/avatar/249.jpeg")
+                        .apply(RequestOptions()
+                                .placeholder(R.drawable.image_placeholder_error)
+                                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        )
+                        .into(this)
             }
             itemBind.episodeNameValue.text = placeHolderString.format(episode.name)
             itemBind.episodeAirDateValue?.let {
@@ -59,7 +76,7 @@ class EpisodeAdapter(
     }
 
     interface EpisodeListener{
-        fun onEpisodeClick(episode: EpisodeModel)
+        fun onEpisodeClick(episode: EpisodeModel, episodeCard: MaterialCardView)
     }
 
 }

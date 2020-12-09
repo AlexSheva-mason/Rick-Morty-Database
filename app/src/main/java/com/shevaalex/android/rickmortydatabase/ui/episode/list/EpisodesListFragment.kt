@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
@@ -42,8 +44,11 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
         episodeAdapter = EpisodeAdapter(
                 placeHolderString = getString(R.string.episode_name_placeholder),
                 episodeListener = object : EpisodeAdapter.EpisodeListener {
-                    override fun onEpisodeClick(episode: EpisodeModel) {
-                        navigateEpisodeDetail(episode)
+                    override fun onEpisodeClick(
+                            episode: EpisodeModel,
+                            episodeCard: MaterialCardView
+                    ) {
+                        navigateEpisodeDetail(episode, episodeCard)
                     }
                 }
         )
@@ -211,11 +216,13 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
             Constants.KEY_MAP_FILTER_EPISODE_S_04 to Constants.VALUE_MAP_FILTER_EPISODE_S_04
     )
 
-    private fun navigateEpisodeDetail(episode: EpisodeModel) {
-        val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(
-                episodeObject = episode
+    private fun navigateEpisodeDetail(episode: EpisodeModel, episodeCard: MaterialCardView) {
+        setExitAndReenterAnimation()
+        val extras = FragmentNavigatorExtras(
+                episodeCard to Constants.TRANSITION_EPISODE.plus(episode.id)
         )
-        findNavController().navigate(action)
+        val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(episode)
+        findNavController().navigate(action, extras)
     }
 
 }

@@ -19,6 +19,7 @@ import com.shevaalex.android.rickmortydatabase.ui.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter.CharacterClickListener
 import com.shevaalex.android.rickmortydatabase.utils.Constants
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSITION_EPISODE
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
 import javax.inject.Inject
 
@@ -71,8 +72,12 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
     private fun setupViews(episode: EpisodeModel) {
         setShareButton(episode)
         viewModel.setDetailObject(episode)
+        binding.layoutFragmentEpisodeDetail.transitionName = TRANSITION_EPISODE.plus(episode.id)
         binding.imageEpisode?.let {
-            setMainImage(episode.imageUrl, it)
+            setMainImage(
+                    imageUrl = episode.imageUrl,
+                    imageView = it
+            )
         }
         binding.episodeName.text = episode.name
         binding.episodeAirDateValue.text = episode.airDate
