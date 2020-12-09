@@ -142,7 +142,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Recyclerview
-    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha06"
+    implementation "androidx.recyclerview:recyclerview:1.2.0-beta01"
 
     // Retrofit, Gson
     def retrofitVersion = "2.9.0"
@@ -173,7 +173,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     // Navigation components
-    def nav_version = "2.3.1"
+    def nav_version = "2.3.2"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
