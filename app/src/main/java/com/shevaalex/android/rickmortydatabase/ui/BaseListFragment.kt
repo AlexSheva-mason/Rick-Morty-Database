@@ -291,10 +291,10 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
      */
     protected fun setExitAndReenterAnimation(){
         exitTransition = MaterialElevationScale(false).apply {
-            duration = resources.getInteger(R.integer.rm_motion_duration_medium).toLong()
+            duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
         }
         reenterTransition = MaterialElevationScale(true).apply {
-            duration = resources.getInteger(R.integer.rm_motion_duration_medium).toLong()
+            duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
         }
         postponeEnterTransition()
     }
