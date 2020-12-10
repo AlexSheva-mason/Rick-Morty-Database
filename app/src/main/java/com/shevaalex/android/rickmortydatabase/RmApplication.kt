@@ -67,7 +67,6 @@ class RmApplication : Application() {
                     .detectLeakedSqlLiteObjects()
                     .detectLeakedClosableObjects()
                     .penaltyLog()
-                    .penaltyDeath()
                     .build())
         }
     }
