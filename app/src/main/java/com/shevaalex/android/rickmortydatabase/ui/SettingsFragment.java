@@ -84,19 +84,39 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        Bundle params = new Bundle();
+        String themeMode;
         switch (preference.getKey()) {
             case SWITCH_THEME_PREFERENCE_KEY:
                 boolean nightModeOn = (Boolean) newValue;
                 if (nightModeOn) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    themeMode = "MODE_NIGHT_YES";
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    themeMode = "MODE_NIGHT_NO";
                 }
+                params.putString(FirebaseAnalytics.Param.ITEM_NAME, themeMode);
                 break;
             case LIST_THEME_PREFERENCE_KEY:
                 int value = Integer.parseInt((String) newValue);
                 AppCompatDelegate.setDefaultNightMode(value);
+                switch (value) {
+                    case -1:
+                        themeMode = "MODE_NIGHT_FOLLOW_SYSTEM";
+                        break;
+                    case 2:
+                        themeMode = "MODE_NIGHT_YES";
+                        break;
+                    case 1:
+                        themeMode = "MODE_NIGHT_NO";
+                        break;
+                    default:
+                        themeMode = "default (unchanged)";
+                }
+                params.putString(FirebaseAnalytics.Param.ITEM_NAME, themeMode);
         }
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, params);
         return true;
     }
 }
