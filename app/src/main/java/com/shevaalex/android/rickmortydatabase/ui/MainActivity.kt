@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
@@ -23,6 +24,8 @@ import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveDa
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -52,7 +55,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         connectionStatus = ConnectionLiveData(this)
         //if database has been recently checked -> skip db sync
-        if (isDbCheckNeeded()) getInitState()
+        lifecycleScope.launch(Dispatchers.IO) {
+            isDbCheckNeeded().run {
+                if (this) getInitState()
+            }
+        }
         setupViews()
     }
 
@@ -80,7 +87,11 @@ class MainActivity : AppCompatActivity() {
                     dbInit()
                 }
                 //else save the timestamp to shared prefs
-                else saveToSharedPrefs()
+                else {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        saveToSharedPrefs()
+                    }
+                }
             }
         })
     }
