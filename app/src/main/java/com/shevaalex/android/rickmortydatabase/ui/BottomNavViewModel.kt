@@ -1,47 +1,33 @@
-package com.shevaalex.android.rickmortydatabase.ui;
+package com.shevaalex.android.rickmortydatabase.ui
 
-import android.view.View;
+import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+class BottomNavViewModel : ViewModel() {
 
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+    private val _bottomNavVisibility = MutableLiveData<Int>()
+    private val _bottomNavLabelVisibility = MutableLiveData<Int>()
 
+    val bottomNavVisibility: LiveData<Int> = _bottomNavVisibility
+    val bottomNavLabelVisibility: LiveData<Int> = _bottomNavLabelVisibility
 
-public class BottomNavViewModel extends ViewModel {
-    private MutableLiveData<Integer> bottomNavVisibility;
-    private MutableLiveData<Integer> bottomNavLabelVisibility;
-
-    public LiveData<Integer> getBottomNavVisibility() {
-        if (bottomNavVisibility == null) {
-            bottomNavVisibility = new MutableLiveData<>();
-            showBottomNav();
-        }
-        return bottomNavVisibility;
+    fun showBottomNav() {
+        _bottomNavVisibility.postValue(View.VISIBLE)
     }
 
-    public LiveData<Integer> getBottomNavLabelStatus() {
-        if (bottomNavLabelVisibility == null) {
-            bottomNavLabelVisibility = new MutableLiveData<>();
-            setLabelSelected();
-        }
-        return bottomNavLabelVisibility;
+    fun hideBottomNav() {
+        _bottomNavVisibility.postValue(View.GONE)
     }
 
-    public void showBottomNav() {
-        bottomNavVisibility.postValue(View.VISIBLE);
+    fun setLabelSelected() {
+        _bottomNavLabelVisibility.postValue(LabelVisibilityMode.LABEL_VISIBILITY_SELECTED)
     }
 
-    public void hideBottomNav() {
-        bottomNavVisibility.postValue(View.GONE);
+    fun setUnlabeled() {
+        _bottomNavLabelVisibility.postValue(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED)
     }
 
-    public void setLabelSelected() {
-        bottomNavLabelVisibility.postValue(LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
-    }
-
-    public void setUnlabeled() {
-        bottomNavLabelVisibility.postValue(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
-    }
 }
