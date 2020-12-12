@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -229,6 +230,14 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         } catch (e: Exception) {
             null
         }
+    }
+
+    override fun getToolbarBottomGuideline(): Guideline? {
+        return binding.guidelineToolbar
+    }
+
+    override fun getToolbarTopGuideline(): Guideline? {
+        return binding.guidelineStatusBar
     }
 
 }

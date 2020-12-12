@@ -14,6 +14,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.widget.Guideline
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,6 +30,7 @@ import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.ImageParsingUtil
+import com.shevaalex.android.rickmortydatabase.utils.getActionBarHeightPx
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
@@ -64,6 +67,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
         view.doOnPreDraw {
             startPostponedEnterTransition()
         }
+        setupToolbarEdgeToEdge()
     }
 
     override fun onResume() {
@@ -223,6 +227,23 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
         }
     }
 
+    /**
+     * sets constraintGuide_begin for guidelines accroding to window insets (status bar height)
+     * to allign toolbar views in the layout
+     */
+    private fun setupToolbarEdgeToEdge() {
+        getToolbarBottomGuideline()?.setOnApplyWindowInsetsListener { _, insets ->
+            val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets)
+            val systemWindow = insetsCompat.getInsets(
+                    WindowInsetsCompat.Type.statusBars()
+            )
+            val topMargin = getActionBarHeightPx(requireContext()) + systemWindow.top
+            getToolbarBottomGuideline()?.setGuidelineBegin(topMargin)
+            getToolbarTopGuideline()?.setGuidelineBegin(systemWindow.top)
+            insets
+        }
+    }
+
     protected fun setBackButton(backBtn: ImageView) {
         backBtn.setOnClickListener { findNavController().navigateUp() }
     }
@@ -232,5 +253,9 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
     protected abstract fun setBinding(inflater: LayoutInflater, container: ViewGroup?): T
 
     protected abstract fun getMotionLayout(): MotionLayout?
+
+    protected abstract fun getToolbarBottomGuideline(): Guideline?
+
+    protected abstract fun getToolbarTopGuideline(): Guideline?
 
 }

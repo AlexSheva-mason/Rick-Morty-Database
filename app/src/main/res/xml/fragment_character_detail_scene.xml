@@ -305,7 +305,7 @@
         <Constraint android:id="@+id/image_character">
             <Layout
                 android:layout_width="0dp"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="0dp"
                 motion:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
                 motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toStartOf="parent"
@@ -334,7 +334,7 @@
                 motion:layout_constraintBottom_toBottomOf="@id/image_character"
                 motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toEndOf="@+id/button_back"
-                motion:layout_constraintTop_toTopOf="parent" />
+                motion:layout_constraintTop_toTopOf="@id/guideline_status_bar" />
             <CustomAttribute
                 motion:attributeName="maxLines"
                 motion:customIntegerValue="1" />
@@ -441,7 +441,7 @@
                 motion:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
                 motion:layout_constraintEnd_toStartOf="@+id/button_share"
                 motion:layout_constraintStart_toEndOf="@+id/button_back"
-                motion:layout_constraintTop_toTopOf="parent" />
+                motion:layout_constraintTop_toTopOf="@id/guideline_status_bar" />
             <CustomAttribute
                 motion:attributeName="maxLines"
                 motion:customIntegerValue="1" />
