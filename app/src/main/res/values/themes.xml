@@ -17,10 +17,6 @@
         <item name="textAppearanceCaption">@style/TextAppearance.RM.Caption</item>
         <item name="textAppearanceOverline">@style/TextAppearance.RM.Overline</item>
 
-        <!--Platform attributes-->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-
         <!--Default styles-->
         <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
@@ -43,6 +39,8 @@
         <item name="colorOnBackground">@android:color/black</item>
         <item name="colorOnSecondary">@android:color/black</item>
         <item name="colorOnSurface">@android:color/black</item>
+        <item name="android:statusBarColor">@color/black_translucent_20</item>
+        <item name="android:navigationBarColor">@color/black_translucent_20</item>
     </style>
 
     <!--Preference fragment theme-->
