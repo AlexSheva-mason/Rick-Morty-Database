@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -26,6 +29,7 @@ import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -53,14 +57,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        connectionStatus = ConnectionLiveData(this)
         //if database has been recently checked -> skip db sync
         lifecycleScope.launch(Dispatchers.IO) {
             isDbCheckNeeded().run {
-                if (this) getInitState()
+                if (this) {
+                    withContext(Dispatchers.Main) {
+                        getInitState()
+                    }
+                }
             }
         }
-        setupViews()
+        setupNavController()
+        registerObservers()
+        setupEdgeToEdge()
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle?) {
@@ -123,6 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun monitorNetworkState() {
+        connectionStatus = ConnectionLiveData(this)
         connectionStatus.observe(this) {
             initViewModel.isNetworkAvailable(it)
         }
@@ -133,22 +143,36 @@ class MainActivity : AppCompatActivity() {
         initViewModel.init.removeObservers(this)
     }
 
-    private fun setupViews() {
-        // Finding the navigation controller
-        val navController = findNavController(R.id.nav_host_fragment)
-        // Setting the nav controller with bottom navigation
-        binding.bottomPanel.setupWithNavController(navController)
-        //setup the ViewModel for lifecycle aware observing bottomNav state
+
+    private fun setupEdgeToEdge() {
+        //set window to draw behind system bars
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        //update the padding of the BottomNavigationView
+        binding.bottomPanel.setOnApplyWindowInsetsListener { view, insets ->
+            val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets)
+            val systemWindow = insetsCompat.getInsets(
+                    WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.ime()
+            )
+            view.updatePadding(bottom = systemWindow.bottom)
+            insets
+        }
+    }
+
+    private fun registerObservers() {
+        //observe and set BottomNavigationView state
         botNavViewModel.bottomNavVisibility.observe(this,
                 { integer: Int -> binding.bottomPanel.visibility = integer })
-        botNavViewModel.bottomNavLabelStatus.observe(this,
+        botNavViewModel.bottomNavLabelVisibility.observe(this,
                 { integer: Int -> binding.bottomPanel.labelVisibilityMode = integer })
-        // monitor navigation and remove BottomNavigationView in Detail fragments
+    }
+
+    private fun setupNavController() {
+        val navController = findNavController(R.id.nav_host_fragment)
+        binding.bottomPanel.setupWithNavController(navController)
+        // monitor navigation and set unlabeled BottomNavigationView in Detail fragments
         navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
             if (destination.id == R.id.settingsFragment) {
-                Timer().schedule(100){
-                    botNavViewModel.hideBottomNav()
-                }
+                botNavViewModel.hideBottomNav()
             } else if (destination.id == R.id.characterDetailFragment2
                     || destination.id == R.id.locationDetailFragment
                     || destination.id == R.id.episodeDetailFragment) {
