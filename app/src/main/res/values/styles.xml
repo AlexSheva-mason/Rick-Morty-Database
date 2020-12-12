@@ -41,7 +41,7 @@
     <style name="Widget.RM.Toolbar.PrimarySurface" parent="@style/Widget.MaterialComponents.Toolbar.PrimarySurface">
         <item name="android:elevation">4dp</item>
         <item name="android:background">?attr/colorPrimarySurface</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

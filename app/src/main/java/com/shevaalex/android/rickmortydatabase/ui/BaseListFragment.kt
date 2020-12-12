@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
@@ -68,6 +70,7 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
         view.doOnPreDraw { startPostponedEnterTransition() }
         getToolbar()?.let {
             setupToolbarWithNavController(it)
+            setupEdgeToEdgePadding(it)
         }
     }
 
@@ -297,6 +300,17 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
             duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
         }
         postponeEnterTransition()
+    }
+
+    private fun setupEdgeToEdgePadding(toolbar: Toolbar) {
+        toolbar.setOnApplyWindowInsetsListener{ view, insets ->
+            val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets)
+            val systemWindow = insetsCompat.getInsets(
+                    WindowInsetsCompat.Type.statusBars()
+            )
+            view.updatePadding(top = systemWindow.top)
+            insets
+        }
     }
 
     /**
