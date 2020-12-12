@@ -22,11 +22,18 @@
         tools:ignore="ContentDescription" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_status_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_constraintGuide_begin="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="?attr/actionBarSize" />
+        tools:layout_constraintGuide_begin="?attr/actionBarSize" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/image_toolbar_background"
@@ -49,7 +56,7 @@
         android:src="@drawable/ic_baseline_arrow_back"
         app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_status_bar"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -73,7 +80,7 @@
         android:src="@drawable/ic_share"
         app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_status_bar"
         tools:ignore="ContentDescription" />
 
     <ImageView

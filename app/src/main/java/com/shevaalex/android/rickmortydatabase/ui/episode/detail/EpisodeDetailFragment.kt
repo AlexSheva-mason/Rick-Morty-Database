@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -154,6 +155,14 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
         } catch (e: Exception) {
             null
         }
+    }
+
+    override fun getToolbarBottomGuideline(): Guideline? {
+        return binding.guidelineToolbar
+    }
+
+    override fun getToolbarTopGuideline(): Guideline? {
+        return binding.guidelineStatusBar
     }
 
 }
