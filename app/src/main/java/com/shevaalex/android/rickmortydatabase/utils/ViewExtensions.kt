@@ -8,6 +8,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -81,6 +83,14 @@ fun <T : RecyclerView.ViewHolder> Fragment.setGridOrLinearRecyclerView(
                 false
         )
         recyclerView.layoutManager = gridLayoutManager
+        recyclerView.setOnApplyWindowInsetsListener { v, insets ->
+            val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets)
+            val systemWindow = insetsCompat.getInsets(
+                    WindowInsetsCompat.Type.statusBars()
+            )
+            v.updatePadding(top = systemWindow.top)
+            insets
+        }
         // apply spacing to gridlayout
         val rowSpacing = getDimensPx(requireContext(), R.dimen.item_grid_spacing)
         val itemDecoration = CustomItemDecoration(
