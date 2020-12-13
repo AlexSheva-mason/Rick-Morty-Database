@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.FutureTarget
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialFadeThrough
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.shevaalex.android.rickmortydatabase.R
@@ -219,11 +221,17 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
     }
 
     private fun prepareTransitions() {
-        postponeEnterTransition()
-        sharedElementEnterTransition = MaterialContainerTransform().apply {
-            drawingViewId = R.id.nav_host_fragment
-            duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
-            scrimColor = Color.TRANSPARENT
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            postponeEnterTransition()
+            sharedElementEnterTransition = MaterialContainerTransform().apply {
+                drawingViewId = R.id.nav_host_fragment
+                duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+                scrimColor = Color.TRANSPARENT
+            }
+        } else {
+            enterTransition = MaterialFadeThrough().apply {
+                duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+            }
         }
     }
 

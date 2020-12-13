@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialFadeThrough
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.gson.Gson
@@ -293,13 +295,19 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
      * sets the recyclerview animation on exit and reenter during fragment transition
      */
     protected fun setExitAndReenterAnimation(){
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
-        }
-        reenterTransition = MaterialElevationScale(true).apply {
-            duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
-        }
         postponeEnterTransition()
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            exitTransition = MaterialElevationScale(false).apply {
+                duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+            }
+            reenterTransition = MaterialElevationScale(true).apply {
+                duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+            }
+        } else {
+            exitTransition = MaterialFadeThrough().apply {
+                duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+            }
+        }
     }
 
     private fun setupEdgeToEdgePadding(toolbar: Toolbar) {
