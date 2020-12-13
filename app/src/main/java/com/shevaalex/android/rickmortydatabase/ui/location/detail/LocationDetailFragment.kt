@@ -110,10 +110,10 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
                 adapter?.setCharacterList(it)
                 //explicilty reset the RV adapter, otherwise RV is invisible at the start of transition or landscape
                 binding.recyclerviewLocationDetail.adapter = adapter
+                binding.locationResidentsNone.visibility = if (characters.isEmpty()) {
+                    View.VISIBLE
+                } else View.GONE
             }
-            binding.locationResidentsNone.visibility = characters?.let {
-                View.GONE
-            }?: View.VISIBLE
         })
     }
 
