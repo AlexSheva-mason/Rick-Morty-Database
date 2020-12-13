@@ -22,6 +22,7 @@ import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter.Characte
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSITION_EPISODE
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.setTopPaddingForStatusBar
 import javax.inject.Inject
 
 class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, EpisodeModel>() {
@@ -163,6 +164,10 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
 
     override fun getToolbarTopGuideline(): Guideline? {
         return binding.guidelineStatusBar
+    }
+
+    override fun setupDetailLayoutWithTransparentStatusBar() {
+        binding.layoutFragmentEpisodeDetail.setTopPaddingForStatusBar()
     }
 
 }

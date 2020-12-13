@@ -108,3 +108,14 @@ fun <T : RecyclerView.ViewHolder> Fragment.setGridOrLinearRecyclerView(
     //set the adapter to recyclerview
     recyclerView.adapter = adapter
 }
+
+fun View.setTopPaddingForStatusBar() {
+    this.setOnApplyWindowInsetsListener { v, insets ->
+        val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets)
+        val systemWindow = insetsCompat.getInsets(
+                WindowInsetsCompat.Type.statusBars()
+        )
+        v.updatePadding(top = systemWindow.top)
+        insets
+    }
+}

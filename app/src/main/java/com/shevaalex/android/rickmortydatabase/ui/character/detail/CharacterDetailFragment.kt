@@ -240,4 +240,8 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         return binding.guidelineStatusBar
     }
 
+    override fun setupDetailLayoutWithTransparentStatusBar() {
+        binding.characterDetails?.setTopPaddingForStatusBar()
+    }
+
 }

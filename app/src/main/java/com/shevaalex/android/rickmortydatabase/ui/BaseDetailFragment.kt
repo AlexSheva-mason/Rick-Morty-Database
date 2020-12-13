@@ -70,6 +70,9 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
             startPostponedEnterTransition()
         }
         setupToolbarEdgeToEdge()
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setupDetailLayoutWithTransparentStatusBar()
+        }
     }
 
     override fun onResume() {
@@ -265,5 +268,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
     protected abstract fun getToolbarBottomGuideline(): Guideline?
 
     protected abstract fun getToolbarTopGuideline(): Guideline?
+
+    protected abstract fun setupDetailLayoutWithTransparentStatusBar()
 
 }

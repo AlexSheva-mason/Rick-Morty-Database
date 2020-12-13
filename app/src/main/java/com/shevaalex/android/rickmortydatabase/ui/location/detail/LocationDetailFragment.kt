@@ -20,6 +20,7 @@ import com.shevaalex.android.rickmortydatabase.ui.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.setTopPaddingForStatusBar
 import javax.inject.Inject
 
 class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding, LocationModel>() {
@@ -162,6 +163,10 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
 
     override fun getToolbarTopGuideline(): Guideline? {
         return binding.guidelineStatusBar
+    }
+
+    override fun setupDetailLayoutWithTransparentStatusBar() {
+        binding.layoutFragmentLocationDetail.setTopPaddingForStatusBar()
     }
 
 }
