@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/location_item"
     android:layout_width="@dimen/item_episode_location_width"
     android:layout_height="@dimen/item_episode_location_height"
@@ -16,13 +17,12 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/img_location_description"
-            android:scaleType="fitCenter"
-            android:src="@drawable/locations_24dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_placeholder_error"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorSecondaryVariant" />
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/location_name_value"
