@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -120,25 +119,23 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             val reviewInfo = reviewViewModel.obtainReviewInfo()
             reviewInfo?.let {
-                Timber.w("ReviewInfo not null: %s", it.toString())
                 if (BuildConfig.DEBUG) {
                     Timber.w("starting launch review flow")
                     val flow = fakeReviewManager.launchReviewFlow(requireActivity(), it)
                     reviewViewModel.notifyReviewFlowLaunched()
                     flow.addOnCompleteListener {
                         if (flow.isSuccessful) {
-                            Toast.makeText(
-                                    requireContext(),
-                                    "fakeReviewManager.launchReviewFlow == SUCCESS",
-                                    Toast.LENGTH_LONG
-                            ).show()
+                            //show "fake review dialog"
+                            activity?.displayErrorDialog(
+                                    "fakeReviewManager.launchReviewFlow == SUCCESS"
+                            )
                         }
                     }
                 } else {
                     reviewManager.launchReview(requireActivity(), it)
                     reviewViewModel.notifyReviewFlowLaunched()
                 }
-            }?: Timber.w("ReviewInfo is NULL")
+            }
         }
     }
 
