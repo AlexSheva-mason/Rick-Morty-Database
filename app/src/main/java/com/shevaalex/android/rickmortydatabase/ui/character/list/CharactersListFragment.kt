@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -15,12 +17,18 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.play.core.ktx.launchReview
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.testing.FakeReviewManager
+import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
+import com.shevaalex.android.rickmortydatabase.ui.ReviewViewModel
 import com.shevaalex.android.rickmortydatabase.utils.*
+import timber.log.Timber
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 
@@ -30,8 +38,21 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<CharacterListViewModel>
 
+    @Inject
+    lateinit var reviewViewmodelFactory: DiViewModelFactory<ReviewViewModel>
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var fakeReviewManager: FakeReviewManager
+
     override val viewModel: CharacterListViewModel by activityViewModels {
         viewModelFactory
+    }
+
+    private val reviewViewModel: ReviewViewModel by activityViewModels {
+        reviewViewmodelFactory
     }
 
     override val keyListFilterMap = Const.KEY_FRAGMENT_CHAR_LIST_FILTER_MAP
@@ -46,6 +67,11 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         registerObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        attemptShowReviewDialog()
     }
 
     override fun onDestroyView() {
@@ -88,6 +114,32 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
                 binding.recyclerviewCharacter.layoutManager?.onRestoreInstanceState(it)
             }?: binding.recyclerviewCharacter.layoutManager?.scrollToPosition(0)
         })
+    }
+
+    private fun attemptShowReviewDialog() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            val reviewInfo = reviewViewModel.obtainReviewInfo()
+            reviewInfo?.let {
+                Timber.w("ReviewInfo not null: %s", it.toString())
+                if (BuildConfig.DEBUG) {
+                    Timber.w("starting launch review flow")
+                    val flow = fakeReviewManager.launchReviewFlow(requireActivity(), it)
+                    reviewViewModel.notifyReviewFlowLaunched()
+                    flow.addOnCompleteListener {
+                        if (flow.isSuccessful) {
+                            Toast.makeText(
+                                    requireContext(),
+                                    "fakeReviewManager.launchReviewFlow == SUCCESS",
+                                    Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                } else {
+                    reviewManager.launchReview(requireActivity(), it)
+                    reviewViewModel.notifyReviewFlowLaunched()
+                }
+            }?: Timber.w("ReviewInfo is NULL")
+        }
     }
 
     override fun injectFragment() {

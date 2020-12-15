@@ -1,6 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
-import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -40,6 +40,12 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<InitViewModel>
 
+    @Inject
+    lateinit var reviewViewmodelFactory: DiViewModelFactory<ReviewViewModel>
+
+    @Inject
+    lateinit var sharedPref: SharedPreferences
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var connectionStatus: ConnectionLiveData
     private var navController: NavController? = null
@@ -49,10 +55,14 @@ class MainActivity : AppCompatActivity() {
     private val initViewModel: InitViewModel by viewModels {
         viewModelFactory
     }
+    private val reviewViewModel: ReviewViewModel by viewModels {
+        reviewViewmodelFactory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as RmApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
+        requestReviewInfo()
         restoreInstanceState(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
@@ -124,6 +134,8 @@ class MainActivity : AppCompatActivity() {
                         composeMessage(stateResource, snackColor)
                         binding.progressBar.progressBar.visibility = View.GONE
                         initViewModel.dbIsSynced(true)
+                        //notify reviewViewModel to increment the number of successful db sync events
+                        reviewViewModel.notifyDbSyncSuccessful()
                         unSubscribe()
                     }
                 }
@@ -227,7 +239,6 @@ class MainActivity : AppCompatActivity() {
      * save the timestamp with the time when dbsynced was true
      */
     private fun saveToSharedPrefs() {
-        val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
         with (sharedPref.edit()) {
             val currentTimeHrs = (System.currentTimeMillis()/3600000).toInt()
             Timber.i("saving to share prefs timestamp: %s", currentTimeHrs)
@@ -240,7 +251,6 @@ class MainActivity : AppCompatActivity() {
      * @return true if currentTimeHrs - lastSynced is more than Const.DB_CHECK_PERIOD (hours)
      */
     private fun isDbCheckNeeded(): Boolean{
-        val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
         val lastSynced = sharedPref.getInt(Const.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, 0)
         val currentTimeHrs = (System.currentTimeMillis()/3600000).toInt()
         Timber.i(
@@ -250,6 +260,10 @@ class MainActivity : AppCompatActivity() {
                 currentTimeHrs-lastSynced
         )
         return currentTimeHrs - lastSynced > Const.DB_CHECK_PERIOD
+    }
+
+    private fun requestReviewInfo() {
+        reviewViewModel.preWarmReview()
     }
 
     override fun onBackPressed() {

@@ -21,6 +21,12 @@ class Constants {
         //sets the db sync status check period (hours)
         const val DB_CHECK_PERIOD = 24
 
+        //sets the required number of successful db sync events before google review dialog is shown
+        const val REVIEW_REQ_SUCCESS_SYNC_UPDATES = 4
+
+        //sets the amount of time to be elapsed between google review dialog can be shown again (days)
+        const val REVIEW_REQ_SHOW_PERIOD = 60
+
         //Share type image
         const val SHARE_TYPE = "image/*"
 
@@ -40,7 +46,10 @@ class Constants {
         const val KEY_FRAGMENT_EPISODE_DETAIL_OBJECT = "fragment_episode_detail_object"
 
         //Shared Prefs keys
+        const val SHARED_PREFS_FILE_NAME = "com.shevaalex.android.rickmortydatabase.shared.prefs"
         const val KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP = "main_activity_bool_true_timestamp"
+        const val KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER = "review_success_sync_updates_number"
+        const val KEY_REVIEW_ASKED_FOR_REVIEW_TIMESTAMP = "review_asked_for_review_timestamp"
 
         //SearchView recent queries list size
         const val SV_RECENT_COUNT = 10
