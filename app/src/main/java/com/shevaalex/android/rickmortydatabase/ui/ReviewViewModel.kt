@@ -65,7 +65,7 @@ constructor(
         Timber.i("numberOfSuccessDbSyncs initial: %s", numberOfSuccessDbSyncs)
         numberOfSuccessDbSyncs++
         Timber.i("numberOfSuccessDbSyncs updated: %s", numberOfSuccessDbSyncs)
-        with (sharedPrefs.edit()) {
+        with(sharedPrefs.edit()) {
             putInt(KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER, numberOfSuccessDbSyncs)
             Timber.i("saving new numberOfSuccessDbSyncs to sharedPrefs: %s", numberOfSuccessDbSyncs)
             apply()
@@ -119,9 +119,10 @@ constructor(
      * called when review flow was launched to reset the count of numberOfSuccessDbSyncs
      */
     private fun resetNumberOfSuccessDbSyncs() {
-        with (sharedPrefs.edit()) {
-            putInt(KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER, 0)
-            Timber.i("resetting the numberOfSuccessDbSyncs to sharedPrefs: %s", 0)
+        numberOfSuccessDbSyncs = 0
+        with(sharedPrefs.edit()) {
+            putInt(KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER, numberOfSuccessDbSyncs)
+            Timber.i("resetting the numberOfSuccessDbSyncs to sharedPrefs: %s", numberOfSuccessDbSyncs)
             apply()
         }
     }
