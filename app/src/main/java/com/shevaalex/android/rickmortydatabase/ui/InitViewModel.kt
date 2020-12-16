@@ -19,9 +19,6 @@ constructor(
 
     private val isNetworkAvailable = MutableLiveData<Boolean>()
 
-    private val _dbIsSynced = MutableLiveData(false)
-    val dbIsSynced: LiveData<Boolean> get() = _dbIsSynced
-
     init {
         viewModelScope.launch {
             /*
@@ -41,7 +38,7 @@ constructor(
         emit(StateResource(Status.Error, Message.NoInternet))
     }
 
-    val init: LiveData<StateResource> = Transformations.switchMap(isNetworkAvailable) { isNetworkAvailable ->
+    fun init(): LiveData<StateResource> = Transformations.switchMap(isNetworkAvailable) { isNetworkAvailable ->
         if (isNetworkAvailable) {
             Timber.i("CONNECTED")
             initRepository.getDbStateResource()
@@ -49,10 +46,6 @@ constructor(
             Timber.e("DISCONNECTED")
             noInternetError
         }
-    }
-
-    fun dbIsSynced (isSynced: Boolean) {
-        _dbIsSynced.value = isSynced
     }
 
     fun isNetworkAvailable(isConnected: Boolean) {
