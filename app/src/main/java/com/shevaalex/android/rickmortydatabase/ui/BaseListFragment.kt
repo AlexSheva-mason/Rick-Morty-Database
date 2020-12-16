@@ -16,6 +16,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.transition.Transition
 import androidx.viewbinding.ViewBinding
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.transition.MaterialElevationScale
@@ -294,7 +295,7 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
     /**
      * sets the recyclerview animation on exit and reenter during fragment transition
      */
-    protected fun setExitAndReenterAnimation(){
+    protected fun setExitAndReenterAnimation(listener: Transition.TransitionListener? = null){
         postponeEnterTransition()
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             exitTransition = MaterialElevationScale(false).apply {
@@ -302,6 +303,9 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
             }
             reenterTransition = MaterialElevationScale(true).apply {
                 duration = resources.getInteger(R.integer.rm_motion_default_large).toLong()
+                listener?.let {
+                    addListener(it)
+                }
             }
         } else {
             exitTransition = MaterialFadeThrough().apply {

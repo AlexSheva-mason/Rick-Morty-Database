@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Transition
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -66,11 +67,6 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         registerObservers()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        attemptShowReviewDialog()
     }
 
     override fun onDestroyView() {
@@ -392,7 +388,17 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
     }
 
     private fun navigateCharacterDetail(character: CharacterModel, characterCard: MaterialCardView) {
-        setExitAndReenterAnimation()
+        //set reenter transition listener to attempt to show review dialog after navigating back to this fragment
+        val transitionListener = object: Transition.TransitionListener {
+            override fun onTransitionStart(transition: Transition) { }
+            override fun onTransitionEnd(transition: Transition) {
+                attemptShowReviewDialog()
+            }
+            override fun onTransitionCancel(transition: Transition) { }
+            override fun onTransitionPause(transition: Transition) { }
+            override fun onTransitionResume(transition: Transition) { }
+        }
+        setExitAndReenterAnimation(listener = transitionListener)
         val extras = FragmentNavigatorExtras(
                 characterCard to Constants.TRANSITION_CHARACTER.plus(character.id)
         )
