@@ -31,7 +31,6 @@ class Constants {
         const val SHARE_TYPE = "image/*"
 
         //SavedInstanceState keys
-        const val KEY_ACTIVITY_MAIN_DB_SYNC_BOOL = "main_activity_dbsync"
         const val KEY_FRAGMENT_CHAR_LIST_QUERY = "fragment_character_list_query"
         const val KEY_FRAGMENT_CHAR_LIST_FILTER_MAP = "fragment_character_list_filter_map"
         const val KEY_FRAGMENT_CHAR_LIST_LIST_POSITION = "fragment_character_list_list_position"

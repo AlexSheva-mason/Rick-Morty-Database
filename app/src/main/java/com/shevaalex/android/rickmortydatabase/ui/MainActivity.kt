@@ -63,60 +63,31 @@ class MainActivity : AppCompatActivity() {
         (application as RmApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         requestReviewInfo()
-        restoreInstanceState(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        //if database has been recently checked -> skip db sync
-        lifecycleScope.launch(Dispatchers.IO) {
-            isDbCheckNeeded().run {
-                if (this) {
-                    withContext(Dispatchers.Main) {
-                        getInitState()
-                    }
-                }
-            }
-        }
+        databaseSyncCheck()
         setupNavController()
         registerObservers()
         setupEdgeToEdge()
     }
 
-    private fun restoreInstanceState(savedInstanceState: Bundle?) {
-        savedInstanceState?.let{savedInstance ->
-            (savedInstance[Const.KEY_ACTIVITY_MAIN_DB_SYNC_BOOL] as Boolean?)?.let {dbSynced ->
-                Timber.v("restoring dbsynced bool: %s", dbSynced)
-                initViewModel.dbIsSynced(dbSynced)
+    private fun databaseSyncCheck() {
+        //if database has been recently checked -> skip db sync
+        lifecycleScope.launch(Dispatchers.IO) {
+            isDbCheckNeeded().run {
+                if (this) {
+                    withContext(Dispatchers.Main) {
+                        monitorNetworkState()
+                        dbInit()
+                    }
+                }
             }
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        val dbIsSynced = initViewModel.dbIsSynced.value?: false
-        outState.putBoolean(Const.KEY_ACTIVITY_MAIN_DB_SYNC_BOOL, dbIsSynced)
-    }
-
-    private fun getInitState() {
-        initViewModel.dbIsSynced.observe(this, { isSynced ->
-            isSynced?.let {
-                //if db has not been synced -> monitor network connection and fetch data when connected
-                if (!it) {
-                    monitorNetworkState()
-                    dbInit()
-                }
-                //else save the timestamp to shared prefs
-                else {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        saveToSharedPrefs()
-                    }
-                }
-            }
-        })
-    }
-
     private fun dbInit() {
-        initViewModel.init.observe(this, {
+        initViewModel.init().observe(this, {
             it?.let {stateResource ->
                 val snackColor: Int?
                 when (stateResource.status) {
@@ -133,7 +104,10 @@ class MainActivity : AppCompatActivity() {
                         snackColor = ContextCompat.getColor(this, R.color.rm_green_300)
                         composeMessage(stateResource, snackColor)
                         binding.progressBar.progressBar.visibility = View.GONE
-                        initViewModel.dbIsSynced(true)
+                        //save the timestamp of success update time to shared prefs
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            saveToSharedPrefs()
+                        }
                         //notify reviewViewModel to increment the number of successful db sync events
                         reviewViewModel.notifyDbSyncSuccessful()
                         unSubscribe()
@@ -152,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun unSubscribe() {
         connectionStatus.removeObservers(this)
-        initViewModel.init.removeObservers(this)
+        initViewModel.init().removeObservers(this)
     }
 
 
