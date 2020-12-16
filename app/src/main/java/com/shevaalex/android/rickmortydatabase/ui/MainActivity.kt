@@ -1,6 +1,5 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
@@ -21,16 +19,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding
-import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
 import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
@@ -42,9 +35,6 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var reviewViewmodelFactory: DiViewModelFactory<ReviewViewModel>
-
-    @Inject
-    lateinit var sharedPref: SharedPreferences
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var connectionStatus: ConnectionLiveData
@@ -74,14 +64,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun databaseSyncCheck() {
         //if database has been recently checked -> skip db sync
-        lifecycleScope.launch(Dispatchers.IO) {
-            isDbCheckNeeded().run {
-                if (this) {
-                    withContext(Dispatchers.Main) {
-                        monitorNetworkState()
-                        dbInit()
-                    }
-                }
+        initViewModel.isDbCheckNeeded().run {
+            if (this) {
+                monitorNetworkState()
+                dbInit()
             }
         }
     }
@@ -104,10 +90,8 @@ class MainActivity : AppCompatActivity() {
                         snackColor = ContextCompat.getColor(this, R.color.rm_green_300)
                         composeMessage(stateResource, snackColor)
                         binding.progressBar.progressBar.visibility = View.GONE
-                        //save the timestamp of success update time to shared prefs
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            saveToSharedPrefs()
-                        }
+                        //notify viewmodel Db sync success
+                        initViewModel.notifyDbAllSuccess()
                         //notify reviewViewModel to increment the number of successful db sync events
                         reviewViewModel.notifyDbSyncSuccessful()
                         unSubscribe()
@@ -207,33 +191,6 @@ class MainActivity : AppCompatActivity() {
         mySnackbar.setTextColor(ContextCompat.getColor(this, R.color.rm_white_50))
         mySnackbar.anchorView = binding.bottomPanel
         mySnackbar.show()
-    }
-
-    /**
-     * save the timestamp with the time when dbsynced was true
-     */
-    private fun saveToSharedPrefs() {
-        with (sharedPref.edit()) {
-            val currentTimeHrs = (System.currentTimeMillis()/3600000).toInt()
-            Timber.i("saving to share prefs timestamp: %s", currentTimeHrs)
-            putInt(Const.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, currentTimeHrs)
-            apply()
-        }
-    }
-
-    /**
-     * @return true if currentTimeHrs - lastSynced is more than Const.DB_CHECK_PERIOD (hours)
-     */
-    private fun isDbCheckNeeded(): Boolean{
-        val lastSynced = sharedPref.getInt(Const.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, 0)
-        val currentTimeHrs = (System.currentTimeMillis()/3600000).toInt()
-        Timber.i(
-                "getLastTimeSynced, lastSync: %s, currentTimeHrs: %s, diff: %s",
-                lastSynced,
-                currentTimeHrs,
-                currentTimeHrs-lastSynced
-        )
-        return currentTimeHrs - lastSynced > Const.DB_CHECK_PERIOD
     }
 
     private fun requestReviewInfo() {
