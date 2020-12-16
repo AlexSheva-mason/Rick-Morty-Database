@@ -62,12 +62,13 @@ constructor(
      * increments the number of successful db sync events numberOfSuccessDbSyncs
      */
     fun notifyDbSyncSuccessful() {
-        Timber.i("numberOfSuccessDbSyncs initial: %s", numberOfSuccessDbSyncs)
+        Timber.i("saving new numberOfSuccessDbSyncs to sharedPrefs: old=%s / new =%s",
+                numberOfSuccessDbSyncs,
+                numberOfSuccessDbSyncs++
+        )
         numberOfSuccessDbSyncs++
-        Timber.i("numberOfSuccessDbSyncs updated: %s", numberOfSuccessDbSyncs)
         with(sharedPrefs.edit()) {
             putInt(KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER, numberOfSuccessDbSyncs)
-            Timber.i("saving new numberOfSuccessDbSyncs to sharedPrefs: %s", numberOfSuccessDbSyncs)
             apply()
         }
     }
@@ -77,12 +78,14 @@ constructor(
      */
     fun notifyReviewFlowLaunched() {
         resetNumberOfSuccessDbSyncs()
-        Timber.i("timestampLastTimeShowedReview initial: %s", timestampLastTimeShowedReview)
+        Timber.i("saving new timestampLastTimeShowedReview to sharedPrefs: old=%s / new=%s",
+                timestampLastTimeShowedReview,
+                (System.currentTimeMillis() / 86400000).toInt()
+        )
         //sets timestamp to current time in days
         timestampLastTimeShowedReview = (System.currentTimeMillis() / 86400000).toInt()
         with (sharedPrefs.edit()) {
             putInt(KEY_REVIEW_ASKED_FOR_REVIEW_TIMESTAMP, timestampLastTimeShowedReview)
-            Timber.i("saving new timestampLastTimeShowedReview to sharedPrefs: %s", timestampLastTimeShowedReview)
             apply()
         }
     }
@@ -97,21 +100,23 @@ constructor(
         val currentTimeDays = (System.currentTimeMillis() / 86400000).toInt()
         val shouldAsk = numberOfSuccessDbSyncs >= REVIEW_REQ_SUCCESS_SYNC_UPDATES
                 && currentTimeDays - timestampLastTimeShowedReview > REVIEW_REQ_SHOW_PERIOD
-        Timber.i("[shouldAskForReview()] numberOfSuccessDbSyncs=%s / REVIEW_REQ_SUCCESS_SYNC_UPDATES=%s",
-                numberOfSuccessDbSyncs,
-                REVIEW_REQ_SUCCESS_SYNC_UPDATES
-        )
-        Timber.i(
-                "[shouldAskForReview()] currentTimeDays=%s / timestampLastTimeShowedReview=%s / REVIEW_REQ_SHOW_PERIOD=%s",
-                currentTimeDays,
-                timestampLastTimeShowedReview,
-                REVIEW_REQ_SHOW_PERIOD
-        )
-        Timber.i(
-                "[shouldAskForReview()] timestampDiff=%s / shouldAsk=%s",
-                currentTimeDays - timestampLastTimeShowedReview,
-                shouldAsk
-        )
+        if (shouldAsk) {
+            Timber.i("[shouldAskForReview()] numberOfSuccessDbSyncs=%s / REVIEW_REQ_SUCCESS_SYNC_UPDATES=%s",
+                    numberOfSuccessDbSyncs,
+                    REVIEW_REQ_SUCCESS_SYNC_UPDATES
+            )
+            Timber.i(
+                    "[shouldAskForReview()] currentTimeDays=%s / timestampLastTimeShowedReview=%s / REVIEW_REQ_SHOW_PERIOD=%s",
+                    currentTimeDays,
+                    timestampLastTimeShowedReview,
+                    REVIEW_REQ_SHOW_PERIOD
+            )
+            Timber.i(
+                    "[shouldAskForReview()] timestampDiff=%s / shouldAsk=%s",
+                    currentTimeDays - timestampLastTimeShowedReview,
+                    shouldAsk
+            )
+        }
         return shouldAsk
     }
 
