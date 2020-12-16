@@ -64,7 +64,7 @@ constructor(
     fun notifyDbSyncSuccessful() {
         Timber.i("saving new numberOfSuccessDbSyncs to sharedPrefs: old=%s / new =%s",
                 numberOfSuccessDbSyncs,
-                numberOfSuccessDbSyncs++
+                numberOfSuccessDbSyncs + 1
         )
         numberOfSuccessDbSyncs++
         with(sharedPrefs.edit()) {
