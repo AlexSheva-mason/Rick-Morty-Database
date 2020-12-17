@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.view.WindowInsetsCompat
@@ -32,6 +31,7 @@ import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.ImageParsingUtil
+import com.shevaalex.android.rickmortydatabase.utils.displayErrorDialog
 import com.shevaalex.android.rickmortydatabase.utils.getActionBarHeightPx
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -96,10 +96,6 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
     }
 
     protected fun shareImageWithGlide(detailObjectName: String, imageUrl: String?) {
-        // fragment's class name for firebase logging
-        val className = "_"
-                .plus(this.javaClass.simpleName)
-                .toLowerCase(Locale.ROOT)
         //get the bitmap from glide
         val futureBitmap: FutureTarget<Bitmap> =
                 Glide.with(this)
@@ -123,7 +119,6 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
                 shareIntent.flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 val uri: Uri = ImageParsingUtil
                         .parseBitmapToUri(bitmap, underscoredName, requireActivity())
-                shareIntent.data = uri
                 //put extra for compatability with older apps
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
                 val chooser = Intent
@@ -149,11 +144,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
                 }
                 //start share intent
                 startActivity(chooser)
-                //log share intent with firebase
-                firebaseAnalytics
-                        .logEvent(FirebaseAnalytics.Event.SHARE.plus(className)) {
-                            param(FirebaseAnalytics.Param.ITEM_ID, detailObjectName)
-                        }
+                logShareEventWithFirebase(detailObjectName)
                 //clear the bitmap
                 Glide.with(requireActivity()).clear(futureBitmap)
             }
@@ -171,13 +162,22 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
         }
     }
 
+    private fun logShareEventWithFirebase(detailObjectName: String) {
+        // fragment's class name for firebase logging
+        val className = "_"
+                .plus(this.javaClass.simpleName)
+                .toLowerCase(Locale.ROOT)
+        firebaseAnalytics
+                .logEvent(FirebaseAnalytics.Event.SHARE.plus(className)) {
+                    param(FirebaseAnalytics.Param.ITEM_ID, detailObjectName)
+                }
+    }
+
     private suspend fun showErrorToast() {
         withContext(Dispatchers.Main) {
-            Toast.makeText(
-                    requireActivity(),
-                    requireActivity().resources.getString(R.string.error_share_no_network),
-                    Toast.LENGTH_SHORT
-            ).show()
+            requireActivity().displayErrorDialog(
+                    requireActivity().resources.getString(R.string.error_share_no_network)
+            )
         }
     }
 
