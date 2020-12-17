@@ -1,35 +1,47 @@
 # Characters for Rick and Morty
 <a href='https://play.google.com/store/apps/details?id=com.shevaalex.android.rickmortydatabase&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/static/images/badges/en_badge_web_generic.png' height="50"/></a>
 
-This project was created to help myself practicing Java and Android development. 
-App is created using Android Jetpack library and Material Design library.
+This project is an android app created for fans of "Rick And Morty" series and provides some valuable information about characters, locations and episodes, allows to search and filter data.
+This project originally was created in Java, but now it has been heavily refactored and rewritten in Kotlin.
 
 
-<img src="screenshots/demo.gif" width="250" hspace="10"><img src="screenshots/Screenshot_1592672654.png" width="250" hspace="10"><img src="screenshots/Screenshot_1592672636.png" width="250" hspace="10">
+<img src="screenshots/demo.gif" width="250" hspace="10"><img src="screenshots/Screenshot_light.png" width="250" hspace="10"><img src="screenshots/Screenshot_dark.png" width="250" hspace="10">
 
 
 
 ## App design and architecture
-Project is based on MVVM architecture, written in Java.
+Project is based on MVVM architecture, mostly written in Kotlin using Android Jetpack library (AndroidX).
+App utilises offline first approach and implements "Single Activity - multiple Fragments" navigation pattern.
+Project uses dependency injection with Dagger2.
+
 Android Jetpack Architecture Components used:
 - ViewModel
 - LiveData
 - Room
 - ViewBinding 
-- Navigation component (Single Activity - many Fragments)
+- Navigation component
 - Paging v2
 
-App is using components from Material Design library: BottomNavigationView, AppBarLayout, CollapsingToolbarLayout. Theming is implemented using Dark and Light theme with custom styles and text appearance following modern design practices.
-This project supports responsive layouts on phones (multi-layout screens for tablets are not yet implemented).
+Kotlin libraries:
+- Coroutines (with Flows)
+- various ktx extensions
+
+UI is utilising a dual-theme approach, allowing users to choose from light or dark theme. Components from Material Design library (MaterialCardview, MaterialToolbar, BottomNavigationView etc.) have been used due to their ability to switch between colour Primary and colour Surface.
+Detail Fragments are designed in a way that allows the user to drag and move contents - this behaviour is implemented by using MotionLayout.
+MaterialContainerTransform (shared element transitions), MaterialFadeThrough and MaterialElevationScale from Material Design library have been used to animate transitions between list and detail fragments.
 
 ## Credits
-Project uses third-party libraries (in no particular order):
-- [AndroidFastScroll by zhanghai](https://github.com/zhanghai/AndroidFastScroll);
-- [Picasso by square](https://github.com/square/picasso);
-- [OkHTTP (for Picasso) by square](https://github.com/square/okhttp);
-- [LeakCanary by square](https://github.com/square/leakcanary) in debug mode for detecting memory leaks.
+[Rick and Morty RESTful API](https://rickandmortyapi.com/), [rick-and-morty-api](https://github.com/afuh/rick-and-morty-api) by Axel Fuhrmann is being used as a data source for this project.
 
-[Rick and Morty RESTful API](https://rickandmortyapi.com/) by [afuh](https://github.com/afuh/rick-and-morty-api) is being used as a source for database.
+Project uses third-party libraries (in no particular order):
+- [LeakCanary](https://github.com/square/leakcanary) in debug mode for detecting memory leaks.
+- [Retrofit](https://github.com/square/retrofit) for making RESTful API calls
+- [Material Dialogs](https://github.com/afollestad/material-dialogs) creating dialog views
+- [Timber](https://github.com/JakeWharton/timber) logging
+- [Dagger2](https://github.com/google/dagger) dependency injection
+- [Glide](https://github.com/bumptech/glide) image loading library
+
+
 
 ## Authors
 [Alexei Sevcisen](https://github.com/AlexSheva-mason)
