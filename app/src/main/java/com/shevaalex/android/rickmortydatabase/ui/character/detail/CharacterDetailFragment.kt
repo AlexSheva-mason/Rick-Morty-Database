@@ -127,11 +127,15 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
             }
             if (it.lastLocation.name != activity?.resources?.getString(R.string.location_unknown)) {
                 binding.characterLastLocValue.text = it.lastLocation.name
-                setLocationActive(binding.lastLocIcon, binding.characterLastLocValue)
+                setLocationActive(binding.lastLocChevron, binding.lastLocIcon, binding.characterLastLocValue)
+            } else {
+                binding.lastLocChevron.visibility = View.GONE
             }
             if (it.originLocation.name != activity?.resources?.getString(R.string.location_unknown)) {
                 binding.characterOriginValue.text = it.originLocation.name
-                setLocationActive(binding.originIcon, binding.characterOriginValue)
+                setLocationActive(binding.originChevron, binding.originLocIcon, binding.characterOriginValue)
+            } else {
+                binding.originChevron.visibility = View.GONE
             }
         }
     }
@@ -151,13 +155,13 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         }
     }
 
-    private fun setLocationActive(locIcon: ImageView?, locTv: TextView?) {
+    private fun setLocationActive(chevronIcon: ImageView?, locIcon: ImageView?, locTv: TextView?) {
         locIcon?.setImageResource(R.drawable.ic_location_defined_24dp)
         activity?.let { activity ->
             val colorPrimary = TextColourUtil.fetchThemeColor(R.attr.colorPrimary, activity)
+            chevronIcon?.setColorFilter(colorPrimary)
             locIcon?.setColorFilter(colorPrimary)
-            locTv?.setTextColor(colorPrimary)
-            locTv?.isAllCaps = true
+            locTv?.setTextColor(activity.getColor(R.color.material_on_background_emphasis_high_type))
         }
     }
 
@@ -173,14 +177,14 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         //observe Locations and set click listeners
         viewModel.lastLocation.observe(viewLifecycleOwner, {
             it?.let { location ->
-                binding.characterLastLocValue.setOnClickListener {
+                binding.lastLocIconContainer.setOnClickListener {
                     navigateLocationDetail(location)
                 }
             }
         })
         viewModel.originLocation.observe(viewLifecycleOwner, {
             it?.let { location ->
-                binding.characterOriginValue.setOnClickListener {
+                binding.originIconContainer.setOnClickListener {
                     navigateLocationDetail(location)
                 }
             }

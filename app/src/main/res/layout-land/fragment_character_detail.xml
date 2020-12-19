@@ -115,8 +115,9 @@
                     android:layout_marginTop="4dp"
                     android:text="@string/tv_character_last_loc"
                     android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintBottom_toBottomOf="@id/last_loc_icon_container"
                     app:layout_constraintStart_toStartOf="@+id/character_origin_title"
-                    app:layout_constraintTop_toBottomOf="@id/character_origin_title" />
+                    app:layout_constraintTop_toTopOf="@id/last_loc_icon_container" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_text_value"
@@ -167,11 +168,43 @@
                     app:layout_constraintStart_toStartOf="@id/character_status"
                     app:layout_constraintTop_toBottomOf="@+id/character_species" />
 
+                <LinearLayout
+                    android:id="@+id/origin_icon_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    app:layout_constraintBottom_toBottomOf="@id/character_origin_title"
+                    app:layout_constraintEnd_toEndOf="@id/barrier_locations_container"
+                    app:layout_constraintStart_toEndOf="@id/character_last_location_title"
+                    app:layout_constraintTop_toTopOf="@id/character_origin_title">
+
+                    <ImageView
+                        android:id="@+id/origin_chevron"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:src="@drawable/ic_chevron_right_24"
+                        app:tint="@color/material_on_background_emphasis_medium"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/origin_loc_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:src="@drawable/ic_location_unknown_24dp"
+                        app:tint="@color/material_on_background_emphasis_medium"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/character_origin_value"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="2dp"
                     android:ellipsize="end"
                     android:gravity="start|center"
                     android:maxLines="1"
@@ -180,23 +213,62 @@
                     android:textColor="@color/material_on_background_emphasis_medium"
                     app:layout_constraintBottom_toBottomOf="@id/character_origin_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/character_last_location_title"
+                    app:layout_constraintStart_toEndOf="@id/origin_icon_container"
                     app:layout_constraintTop_toTopOf="@id/character_origin_title" />
+
+                <LinearLayout
+                    android:id="@+id/last_loc_icon_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    app:layout_constraintEnd_toEndOf="@id/barrier_locations_container"
+                    app:layout_constraintStart_toEndOf="@id/character_last_location_title"
+                    app:layout_constraintTop_toBottomOf="@id/origin_icon_container">
+
+                    <ImageView
+                        android:id="@+id/last_loc_chevron"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:src="@drawable/ic_chevron_right_24"
+                        app:tint="@color/material_on_background_emphasis_medium"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/last_loc_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:src="@drawable/ic_location_unknown_24dp"
+                        app:tint="@color/material_on_background_emphasis_medium"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_locations_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="end"
+                    app:constraint_referenced_ids="origin_icon_container,last_loc_icon_container" />
 
                 <TextView
                     android:id="@+id/character_last_loc_value"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_marginStart="2dp"
                     android:ellipsize="end"
                     android:gravity="start|center"
                     android:maxLines="1"
                     android:text="@string/tv_character_last_loc_unknown_value"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="@color/material_on_background_emphasis_medium"
-                    app:layout_constraintBottom_toBottomOf="@id/character_last_location_title"
+                    app:layout_constraintBottom_toBottomOf="@id/last_loc_icon_container"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/character_origin_value"
-                    app:layout_constraintTop_toTopOf="@id/character_last_location_title" />
+                    app:layout_constraintStart_toEndOf="@id/last_loc_icon_container"
+                    app:layout_constraintTop_toTopOf="@id/last_loc_icon_container" />
 
                 <TextView
                     android:id="@+id/character_episodes"

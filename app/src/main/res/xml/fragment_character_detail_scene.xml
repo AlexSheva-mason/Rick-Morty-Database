@@ -92,7 +92,7 @@
             <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="60"
-                motion:motionTarget="@id/origin_icon" />
+                motion:motionTarget="@id/origin_icon_container" />
             <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="60"
@@ -104,7 +104,7 @@
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="80"
-                motion:motionTarget="@id/origin_icon" />
+                motion:motionTarget="@id/origin_icon_container" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="80"
@@ -116,7 +116,7 @@
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="70"
-                motion:motionTarget="@id/last_loc_icon" />
+                motion:motionTarget="@id/last_loc_icon_container" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="70"
@@ -208,7 +208,7 @@
             <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="40"
-                motion:motionTarget="@id/origin_icon" />
+                motion:motionTarget="@id/origin_icon_container" />
             <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="40"
@@ -220,7 +220,7 @@
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="90"
-                motion:motionTarget="@id/origin_icon" />
+                motion:motionTarget="@id/origin_icon_container" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="90"
@@ -232,7 +232,7 @@
             <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="30"
-                motion:motionTarget="@id/last_loc_icon" />
+                motion:motionTarget="@id/last_loc_icon_container" />
             <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="30"
@@ -244,7 +244,7 @@
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="60"
-                motion:motionTarget="@id/last_loc_icon" />
+                motion:motionTarget="@id/last_loc_icon_container" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="60"
@@ -357,7 +357,7 @@
         <Constraint android:id="@+id/character_origin_title">
             <PropertySet android:alpha="0" />
         </Constraint>
-        <Constraint android:id="@+id/origin_icon">
+        <Constraint android:id="@+id/origin_icon_container">
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_origin_value">
@@ -366,7 +366,7 @@
         <Constraint android:id="@+id/character_last_title">
             <PropertySet android:alpha="0" />
         </Constraint>
-        <Constraint android:id="@+id/last_loc_icon">
+        <Constraint android:id="@+id/last_loc_icon_container">
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_last_loc_value">
@@ -465,7 +465,7 @@
         <Constraint android:id="@+id/character_origin_title">
             <PropertySet android:alpha="0" />
         </Constraint>
-        <Constraint android:id="@+id/origin_icon">
+        <Constraint android:id="@+id/origin_icon_container">
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_origin_value">
@@ -474,7 +474,7 @@
         <Constraint android:id="@+id/character_last_title">
             <PropertySet android:alpha="0" />
         </Constraint>
-        <Constraint android:id="@+id/last_loc_icon">
+        <Constraint android:id="@+id/last_loc_icon_container">
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_last_loc_value">
