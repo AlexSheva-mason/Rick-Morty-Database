@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.shevaalex.android.rickmortydatabase.R;
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel;
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel;
@@ -25,6 +26,10 @@ public class UiTranslateUtils {
         character.setSpecies(getCharacterSpeciesLocalized(context, character));
         character.setStatus(getCharacterStatusLocalized(context, character));
         character.setGender(getCharacterGenderLocalized(context, character));
+        String lastLocationName = getTranslatedLocationName(context, character.getLastLocation().getId());
+        String originLocationName = getTranslatedLocationName(context, character.getOriginLocation().getId());
+        character.getLastLocation().setName(lastLocationName);
+        character.getOriginLocation().setName(originLocationName);
         return character;
     }
 
@@ -58,6 +63,14 @@ public class UiTranslateUtils {
             return translatedStatus;
         }
         return character.getStatus();
+    }
+
+    private static String getTranslatedLocationName (Context context, int locationId) {
+        String translatedName = StringParsing.returnLocationNameLocale(context, locationId);
+        if (!translatedName.equals(StringParsing.KEY_NULL)) {
+            return translatedName;
+        }
+        return context.getResources().getString(R.string.location_unknown);
     }
 
     //LOCATION data
