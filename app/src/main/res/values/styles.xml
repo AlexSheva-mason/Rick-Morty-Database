@@ -30,7 +30,6 @@
     <!--Preference fragment theme-->
     <style name="RM.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
         <item name="android:layout">@layout/fragment_settings</item>
-        <item name="android:tint">@color/material_on_surface_emphasis_medium</item>
     </style>
 
 </resources>

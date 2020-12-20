@@ -31,23 +31,28 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
+        val iconTintColor = requireActivity().getColor(R.color.material_on_surface_disabled)
         val switchPreference =
                 findPreference<SwitchPreferenceCompat>(Constants.SWITCH_THEME_PREFERENCE_KEY)
         val listPreference = findPreference<ListPreference>(Constants.LIST_THEME_PREFERENCE_KEY)
         val versionPreference = findPreference<Preference>(Constants.KEY_VERSION)
         val reviewPreference = findPreference<Preference>(Constants.KEY_REVIEW)
         switchPreference?.let {
+            it.icon.setTint(iconTintColor)
             it.onPreferenceChangeListener = this
         }
         listPreference?.let {
+            it.icon.setTint(iconTintColor)
             it.onPreferenceChangeListener = this
         }
         versionPreference?.let {
+            it.icon.setTint(iconTintColor)
             it.summary = getString(R.string.app_name) +
                     getString(R.string.fragment_settings_version) +
                     BuildConfig.VERSION_NAME
         }
         reviewPreference?.let {
+            it.icon.setTint(iconTintColor)
             val webLinkIntent = Intent()
             webLinkIntent.action = Intent.ACTION_VIEW
             webLinkIntent.data = Uri.parse(Constants.DATA_REVIEW_LINK)
