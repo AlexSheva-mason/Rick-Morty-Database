@@ -94,11 +94,25 @@
         app:layout_constraintTop_toTopOf="@id/button_share"
         tools:ignore="ContentDescription" />
 
+    <ImageView
+        android:id="@+id/character_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:outlineProvider="bounds"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="8dp"
+        android:src="@drawable/character_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_character"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="?attr/colorOnPrimarySurface"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:elevation="8dp"

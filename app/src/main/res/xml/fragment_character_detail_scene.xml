@@ -38,6 +38,10 @@
                 motion:framePosition="15"
                 motion:motionTarget="@id/background_character_name" />
             <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="5"
+                motion:motionTarget="@id/character_icon" />
+            <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="75"
                 motion:motionTarget="@id/character_status_dot" />
@@ -177,6 +181,10 @@
                 android:alpha="1"
                 motion:framePosition="95"
                 motion:motionTarget="@id/character_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="5"
+                motion:motionTarget="@id/character_icon" />
             <KeyAttribute
                 android:alpha="1"
                 motion:framePosition="90"
@@ -336,6 +344,9 @@
         <Constraint android:id="@+id/background_character_name">
             <PropertySet android:alpha="0" />
         </Constraint>
+        <Constraint android:id="@+id/character_icon">
+            <PropertySet android:alpha="0" />
+        </Constraint>
         <Constraint android:id="@+id/character_status_dot">
             <PropertySet android:alpha="0" />
         </Constraint>
@@ -442,6 +453,9 @@
             <PropertySet android:alpha="1" />
         </Constraint>
         <Constraint android:id="@+id/background_character_name">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/character_icon">
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/character_status_dot">
