@@ -68,6 +68,10 @@
     <string name="fragment_settings_theme_switch_title">Enable dark theme</string>
     <string name="fragment_settings_preference_category_help">About</string>
     <string name="fragment_settings_preference_version">Version</string>
+    <string name="fragment_settings_preference_review">Review the app</string>
+    <string name="fragment_settings_preference_review_summary">To review the app, please follow
+        this link to the app\'s page on Google Play and put your rating within the review
+        section</string>
     <string name="fragment_settings_version" translatable="false">: v</string>
     <string name="fragment_settings_theme_entry_follow_system">Follow the system</string>
     <string name="fragment_settings_theme_entry_dark_theme">Dark theme</string>

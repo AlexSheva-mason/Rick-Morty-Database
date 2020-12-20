@@ -9,6 +9,10 @@ class Constants {
         const val LIST_THEME_PREFERENCE_KEY = "theme_list"
         const val SWITCH_THEME_PREFERENCE_KEY = "theme_switch"
         const val KEY_VERSION = "version"
+        const val KEY_REVIEW = "review"
+
+        //Settings data
+        const val DATA_REVIEW_LINK = "http://play.google.com/store/apps/details?id=com.shevaalex.android.rickmortydatabase"
 
         //Retrofit options
         const val CONNECTION_TIMEOUT = 10L

@@ -11,6 +11,7 @@
             android:defaultValue="@string/fragment_settings_theme_value_follow_system"
             android:entries="@array/pref_theme_list_entries"
             android:entryValues="@array/pref_theme_list_values"
+            android:icon="@drawable/ic_palette_24"
             android:key="theme_list"
             android:title="@string/fragment_settings_theme_list_title"
             app:useSimpleSummaryProvider="true" />
@@ -23,6 +24,13 @@
         app:title="@string/fragment_settings_preference_category_help">
 
         <Preference
+            android:icon="@drawable/ic_link_24"
+            app:key="review"
+            app:summary="@string/fragment_settings_preference_review_summary"
+            app:title="@string/fragment_settings_preference_review" />
+
+        <Preference
+            android:icon="@drawable/ic_info_24"
             app:key="version"
             app:summary="version here"
             app:title="@string/fragment_settings_preference_version" />

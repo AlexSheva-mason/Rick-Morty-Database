@@ -1,5 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -33,6 +35,7 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
                 findPreference<SwitchPreferenceCompat>(Constants.SWITCH_THEME_PREFERENCE_KEY)
         val listPreference = findPreference<ListPreference>(Constants.LIST_THEME_PREFERENCE_KEY)
         val versionPreference = findPreference<Preference>(Constants.KEY_VERSION)
+        val reviewPreference = findPreference<Preference>(Constants.KEY_REVIEW)
         switchPreference?.let {
             it.onPreferenceChangeListener = this
         }
@@ -43,6 +46,12 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
             it.summary = getString(R.string.app_name) +
                     getString(R.string.fragment_settings_version) +
                     BuildConfig.VERSION_NAME
+        }
+        reviewPreference?.let {
+            val webLinkIntent = Intent()
+            webLinkIntent.action = Intent.ACTION_VIEW
+            webLinkIntent.data = Uri.parse(Constants.DATA_REVIEW_LINK)
+            it.intent = webLinkIntent
         }
     }
 

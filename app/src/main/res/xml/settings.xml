@@ -8,6 +8,7 @@
         app:title="@string/fragment_settings_preference_category_theme">
 
         <SwitchPreferenceCompat
+            android:icon="@drawable/ic_palette_24"
             app:key="theme_switch"
             app:title="@string/fragment_settings_theme_switch_title" />
 
@@ -19,6 +20,13 @@
         app:title="@string/fragment_settings_preference_category_help">
 
         <Preference
+            android:icon="@drawable/ic_link_24"
+            app:key="review"
+            app:summary="@string/fragment_settings_preference_review_summary"
+            app:title="@string/fragment_settings_preference_review" />
+
+        <Preference
+            android:icon="@drawable/ic_info_24"
             app:key="version"
             app:summary="version here"
             app:title="@string/fragment_settings_preference_version" />
