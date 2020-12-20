@@ -94,11 +94,26 @@
         app:layout_constraintTop_toTopOf="@id/button_share"
         tools:ignore="ContentDescription" />
 
+    <ImageView
+        android:id="@+id/location_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/rm_grey_blue_900_alpha_30"
+        android:elevation="4dp"
+        android:padding="2dp"
+        android:src="@drawable/locations_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="?attr/colorOnPrimarySurface"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/location_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:elevation="8dp"

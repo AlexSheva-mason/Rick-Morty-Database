@@ -37,6 +37,10 @@
                 android:alpha="0"
                 motion:framePosition="15"
                 motion:motionTarget="@id/background_location_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="5"
+                motion:motionTarget="@id/location_icon" />
         </KeyFrameSet>
     </Transition>
 
@@ -83,6 +87,10 @@
                 android:alpha="1"
                 motion:framePosition="95"
                 motion:motionTarget="@id/location_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="5"
+                motion:motionTarget="@id/location_icon" />
         </KeyFrameSet>
     </Transition>
 
@@ -162,6 +170,9 @@
         <Constraint android:id="@+id/background_location_name">
             <PropertySet android:alpha="0" />
         </Constraint>
+        <Constraint android:id="@+id/location_icon">
+            <PropertySet android:alpha="0" />
+        </Constraint>
     </ConstraintSet>
 
 
@@ -213,6 +224,9 @@
             <PropertySet android:alpha="1" />
         </Constraint>
         <Constraint android:id="@+id/background_location_name">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/location_icon">
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/location_dimension_value">
