@@ -20,7 +20,6 @@
         <!--Default styles-->
         <item name="bottomNavigationStyle">@style/Widget.RM.BottomNavigationView</item>
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
-        <item name="actionOverflowMenuStyle">@style/Widget.RM.PopupMenu.Overflow</item>
         <item name="preferenceTheme">@style/RM.PreferenceThemeOverlay</item>
 
     </style>
@@ -42,11 +41,5 @@
         <item name="android:statusBarColor">@color/black_translucent_20</item>
         <item name="android:navigationBarColor">@color/black_translucent_20</item>
     </style>
-
-    <!--Preference fragment theme-->
-    <style name="RM.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
-        <item name="android:layout">@layout/fragment_settings</item>
-    </style>
-
 
 </resources>
