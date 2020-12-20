@@ -37,6 +37,10 @@
                 android:alpha="0"
                 motion:framePosition="15"
                 motion:motionTarget="@id/background_episode_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="5"
+                motion:motionTarget="@id/episode_icon" />
         </KeyFrameSet>
     </Transition>
 
@@ -83,6 +87,10 @@
                 android:alpha="1"
                 motion:framePosition="95"
                 motion:motionTarget="@id/episode_name" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="5"
+                motion:motionTarget="@id/episode_icon" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="1"
@@ -166,6 +174,9 @@
         <Constraint android:id="@+id/background_episode_name">
             <PropertySet android:alpha="0" />
         </Constraint>
+        <Constraint android:id="@+id/episode_icon">
+            <PropertySet android:alpha="0" />
+        </Constraint>
         <Constraint android:id="@+id/episode_description">
             <Layout
                 android:layout_width="0dp"
@@ -228,6 +239,9 @@
             <PropertySet android:alpha="1" />
         </Constraint>
         <Constraint android:id="@+id/background_episode_name">
+            <PropertySet android:alpha="0" />
+        </Constraint>
+        <Constraint android:id="@+id/episode_icon">
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/episode_code_value">
