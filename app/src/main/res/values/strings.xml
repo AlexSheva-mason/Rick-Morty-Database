@@ -10,27 +10,54 @@
     <string name="bottom_nav_episode">Episodes</string>
 
     //Fragment labels
-    <string name="fragment_character_list">List of Characters</string>
-    <string name="fragment_episode_list">List of Episodes</string>
-    <string name="fragment_location_list">List of Locations</string>
     <string name="fragment_settings">Settings</string>
 
-    //Volley Error managing
-    <string name="timeout_or_no_connection" translatable="false">Request timed out or bad connection, Database might be not up to date</string>
-    <string name="auth_fail" translatable="false">Authentication Failure while performing the request, Database might be not up to date</string>
-    <string name="server_error" translatable="false">Server error, Database might be not up to date</string>
-    <string name="network_error" translatable="false">Network error, Database might be not up to date</string>
-    <string name="parse_error" translatable="false">Server response cannot be parsed, Database might be not up to date</string>
-
     //MainActivity Error managing
-    <string name="ma_snack_no_connection">No network connection</string>
     <string name="ma_snack_database_up_to_date">Database is up to date</string>
     <string name="ma_snack_database_sync">Updating Database</string>
-    <string name="ma_snack_database_not_synced">Please connect to internet for database update</string>
+    <string name="ma_snack_database_not_synced">Please connect to the internet for a database check</string>
+    <string name="ma_snack_error_server_error">Error while syncing the database. \nServer Error: </string>
+    <string name="ma_snack_error_network_error">Error while syncing the database. \nPlease, check your network connection</string>
+    <string name="ma_snack_error_empty_response">Error while syncing the database. \nServer response is empty</string>
 
-    //CharacterListFragment
+    //Menu
+    <string name="filter">Filter</string>
+
+    //Dialog filter characters
+    <string name="dialog_title">Filter options</string>
+    <string name="dialog_subtitle_status">Filter by status:</string>
+    <string name="dialog_subtitle_gender">Filter by gender:</string>
+    <string name="dialog_subtitle_species">Filter by species:</string>
+    <string name="dialog_species_all">Show all</string>
+    <string name="dialog_positive_button">Apply</string>
+    <string name="dialog_negative_button">Cancel</string>
+    <string name="dialog_error_message">Please, select at least one option in these categories:\n\n</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_error_status">status</string>
+    <string name="dialog_error_gender">gender</string>
+    <string name="dialog_error_species">species</string>
+
+    //Dialog filter locations
+    <string name="dialog_subtitle_type">Filter by type:</string>
+    <string name="dialog_subtitle_dimension">Filter by dimension:</string>
+    <string name="dialog_error_type">type</string>
+    <string name="dialog_error_dimension">dimension</string>
+
+    //Dialog filter episodes
+    <string name="dialog_subtitle_season">Seasons:</string>
+    <string name="dialog_season_1" translatable="false">S 01</string>
+    <string name="dialog_season_2" translatable="false">S 02</string>
+    <string name="dialog_season_3" translatable="false">S 03</string>
+    <string name="dialog_season_4" translatable="false">S 04</string>
+    <string name="dialog_error_season">season</string>
+
+    //CharactersListFragment
     <string name="clf_no_results_query">Oops, nothing found :(</string>
-    <string name="clf_searchview_query_hint">Enter your query…</string>
+    <string name="clf_searchview_query_hint"><font size="14">Search characters</font></string>
+    //LocationsListFragment
+    <string name="llf_searchview_query_hint"><font size="14">Search locations</font></string>
+    //EpisodesListFragment
+    <string name="elf_searchview_query_hint"><font size="14">Search episodes</font></string>
 
     //EpisodeAdapter
     <string name="episode_name_placeholder" translatable="false">\"%1$s\"</string>
@@ -41,6 +68,10 @@
     <string name="fragment_settings_theme_switch_title">Enable dark theme</string>
     <string name="fragment_settings_preference_category_help">About</string>
     <string name="fragment_settings_preference_version">Version</string>
+    <string name="fragment_settings_preference_review">Review the app</string>
+    <string name="fragment_settings_preference_review_summary">To review the app, please follow
+        this link to the app\'s page on Google Play and put your rating within the review
+        section</string>
     <string name="fragment_settings_version" translatable="false">: v</string>
     <string name="fragment_settings_theme_entry_follow_system">Follow the system</string>
     <string name="fragment_settings_theme_entry_dark_theme">Dark theme</string>
@@ -50,37 +81,44 @@
     <string name="fragment_settings_theme_value_light_theme" translatable="false">1</string>
 
     //CharacterImageFragment
-    <string name="share_description">Share</string>
     <string name="error_share_no_network">Sharing failed, please check your internet connection</string>
     <string name="share_title">Share image with…</string>
 
     //App Bar
-    <string name="item_search">Search</string>
     <string name="item_settings">Settings</string>
-    <string name="item_filter">Do not show dead</string>
-    <string name="item_overflow" translatable="false">Overflow</string>
 
     //Layout view names and descriptions
     <string name="img_character_description">Character image</string>
     <string name="tv_character_name">Name:</string>
     <string name="tv_character_status">Status:</string>
+    <string name="tv_character_detail_status_unknown">Unknown</string>
     <string name="tv_character_species">Species:</string>
+    <string name="tv_character_detail_species_unknown">Unknown</string>
     <string name="tv_character_gender">Gender:</string>
+    <string name="tv_character_detail_gender_unknown">Unknown</string>
     <string name="tv_character_origin">Origin:</string>
     <string name="tv_character_last_loc">Last location:</string>
-    <string name="tv_character_last_loc_unknown_value">Unknown</string>
-    <string name="tv_character_location_unknown">unknown</string>
+    <string name="tv_character_last_loc_unknown_value">Location unknown</string>
     <string name="tv_character_episode_list">Seen in episodes:</string>
     <string name="tv_character_list_pb">Aw Jeez…</string>
     <string name="img_location_description">Location image placeholder</string>
     <string name="img_episode_description">Episode image placeholder</string>
+    <string name="tv_location_detail_dimension_unknown">Dimension unknown</string>
+    <string name="tv_location_detail_type_unknown">Type unknown</string>
     <string name="tv_location_type">Type:</string>
     <string name="tv_location_dimension">Dimension:</string>
     <string name="tv_location_residents">Residents in this location:</string>
     <string name="tv_location_residents_unknown">Unknown</string>
+    <string name="tv_episode_name">Name</string>
     <string name="tv_episode_code">S03E09</string>
     <string name="tv_episode_air_date">Air Date:</string>
     <string name="tv_episode_characters_list">Characters, seen in the episode:</string>
+    <string name="tv_episode_descr_lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Ut vitae lacus euismod, tincidunt est nec, tincidunt dolor.
+        Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Phasellus mattis iaculis nibh vel congue. Vestibulum finibus ac turpis eu elementum.
+        Aliquam volutpat, tellus ac eleifend pellentesque, orci sem mollis tellus, id viverra felis orci quis enim.
+        Phasellus suscipit lorem quis elit rutrum tristique.</string>
 
     //Database locale character names
     <string name="character_1">Rick Sanchez</string>
@@ -756,9 +794,9 @@
     <string name="character_671">New Improved Galactic Federation Guard</string>
 
     //Database locale character gender
-    <string name="character_gender_genderless">genderless</string>
-    <string name="character_gender_female">female</string>
-    <string name="character_gender_male">male</string>
+    <string name="character_gender_genderless">Genderless</string>
+    <string name="character_gender_female">Female</string>
+    <string name="character_gender_male">Male</string>
     <string name="character_gender_unknown">unknown</string>
 
     //Database locale character status
@@ -773,13 +811,10 @@
     <string name="species_Humanoid">Humanoid</string>
     <string name="species_unknown">unknown</string>
     <string name="species_Poopybutthole">Poopybutthole</string>
-    <string name="species_Mytholog">Mytholog</string>
     <string name="species_Animal">Animal</string>
-    <string name="species_Vampire">Vampire</string>
     <string name="species_Robot">Robot</string>
     <string name="species_Cronenberg">Cronenberg</string>
     <string name="species_Disease">Disease</string>
-    <string name="species_Parasite">Parasite</string>
     <string name="species_Planet">Planet</string>
     <string name="species_Mythological_Creature">Mythological Creature</string>
 
@@ -896,11 +931,11 @@
     //Location type
     <string name="location_Planet">Planet</string>
     <string name="location_Cluster">Cluster</string>
-    <string name="location_Space_station">Space_station</string>
+    <string name="location_Space_station">Space station</string>
     <string name="location_Microverse">Microverse</string>
     <string name="location_TV">TV</string>
     <string name="location_Resort">Resort</string>
-    <string name="location_Fantasy_town">Fantasy_town</string>
+    <string name="location_Fantasy_town">Fantasy town</string>
     <string name="location_Dream">Dream</string>
     <string name="location_Dimension">Dimension</string>
     <string name="location_unknown">unknown</string>
@@ -908,12 +943,12 @@
     <string name="location_Game">Game</string>
     <string name="location_Customs">Customs</string>
     <string name="location_Daycare">Daycare</string>
-    <string name="location_Dwarf_planet__Celestial_Dwarf_">Dwarf_planet__Celestial_Dwarf_</string>
+    <string name="location_Dwarf_planet__Celestial_Dwarf_">Dwarf planet Celestial Dwarf</string>
     <string name="location_Miniverse">Miniverse</string>
     <string name="location_Teenyverse">Teenyverse</string>
     <string name="location_Box">Box</string>
     <string name="location_Spacecraft">Spacecraft</string>
-    <string name="location_Artificially_generated_world">Artificially_generated_world</string>
+    <string name="location_Artificially_generated_world">Artificially generated world</string>
     <string name="location_Machine">Machine</string>
     <string name="location_Arcade">Arcade</string>
     <string name="location_Spa">Spa</string>
@@ -924,19 +959,19 @@
     <string name="location_Convention">Convention</string>
     <string name="location_Woods">Woods</string>
     <string name="location_Diegesis">Diegesis</string>
-    <string name="location_Non_Diegetic_Alternative_Reality">Non_Diegetic_Alternative_Reality</string>
+    <string name="location_Non_Diegetic_Alternative_Reality">Non Diegetic Alternative Reality</string>
     <string name="location_Nightmare">Nightmare</string>
     <string name="location_Asteroid">Asteroid</string>
-    <string name="location_Acid_Plant">Acid_Plant</string>
+    <string name="location_Acid_Plant">Acid Plant</string>
     <string name="location_Reality">Reality</string>
-    <string name="location_Death_Star">Death_Star</string>
+    <string name="location_Death_Star">Death Star</string>
     <string name="location_Base">Base</string>
 
     //Location Dimension
-    <string name="location_Dimension_C_137">Dimension_C_137</string>
+    <string name="location_Dimension_C_137">Dimension C-137</string>
     <string name="location_Post_Apocalyptic_Dimension">Post_Apocalyptic_Dimension</string>
-    <string name="location_Replacement_Dimension">Replacement_Dimension</string>
-    <string name="location_Cronenberg_Dimension">Cronenberg_Dimension</string>
+    <string name="location_Replacement_Dimension">Replacement Dimension</string>
+    <string name="location_Cronenberg_Dimension">Cronenberg Dimension</string>
     <string name="location_Fantasy_Dimension">Fantasy_Dimension</string>
     <string name="location_Dimension_5_126">Dimension_5_126</string>
     <string name="location_Testicle_Monster_Dimension">Testicle_Monster_Dimension</string>
@@ -1022,4 +1057,5 @@
     <string name="episode_october">october</string>
     <string name="episode_november">november</string>
     <string name="episode_december">december</string>
+
 </resources>

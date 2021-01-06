@@ -1,131 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_fragment_location_detail"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_location_detail_scene">
 
-    <include
-        android:id="@+id/partial_toolbar_simple"
-        layout="@layout/partial_toolbar_simple"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/image_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:elevation="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_placeholder_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_status_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_constraintGuide_begin="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_constraintGuide_begin="?attr/actionBarSize" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/image_toolbar_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="?attr/colorPrimarySurface"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_baseline_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_status_bar"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/background_button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:src="@drawable/circle_background"
+        app:layout_constraintBottom_toBottomOf="@id/button_back"
+        app:layout_constraintEnd_toEndOf="@id/button_back"
+        app:layout_constraintStart_toStartOf="@id/button_back"
+        app:layout_constraintTop_toTopOf="@id/button_back"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/button_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_share"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_status_bar"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/background_button_share"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:elevation="4dp"
+        android:src="@drawable/circle_background"
+        app:layout_constraintBottom_toBottomOf="@id/button_share"
+        app:layout_constraintEnd_toEndOf="@id/button_share"
+        app:layout_constraintStart_toStartOf="@id/button_share"
+        app:layout_constraintTop_toTopOf="@id/button_share"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/location_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/rm_grey_blue_900_alpha_30"
+        android:elevation="4dp"
+        android:padding="2dp"
+        android:src="@drawable/locations_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="?attr/colorOnPrimarySurface"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/location_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="8dp"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:outlineProvider="background"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.RM.Headline4"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/image_location"
+        app:layout_constraintEnd_toEndOf="@id/image_location"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/image_location"
+        tools:text="New Improved Galactic Federation Quarters" />
+
+    <ImageView
+        android:id="@+id/background_location_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/rm_grey_blue_900_alpha_30"
+        android:elevation="4dp"
+        android:paddingStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/location_name"
+        app:layout_constraintEnd_toEndOf="@id/location_name"
+        app:layout_constraintStart_toStartOf="@id/location_name"
+        app:layout_constraintTop_toTopOf="@id/location_name"
+        tools:ignore="ContentDescription" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp">
+    <TextView
+        android:id="@+id/location_dimension_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
+        android:gravity="center_horizontal"
+        android:maxLines="2"
+        android:text="@string/tv_location_detail_dimension_unknown"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@color/material_on_background_emphasis_medium"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_location" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/view_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/location_type_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
+        android:maxLines="2"
+        android:text="@string/tv_location_detail_type_unknown"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@color/material_on_background_emphasis_medium"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/location_dimension_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical_1"
+        app:layout_constraintTop_toTopOf="@id/location_dimension_value" />
 
-                <TextView
-                    android:id="@+id/location_dimension"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/tv_location_dimension"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/location_residents"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/tv_location_residents"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_dimension_value" />
 
-                <TextView
-                    android:id="@+id/location_dimension_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    app:autoSizeMinTextSize="12sp"
-                    app:autoSizeStepGranularity="1sp"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toTopOf="@+id/location_dimension"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/location_dimension"
-                    app:layout_constraintTop_toBottomOf="@+id/location_dimension"
-                    tools:text="DIMENSION" />
+    <TextView
+        android:id="@+id/location_residents_none"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/tv_location_residents_unknown"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_residents" />
 
-                <TextView
-                    android:id="@+id/location_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_location_type"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    app:layout_constraintStart_toStartOf="@id/location_dimension"
-                    app:layout_constraintTop_toBottomOf="@id/location_dimension" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_location_detail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_residents"
+        tools:listitem="@layout/item_character_small" />
 
-                <TextView
-                    android:id="@+id/location_type_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="8dp"
-                    android:maxLines="1"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    app:layout_constraintBottom_toTopOf="@+id/location_type"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/location_type"
-                    app:layout_constraintTop_toBottomOf="@+id/location_type"
-                    tools:text="TYPE" />
-
-                <TextView
-                    android:id="@+id/location_residents"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/tv_location_residents"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/location_type"
-                    app:layout_constraintTop_toBottomOf="@id/location_type" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/location_residents_none"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/tv_location_residents_unknown"
-                android:textAppearance="?attr/textAppearanceSubtitle1" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_location_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            app:fastScrollEnabled="true"
-            app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-            app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-            app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-            app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_character_small" />
-    </LinearLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

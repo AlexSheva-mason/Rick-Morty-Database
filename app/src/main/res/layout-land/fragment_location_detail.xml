@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_fragment_location_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/location_name_value"
+                android:id="@+id/location_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -44,7 +45,7 @@
                 android:text="@string/tv_location_dimension"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/location_name_value" />
+                app:layout_constraintTop_toBottomOf="@id/location_name" />
 
             <TextView
                 android:id="@+id/location_dimension_value"
@@ -103,14 +104,14 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/location_residents_none"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
-        android:visibility="gone"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/location_data">
@@ -121,6 +122,7 @@
             android:layout_gravity="center"
             android:text="@string/tv_location_residents_unknown"
             android:textAppearance="?attr/textAppearanceSubtitle1" />
+
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -130,16 +132,11 @@
         android:clipToPadding="false"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
-        android:scrollbars="none"
-        app:fastScrollEnabled="true"
-        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
+        android:scrollbars="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/location_residents_none"
+        app:layout_constraintTop_toBottomOf="@id/location_data"
         tools:listitem="@layout/item_character_small" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

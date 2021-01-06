@@ -6,165 +6,95 @@
     app:startDestination="@+id/charactersListFragment">
     <fragment
         android:id="@+id/charactersListFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharactersListFragment"
-        android:label="@string/fragment_character_list"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.character.list.CharactersListFragment"
+        android:label=""
         tools:layout="@layout/fragment_characters_list">
         <action
             android:id="@+id/toCharacterDetailFragmentAction"
-            app:destination="@id/characterDetailFragment2"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/toSettingsFragment"
-            app:destination="@id/settingsFragment"
-            app:enterAnim="@anim/slide_in_from_top"
-            app:exitAnim="@anim/slide_out_to_bottom"
-            app:popEnterAnim="@anim/slide_in_from_bottom"
-            app:popExitAnim="@anim/slide_out_to_top"/>
+            app:destination="@id/characterDetailFragment2" />
     </fragment>
     <fragment
         android:id="@+id/episodesListFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodesListFragment"
-        android:label="@string/fragment_episode_list"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.list.EpisodesListFragment"
+        android:label=""
         tools:layout="@layout/fragment_episodes_list">
         <action
             android:id="@+id/toEpisodeDetailFragmentAction"
-            app:destination="@id/episodeDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/episodeDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationsListFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.location.LocationsListFragment"
-        android:label="@string/fragment_location_list"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.location.list.LocationsListFragment"
+        android:label=""
         tools:layout="@layout/fragment_locations_list">
         <action
             android:id="@+id/toLocationDetailFragmentAction"
-            app:destination="@id/locationDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/locationDetailFragment" />
     </fragment>
-    <!--set the fragment's title to characters name passed as an argument-->
     <fragment
         android:id="@+id/characterDetailFragment2"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterDetailFragment"
-        android:label="{character_name}"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.character.detail.CharacterDetailFragment"
+        android:label=""
         tools:layout="@layout/fragment_character_detail">
         <argument
-            android:name="id"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="character_name"
-            android:defaultValue="Name"
-            app:argType="string" />
-        <action
-            android:id="@+id/toEpisodeDetailFragmentAction2"
-            app:destination="@id/episodeDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
-        <action
-            android:id="@+id/toLocationDetailFragmentAction2"
-            app:destination="@id/locationDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
-        <action
-            android:id="@+id/toCharacterImageFragment"
-            app:destination="@id/characterImageFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            android:name="character_object"
+            android:defaultValue="@null"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.character.CharacterModel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.location.LocationDetailFragment"
-        android:label="{location_name}"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.location.detail.LocationDetailFragment"
+        android:label=""
         tools:layout="@layout/fragment_location_detail">
         <argument
-            android:name="location_id"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="location_name"
-            android:defaultValue="Name"
-            app:argType="string" />
-        <argument
-            android:name="location_type"
-            android:defaultValue="Type"
-            app:argType="string" />
-        <argument
-            android:name="location_dimension"
-            android:defaultValue="Dimension"
-            app:argType="string" />
-        <argument
-            android:name="location_residents"
-            android:defaultValue="zzz"
-            app:argType="string" />
-        <action
-            android:id="@+id/toCharacterDetailFragmentAction3"
-            app:destination="@id/characterDetailFragment2"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            android:name="location_object"
+            android:defaultValue="@null"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.location.LocationModel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/episodeDetailFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.EpisodeDetailFragment"
-        android:label="{episode_code}"
+        android:name="com.shevaalex.android.rickmortydatabase.ui.episode.detail.EpisodeDetailFragment"
+        android:label=""
         tools:layout="@layout/fragment_episode_detail">
         <argument
-            android:name="episode_name"
-            android:defaultValue="Name"
-            app:argType="string" />
-        <argument
-            android:name="episode_air_date"
-            android:defaultValue="01/01/2020"
-            app:argType="string" />
-        <argument
-            android:name="episode_code"
-            android:defaultValue="Dimension"
-            app:argType="string" />
-        <argument
-            android:name="id"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <action
-            android:id="@+id/toCharacterDetailFragmentAction2"
-            app:destination="@id/characterDetailFragment2"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            android:name="episode_object"
+            android:defaultValue="@null"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.shevaalex.android.rickmortydatabase.ui.SettingsFragment"
         android:label="@string/fragment_settings"
         tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/characterImageFragment"
-        android:name="com.shevaalex.android.rickmortydatabase.ui.character.CharacterImageFragment"
-        android:label=""
-        tools:layout="@layout/fragment_character_image">
-        <argument
-            android:name="character_image_url"
-            android:defaultValue="none"
-            app:argType="string" />
-        <argument
-            android:name="character_name"
-            android:defaultValue="none"
-            app:argType="string" />
-    </fragment>
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment"
+        app:enterAnim="@anim/slide_in_from_top"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/slide_out_to_top" />
+    <action
+        android:id="@+id/action_global_episodeDetailFragment"
+        app:destination="@id/episodeDetailFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
+        android:id="@+id/action_global_locationDetailFragment"
+        app:destination="@id/locationDetailFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
+        android:id="@+id/action_global_characterDetailFragment2"
+        app:destination="@id/characterDetailFragment2"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right" />
 </navigation>

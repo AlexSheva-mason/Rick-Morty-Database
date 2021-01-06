@@ -3,9 +3,6 @@ package com.shevaalex.android.rickmortydatabase.utils;
 import android.content.Context;
 
 import com.shevaalex.android.rickmortydatabase.R;
-import com.shevaalex.android.rickmortydatabase.source.network.ApiCall;
-
-import java.util.ArrayList;
 
 public abstract class StringParsing {
     private static final String CHAR_GENDER_FEMALE = "female";
@@ -19,40 +16,6 @@ public abstract class StringParsing {
     private static final String LOCATION_RES_KEY = "location_";
     private static final String EPISODE_RES_KEY = "episode_";
     public static final String KEY_NULL = "null";
-
-    public static String rearrangeSearchQuery (String query) {
-        String [] splitQuery = query.split(" ");
-        return splitQuery[1] + " " + splitQuery[0];
-    }
-
-    public static String returnStringOfIds (String string) {
-        return string.replaceAll("[a-zA-Z:\\\\/.\"\\[\\]]", "");
-    }
-
-
-    public static ArrayList<Integer> parseIdsFromString(String stringUnSplit) {
-        ArrayList<Integer> parsedIdList = new ArrayList<>();
-        String[] splitArray = stringUnSplit.split(",");
-        for (String arrayElement : splitArray) {
-            if (!arrayElement.isEmpty()) {
-                parsedIdList.add(Integer.parseInt(arrayElement));
-            }
-        }
-        return parsedIdList;
-    }
-
-    public static int parseLocationId (String locationUrl) {
-        int lastKnownLocId = 0;
-        if (locationUrl.contains(ApiCall.ApiCallCharacterKeys.CHARACTER_LOCATIONS_SUBSTRING)) {
-            int slashId = locationUrl.lastIndexOf("/");
-            lastKnownLocId = Integer.parseInt(locationUrl.substring(slashId+1));
-        }
-        return lastKnownLocId;
-    }
-
-    public static String parseCharacterName (String characterName) {
-        return (characterName.trim().replaceAll("\\s", "_") + "_");
-    }
 
     public static String returnCharacterNameLocale(Context context, int id) {
         String characterIdToMatch = CHARACTER_RES_KEY + id;
@@ -99,7 +62,7 @@ public abstract class StringParsing {
     }
 
     public static String returnCharacterSpeciesLocale (Context context, String speciesEn) {
-        String speciesEnToMatch = SPECIES_RES_KEY + speciesEn.replaceAll("\\s", "_");
+        String speciesEnToMatch = SPECIES_RES_KEY + speciesEn.trim().replaceAll("\\s", "_");
         try {
             int resId = context.getResources().getIdentifier(speciesEnToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);
@@ -119,7 +82,7 @@ public abstract class StringParsing {
     }
 
     public static String returnLocationTypeLocale(Context context, String type) {
-        String typeToMatch = LOCATION_RES_KEY + type.replaceAll("[\\s()\\\\-]", "_");
+        String typeToMatch = LOCATION_RES_KEY + type.replaceAll("[\\s()\\\\]", "_");
         try {
             int resId = context.getResources().getIdentifier(typeToMatch, "string" , context.getPackageName());
             return context.getResources().getString(resId);

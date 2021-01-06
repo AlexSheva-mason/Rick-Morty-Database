@@ -1,100 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_fragment_episode_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.episode.EpisodeDetailFragment">
+    app:layoutDescription="@xml/fragment_episode_detail_scene"
+    tools:context=".ui.episode.detail.EpisodeDetailFragment">
 
-    <include
-        layout="@layout/partial_toolbar_simple"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/image_episode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:elevation="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_placeholder_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_status_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_constraintGuide_begin="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_constraintGuide_begin="?attr/actionBarSize" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/image_toolbar_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="?attr/colorPrimarySurface"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_episode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_baseline_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_status_bar"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/background_button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:src="@drawable/circle_background"
+        app:layout_constraintBottom_toBottomOf="@id/button_back"
+        app:layout_constraintEnd_toEndOf="@id/button_back"
+        app:layout_constraintStart_toStartOf="@id/button_back"
+        app:layout_constraintTop_toTopOf="@id/button_back"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/button_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_share"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_status_bar"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/background_button_share"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:elevation="4dp"
+        android:src="@drawable/circle_background"
+        app:layout_constraintBottom_toBottomOf="@id/button_share"
+        app:layout_constraintEnd_toEndOf="@id/button_share"
+        app:layout_constraintStart_toStartOf="@id/button_share"
+        app:layout_constraintTop_toTopOf="@id/button_share"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/episode_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/rm_grey_blue_900_alpha_30"
+        android:elevation="4dp"
+        android:padding="2dp"
+        android:src="@drawable/episodes_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_episode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="?attr/colorOnPrimarySurface"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/episode_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="8dp"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:outlineProvider="background"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.RM.Headline4"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/image_episode"
+        app:layout_constraintEnd_toEndOf="@id/image_episode"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/image_episode"
+        tools:text="Close Rick-counters of the Rick Kind" />
+
+    <ImageView
+        android:id="@+id/background_episode_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/rm_grey_blue_900_alpha_30"
+        android:elevation="4dp"
+        android:paddingStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/episode_name"
+        app:layout_constraintEnd_toEndOf="@id/episode_name"
+        app:layout_constraintStart_toStartOf="@id/episode_name"
+        app:layout_constraintTop_toTopOf="@id/episode_name"
+        tools:ignore="ContentDescription" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp">
+    <TextView
+        android:id="@+id/episode_code_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
+        android:gravity="center_horizontal"
+        android:maxLines="2"
+        android:text="@string/tv_location_detail_dimension_unknown"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@color/material_on_background_emphasis_medium"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_episode"
+        tools:text="S01E11" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/view_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/episode_air_date_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
+        android:maxLines="2"
+        android:text="@string/tv_location_detail_type_unknown"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@color/material_on_background_emphasis_medium"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/episode_code_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical_1"
+        app:layout_constraintTop_toTopOf="@id/episode_code_value"
+        tools:text="December 2, 2013" />
 
-                <TextView
-                    android:id="@+id/episode_name_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    app:autoSizeMinTextSize="10sp"
-                    app:autoSizeStepGranularity="1sp"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="NAME" />
+    <TextView
+        android:id="@+id/episode_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="@color/material_on_background_emphasis_medium"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/episode_character_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/episode_code_value"
+        tools:text="@string/tv_episode_descr_lorem_ipsum" />
 
-                <TextView
-                    android:id="@+id/episode_air_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_episode_air_date"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    app:layout_constraintStart_toStartOf="@id/episode_name_value"
-                    app:layout_constraintTop_toBottomOf="@id/episode_name_value" />
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="episode_description,episode_code_value" />
 
-                <TextView
-                    android:id="@+id/episode_air_date_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    app:layout_constraintStart_toEndOf="@id/episode_air_date"
-                    app:layout_constraintTop_toTopOf="@id/episode_air_date"
-                    tools:text="December 2, 2013" />
+    <TextView
+        android:id="@+id/episode_character_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/tv_episode_characters_list"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier1" />
 
-                <TextView
-                    android:id="@+id/episode_character_list"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/tv_episode_characters_list"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/episode_air_date"
-                    app:layout_constraintTop_toBottomOf="@+id/episode_air_date_value" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_episode_detail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/episode_character_list"
+        tools:listitem="@layout/item_character_small" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_episode_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            app:fastScrollEnabled="true"
-            app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-            app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-            app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-            app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
-            tools:listitem="@layout/item_character_small" />
-    </LinearLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
