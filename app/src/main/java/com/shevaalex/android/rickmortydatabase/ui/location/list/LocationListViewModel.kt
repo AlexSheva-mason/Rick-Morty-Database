@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.paging.PagedList
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
-import com.shevaalex.android.rickmortydatabase.ui.BaseListViewModel
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData
 import javax.inject.Inject

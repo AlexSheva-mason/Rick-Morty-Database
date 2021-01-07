@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui
+package com.shevaalex.android.rickmortydatabase.ui.settings
 
 import android.content.Intent
 import android.net.Uri

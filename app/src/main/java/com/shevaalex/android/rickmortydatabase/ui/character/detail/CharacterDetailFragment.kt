@@ -21,7 +21,7 @@ import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDeta
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.ui.BaseDetailFragment
+import com.shevaalex.android.rickmortydatabase.ui.base.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const

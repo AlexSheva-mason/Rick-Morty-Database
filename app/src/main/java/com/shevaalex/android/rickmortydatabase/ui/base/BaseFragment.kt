@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui
+package com.shevaalex.android.rickmortydatabase.ui.base
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import android.os.Bundle

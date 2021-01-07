@@ -18,7 +18,7 @@ import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
+import com.shevaalex.android.rickmortydatabase.ui.base.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 

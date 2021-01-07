@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui
+package com.shevaalex.android.rickmortydatabase.ui.base
 
 import android.content.Context
 import android.content.Intent
@@ -29,6 +29,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseDetailViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.ImageParsingUtil
 import com.shevaalex.android.rickmortydatabase.utils.displayErrorDialog

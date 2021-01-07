@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui
+package com.shevaalex.android.rickmortydatabase.ui.base
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -26,6 +26,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.shevaalex.android.rickmortydatabase.R
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.*
 import kotlinx.coroutines.launch
 import timber.log.Timber

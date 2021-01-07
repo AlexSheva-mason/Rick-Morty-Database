@@ -25,8 +25,8 @@ import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.ui.BaseListFragment
-import com.shevaalex.android.rickmortydatabase.ui.ReviewViewModel
+import com.shevaalex.android.rickmortydatabase.ui.base.BaseListFragment
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.ReviewViewModel
 import com.shevaalex.android.rickmortydatabase.utils.*
 import timber.log.Timber
 import javax.inject.Inject

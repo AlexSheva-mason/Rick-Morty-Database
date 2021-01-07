@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.ui
+package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
 import android.view.View
 import androidx.lifecycle.LiveData

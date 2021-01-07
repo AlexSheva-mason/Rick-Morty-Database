@@ -1,6 +1,6 @@
 @file:Suppress("PropertyName")
 
-package com.shevaalex.android.rickmortydatabase.ui
+package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
 import androidx.lifecycle.*
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel

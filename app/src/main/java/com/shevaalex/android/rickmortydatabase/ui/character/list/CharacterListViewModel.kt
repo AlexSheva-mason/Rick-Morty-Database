@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.repository.character.CharacterRepository
-import com.shevaalex.android.rickmortydatabase.ui.BaseListViewModel
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData
 import javax.inject.Inject
