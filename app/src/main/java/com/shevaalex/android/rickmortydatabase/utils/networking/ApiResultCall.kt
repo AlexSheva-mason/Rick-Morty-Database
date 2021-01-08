@@ -3,6 +3,7 @@ package com.shevaalex.android.rickmortydatabase.utils.networking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 
 class ApiResultCall<T>(proxy: Call<T>) : CallDelegate<T, ApiResult<T>>(proxy) {
@@ -27,6 +28,7 @@ class ApiResultCall<T>(proxy: Call<T>) : CallDelegate<T, ApiResult<T>>(proxy) {
             val result = if (t is IOException) {
                 ApiResult.NetworkError
             } else {
+                Timber.e(t, "ApiResultCall: Failure!")
                 ApiResult.Failure(null)
             }
 
