@@ -1,12 +1,13 @@
 package com.shevaalex.android.rickmortydatabase.models.location
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
-import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants.ApiCallLocationKeys.LOCATION_RESIDENTS
+import com.shevaalex.android.rickmortydatabase.utils.networking.LOCATION_RESIDENTS
 import kotlinx.parcelize.Parcelize
 
 @Entity
@@ -29,9 +30,9 @@ data class LocationModel(
         override val imageUrl: String?,
 
         @SerializedName(LOCATION_RESIDENTS)
-        val characters: Array<String>
+        val characters: List<String>
 
-): ApiObjectModel {
+): ApiObjectModel, Parcelable {
 
     val characterIds: List<Int>
         get() {
@@ -45,13 +46,12 @@ data class LocationModel(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is LocationModel) return false
-
         if (id != other.id) return false
         if (name != other.name) return false
         if (type != other.type) return false
         if (dimension != other.dimension) return false
-        if (!characters.contentEquals(other.characters)) return false
-
+        if (imageUrl != other.imageUrl) return false
+        if (characters != other.characters) return false
         return true
     }
 
@@ -60,15 +60,9 @@ data class LocationModel(
         result = 31 * result + name.hashCode()
         result = 31 * result + type.hashCode()
         result = 31 * result + dimension.hashCode()
-        result = 31 * result + characters.contentHashCode()
+        result = 31 * result + (imageUrl?.hashCode() ?: 0)
+        result = 31 * result + characters.hashCode()
         return result
-    }
-
-    override fun toString(): String {
-        return "LocationModel(id=$id," +
-                " name='$name'," +
-                " type='$type'," +
-                " dimension='$dimension')"
     }
 
 }

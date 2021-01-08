@@ -5,9 +5,7 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
-import com.shevaalex.android.rickmortydatabase.utils.networking.ApiConstants.ApiCallCharacterKeys
 import kotlinx.parcelize.Parcelize
 
 @Entity
@@ -29,17 +27,13 @@ data class CharacterModel(
 
         var gender: String,
 
-        @SerializedName(ApiCallCharacterKeys.CHARACTER_ORIGIN_LOCATION)
         val originLocation: LinkedLocationModel,
 
-        @SerializedName(ApiCallCharacterKeys.CHARACTER_LAST_LOCATION)
         val lastLocation: LinkedLocationModel,
 
-        @SerializedName(ApiCallCharacterKeys.CHARACTER_IMAGE_URL)
         override val imageUrl: String,
 
-        @SerializedName(ApiCallCharacterKeys.CHARACTER_EPISODE_LIST)
-        val episodeList: Array<String>
+        val episodeList: List<String>
 
 ): ApiObjectModel, Parcelable {
 
@@ -55,7 +49,6 @@ data class CharacterModel(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is CharacterModel) return false
-
         if (id != other.id) return false
         if (name != other.name) return false
         if (status != other.status) return false
@@ -64,8 +57,7 @@ data class CharacterModel(
         if (originLocation != other.originLocation) return false
         if (lastLocation != other.lastLocation) return false
         if (imageUrl != other.imageUrl) return false
-        if (!episodeList.contentEquals(other.episodeList)) return false
-
+        if (episodeList != other.episodeList) return false
         return true
     }
 
@@ -78,18 +70,8 @@ data class CharacterModel(
         result = 31 * result + originLocation.hashCode()
         result = 31 * result + lastLocation.hashCode()
         result = 31 * result + imageUrl.hashCode()
-        result = 31 * result + episodeList.contentHashCode()
+        result = 31 * result + episodeList.hashCode()
         return result
-    }
-
-    override fun toString(): String {
-        return "CharacterModel(id=$id," +
-                " name='$name'," +
-                " status='$status'," +
-                " species='$species'," +
-                " gender='$gender'," +
-                " originLocation=$originLocation," +
-                " lastLocation=$lastLocation)"
     }
 
 }
