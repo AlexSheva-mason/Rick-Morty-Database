@@ -1,32 +1,33 @@
-package com.shevaalex.android.rickmortydatabase.source.database;
+package com.shevaalex.android.rickmortydatabase.source.database
 
-import androidx.room.TypeConverter;
+import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocationModel
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocationModel;
-
-import java.lang.reflect.Type;
-
-public class Converters {
+object Converters {
+    @JvmStatic
     @TypeConverter
-    public static String stringArrayToString(String[] array) {
-        return new Gson().toJson(array);
+    fun listToString(list: List<String>): String {
+        return Gson().toJson(list)
     }
 
+    @JvmStatic
     @TypeConverter
-    public static String[] stringToArray(String json) {
-        Type arrayType = new TypeToken<String[]>(){}.getType();
-        return new Gson().fromJson(json, arrayType);
+    fun stringToList(json: String): List<String> {
+        val listType = object : TypeToken<List<String>>() {}.type
+        return Gson().fromJson(json, listType)
     }
 
+    @JvmStatic
     @TypeConverter
-    public static String linkedLocationModelToString(LinkedLocationModel locationModel) {
-        return new Gson().toJson(locationModel);
+    fun linkedLocationModelToString(locationModel: LinkedLocationModel): String {
+        return Gson().toJson(locationModel)
     }
 
+    @JvmStatic
     @TypeConverter
-    public static LinkedLocationModel stringToLinkedLocationModel(String string) {
-        return new Gson().fromJson(string, LinkedLocationModel.class);
+    fun stringToLinkedLocationModel(string: String): LinkedLocationModel {
+        return Gson().fromJson(string, LinkedLocationModel::class.java)
     }
 }
