@@ -132,6 +132,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     //Firebase Authentication library
     implementation 'com.google.firebase:firebase-auth-ktx'
+    //Google play api kotlin coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1'
 
     // Material Design components
     implementation 'com.google.android.material:material:1.2.1'
