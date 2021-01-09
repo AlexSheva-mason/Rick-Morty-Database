@@ -26,6 +26,7 @@ class ApiResultCall<T>(proxy: Call<T>) : CallDelegate<T, ApiResult<T>>(proxy) {
 
         override fun onFailure(call: Call<T>, t: Throwable) {
             val result = if (t is IOException) {
+                Timber.e(t, "ApiResultCall: NetworkError!")
                 ApiResult.NetworkError
             } else {
                 Timber.e(t, "ApiResultCall: Failure!")
