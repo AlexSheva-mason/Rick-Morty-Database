@@ -1,5 +1,8 @@
 package com.shevaalex.android.rickmortydatabase.di
 
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.CONNECTION_TIMEOUT
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.READ_TIMEOUT
@@ -18,6 +21,10 @@ import javax.inject.Singleton
 
 @Module
 object NetworkModule{
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
 
     @Singleton
     @Provides
