@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.source.remote
+package com.shevaalex.android.rickmortydatabase.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -32,7 +32,7 @@ constructor(
         val getTokenTask = firebaseUser.getIdToken(true)
         return try {
             val result = getTokenTask.await()
-            Timber.i("firebase getToken:success, token: %s", result.token)
+            Timber.i("firebase getToken:success, token: %s", result.token?.takeLast(7))
             result.token
         } catch (e: Exception) {
             Timber.e(e, "firebase getIdToken:failure")
