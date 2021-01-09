@@ -34,7 +34,7 @@ data class EpisodeModel(
         val description: String?,
 
         @SerializedName(EPISODE_CHARACTERS)
-        val charactersList: Array<String>
+        val charactersList: List<String>
 
 ): ApiObjectModel, Parcelable {
 
@@ -56,7 +56,7 @@ data class EpisodeModel(
         if (code != other.code) return false
         if (imageUrl != other.imageUrl) return false
         if (description != other.description) return false
-        if (!charactersList.contentEquals(other.charactersList)) return false
+        if (charactersList != other.charactersList) return false
         return true
     }
 
@@ -67,7 +67,7 @@ data class EpisodeModel(
         result = 31 * result + code.hashCode()
         result = 31 * result + (imageUrl?.hashCode() ?: 0)
         result = 31 * result + (description?.hashCode() ?: 0)
-        result = 31 * result + charactersList.contentHashCode()
+        result = 31 * result + charactersList.hashCode()
         return result
     }
 
