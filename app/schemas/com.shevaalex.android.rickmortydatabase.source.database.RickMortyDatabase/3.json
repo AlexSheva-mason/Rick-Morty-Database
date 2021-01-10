@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "3d64785d4793f2cf078e23eb95ebbfc1",
+    "identityHash": "8cc8066774f9b40943c78d71f934da6d",
     "entities": [
       {
         "tableName": "CharacterModel",
@@ -80,7 +80,7 @@
       },
       {
         "tableName": "LocationModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `type` TEXT NOT NULL, `dimension` TEXT NOT NULL, `imageUrl` TEXT, `characters` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `type` TEXT NOT NULL, `dimension` TEXT NOT NULL, `imageUrl` TEXT, `characters` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -122,7 +122,7 @@
             "fieldPath": "characters",
             "columnName": "characters",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -232,7 +232,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3d64785d4793f2cf078e23eb95ebbfc1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8cc8066774f9b40943c78d71f934da6d')"
     ]
   }
 }

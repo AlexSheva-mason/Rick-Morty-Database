@@ -8,13 +8,13 @@ import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocationMo
 object Converters {
     @JvmStatic
     @TypeConverter
-    fun listToString(list: List<String>): String {
+    fun listToString(list: List<String>?): String? {
         return Gson().toJson(list)
     }
 
     @JvmStatic
     @TypeConverter
-    fun stringToList(json: String): List<String> {
+    fun stringToList(json: String?): List<String>? {
         val listType = object : TypeToken<List<String>>() {}.type
         return Gson().fromJson(json, listType)
     }

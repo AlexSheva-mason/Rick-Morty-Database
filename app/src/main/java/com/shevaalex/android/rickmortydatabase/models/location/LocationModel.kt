@@ -30,17 +30,17 @@ data class LocationModel(
         override val imageUrl: String?,
 
         @SerializedName(LOCATION_RESIDENTS)
-        val characters: List<String>
+        val characters: List<String>?
 
 ): ApiObjectModel, Parcelable {
 
     val characterIds: List<Int>
         get() {
-            return characters.mapNotNull {characterUrl ->
+            return characters?.mapNotNull {characterUrl ->
                 characterUrl.dropWhile {char ->
                     !char.isDigit()
                 }.toIntOrNull()
-            }
+            }?: listOf(0)
         }
 
     override fun equals(other: Any?): Boolean {
