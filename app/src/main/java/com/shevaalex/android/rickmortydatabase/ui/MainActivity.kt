@@ -19,11 +19,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BottomNavViewModel
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.InitViewModel
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.ReviewViewModel
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
-import com.shevaalex.android.rickmortydatabase.utils.networking.ConnectionLiveData
-import com.shevaalex.android.rickmortydatabase.utils.networking.Message
-import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
-import com.shevaalex.android.rickmortydatabase.utils.networking.Status
+import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun dbInit() {
         initViewModel.init().observe(this, {
-            it?.let {stateResource ->
+            it?.let { stateResource ->
                 val snackColor: Int?
                 when (stateResource.status) {
                     is Status.Error -> {
@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity() {
                     resources.getString(R.string.toast_close_message),
                     Toast.LENGTH_SHORT)
                     .show()
-            Timer().schedule(2000){
+            Timer().schedule(2000) {
                 backPressedOnce = false
             }
         } else {
