@@ -4,6 +4,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
+import com.shevaalex.android.rickmortydatabase.source.remote.EpisodeApi
+import com.shevaalex.android.rickmortydatabase.source.remote.LocationApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.CONNECTION_TIMEOUT
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.READ_TIMEOUT
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.WRITE_TIMEOUT
@@ -69,6 +71,22 @@ object NetworkModule{
         return retrofitBuilder
                 .build()
                 .create(CharacterApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLocationApiService(retrofitBuilder: Retrofit.Builder): LocationApi {
+        return retrofitBuilder
+                .build()
+                .create(LocationApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEpisodeApiService(retrofitBuilder: Retrofit.Builder): EpisodeApi {
+        return retrofitBuilder
+                .build()
+                .create(EpisodeApi::class.java)
     }
 
 }
