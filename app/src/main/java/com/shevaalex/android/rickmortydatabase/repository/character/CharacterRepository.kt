@@ -5,10 +5,7 @@ import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
-import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.currentTimeHours
-import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,7 +17,6 @@ class CharacterRepository
 constructor(
         private val characterDao: CharacterModelDao,
         private val recentQueryDao: RecentQueryDao,
-        private val characterApi: CharacterApi
 ) {
 
     fun getAllCharacters(): DataSource.Factory<Int, CharacterModel> =
@@ -38,18 +34,6 @@ constructor(
         // perform a search with filtering or perform just filtering
         else {
             searchAndFilter(query, filterMap)
-        }
-    }
-
-    suspend fun updateDatedCharacter(character: CharacterModel, token: String) {
-        val request = characterApi.getCharacter(character.id, token)
-        if (request is ApiResult.Success) {
-            val newChar = request.data
-            newChar.timeStamp = currentTimeHours().toInt()
-            Timber.i("updateDatedCharacters(): updating a character %s %s",
-                    "id=${newChar.id}, name=${newChar.name}, timestamp=${newChar.timeStamp}",
-                    "with token:${token.takeLast(7)}")
-            characterDao.updateCharacter(newChar)
         }
     }
 
