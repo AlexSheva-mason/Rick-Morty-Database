@@ -12,6 +12,9 @@ interface CharacterModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<CharacterModel?>?)
 
+    @Update
+    suspend fun updateCharacter(character: CharacterModel)
+
     /**
      * gets the last character to compare databases
      */
