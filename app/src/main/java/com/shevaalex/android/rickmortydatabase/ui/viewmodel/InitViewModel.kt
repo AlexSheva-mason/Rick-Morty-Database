@@ -6,7 +6,6 @@ import com.shevaalex.android.rickmortydatabase.auth.AuthManager
 import com.shevaalex.android.rickmortydatabase.models.AuthToken
 import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
 import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.AUTH_TOKEN_CHECK_PERIOD
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.AUTH_TOKEN_REFRESH_TIME
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP
 import com.shevaalex.android.rickmortydatabase.utils.NetworkAndTokenMediatorLiveData
@@ -47,25 +46,6 @@ constructor(
     }
 
     init {
-        //check auth token every AUTH_TOKEN_CHECK_PERIOD ms (or every 6secs if null/expired), refresh if needed
-        viewModelScope.launch {
-            while (true) {
-                var delay = AUTH_TOKEN_CHECK_PERIOD
-                val token = authManager.token.value
-                token?.let {
-                    Timber.v("checking token in viewmodel, token: %s", it.token.takeLast(7))
-                    if (hasTokenExpired(it)) {
-                        authManager.getNewToken()
-                        delay = 6000L
-                    }
-                } ?: run {
-                    Timber.e("checking token in viewmodel, token is null")
-                    authManager.getNewToken()
-                    delay = 6000L
-                }
-                delay(delay)
-            }
-        }
         viewModelScope.launch {
             /*
             waits 1sec and sets isNetworkAvailable to false (starting an app in a flight mode
@@ -90,16 +70,18 @@ constructor(
         if (isNetworkAvailable) {
             Timber.i("CONNECTED")
             token?.let { authToken ->
-                //if token has expired - emit loadingStatus
+                //if token has expired - refetch and emit loadingStatus
                 if (hasTokenExpired(authToken)) {
                     Timber.e("init() call, token has expired")
+                    refetchAuthToken()
                     loadingStatus
                 } else {
                     initRepository.getDbStateResource(authToken.token)
                 }
             }?: run{
-                //if token is null - emit loadingStatus
+                //if token is null - refetch and emit loadingStatus
                 Timber.e("init() call, token is null")
+                refetchAuthToken()
                 loadingStatus
             }
         } else {
@@ -127,7 +109,7 @@ constructor(
     fun isDbCheckNeeded(): Boolean {
         val lastSynced = sharedPref.getInt(KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, 0)
         val currentTimeHrs = currentTimeHours().toInt()
-        Timber.i(
+        Timber.d(
                 "getLastTimeSynced, lastSync: %s, currentTimeHrs: %s, diff: %s, isDbCheckNeeded:%s",
                 lastSynced,
                 currentTimeHrs,
@@ -138,12 +120,12 @@ constructor(
     }
 
     /**
-     * save the timestamp with the time when database was synced successfuly
+     * save the timestamp with the time when database was synced successfuly (only list size check)
      */
     private fun saveTimestampToSharedPrefs() {
         with(sharedPref.edit()) {
             val currentTimeHrs = currentTimeHours().toInt()
-            Timber.i("saving to share prefs timestamp: %s", currentTimeHrs)
+            Timber.d("saving to share prefs timestamp: %s", currentTimeHrs)
             putInt(KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, currentTimeHrs)
             apply()
         }
@@ -157,6 +139,12 @@ constructor(
                 currentTimeMinutes() - authToken.timestamp,
                 expired)
         return expired
+    }
+
+    private fun refetchAuthToken() {
+        viewModelScope.launch {
+            authManager.getNewToken()
+        }
     }
 
 }
