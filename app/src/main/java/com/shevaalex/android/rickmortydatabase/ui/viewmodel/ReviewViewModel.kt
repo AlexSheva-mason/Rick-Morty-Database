@@ -62,7 +62,7 @@ constructor(
      * increments the number of successful db sync events numberOfSuccessDbSyncs
      */
     fun notifyDbSyncSuccessful() {
-        Timber.i("saving new numberOfSuccessDbSyncs to sharedPrefs: old=%s / new =%s",
+        Timber.d("saving new numberOfSuccessDbSyncs to sharedPrefs: old=%s / new =%s",
                 numberOfSuccessDbSyncs,
                 numberOfSuccessDbSyncs + 1
         )
@@ -78,7 +78,7 @@ constructor(
      */
     fun notifyReviewFlowLaunched() {
         resetNumberOfSuccessDbSyncs()
-        Timber.i("saving new timestampLastTimeShowedReview to sharedPrefs: old=%s / new=%s",
+        Timber.d("saving new timestampLastTimeShowedReview to sharedPrefs: old=%s / new=%s",
                 timestampLastTimeShowedReview,
                 (System.currentTimeMillis() / 86400000).toInt()
         )
@@ -101,17 +101,17 @@ constructor(
         val shouldAsk = numberOfSuccessDbSyncs >= REVIEW_REQ_SUCCESS_SYNC_UPDATES
                 && currentTimeDays - timestampLastTimeShowedReview > REVIEW_REQ_SHOW_PERIOD
         if (shouldAsk) {
-            Timber.i("[shouldAskForReview()] numberOfSuccessDbSyncs=%s / REVIEW_REQ_SUCCESS_SYNC_UPDATES=%s",
+            Timber.d("[shouldAskForReview()] numberOfSuccessDbSyncs=%s / REVIEW_REQ_SUCCESS_SYNC_UPDATES=%s",
                     numberOfSuccessDbSyncs,
                     REVIEW_REQ_SUCCESS_SYNC_UPDATES
             )
-            Timber.i(
+            Timber.d(
                     "[shouldAskForReview()] currentTimeDays=%s / timestampLastTimeShowedReview=%s / REVIEW_REQ_SHOW_PERIOD=%s",
                     currentTimeDays,
                     timestampLastTimeShowedReview,
                     REVIEW_REQ_SHOW_PERIOD
             )
-            Timber.i(
+            Timber.d(
                     "[shouldAskForReview()] timestampDiff=%s / shouldAsk=%s",
                     currentTimeDays - timestampLastTimeShowedReview,
                     shouldAsk
@@ -127,7 +127,7 @@ constructor(
         numberOfSuccessDbSyncs = 0
         with(sharedPrefs.edit()) {
             putInt(KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER, numberOfSuccessDbSyncs)
-            Timber.i("resetting the numberOfSuccessDbSyncs to sharedPrefs: %s", numberOfSuccessDbSyncs)
+            Timber.d("resetting the numberOfSuccessDbSyncs to sharedPrefs: %s", numberOfSuccessDbSyncs)
             apply()
         }
     }
