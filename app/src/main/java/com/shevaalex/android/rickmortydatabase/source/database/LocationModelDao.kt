@@ -2,11 +2,8 @@ package com.shevaalex.android.rickmortydatabase.source.database
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Query
-import androidx.room.RoomWarnings
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
 import kotlinx.coroutines.flow.Flow
 
@@ -15,6 +12,9 @@ interface LocationModelDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insertLocations(locations: List<LocationModel?>?)
+
+    @Update
+    suspend fun updateLocation(location: LocationModel)
 
     /**
      * gets the last location to compare databases
