@@ -8,6 +8,7 @@ import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.source.database.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
 import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,7 +23,7 @@ constructor(
 ) {
 
     fun getAllEpisodes(): LiveData<PagedList<EpisodeModel>> =
-            episodeDao.getAllEpisodes().toLiveData(50)
+            episodeDao.getAllEpisodes().toLiveData(ROOM_PAGE_SIZE)
 
     fun searchAndFilterEpisodes(
             query: String,

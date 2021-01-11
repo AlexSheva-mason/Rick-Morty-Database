@@ -8,6 +8,7 @@ import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
 import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
 import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,7 +23,7 @@ constructor(
 ){
 
     fun getAllLocations(): LiveData<PagedList<LocationModel>> =
-            locationDao.getAllLocations().toLiveData(50)
+            locationDao.getAllLocations().toLiveData(ROOM_PAGE_SIZE)
 
     fun searchAndFilterLocations(
             query: String,

@@ -19,8 +19,14 @@ class Constants {
         const val READ_TIMEOUT = 10L
         const val WRITE_TIMEOUT = 10L
 
+        //Room pagination page size
+        const val ROOM_PAGE_SIZE = 75
+
         //sets the db sync status check period (hours)
         const val DB_CHECK_PERIOD = 12
+
+        //object refetch period (hours)
+        const val OBJECT_REFETCH = 48
 
         //firebase auth token refresh time (mins)
         const val AUTH_TOKEN_REFRESH_TIME = 50
