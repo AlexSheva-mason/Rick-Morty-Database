@@ -31,6 +31,7 @@ object NetworkModule{
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
+        @Suppress("UNUSED_VARIABLE")
         val interceptor = HttpLoggingInterceptor { message ->
             Timber.d(message)
         }.setLevel(HttpLoggingInterceptor.Level.BASIC)
@@ -39,7 +40,7 @@ object NetworkModule{
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(false)
-                .addInterceptor(interceptor)
+                //not needed for now   .addInterceptor(interceptor)
                 .build()
     }
 
