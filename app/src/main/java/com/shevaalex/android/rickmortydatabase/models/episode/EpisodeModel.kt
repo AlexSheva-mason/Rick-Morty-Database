@@ -22,8 +22,6 @@ data class EpisodeModel(
         @ColumnInfo(collate = ColumnInfo.LOCALIZED)
         override var name: String,
 
-        override var timeStamp: Int,
-
         var airDate: String,
 
         @SerializedName(EPISODE_CODE)

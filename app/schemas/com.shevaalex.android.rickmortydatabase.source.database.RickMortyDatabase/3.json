@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "8cc8066774f9b40943c78d71f934da6d",
+    "identityHash": "9f39fd3d41a5363f638cb82303c03181",
     "entities": [
       {
         "tableName": "CharacterModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `status` TEXT NOT NULL, `species` TEXT NOT NULL, `gender` TEXT NOT NULL, `originLocation` TEXT NOT NULL, `lastLocation` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `episodeList` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `status` TEXT NOT NULL, `species` TEXT NOT NULL, `gender` TEXT NOT NULL, `originLocation` TEXT NOT NULL, `lastLocation` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `episodeList` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,12 +18,6 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "timeStamp",
-            "columnName": "timeStamp",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -80,7 +74,7 @@
       },
       {
         "tableName": "LocationModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `type` TEXT NOT NULL, `dimension` TEXT NOT NULL, `imageUrl` TEXT, `characters` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `type` TEXT NOT NULL, `dimension` TEXT NOT NULL, `imageUrl` TEXT, `characters` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -92,12 +86,6 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "timeStamp",
-            "columnName": "timeStamp",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -136,7 +124,7 @@
       },
       {
         "tableName": "EpisodeModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `timeStamp` INTEGER NOT NULL, `airDate` TEXT NOT NULL, `code` TEXT NOT NULL, `imageUrl` TEXT, `description` TEXT, `charactersList` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL COLLATE LOCALIZED, `airDate` TEXT NOT NULL, `code` TEXT NOT NULL, `imageUrl` TEXT, `description` TEXT, `charactersList` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -148,12 +136,6 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "timeStamp",
-            "columnName": "timeStamp",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -232,7 +214,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8cc8066774f9b40943c78d71f934da6d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f39fd3d41a5363f638cb82303c03181')"
     ]
   }
 }

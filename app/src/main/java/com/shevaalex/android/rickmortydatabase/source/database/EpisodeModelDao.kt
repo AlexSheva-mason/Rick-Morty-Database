@@ -116,4 +116,10 @@ interface EpisodeModelDao {
         ORDER BY code""")
     fun getEpisodesByIds(idList: List<Int>): LiveData<List<EpisodeModel>>
 
+    /**
+     * gets an episode with a provided id
+     */
+    @Query("SELECT * FROM EpisodeModel WHERE id = :id")
+    suspend fun getEpisodeByIdSuspend(id: Int): EpisodeModel?
+
 }

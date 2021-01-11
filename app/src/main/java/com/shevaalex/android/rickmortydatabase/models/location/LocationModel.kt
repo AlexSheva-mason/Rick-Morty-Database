@@ -21,8 +21,6 @@ data class LocationModel(
         @ColumnInfo(collate = ColumnInfo.LOCALIZED)
         override var name: String,
 
-        override var timeStamp: Int,
-
         var type: String,
 
         var dimension: String,

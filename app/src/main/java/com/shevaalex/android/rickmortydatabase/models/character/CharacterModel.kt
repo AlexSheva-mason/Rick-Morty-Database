@@ -19,8 +19,6 @@ data class CharacterModel(
         @ColumnInfo(collate = ColumnInfo.LOCALIZED)
         override var name: String,
 
-        override var timeStamp: Int,
-
         var status: String,
 
         var species: String,

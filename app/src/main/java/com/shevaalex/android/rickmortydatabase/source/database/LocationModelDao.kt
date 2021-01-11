@@ -134,4 +134,10 @@ interface LocationModelDao {
         COLLATE LOCALIZED""")
     fun getLocationById(id: Int): LiveData<LocationModel>
 
+    /**
+     * gets a location with a provided id
+     */
+    @Query("SELECT * FROM LocationModel WHERE id = :id")
+    suspend fun getLocationByIdSuspend(id: Int): LocationModel?
+
 }

@@ -8,8 +8,6 @@ interface ApiObjectModel: Parcelable {
 
     var name: String
 
-    var timeStamp: Int
-
     val imageUrl: String?
 
 }

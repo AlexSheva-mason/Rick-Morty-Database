@@ -12,9 +12,6 @@ interface CharacterModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<CharacterModel?>?)
 
-    @Update
-    suspend fun updateCharacter(character: CharacterModel)
-
     /**
      * gets the last character to compare databases
      */
@@ -162,5 +159,11 @@ interface CharacterModelDao {
         ORDER BY name
         COLLATE LOCALIZED""")
     fun getCharactersByIds(idList: List<Int>): LiveData<List<CharacterModel>>
+
+    /**
+     * gets a character with a provided id
+     */
+    @Query("SELECT * FROM CharacterModel WHERE id = :id")
+    suspend fun getCharacterByIdSuspend(id: Int): CharacterModel?
 
 }
