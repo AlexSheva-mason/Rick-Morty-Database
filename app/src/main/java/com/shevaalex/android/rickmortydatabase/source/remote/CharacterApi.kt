@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CharacterApi {
@@ -14,7 +13,7 @@ interface CharacterApi {
      * @param idToken token to be used in Query ?auth=<idToken>
      * @param isShallow boolean is used in Query &shallow=isShallow. Pass true to get shallow result
      */
-    @GET(SUB_URL_CHARACTER+FIREBASE_JSON_SUFFIX)
+    @GET(SUB_URL_CHARACTER + FIREBASE_JSON_SUFFIX)
     suspend fun getCharacterList(
             @Query(FIREBASE_AUTH_QUERY) idToken: String,
             @Query(FIREBASE_SHALLOW_QUERY) isShallow: Boolean
@@ -25,18 +24,9 @@ interface CharacterApi {
      * gets a list of all children from the character node
      * @param idToken token to be used in Query ?auth=<idToken>
      */
-    @GET(SUB_URL_CHARACTER+FIREBASE_JSON_SUFFIX)
+    @GET(SUB_URL_CHARACTER + FIREBASE_JSON_SUFFIX)
     suspend fun getCharacterList(
             @Query(FIREBASE_AUTH_QUERY) idToken: String
     ): ApiResult<List<CharacterModel?>>
-
-    /**
-     * gets a single character
-     */
-    @GET("$SUB_URL_CHARACTER/{id}$FIREBASE_JSON_SUFFIX")
-    suspend fun getCharacter(
-            @Path("id") charId: Int,
-            @Query(FIREBASE_AUTH_QUERY) idToken: String
-    ): ApiResult<CharacterModel>
 
 }

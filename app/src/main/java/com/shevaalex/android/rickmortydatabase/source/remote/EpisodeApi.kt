@@ -1,11 +1,9 @@
 package com.shevaalex.android.rickmortydatabase.source.remote
 
 import com.google.gson.JsonObject
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface EpisodeApi {
@@ -30,14 +28,5 @@ interface EpisodeApi {
     suspend fun getEpisodeList(
             @Query(FIREBASE_AUTH_QUERY) idToken: String
     ): ApiResult<List<EpisodeModel?>>
-
-    /**
-     * gets a single episode
-     */
-    @GET("$SUB_URL_EPISODE/{id}$FIREBASE_JSON_SUFFIX")
-    suspend fun getEpisode(
-            @Path("id") episodeId: Int,
-            @Query(FIREBASE_AUTH_QUERY) idToken: String
-    ): ApiResult<EpisodeModel>
 
 }
