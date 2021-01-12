@@ -6,7 +6,8 @@
     android:layout_width="@dimen/item_episode_location_width"
     android:layout_height="@dimen/item_episode_location_height"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardElevation="3dp">
+    app:cardCornerRadius="0dp"
+    app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

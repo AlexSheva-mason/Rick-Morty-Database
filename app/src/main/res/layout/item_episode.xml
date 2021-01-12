@@ -10,7 +10,8 @@
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="4dp"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardElevation="3dp">
+    app:cardCornerRadius="0dp"
+    app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
