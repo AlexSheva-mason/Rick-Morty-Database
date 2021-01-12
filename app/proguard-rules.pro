@@ -21,9 +21,6 @@
 #-renamesourcefileattribute SourceFile
 
 
-#---------------- DATA CLASSES ---------------------
--keep class com.shevaalex.android.rickmortydatabase.models.** { *; }
-
 #---------------- GLIDE ---------------------
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep class * extends com.bumptech.glide.module.AppGlideModule {

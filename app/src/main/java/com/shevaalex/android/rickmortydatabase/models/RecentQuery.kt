@@ -1,9 +1,10 @@
 package com.shevaalex.android.rickmortydatabase.models
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
+@Keep
 @Entity
 data class RecentQuery(
 
@@ -20,4 +21,5 @@ data class RecentQuery(
                 LOCATION("location"),
                 EPISODE("episode")
         }
+
 }
