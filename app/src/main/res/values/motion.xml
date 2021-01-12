@@ -2,6 +2,5 @@
 <resources>
 
     <integer name="rm_motion_default_large">300</integer>
-    <integer name="rm_motion_duration_medium">225</integer>
 
 </resources>

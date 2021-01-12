@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">Персонажі з Рік та Морті</string>
+
+    //Main Activity
+    <string name="toast_close_message">Натисніть Назад ще раз щоб вийти</string>
+
+    //Bottom Navigation
+    <string name="bottom_nav_character">Персонажі</string>
+    <string name="bottom_nav_location">Локації</string>
+    <string name="bottom_nav_episode">Серії</string>
+
+    //Fragment labels
+    <string name="fragment_settings">Налаштування</string>
+
+    //MainActivity Error managing
+    <string name="ma_snack_database_up_to_date">База даних актуальна</string>
+    <string name="ma_snack_database_sync">Оновлення бази даних</string>
+    <string name="ma_snack_database_not_synced">Для перевірки бази даних підключіться до інтернету</string>
+    <string name="ma_snack_error_server_error">Помилка під час оновлення бази даних. \nПомилка серверу: </string>
+    <string name="ma_snack_error_network_error">Помилка під час оновлення бази даних. \nПеревірте наявність інтернет з\'єднання</string>
+    <string name="ma_snack_error_empty_response">Помилка під час оновлення бази даних. \nПомилка серверу</string>
+
+    //Menu
+    <string name="filter">Фільтр</string>
+
+    //Dialog filter characters
+    <string name="dialog_title">Налаштування фільтрів</string>
+    <string name="dialog_subtitle_status">За статусом:</string>
+    <string name="dialog_subtitle_gender">За статтю:</string>
+    <string name="dialog_subtitle_species">За видом:</string>
+    <string name="dialog_species_all">Показувати всі</string>
+    <string name="dialog_positive_button">Застосувати</string>
+    <string name="dialog_negative_button">Скасувати</string>
+    <string name="dialog_error_message">Будь ласка, оберіть хоча б одну опцію в наступних категоріях:\n\n</string>
+    <string name="dialog_error_title">Помилка</string>
+    <string name="dialog_error_status">статус</string>
+    <string name="dialog_error_gender">стать</string>
+    <string name="dialog_error_species">вид</string>
+
+    //Dialog filter locations
+    <string name="dialog_subtitle_type">За типом:</string>
+    <string name="dialog_subtitle_dimension">За виміром:</string>
+    <string name="dialog_error_type">тип</string>
+    <string name="dialog_error_dimension">вимір</string>
+
+
+    //Dialog filter episodes
+    <string name="dialog_subtitle_season">Сезони:</string>
+    <string name="dialog_error_season">сезон</string>
+
+    //CharacterListFragment
+    <string name="clf_no_results_query">Трясця, нічого не знайдено :(</string>
+    <string name="clf_searchview_query_hint"><font size="14">Пошук персонажу</font></string>
+    //LocationsListFragment
+    <string name="llf_searchview_query_hint"><font size="14">Пошук локації</font></string>
+    //EpisodesListFragment
+    <string name="elf_searchview_query_hint"><font size="14">Пошук серії</font></string>
+
+    //Settings Fragment
+    <string name="fragment_settings_preference_category_theme">Зовнішній вигляд</string>
+    <string name="fragment_settings_theme_list_title">Тема додатку</string>
+    <string name="fragment_settings_theme_switch_title">Темна тема</string>
+    <string name="fragment_settings_preference_category_help">Про додаток</string>
+    <string name="fragment_settings_preference_version">Версія</string>
+    <string name="fragment_settings_preference_review">Залишити відгук</string>
+    <string name="fragment_settings_preference_review_summary">Щоб написати відгук, будь-ласка,
+        перейдіть за цим посиланням на сторінку додадку в Google Play та залиште оцінку в розділі
+        відгуків</string>
+    <string name="fragment_settings_theme_entry_follow_system">Дотримуватися системної</string>
+    <string name="fragment_settings_theme_entry_dark_theme">Темна тема</string>
+    <string name="fragment_settings_theme_entry_light_theme">Світла тема</string>
+
+    //CharacterImageFragment
+    <string name="error_share_no_network">Не вдалося відправити, будь ласка перевірте наявність інтернет з\'єднання</string>
+    <string name="share_title">Відправити зображення…</string>
+
+    //App Bar
+    <string name="item_settings">Налаштування</string>
+
+    //Layout view names and descriptions
+    <string name="img_character_description">Зображення персонажу</string>
+    <string name="tv_character_name">Ім\'я:</string>
+    <string name="tv_character_status">Статус:</string>
+    <string name="tv_character_detail_status_unknown">Невідомо</string>
+    <string name="tv_character_species">Вид:</string>
+    <string name="tv_character_detail_species_unknown">Невідомо</string>
+    <string name="tv_character_gender">Стать:</string>
+    <string name="tv_character_detail_gender_unknown">Невідомо</string>
+    <string name="tv_character_origin">Походження:</string>
+    <string name="tv_character_last_loc">Остання локація:</string>
+    <string name="tv_character_last_loc_unknown_value">Локація невідома</string>
+    <string name="tv_character_episode_list">Бачили в серіях:</string>
+    <string name="tv_character_list_pb">Ой трясця…</string>
+    <string name="tv_location_detail_dimension_unknown">Вимір невідомо</string>
+    <string name="tv_location_detail_type_unknown">Тип невідомо</string>
+    <string name="tv_location_type">Тип:</string>
+    <string name="tv_location_dimension">Вимір:</string>
+    <string name="tv_location_residents">Останнього разу бачили в цій локації:</string>
+    <string name="tv_location_residents_unknown">Невідомо</string>
+    <string name="tv_episode_name">Назва</string>
+    <string name="tv_episode_code">S03E09</string>
+    <string name="tv_episode_air_date">Дата виходу:</string>
+    <string name="tv_episode_characters_list">Бачили в цій серії:</string>
+
+    //Database character gender for filter map
+    <string name="character_gender_genderless">Безстатевий</string>
+    <string name="character_gender_female">Жіноча</string>
+    <string name="character_gender_male">Чоловіча</string>
+    <string name="character_gender_unknown">Невідомо</string>
+
+    //Database character status for filter map
+    <string name="character_status_alive_female">Жива</string>
+    <string name="character_status_alive_male">Живий</string>
+    <string name="character_status_dead_female">Померла</string>
+    <string name="character_status_dead_male">Померлий</string>
+
+    //Database character species for filter map
+    <string name="species_Human">Людина</string>
+    <string name="species_Alien">Іншопланетянин</string>
+    <string name="species_Humanoid">Гуманоїд</string>
+    <string name="species_unknown">Невідомо</string>
+    <string name="species_Poopybutthole">Дуркогепель</string>
+    <string name="species_Animal">Тварина</string>
+    <string name="species_Robot">Робот</string>
+    <string name="species_Cronenberg">Цуріпоп</string>
+    <string name="species_Mythological_Creature">Міфічна істота</string>
+
+    //Location type
+    <string name="location_Planet">Планета</string>
+    <string name="location_Space_station">Космічна Станція</string>
+    <string name="location_Microverse">Мікросвіт</string>
+    <string name="location_unknown">Невідомо</string>
+
+    //Location Dimension
+    <string name="location_Dimension_C_137">C-137</string>
+    <string name="location_Replacement_Dimension">Замінний Вимір</string>
+    <string name="location_Cronenberg_Dimension">Цуріпопний</string>
+
+</resources>
