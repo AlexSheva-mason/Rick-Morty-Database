@@ -131,8 +131,8 @@
     <string name="location_unknown">Неизвестно</string>
 
     //Location Dimension
-    <string name="location_Dimension_C_137">C-137</string>
+    <string name="location_Dimension_C_137">Измерение C-137</string>
     <string name="location_Replacement_Dimension">Замещённое измерение</string>
-    <string name="location_Cronenberg_Dimension">Кроненберг</string>
+    <string name="location_Cronenberg_Dimension">Измерение Кроненбергов</string>
 
 </resources>

@@ -132,8 +132,8 @@
     <string name="location_unknown">Невідомо</string>
 
     //Location Dimension
-    <string name="location_Dimension_C_137">C-137</string>
-    <string name="location_Replacement_Dimension">Замінний Вимір</string>
-    <string name="location_Cronenberg_Dimension">Цуріпопний</string>
+    <string name="location_Dimension_C_137">Вимір C-137</string>
+    <string name="location_Replacement_Dimension">Замінний вимір</string>
+    <string name="location_Cronenberg_Dimension">Цуріпопний вимір</string>
 
 </resources>
