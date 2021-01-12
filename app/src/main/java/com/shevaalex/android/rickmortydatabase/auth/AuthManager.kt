@@ -19,6 +19,8 @@ constructor(
         private val sharedPref: SharedPreferences
 ) {
 
+    val defaultToken = AuthToken("-1", 0L)
+
     private val _token = MutableStateFlow(getAuthTokenFromSharedPrefs())
     val token: StateFlow<AuthToken?> = _token
 
@@ -31,15 +33,15 @@ constructor(
         }
     }
 
-    private fun getAuthTokenFromSharedPrefs(): AuthToken? {
+    private fun getAuthTokenFromSharedPrefs(): AuthToken {
         val tokenJson = sharedPref.getString(KEY_AUTH_TOKEN, null)
         return tokenJson?.let {
             val token = Gson().fromJson(tokenJson, AuthToken::class.java)
             Timber.v("getAuthTokenFromSharedPrefs() token: %s", token.token.takeLast(7))
             token
         }?: run{
-            Timber.e("getAuthTokenFromSharedPrefs() token is null")
-            null
+            Timber.e("getAuthTokenFromSharedPrefs() token is null, returning default")
+            defaultToken
         }
     }
 

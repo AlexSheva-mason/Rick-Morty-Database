@@ -26,13 +26,10 @@ class Constants {
         const val DB_CHECK_PERIOD = 12
 
         //object refetch period (hours)
-        const val OBJECT_REFETCH = 48
+        const val OBJECT_REFETCH_PERIOD = 48
 
         //firebase auth token refresh time (mins)
         const val AUTH_TOKEN_REFRESH_TIME = 50
-
-        //firebase auth token check period (ms) 5mins=300.000ms
-        const val AUTH_TOKEN_CHECK_PERIOD = 300000L
 
         //sets the required number of successful db sync events before google review dialog is shown
         const val REVIEW_REQ_SUCCESS_SYNC_UPDATES = 4
@@ -63,6 +60,9 @@ class Constants {
         const val KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER = "review_success_sync_updates_number"
         const val KEY_REVIEW_ASKED_FOR_REVIEW_TIMESTAMP = "review_asked_for_review_timestamp"
         const val KEY_AUTH_TOKEN = "firebase_auth_token"
+        const val KEY_INIT_VM_CHARACTERS_FETCHED_TIMESTAMP = "init_viewmodel_characters_refetched_timestamp"
+        const val KEY_INIT_VM_LOCATIONS_FETCHED_TIMESTAMP = "init_viewmodel_locations_refetched_timestamp"
+        const val KEY_INIT_VM_EPISODES_FETCHED_TIMESTAMP = "init_viewmodel_episodes_refetched_timestamp"
 
         //SearchView recent queries list size
         const val SV_RECENT_COUNT = 10

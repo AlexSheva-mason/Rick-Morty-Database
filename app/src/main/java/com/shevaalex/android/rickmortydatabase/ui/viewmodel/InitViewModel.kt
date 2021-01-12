@@ -70,18 +70,26 @@ constructor(
         if (isNetworkAvailable) {
             Timber.i("CONNECTED")
             token?.let { authToken ->
-                //if token has expired - refetch and emit loadingStatus
-                if (hasTokenExpired(authToken)) {
-                    Timber.e("init() call, token has expired")
-                    refetchAuthToken()
-                    loadingStatus
-                } else {
-                    initRepository.getDbStateResource(authToken.token)
+                when {
+                    //if authToken is default -> sharedPrefs returned null, refetch
+                    authToken == authManager.defaultToken -> {
+                        Timber.e("init() call, token is default")
+                        refetchAuthToken()
+                        loadingStatus
+                    }
+                    //if token has expired - refetch and emit loadingStatus
+                    hasTokenExpired(authToken) -> {
+                        Timber.e("init() call, token has expired")
+                        refetchAuthToken()
+                        loadingStatus
+                    }
+                    else -> {
+                        initRepository.getDbStateResource(authToken.token)
+                    }
                 }
             }?: run{
-                //if token is null - refetch and emit loadingStatus
+                //if token is null - emit loadingStatus and wait for authToken to be fetched
                 Timber.e("init() call, token is null")
-                refetchAuthToken()
                 loadingStatus
             }
         } else {
@@ -114,9 +122,9 @@ constructor(
                 lastSynced,
                 currentTimeHrs,
                 currentTimeHrs - lastSynced,
-                currentTimeHrs - lastSynced > Constants.DB_CHECK_PERIOD
+                currentTimeHrs - lastSynced >= Constants.DB_CHECK_PERIOD
         )
-        return currentTimeHrs - lastSynced > Constants.DB_CHECK_PERIOD
+        return currentTimeHrs - lastSynced >= Constants.DB_CHECK_PERIOD
     }
 
     /**

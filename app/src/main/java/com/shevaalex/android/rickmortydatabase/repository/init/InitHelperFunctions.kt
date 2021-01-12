@@ -32,7 +32,7 @@ fun isRefetchNeeded(sharedPref: SharedPreferences, key: String): Boolean {
             lastSynced,
             currentTimeHrs,
             currentTimeHrs - lastSynced,
-            currentTimeHrs - lastSynced > Constants.OBJECT_REFETCH_PERIOD
+            currentTimeHrs - lastSynced >= Constants.OBJECT_REFETCH_PERIOD
     )
     return currentTimeHrs - lastSynced >= Constants.OBJECT_REFETCH_PERIOD
 }
