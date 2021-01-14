@@ -290,7 +290,7 @@
                 motion:customIntegerValue="4" />
             <CustomAttribute
                 motion:attributeName="textSize"
-                motion:customFloatValue="34" />
+                motion:customFloatValue="28" />
         </Constraint>
         <Constraint android:id="@+id/background_character_name">
             <PropertySet android:alpha="1" />
@@ -339,7 +339,7 @@
                 motion:customIntegerValue="1" />
             <CustomAttribute
                 motion:attributeName="textSize"
-                motion:customFloatValue="24" />
+                motion:customFloatValue="22" />
         </Constraint>
         <Constraint android:id="@+id/background_character_name">
             <PropertySet android:alpha="0" />
@@ -449,7 +449,7 @@
                 motion:customIntegerValue="1" />
             <CustomAttribute
                 motion:attributeName="textSize"
-                motion:customFloatValue="24" />
+                motion:customFloatValue="22" />
             <PropertySet android:alpha="1" />
         </Constraint>
         <Constraint android:id="@+id/background_character_name">
