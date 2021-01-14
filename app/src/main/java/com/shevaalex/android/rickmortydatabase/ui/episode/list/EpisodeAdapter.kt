@@ -17,10 +17,10 @@ import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSIT
 class EpisodeAdapter(
         private val placeHolderString: String,
         private val episodeListener: EpisodeListener
-): PagedListAdapter<EpisodeModel, EpisodeAdapter.EpisodeViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<EpisodeModel, EpisodeAdapter.EpisodeViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<EpisodeModel>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<EpisodeModel>() {
             override fun areItemsTheSame(oldItem: EpisodeModel, newItem: EpisodeModel): Boolean {
                 return oldItem.id == newItem.id
             }
@@ -49,7 +49,7 @@ class EpisodeAdapter(
 
     class EpisodeViewHolder(
             private val itemBind: ItemEpisodeBinding
-    ): RecyclerView.ViewHolder(itemBind.root) {
+    ) : RecyclerView.ViewHolder(itemBind.root) {
 
         fun bind(episode: EpisodeModel, episodeListener: EpisodeListener, placeHolderString: String) {
             val context = itemBind.root.context
@@ -57,15 +57,14 @@ class EpisodeAdapter(
                 episodeListener.onEpisodeClick(episode, itemBind.episodeItem)
             }
             itemBind.episodeItem.transitionName = TRANSITION_EPISODE.plus(episode.id)
-            itemBind.episodeImage.apply {
-                Glide.with(context)
-                        .load("https://rickandmortyapi.com/api/character/avatar/249.jpeg")
-                        .apply(RequestOptions()
-                                .placeholder(R.drawable.image_placeholder_error)
-                                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        )
-                        .into(this)
-            }
+            Glide.with(context)
+                    .load(episode.imageUrl)
+                    .override(284, 200)
+                    .apply(RequestOptions()
+                            .placeholder(R.drawable.episodes_24dp)
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    )
+                    .into(itemBind.episodeImage)
             itemBind.episodeNameValue.text = placeHolderString.format(episode.name)
             itemBind.episodeAirDateValue?.let {
                 it.text = episode.airDate
@@ -75,7 +74,7 @@ class EpisodeAdapter(
 
     }
 
-    interface EpisodeListener{
+    interface EpisodeListener {
         fun onEpisodeClick(episode: EpisodeModel, episodeCard: MaterialCardView)
     }
 
