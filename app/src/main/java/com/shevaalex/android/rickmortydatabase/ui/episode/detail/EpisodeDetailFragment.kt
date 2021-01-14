@@ -85,8 +85,10 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
         binding.episodeAirDateValue.text = episode.airDate
         binding.episodeCodeValue?.text = episode.code
         episode.description?.let {
-            binding.episodeDescription?.text = it
-            binding.episodeDescription?.visibility = View.VISIBLE
+            val descr = "\t$it"
+            binding.episodeDescription?.text = descr
+        }?: run {
+            binding.episodeDescription?.visibility = View.INVISIBLE
         }
     }
 
