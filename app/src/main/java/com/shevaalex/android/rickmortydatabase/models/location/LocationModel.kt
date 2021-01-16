@@ -19,11 +19,11 @@ data class LocationModel(
         override val id: Int,
 
         @ColumnInfo(collate = ColumnInfo.LOCALIZED)
-        override var name: String,
+        override val name: String,
 
-        var type: String,
+        val type: String,
 
-        var dimension: String,
+        val dimension: String,
 
         override val imageUrl: String?,
 
@@ -40,27 +40,5 @@ data class LocationModel(
                 }.toIntOrNull()
             }?: listOf(0)
         }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is LocationModel) return false
-        if (id != other.id) return false
-        if (name != other.name) return false
-        if (type != other.type) return false
-        if (dimension != other.dimension) return false
-        if (imageUrl != other.imageUrl) return false
-        if (characters != other.characters) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + name.hashCode()
-        result = 31 * result + type.hashCode()
-        result = 31 * result + dimension.hashCode()
-        result = 31 * result + (imageUrl?.hashCode() ?: 0)
-        result = 31 * result + characters.hashCode()
-        return result
-    }
 
 }

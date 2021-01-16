@@ -8,7 +8,7 @@ interface ApiObjectModel: Parcelable {
 
     val id: Int
 
-    var name: String
+    val name: String
 
     val imageUrl: String?
 

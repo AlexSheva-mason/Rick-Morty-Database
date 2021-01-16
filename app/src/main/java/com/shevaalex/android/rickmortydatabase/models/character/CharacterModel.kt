@@ -17,13 +17,13 @@ data class CharacterModel(
         override val id: Int,
 
         @ColumnInfo(collate = ColumnInfo.LOCALIZED)
-        override var name: String,
+        override val name: String,
 
-        var status: String,
+        val status: String,
 
-        var species: String,
+        val species: String,
 
-        var gender: String,
+        val gender: String,
 
         val originLocation: LinkedLocationModel,
 
@@ -43,33 +43,5 @@ data class CharacterModel(
                 }.toIntOrNull()
             }
         }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is CharacterModel) return false
-        if (id != other.id) return false
-        if (name != other.name) return false
-        if (status != other.status) return false
-        if (species != other.species) return false
-        if (gender != other.gender) return false
-        if (originLocation != other.originLocation) return false
-        if (lastLocation != other.lastLocation) return false
-        if (imageUrl != other.imageUrl) return false
-        if (episodeList != other.episodeList) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + name.hashCode()
-        result = 31 * result + status.hashCode()
-        result = 31 * result + species.hashCode()
-        result = 31 * result + gender.hashCode()
-        result = 31 * result + originLocation.hashCode()
-        result = 31 * result + lastLocation.hashCode()
-        result = 31 * result + imageUrl.hashCode()
-        result = 31 * result + episodeList.hashCode()
-        return result
-    }
 
 }

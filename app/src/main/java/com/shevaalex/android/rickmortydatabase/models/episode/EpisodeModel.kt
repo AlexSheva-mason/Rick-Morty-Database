@@ -20,9 +20,9 @@ data class EpisodeModel(
         override val id: Int,
 
         @ColumnInfo(collate = ColumnInfo.LOCALIZED)
-        override var name: String,
+        override val name: String,
 
-        var airDate: String,
+        val airDate: String,
 
         @SerializedName(EPISODE_CODE)
         val code: String,
@@ -44,29 +44,5 @@ data class EpisodeModel(
                 }.toIntOrNull()
             }
         }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is EpisodeModel) return false
-        if (id != other.id) return false
-        if (name != other.name) return false
-        if (airDate != other.airDate) return false
-        if (code != other.code) return false
-        if (imageUrl != other.imageUrl) return false
-        if (description != other.description) return false
-        if (charactersList != other.charactersList) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + name.hashCode()
-        result = 31 * result + airDate.hashCode()
-        result = 31 * result + code.hashCode()
-        result = 31 * result + (imageUrl?.hashCode() ?: 0)
-        result = 31 * result + (description?.hashCode() ?: 0)
-        result = 31 * result + charactersList.hashCode()
-        return result
-    }
 
 }
