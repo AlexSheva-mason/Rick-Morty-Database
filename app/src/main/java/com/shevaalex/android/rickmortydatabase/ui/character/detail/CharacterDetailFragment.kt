@@ -111,7 +111,8 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
                     imageUrl = it.imageUrl,
                     imageView = binding.imageCharacter,
                     height = 300,
-                    width = 300
+                    width = 300,
+                    placeholderDrawableResource = R.drawable.character_placeholder
             )
             binding.characterName.text = it.name
             if (it.status != activity?.resources?.getString(R.string.species_unknown)) {

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationDetailBinding
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
@@ -79,7 +80,8 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
                     imageUrl = location.imageUrl,
                     imageView = it,
                     height = 400,
-                    width = 568
+                    width = 568,
+                    placeholderDrawableResource = R.drawable.location_placeholder
             )
         }
         binding.locationName.text = location.name

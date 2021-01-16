@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodeDetailBinding
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
@@ -80,7 +81,8 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
                     imageUrl = episode.imageUrl,
                     imageView = it,
                     height = 400,
-                    width = 568
+                    width = 568,
+                    placeholderDrawableResource = R.drawable.episode_placeholder
             )
         }
         binding.episodeName.text = episode.name

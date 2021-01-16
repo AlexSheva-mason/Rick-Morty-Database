@@ -61,7 +61,7 @@ class EpisodeAdapter(
                     .load(episode.imageUrl)
                     .override(284, 200)
                     .apply(RequestOptions()
-                            .placeholder(R.drawable.episodes_24dp)
+                            .placeholder(R.drawable.episode_placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.DATA)
                     )
                     .into(itemBind.episodeImage)

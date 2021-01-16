@@ -60,7 +60,7 @@ class LocationAdapter(
                     .load(location.imageUrl)
                     .override(284, 200)
                     .apply(RequestOptions()
-                            .placeholder(R.drawable.locations_24dp)
+                            .placeholder(R.drawable.location_placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.DATA)
                     )
                     .into(itemBind.locationImage)

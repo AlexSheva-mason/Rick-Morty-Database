@@ -44,7 +44,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/img_character_description"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/image_placeholder_error" />
+                        android:src="@drawable/character_placeholder" />
 
                 </com.google.android.material.card.MaterialCardView>
 
