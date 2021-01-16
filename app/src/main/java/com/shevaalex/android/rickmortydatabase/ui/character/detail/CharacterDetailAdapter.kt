@@ -3,6 +3,9 @@ package com.shevaalex.android.rickmortydatabase.ui.character.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 
@@ -46,9 +49,17 @@ class CharacterDetailAdapter(
     ) : RecyclerView.ViewHolder(itemBind.root) {
 
         fun bind(episode: EpisodeModel, placeHolderString: String, episodeListener: EpisodeListener) {
+            val context = itemBind.root.context
             itemBind.root.setOnClickListener {
                 episodeListener.onEpisodeClick(episode)
             }
+            Glide.with(context)
+                    .load(episode.imageUrl)
+                    .override(284, 200)
+                    .apply(RequestOptions()
+                            .placeholder(R.drawable.episode_placeholder)
+                    )
+                    .into(itemBind.episodeImage)
             itemBind.episodeNameValue.text = placeHolderString.format(episode.name)
             itemBind.episodeCodeValue.text = episode.code
             itemBind.episodeAirDateValue?.text = episode.airDate
