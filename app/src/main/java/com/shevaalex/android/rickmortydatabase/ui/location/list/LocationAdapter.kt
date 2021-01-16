@@ -16,10 +16,10 @@ import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSIT
 
 class LocationAdapter(
         private val locationListener: LocationListener
-): PagedListAdapter<LocationModel, LocationAdapter.LocationViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<LocationModel, LocationAdapter.LocationViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<LocationModel>(){
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LocationModel>() {
             override fun areItemsTheSame(oldItem: LocationModel, newItem: LocationModel): Boolean {
                 return oldItem.id == newItem.id
             }
@@ -48,7 +48,7 @@ class LocationAdapter(
 
     class LocationViewHolder(
             private val itemBind: ItemLocationBinding
-    ): RecyclerView.ViewHolder(itemBind.root) {
+    ) : RecyclerView.ViewHolder(itemBind.root) {
 
         fun bind(location: LocationModel, locationListener: LocationListener) {
             val context = itemBind.root.context
@@ -56,15 +56,14 @@ class LocationAdapter(
                 locationListener.onLocationClick(location, itemBind.locationItem)
             }
             itemBind.locationItem.transitionName = TRANSITION_LOCATION.plus(location.id)
-            itemBind.locationImage.apply {
-                Glide.with(context)
-                        .load("https://rickandmortyapi.com/api/character/avatar/249.jpeg")
-                        .apply(RequestOptions()
-                                .placeholder(R.drawable.image_placeholder_error)
-                                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        )
-                        .into(this)
-            }
+            Glide.with(context)
+                    .load(location.imageUrl)
+                    .override(284, 200)
+                    .apply(RequestOptions()
+                            .placeholder(R.drawable.locations_24dp)
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    )
+                    .into(itemBind.locationImage)
             itemBind.locationNameValue.text = location.name
             itemBind.locationDimensionValue?.let {
                 it.text = location.dimension
@@ -76,7 +75,7 @@ class LocationAdapter(
 
     }
 
-    interface LocationListener{
+    interface LocationListener {
         fun onLocationClick(location: LocationModel, locationCard: MaterialCardView)
     }
 

@@ -23,9 +23,9 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/image_placeholder_error"
+            android:src="@drawable/locations_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline_icon_location"
+            app:layout_constraintEnd_toStartOf="@id/guideline_image_location"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
@@ -43,17 +43,16 @@
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintBottom_toTopOf="@+id/location_dimension"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@id/guideline_icon_location"
+            app:layout_constraintStart_toStartOf="@id/guideline_image_location"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_icon_location"
+            android:id="@+id/guideline_image_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.22" />
+            app:layout_constraintGuide_percent="0.40" />
 
         <TextView
             android:id="@+id/location_dimension"
@@ -63,7 +62,7 @@
             android:text="@string/tv_location_dimension"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             app:layout_constraintBottom_toTopOf="@+id/location_type"
-            app:layout_constraintStart_toStartOf="@id/guideline_icon_location"
+            app:layout_constraintStart_toStartOf="@id/guideline_image_location"
             app:layout_constraintTop_toBottomOf="@+id/location_name_value" />
 
         <TextView
@@ -73,13 +72,14 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="@+id/location_dimension"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/location_dimension"
             app:layout_constraintTop_toBottomOf="@+id/location_dimension"
-            tools:text="DIMENSION" />
+            tools:text="Dimension" />
 
         <TextView
             android:id="@+id/location_type"
@@ -90,7 +90,7 @@
             android:text="@string/tv_location_type"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline_icon_location"
+            app:layout_constraintStart_toStartOf="@id/guideline_image_location"
             app:layout_constraintTop_toBottomOf="@+id/location_dimension" />
 
         <TextView
@@ -99,13 +99,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toTopOf="@+id/location_type"
             app:layout_constraintEnd_toEndOf="@id/location_dimension_value"
             app:layout_constraintStart_toEndOf="@+id/location_type"
             app:layout_constraintTop_toBottomOf="@+id/location_type"
-            tools:text="TYPE" />
+            tools:text="Type" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

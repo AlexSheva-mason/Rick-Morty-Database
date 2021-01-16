@@ -76,8 +76,10 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
                 Constants.TRANSITION_LOCATION.plus(location.id)
         binding.imageLocation?.let {
             setMainImage(
-                    imageUrl = "https://rickandmortyapi.com/api/character/avatar/249.jpeg",
-                    imageView = it
+                    imageUrl = location.imageUrl,
+                    imageView = it,
+                    height = 400,
+                    width = 568
             )
         }
         binding.locationName.text = location.name
