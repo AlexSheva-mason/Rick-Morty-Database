@@ -15,11 +15,11 @@
 
         <ImageView
             android:id="@+id/episode_image"
-            android:layout_width="100dp"
+            android:layout_width="114dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/episodes_24dp"
+            android:src="@drawable/episode_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,14 +32,11 @@
             android:maxLines="1"
             android:textAllCaps="true"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="?attr/colorOnPrimary"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/episode_image"
-            app:layout_constraintEnd_toEndOf="@+id/episode_image"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/episode_image"
-            app:layout_constraintVertical_bias="0.65"
+            app:layout_constraintBottom_toTopOf="@id/episode_name_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/episode_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
             tools:text="@string/tv_episode_code" />
 
         <TextView
@@ -57,7 +54,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/episode_image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/episode_code_value" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
