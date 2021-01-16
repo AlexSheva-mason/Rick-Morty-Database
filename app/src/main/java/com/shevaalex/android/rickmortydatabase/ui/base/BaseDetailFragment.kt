@@ -210,7 +210,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
         }
     }
 
-    protected fun setMainImage(imageUrl: String?, imageView: ImageView) {
+    protected fun setMainImage(imageUrl: String?, imageView: ImageView, width: Int, height: Int) {
         imageView.apply {
             Glide.with(context)
                     .load(imageUrl)
@@ -218,7 +218,7 @@ abstract class BaseDetailFragment<T : ViewBinding, S : ApiObjectModel> : BaseFra
                             .error(R.drawable.image_placeholder_error)
                             .dontTransform()
                             .dontAnimate()
-                            .override(300, 300)
+                            .override(width, height)
                     )
                     .into(this)
         }

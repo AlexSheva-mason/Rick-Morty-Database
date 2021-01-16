@@ -109,7 +109,9 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
                     Constants.TRANSITION_CHARACTER.plus(it.id)
             setMainImage(
                     imageUrl = it.imageUrl,
-                    imageView = binding.imageCharacter
+                    imageView = binding.imageCharacter,
+                    height = 300,
+                    width = 300
             )
             binding.characterName.text = it.name
             if (it.status != activity?.resources?.getString(R.string.species_unknown)) {

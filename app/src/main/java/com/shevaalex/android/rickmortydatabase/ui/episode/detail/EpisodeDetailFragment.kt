@@ -78,7 +78,9 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
         binding.imageEpisode?.let {
             setMainImage(
                     imageUrl = episode.imageUrl,
-                    imageView = it
+                    imageView = it,
+                    height = 400,
+                    width = 568
             )
         }
         binding.episodeName.text = episode.name
