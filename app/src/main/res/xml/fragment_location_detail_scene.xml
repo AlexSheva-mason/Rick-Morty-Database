@@ -10,7 +10,7 @@
         <OnSwipe
             motion:dragDirection="dragUp"
             motion:onTouchUp="autoComplete"
-            motion:touchAnchorId="@+id/image_location"
+            motion:touchAnchorId="@+id/location_residents"
             motion:touchAnchorSide="bottom" />
         <KeyFrameSet>
             <KeyAttribute
