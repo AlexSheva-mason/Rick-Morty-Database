@@ -13,7 +13,7 @@ apply plugin: "kotlin-parcelize"
 ext.versionMajor = 2
 ext.versionMinor = 0
 ext.versionPatch = 0
-ext.versionClassifier = "alpha"
+ext.versionClassifier = ""
 ext.minimumSdkVersion = 24
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
