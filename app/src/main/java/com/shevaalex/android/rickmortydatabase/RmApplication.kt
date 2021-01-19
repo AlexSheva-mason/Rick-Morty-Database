@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.shevaalex.android.rickmortydatabase.di.AppComponent
@@ -20,11 +21,17 @@ class RmApplication : Application() {
         DaggerAppComponent.factory().create(this)
     }
 
+
     override fun onCreate() {
         super.onCreate()
         setupTimber()
         setupTheme()
-        setupStrictMode()
+        //set Strict mode in debug builds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            setupStrictMode()
+        } else {
+            setupStrictModeLegacy()
+        }
     }
 
     private fun setupTimber() {
@@ -54,8 +61,25 @@ class RmApplication : Application() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     private fun setupStrictMode() {
-        //set Strict mode in debug builds
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectAll()
+                    .penaltyLog()
+                    .build())
+            StrictMode.setVmPolicy(VmPolicy.Builder()
+                    .detectNonSdkApiUsage()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .build())
+        }
+    }
+
+    private fun setupStrictModeLegacy() {
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
