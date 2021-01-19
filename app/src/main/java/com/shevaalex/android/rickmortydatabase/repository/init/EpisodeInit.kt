@@ -23,36 +23,9 @@ constructor(
 
     private val sharedPrefsKey: String = Constants.KEY_INIT_VM_EPISODES_FETCHED_TIMESTAMP
 
-    /**
-     * Initialises and syncs an Episode table in the database
-     */
-    suspend fun initEpisodes(token: String): StateResource {
-        val episodeCountResult = getEpisodeCountApiResult(token)
-        if (episodeCountResult is ApiResult.Success) {
-            val episodeCountNetwork = episodeCountResult.data.size()
-            val episodeCountDb = getEpisodeCountDb()
-            return when {
-                //fetch episodes if network list size > db list size
-                episodeCountNetwork > episodeCountDb -> {
-                    fetchAndSaveToDbEpisodes(token)
-                }
-                //refetch episodes if last time fetched > OBJECT_REFETCH_PERIOD (hrs)
-                isRefetchNeeded(sharedPref, sharedPrefsKey) -> {
-                    fetchAndSaveToDbEpisodes(token)
-                }
-                else -> {
-                    Timber.i(
-                            "Episodes fetch not needed, episodeCountNetwork=%s, episodeCountDb=%s",
-                            episodeCountNetwork,
-                            episodeCountDb
-                    )
-                    StateResource(Status.Success, Message.DbIsUpToDate)
-                }
-            }
-        } else return manageEmptyOrErrorResponse(episodeCountResult)
-    }
+    fun isEpisodeRefetchNeeded() = isRefetchNeeded(sharedPref, sharedPrefsKey)
 
-    private suspend fun fetchAndSaveToDbEpisodes(token: String): StateResource {
+    suspend fun fetchAndSaveToDbEpisodes(token: String): StateResource {
         val episodeNetworkListResult = fetchEpisodesNetwork(token)
         return if (episodeNetworkListResult is ApiResult.Success) {
             val episodeNetworkList = episodeNetworkListResult.data.filterNotNull()
@@ -69,6 +42,15 @@ constructor(
     }
 
     /**
+     * gets a shallow list of Episodes from the api
+     */
+    suspend fun getEpisodeCountApiResult(token: String): ApiResult<JsonObject> {
+        return episodeApi.getEpisodeList(idToken = token, isShallow = true)
+    }
+
+    suspend fun getEpisodeCountDb(): Int = episodeDao.episodesCount()
+
+    /**
      * filters a list of network objects with db objects
      * @returns list of network objects that differ (were updated)
      */
@@ -82,15 +64,6 @@ constructor(
         Timber.i("refetched episodes filtered list size: ${filteredList.size}")
         return filteredList
     }
-
-    /**
-     * gets a shallow list of Episodes from the api
-     */
-    private suspend fun getEpisodeCountApiResult(token: String): ApiResult<JsonObject> {
-        return episodeApi.getEpisodeList(idToken = token, isShallow = true)
-    }
-
-    private suspend fun getEpisodeCountDb(): Int = episodeDao.episodesCount()
 
     /**
      * gets a list of Episodes from the api

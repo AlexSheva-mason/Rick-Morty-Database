@@ -19,40 +19,13 @@ constructor(
         private val characterDao: CharacterModelDao,
         private val characterApi: CharacterApi,
         private val sharedPref: SharedPreferences
-){
+) {
 
     private val sharedPrefsKey: String = KEY_INIT_VM_CHARACTERS_FETCHED_TIMESTAMP
 
-    /**
-     * Initialises and syncs a Character table in the database
-     */
-    suspend fun initCharacters(token: String): StateResource {
-        val characterCountResult = getCharacterCountApiResult(token)
-        if (characterCountResult is ApiResult.Success) {
-            val characterCountNetwork = characterCountResult.data.size()
-            val characterCountDb = getCharacterCountDb()
-            return when {
-                //fetch characters if network list size > db list size
-                characterCountNetwork > characterCountDb -> {
-                    fetchAndSaveToDbCharacters(token)
-                }
-                //refetch characters if last time fetched > OBJECT_REFETCH_PERIOD (hrs)
-                isRefetchNeeded(sharedPref, sharedPrefsKey) -> {
-                    fetchAndSaveToDbCharacters(token)
-                }
-                else -> {
-                    Timber.i(
-                            "Characters fetch not needed, characterCountNetwork=%s, characterCountDb=%s",
-                            characterCountNetwork,
-                            characterCountDb
-                    )
-                    StateResource(Status.Success, Message.DbIsUpToDate)
-                }
-            }
-        } else return manageEmptyOrErrorResponse(characterCountResult)
-    }
+    fun isCharacterRefetchNeeded() = isRefetchNeeded(sharedPref, sharedPrefsKey)
 
-    private suspend fun fetchAndSaveToDbCharacters(token: String): StateResource {
+    suspend fun fetchAndSaveToDbCharacters(token: String): StateResource {
         val characterNetworkListResult = fetchCharactersNetwork(token)
         return if (characterNetworkListResult is ApiResult.Success) {
             val characterNetworkList = characterNetworkListResult.data.filterNotNull()
@@ -69,6 +42,15 @@ constructor(
     }
 
     /**
+     * gets a shallow list of Characters from the api
+     */
+    suspend fun getCharacterCountApiResult(token: String): ApiResult<JsonObject> {
+        return characterApi.getCharacterList(idToken = token, isShallow = true)
+    }
+
+    suspend fun getCharacterCountDb(): Int = characterDao.charactersCount()
+
+    /**
      * filters a list of network objects with db objects
      * @returns list of network objects that differ (were updated)
      */
@@ -82,15 +64,6 @@ constructor(
         Timber.i("refetched characters filtered list size: ${filteredList.size}")
         return filteredList
     }
-
-    /**
-     * gets a shallow list of Characters from the api
-     */
-    private suspend fun getCharacterCountApiResult(token: String): ApiResult<JsonObject> {
-        return characterApi.getCharacterList(idToken = token, isShallow = true)
-    }
-
-    private suspend fun getCharacterCountDb(): Int = characterDao.charactersCount()
 
     /**
      * gets a list of Characters from the api

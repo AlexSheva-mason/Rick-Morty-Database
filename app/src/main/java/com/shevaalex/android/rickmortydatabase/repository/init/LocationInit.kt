@@ -23,36 +23,9 @@ constructor(
 
     private val sharedPrefsKey: String = Constants.KEY_INIT_VM_LOCATIONS_FETCHED_TIMESTAMP
 
-    /**
-     * Initialises and syncs a Location table in the database
-     */
-    suspend fun initLocations(token: String): StateResource {
-        val locationCountResult = getLocationCountApiResult(token)
-        if (locationCountResult is ApiResult.Success) {
-            val locationCountNetwork = locationCountResult.data.size()
-            val locationCountDb = getLocationCountDb()
-            return when {
-                //fetch locations if network list size > db list size
-                locationCountNetwork > locationCountDb -> {
-                    fetchAndSaveToDbLocations(token)
-                }
-                //refetch locations if last time fetched > OBJECT_REFETCH_PERIOD (hrs)
-                isRefetchNeeded(sharedPref, sharedPrefsKey) -> {
-                    fetchAndSaveToDbLocations(token)
-                }
-                else -> {
-                    Timber.i(
-                            "Locations fetch not needed, locationCountNetwork=%s, locationCountDb=%s",
-                            locationCountNetwork,
-                            locationCountDb
-                    )
-                    StateResource(Status.Success, Message.DbIsUpToDate)
-                }
-            }
-        } else return manageEmptyOrErrorResponse(locationCountResult)
-    }
+    fun isLocationRefetchNeeded() = isRefetchNeeded(sharedPref, sharedPrefsKey)
 
-    private suspend fun fetchAndSaveToDbLocations(token: String): StateResource {
+    suspend fun fetchAndSaveToDbLocations(token: String): StateResource {
         val locationNetworkListResult = fetchLocationsNetwork(token)
         return if (locationNetworkListResult is ApiResult.Success) {
             val locationNetworkList = locationNetworkListResult.data.filterNotNull()
@@ -69,6 +42,15 @@ constructor(
     }
 
     /**
+     * gets a shallow list of Locations from the api
+     */
+    suspend fun getLocationCountApiResult(token: String): ApiResult<JsonObject> {
+        return locationApi.getLocationList(idToken = token, isShallow = true)
+    }
+
+    suspend fun getLocationCountDb(): Int = locationDao.locationsCount()
+
+    /**
      * filters a list of network objects with db objects
      * @returns list of network objects that differ (were updated)
      */
@@ -82,15 +64,6 @@ constructor(
         Timber.i("refetched locations filtered list size: ${filteredList.size}")
         return filteredList
     }
-
-    /**
-     * gets a shallow list of Locations from the api
-     */
-    private suspend fun getLocationCountApiResult(token: String): ApiResult<JsonObject> {
-        return locationApi.getLocationList(idToken = token, isShallow = true)
-    }
-
-    private suspend fun getLocationCountDb(): Int = locationDao.locationsCount()
 
     /**
      * gets a list of Locations from the api
