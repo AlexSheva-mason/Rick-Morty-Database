@@ -5,8 +5,8 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
-import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
+import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
 import kotlinx.coroutines.flow.Flow

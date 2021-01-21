@@ -3,8 +3,8 @@ package com.shevaalex.android.rickmortydatabase.repository.character
 import androidx.paging.DataSource
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
-import com.shevaalex.android.rickmortydatabase.source.database.RecentQueryDao
+import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber

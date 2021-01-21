@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
 import com.shevaalex.android.rickmortydatabase.source.remote.LocationApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult

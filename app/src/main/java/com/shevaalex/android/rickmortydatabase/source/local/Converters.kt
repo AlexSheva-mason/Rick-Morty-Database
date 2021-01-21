@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.source.database
+package com.shevaalex.android.rickmortydatabase.source.local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

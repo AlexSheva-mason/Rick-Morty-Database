@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.source.database.EpisodeModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.remote.EpisodeApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult

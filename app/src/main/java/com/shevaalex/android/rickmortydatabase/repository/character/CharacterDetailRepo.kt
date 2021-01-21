@@ -3,8 +3,8 @@ package com.shevaalex.android.rickmortydatabase.repository.character
 import androidx.lifecycle.LiveData
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.source.database.EpisodeModelDao
-import com.shevaalex.android.rickmortydatabase.source.database.LocationModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
 import javax.inject.Inject
 import javax.inject.Singleton
 

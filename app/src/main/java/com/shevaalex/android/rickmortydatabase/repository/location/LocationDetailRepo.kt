@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.repository.location
 
 import androidx.lifecycle.LiveData
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.source.database.CharacterModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
 import javax.inject.Inject
 import javax.inject.Singleton
 

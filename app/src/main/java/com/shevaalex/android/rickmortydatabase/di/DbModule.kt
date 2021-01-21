@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.di
 
 import android.app.Application
 import androidx.room.Room
-import com.shevaalex.android.rickmortydatabase.source.database.*
+import com.shevaalex.android.rickmortydatabase.source.local.*
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
