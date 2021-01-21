@@ -12,7 +12,7 @@ apply plugin: "kotlin-parcelize"
 
 ext.versionMajor = 2
 ext.versionMinor = 0
-ext.versionPatch = 0
+ext.versionPatch = 1
 ext.versionClassifier = ""
 ext.minimumSdkVersion = 24
 
@@ -109,6 +109,7 @@ def generateVersionName() {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     //Kotlin
@@ -145,8 +146,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     // Testing
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13'
+    testImplementation 'com.google.truth:truth:1.0.1'
+    androidTestImplementation 'com.google.truth:truth:1.0.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
