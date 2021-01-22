@@ -12,7 +12,7 @@ apply plugin: "kotlin-parcelize"
 
 ext.versionMajor = 2
 ext.versionMinor = 0
-ext.versionPatch = 1
+ext.versionPatch = 2
 ext.versionClassifier = ""
 ext.minimumSdkVersion = 24
 
