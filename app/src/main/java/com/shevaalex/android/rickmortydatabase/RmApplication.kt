@@ -15,9 +15,9 @@ import com.shevaalex.android.rickmortydatabase.utils.CustomDebugTree
 import timber.log.Timber
 
 
-class RmApplication : Application() {
+open class RmApplication : Application() {
 
-    val appComponent: AppComponent by lazy {
+    open val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(this)
     }
 
