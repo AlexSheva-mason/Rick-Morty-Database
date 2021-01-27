@@ -10,6 +10,7 @@ import com.shevaalex.android.rickmortydatabase.di.TestAppComponent
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -110,9 +111,13 @@ class CharacterModelDaoTest : BaseTest() {
     fun getAllCharacters() = runBlockingTest {
         //insert a dummy list of Characters
         val testList = insertCharacterList()
-        //get the data from db, assert returned list.size == testList.size
-        val fetchedList = characterDao.getAllCharacters().toLiveData(10).getOrAwaitValue()
-        assertThat(fetchedList.size).isEqualTo(testList.size)
+        //get the data from db, assert returned list == testList
+        val fetchedList = characterDao.getAllCharacters().toLiveData(150).getOrAwaitValue()
+        if (fetchedList.size != testList.size) {
+            Assert.fail("lists size should be equal: fetchedList.size = [${fetchedList.size}]," +
+                    " testList.size = [${testList.size}]")
+        }
+        assertThat(fetchedList).containsExactlyElementsIn(testList)
     }
 
     @Test
