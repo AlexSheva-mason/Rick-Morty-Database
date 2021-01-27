@@ -310,8 +310,8 @@ class CharacterModelDaoTest : BaseTest() {
             isRandom: Boolean = true
     ): List<CharacterModel> {
         val testList = if (isRandom) {
-            characterDataFactory.createListOfRandomCharacters(number)
-        } else characterDataFactory.createListOfFixedCharacters(number)
+            characterDataFactory.createRandomIdObjectList(number)
+        } else characterDataFactory.createFixedIdObjectList(number)
         characterDao.insertCharacters(testList)
         return testList
     }
