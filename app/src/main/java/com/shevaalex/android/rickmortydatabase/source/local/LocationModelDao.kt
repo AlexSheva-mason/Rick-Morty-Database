@@ -13,15 +13,6 @@ interface LocationModelDao {
     @Insert(onConflict = REPLACE)
     suspend fun insertLocations(locations: List<LocationModel?>?)
 
-    @Update
-    suspend fun updateLocation(location: LocationModel)
-
-    /**
-     * gets the last location to compare databases
-      */
-    @Query("SELECT * FROM LocationModel ORDER BY id DESC LIMIT 1")
-    suspend fun getLastInLocationTable(): LocationModel?
-
     /**
      * gets the entry count to compare databases
      */

@@ -45,15 +45,6 @@ class CharacterModelDaoTest : BaseTest() {
     }
 
     @Test
-    fun getLastInCharacterTable() = runBlockingTest {
-        //insert a dummy list of Characters
-        val testList = insertCharacterList()
-        //assert that last character from db should be == to an object with max Id in the list
-        val lastCharacter = characterDao.getLastInCharacterTable()
-        assertThat(testList.maxByOrNull { it.id }).isEqualTo(lastCharacter)
-    }
-
-    @Test
     fun charactersCount() = runBlockingTest {
         //insert a dummy list of Characters.
         val testList = insertCharacterList()

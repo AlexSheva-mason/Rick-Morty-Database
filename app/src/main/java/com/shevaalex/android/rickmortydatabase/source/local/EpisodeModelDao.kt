@@ -12,15 +12,6 @@ interface EpisodeModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEpisodes(episodes: List<EpisodeModel?>?)
 
-    @Update
-    suspend fun updateEpisode(episode: EpisodeModel)
-
-    /**
-     * gets the last episode to compare databases
-     */
-    @Query("SELECT * FROM EpisodeModel ORDER BY id DESC LIMIT 1")
-    suspend fun getLastInEpisodeTable(): EpisodeModel?
-
     /**
      * gets the entry count to compare databases
      */
