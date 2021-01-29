@@ -16,6 +16,12 @@ interface RecentQueryDao {
     suspend fun deleteQuery(query: RecentQuery)
 
     /**
+     * gets all table for testing
+     */
+    @Query("SELECT * FROM RecentQuery")
+    suspend fun selectAllRecent(): List<RecentQuery>
+
+    /**
      * gets number of recent queries of an appropriate type
      */
     @Query("SELECT COUNT(id) FROM RecentQuery WHERE type = :type")
@@ -37,7 +43,7 @@ interface RecentQueryDao {
      * deletes a query with a specific name
      */
     @Query("DELETE FROM RecentQuery WHERE name = :name AND type = :type")
-    fun deleteQuery(name: String, type: String)
+    suspend fun deleteQuery(name: String, type: String)
 
     @Transaction
     suspend fun insertAndDeleteInTransaction(newQuery: RecentQuery) {
