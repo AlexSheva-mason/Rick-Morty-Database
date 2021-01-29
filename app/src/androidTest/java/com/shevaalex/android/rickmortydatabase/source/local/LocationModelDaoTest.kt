@@ -121,9 +121,9 @@ class LocationModelDaoTest : BaseTest() {
     fun searchLocations() = runBlockingTest {
         //insert a dummy list of Locations
         val testList = insertLocationList()
-        val randomCharacter = testList.random()
+        val randomLocation = testList.random()
         val fetchedList = locationDao
-                .searchLocations(randomCharacter.name)
+                .searchLocations(randomLocation.name)
                 .toLiveData(150)
                 .getOrAwaitValue()
         //test fails if results contain > 1 item
@@ -132,7 +132,7 @@ class LocationModelDaoTest : BaseTest() {
                     " fetchedList.size = [${fetchedList.size}]")
         }
         //assert that returned list contains object with a requested name
-        assertThat(fetchedList).containsExactly(randomCharacter)
+        assertThat(fetchedList).containsExactly(randomLocation)
     }
 
     @Test
