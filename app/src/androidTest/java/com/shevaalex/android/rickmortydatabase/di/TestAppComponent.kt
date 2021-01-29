@@ -2,6 +2,7 @@ package com.shevaalex.android.rickmortydatabase.di
 
 import com.shevaalex.android.rickmortydatabase.TestRmApplication
 import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDaoTest
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDaoTest
 import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDaoTest
 import dagger.BindsInstance
 import dagger.Component
@@ -26,5 +27,7 @@ interface TestAppComponent : AppComponent {
     fun inject(characterDaoTest: CharacterModelDaoTest)
 
     fun inject(locationDaoTest: LocationModelDaoTest)
+
+    fun inject(episodeDaoTest: EpisodeModelDaoTest)
 
 }
