@@ -1,13 +1,18 @@
 package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.*
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.shevaalex.android.rickmortydatabase.auth.AuthManager
 import com.shevaalex.android.rickmortydatabase.models.AuthToken
 import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.AUTH_TOKEN_REFRESH_TIME
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_APP_FIRST_LAUCH
 import com.shevaalex.android.rickmortydatabase.utils.NetworkAndTokenMediatorLiveData
 import com.shevaalex.android.rickmortydatabase.utils.currentTimeHours
 import com.shevaalex.android.rickmortydatabase.utils.currentTimeMinutes
@@ -26,7 +31,8 @@ class InitViewModel
 constructor(
         private val initRepository: InitRepository,
         private val sharedPref: SharedPreferences,
-        private val authManager: AuthManager
+        private val authManager: AuthManager,
+        private val appContext: Context
 ) : ViewModel() {
 
     private val isNetworkAvailable = MutableLiveData<Boolean>()
@@ -62,6 +68,7 @@ constructor(
                 authIdToken.value = it
             }
         }
+        checkFirstLaunch()
     }
 
     fun init(): LiveData<StateResource> = Transformations.switchMap(mediatorLiveData) {
@@ -152,6 +159,37 @@ constructor(
     private fun refetchAuthToken() {
         viewModelScope.launch {
             authManager.getNewToken()
+        }
+    }
+
+    private fun checkFirstLaunch() {
+        val isFirstLaunch = sharedPref.getBoolean(KEY_APP_FIRST_LAUCH, true)
+        if(isFirstLaunch) {
+            logInstallerName()
+            saveFirstLaunchBool()
+        }
+    }
+
+    private fun logInstallerName() {
+        with(appContext.packageName) {
+            val installerName = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                appContext.packageManager?.getInstallSourceInfo(this)?.installingPackageName
+            } else {
+                @Suppress("DEPRECATION")
+                appContext.packageManager?.getInstallerPackageName(this)
+            }
+            installerName?.let {
+                Firebase.analytics.logEvent("installer_name") {
+                    param("installer_package_name", it)
+                }
+            }
+        }
+    }
+
+    private fun saveFirstLaunchBool() {
+        with(sharedPref.edit()) {
+            putBoolean(KEY_APP_FIRST_LAUCH, false)
+            apply()
         }
     }
 
