@@ -63,6 +63,7 @@ class Constants {
         const val KEY_INIT_VM_CHARACTERS_FETCHED_TIMESTAMP = "init_viewmodel_characters_refetched_timestamp"
         const val KEY_INIT_VM_LOCATIONS_FETCHED_TIMESTAMP = "init_viewmodel_locations_refetched_timestamp"
         const val KEY_INIT_VM_EPISODES_FETCHED_TIMESTAMP = "init_viewmodel_episodes_refetched_timestamp"
+        const val KEY_APP_FIRST_LAUCH = "com.shevaalex.android.rickmortydatabase_app_first_launch"
 
         //SearchView recent queries list size
         const val SV_RECENT_COUNT = 10

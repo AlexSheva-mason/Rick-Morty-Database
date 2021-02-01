@@ -32,4 +32,8 @@ object AppModule {
         return app.getSharedPreferences(SHARED_PREFS_FILE_NAME, Context.MODE_PRIVATE)
     }
 
+    @Singleton
+    @Provides
+    fun provideAppContext(app: Application): Context = app.applicationContext
+
 }
