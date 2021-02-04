@@ -14,7 +14,6 @@
 
     //MainActivity Error managing
     <string name="ma_snack_database_up_to_date">База даних актуальна</string>
-    <string name="ma_snack_database_sync">Оновлення бази даних</string>
     <string name="ma_snack_database_not_synced">Для перевірки бази даних підключіться до інтернету</string>
     <string name="ma_snack_error_server_error">Помилка під час оновлення бази даних. \nПомилка серверу: </string>
     <string name="ma_snack_error_network_error">Помилка під час оновлення бази даних. \nПеревірте наявність інтернет з\'єднання</string>

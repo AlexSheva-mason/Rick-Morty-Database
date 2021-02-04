@@ -14,7 +14,6 @@
 
     //MainActivity Error managing
     <string name="ma_snack_database_up_to_date">База данных обновлена</string>
-    <string name="ma_snack_database_sync">Обновление базы данных</string>
     <string name="ma_snack_database_not_synced">Для проверки базы данных подключитесь к интернету</string>
     <string name="ma_snack_error_server_error">Ошибка обновления базы данных. \nОшибка сервера: </string>
     <string name="ma_snack_error_network_error">Ошибка обновления базы данных. \nПроверьте интернет соединение</string>

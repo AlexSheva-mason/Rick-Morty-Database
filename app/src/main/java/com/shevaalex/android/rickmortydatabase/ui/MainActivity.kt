@@ -148,8 +148,6 @@ class MainActivity : AppCompatActivity() {
             is Message.NoInternet -> {
                 snackText = getString(R.string.ma_snack_database_not_synced)
             }
-            is Message.UpdatingDatabase ->
-                snackText = getString(R.string.ma_snack_database_sync)
             is Message.DbIsUpToDate ->
                 snackText = getString(R.string.ma_snack_database_up_to_date)
             is Message.ServerError ->
