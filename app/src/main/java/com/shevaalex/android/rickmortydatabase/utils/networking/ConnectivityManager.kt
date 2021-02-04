@@ -1,6 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.utils.networking
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import javax.inject.Inject
@@ -14,10 +14,10 @@ import javax.inject.Singleton
 class ConnectivityManager
 @Inject
 constructor(
-        appContext: Context,
+        application: Application,
 ) {
 
-  private val connectionLiveData = ConnectionLiveData(appContext)
+  private val connectionLiveData = ConnectionLiveData(application)
 
   private val networkObserver = Observer<Boolean> { isConnected -> isNetworkAvailable.value = isConnected }
 
