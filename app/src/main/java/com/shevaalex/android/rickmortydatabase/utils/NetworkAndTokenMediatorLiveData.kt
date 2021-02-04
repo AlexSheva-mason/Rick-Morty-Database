@@ -7,9 +7,9 @@ import com.shevaalex.android.rickmortydatabase.models.AuthToken
 class NetworkAndTokenMediatorLiveData(
         sourceIsNetworkAvailable: LiveData<Boolean>,
         sourceToken: LiveData<AuthToken>
-) : MediatorLiveData<Pair<Boolean, AuthToken?>>() {
+) : MediatorLiveData<Pair<Boolean?, AuthToken?>>() {
 
-    private var isNetworkAvailable: Boolean = false
+    private var isNetworkAvailable: Boolean? = null
     private var token: AuthToken? = null
 
     init {

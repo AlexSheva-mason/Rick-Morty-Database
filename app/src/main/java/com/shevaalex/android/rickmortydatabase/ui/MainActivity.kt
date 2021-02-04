@@ -2,7 +2,6 @@ package com.shevaalex.android.rickmortydatabase.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -37,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var reviewViewmodelFactory: DiViewModelFactory<ReviewViewModel>
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var connectionStatus: ConnectionLiveData
     private var navController: NavController? = null
     private var backPressedOnce = false
 
@@ -65,10 +63,7 @@ class MainActivity : AppCompatActivity() {
     private fun databaseSyncCheck() {
         //if database has been recently checked -> skip db sync
         initViewModel.isDbCheckNeeded().run {
-            if (this) {
-                monitorNetworkState()
-                dbInit()
-            }
+            if (this) dbInit()
         }
     }
 
@@ -101,18 +96,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun monitorNetworkState() {
-        connectionStatus = ConnectionLiveData(this)
-        connectionStatus.observe(this) {
-            initViewModel.isNetworkAvailable(it)
-        }
-    }
-
     private fun unSubscribe() {
-        connectionStatus.removeObservers(this)
         initViewModel.init().removeObservers(this)
     }
-
 
     private fun setupEdgeToEdge() {
         //set window to draw behind system bars
@@ -157,14 +143,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun composeMessage(stateResource: StateResource, snackColor: Int? = null) {
         val snackText: String
-        var snackBarDuration = BaseTransientBottomBar.LENGTH_LONG
         when (stateResource.message) {
             is Message.NoInternet -> {
-                snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE
                 snackText = getString(R.string.ma_snack_database_not_synced)
             }
-            is Message.UpdatingDatabase ->
-                snackText = getString(R.string.ma_snack_database_sync)
             is Message.DbIsUpToDate ->
                 snackText = getString(R.string.ma_snack_database_up_to_date)
             is Message.ServerError ->
@@ -178,12 +160,13 @@ class MainActivity : AppCompatActivity() {
                 snackText = ""
         }
         if (snackText.isNotBlank()) {
-            showSnackBar(snackText, snackBarDuration, snackColor)
+            showSnackBar(snackText, snackColor)
         }
     }
 
-    private fun showSnackBar(text: String, snackBarDuration: Int, color: Int?) {
-        val mySnackbar = Snackbar.make(binding.activityMainLayout, text, snackBarDuration)
+    private fun showSnackBar(text: String, color: Int? = null) {
+        val mySnackbar = Snackbar
+                .make(binding.activityMainLayout, text, BaseTransientBottomBar.LENGTH_LONG)
         val snackBarView = mySnackbar.view
         color?.let {
             snackBarView.rootView.setBackgroundColor(it)
@@ -209,11 +192,7 @@ class MainActivity : AppCompatActivity() {
                 return
             }
             backPressedOnce = true
-            Toast.makeText(
-                    this,
-                    resources.getString(R.string.toast_close_message),
-                    Toast.LENGTH_SHORT)
-                    .show()
+            showSnackBar(resources.getString(R.string.toast_close_message))
             Timer().schedule(2000) {
                 backPressedOnce = false
             }

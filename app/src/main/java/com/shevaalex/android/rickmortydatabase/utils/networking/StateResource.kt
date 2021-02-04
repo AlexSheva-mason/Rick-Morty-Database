@@ -32,8 +32,6 @@ sealed class Message {
 
     object NoInternet : Message()
 
-    object UpdatingDatabase : Message()
-
     object DbIsUpToDate : Message()
 
     class ServerError(val statusCode: Int): Message()

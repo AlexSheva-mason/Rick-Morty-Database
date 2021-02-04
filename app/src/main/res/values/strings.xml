@@ -14,7 +14,6 @@
 
     //MainActivity Error managing
     <string name="ma_snack_database_up_to_date">Database is up to date</string>
-    <string name="ma_snack_database_sync">Updating Database</string>
     <string name="ma_snack_database_not_synced">Please connect to the internet for a database check</string>
     <string name="ma_snack_error_server_error">Error while syncing the database. \nServer Error: </string>
     <string name="ma_snack_error_network_error">Error while syncing the database. \nPlease, check your network connection</string>

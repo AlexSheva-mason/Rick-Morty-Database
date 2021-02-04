@@ -1,6 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
-import android.content.Context
+import android.app.Application
 import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.google.firebase.analytics.ktx.analytics
@@ -16,15 +16,12 @@ import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_APP
 import com.shevaalex.android.rickmortydatabase.utils.NetworkAndTokenMediatorLiveData
 import com.shevaalex.android.rickmortydatabase.utils.currentTimeHours
 import com.shevaalex.android.rickmortydatabase.utils.currentTimeMinutes
-import com.shevaalex.android.rickmortydatabase.utils.networking.Message
-import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
-import com.shevaalex.android.rickmortydatabase.utils.networking.Status
+import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
-
 
 class InitViewModel
 @Inject
@@ -32,10 +29,11 @@ constructor(
         private val initRepository: InitRepository,
         private val sharedPref: SharedPreferences,
         private val authManager: AuthManager,
-        private val appContext: Context
+        private val connectivityManager: ConnectivityManager,
+        private val application: Application
 ) : ViewModel() {
 
-    private val isNetworkAvailable = MutableLiveData<Boolean>()
+    private val isNetworkAvailable: MutableLiveData<Boolean> = connectivityManager.isNetworkAvailable
 
     private val authIdToken: MutableLiveData<AuthToken> = MutableLiveData()
 
@@ -52,62 +50,68 @@ constructor(
     }
 
     init {
+        connectivityManager.registerConnectionObserver()
         viewModelScope.launch {
-            /*
-            waits 1sec and sets isNetworkAvailable to false (starting an app in a flight mode
-            or with internet switched off doesn't trigger ConnectivityManager.NetworkCallback()
-            in ConnectionLiveData to post any value
-            */
-            delay(1000)
-            if (isNetworkAvailable.value == null) {
-                isNetworkAvailable.value = false
-            }
-            // set auth token
-            authManager.token.collect {
-                Timber.v("collecting token in viewmodel, token: %s", it?.token?.takeLast(7))
-                authIdToken.value = it
-            }
+            setNetworkStatusDisconnect()
+            setAuthToken()
         }
         checkFirstLaunch()
+    }
+
+    /**
+     * waits 1sec and sets isNetworkAvailable to false (starting an app in a flight mode
+     * or with internet switched off doesn't trigger ConnectivityManager.NetworkCallback()
+     * in ConnectionLiveData to post any value
+     */
+    private suspend fun setNetworkStatusDisconnect() {
+        delay(1000)
+        if (isNetworkAvailable.value == null) {
+            isNetworkAvailable.value = false
+        }
+    }
+
+    private suspend fun setAuthToken() {
+        authManager.token.collect {
+            Timber.v("collecting token in viewmodel, token: %s", it?.token?.takeLast(7))
+            authIdToken.value = it
+        }
     }
 
     fun init(): LiveData<StateResource> = Transformations.switchMap(mediatorLiveData) {
         val isNetworkAvailable = it.first
         val token = it.second
-        if (isNetworkAvailable) {
-            Timber.i("CONNECTED")
-            token?.let { authToken ->
-                when {
-                    //if authToken is default -> sharedPrefs returned null, refetch
-                    authToken == authManager.defaultToken -> {
-                        Timber.e("init() call, token is default")
-                        refetchAuthToken()
-                        loadingStatus
+        when (isNetworkAvailable) {
+            true -> {
+                Timber.i("CONNECTED")
+                token?.let { authToken ->
+                    when {
+                        //if authToken is default -> sharedPrefs returned null, refetch
+                        authToken == authManager.defaultToken -> {
+                            Timber.e("init() call, token is default")
+                            refetchAuthToken()
+                            loadingStatus
+                        }
+                        //if token has expired - refetch and emit loadingStatus
+                        hasTokenExpired(authToken) -> {
+                            Timber.e("init() call, token has expired")
+                            refetchAuthToken()
+                            loadingStatus
+                        }
+                        else -> {
+                            initRepository.getDbStateResource(authToken.token)
+                        }
                     }
-                    //if token has expired - refetch and emit loadingStatus
-                    hasTokenExpired(authToken) -> {
-                        Timber.e("init() call, token has expired")
-                        refetchAuthToken()
-                        loadingStatus
-                    }
-                    else -> {
-                        initRepository.getDbStateResource(authToken.token)
-                    }
+                } ?: run {
+                    //if token is null - emit loadingStatus and wait for authToken to be fetched
+                    Timber.e("init() call, token is null")
+                    loadingStatus
                 }
-            }?: run{
-                //if token is null - emit loadingStatus and wait for authToken to be fetched
-                Timber.e("init() call, token is null")
-                loadingStatus
             }
-        } else {
-            Timber.e("DISCONNECTED")
-            noInternetError
-        }
-    }
-
-    fun isNetworkAvailable(isConnected: Boolean) {
-        if (isNetworkAvailable.value != isConnected) {
-            isNetworkAvailable.value = isConnected
+            false -> {
+                Timber.e("DISCONNECTED")
+                noInternetError
+            }
+            else -> loadingStatus
         }
     }
 
@@ -116,6 +120,7 @@ constructor(
      */
     fun notifyDbAllSuccess() {
         saveTimestampToSharedPrefs()
+        connectivityManager.unregisterConnectionObserver()
     }
 
     /**
@@ -164,19 +169,19 @@ constructor(
 
     private fun checkFirstLaunch() {
         val isFirstLaunch = sharedPref.getBoolean(KEY_APP_FIRST_LAUCH, true)
-        if(isFirstLaunch) {
+        if (isFirstLaunch) {
             logInstallerName()
             saveFirstLaunchBool()
         }
     }
 
     private fun logInstallerName() {
-        with(appContext.packageName) {
+        with(application.packageName) {
             val installerName = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                appContext.packageManager?.getInstallSourceInfo(this)?.installingPackageName
+                application.packageManager?.getInstallSourceInfo(this)?.installingPackageName
             } else {
                 @Suppress("DEPRECATION")
-                appContext.packageManager?.getInstallerPackageName(this)
+                application.packageManager?.getInstallerPackageName(this)
             }
             installerName?.let {
                 Firebase.analytics.logEvent("installer_name") {
