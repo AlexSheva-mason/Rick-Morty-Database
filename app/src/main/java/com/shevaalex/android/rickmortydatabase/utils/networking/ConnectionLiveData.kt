@@ -8,6 +8,7 @@ import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.*
 import android.os.Build
 import androidx.lifecycle.LiveData
+import timber.log.Timber
 
 class ConnectionLiveData(private val context: Context) : LiveData<Boolean>() {
 
@@ -21,6 +22,7 @@ class ConnectionLiveData(private val context: Context) : LiveData<Boolean>() {
 
     override fun onInactive() {
         val cm = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        Timber.w("ConnectionLiveData onInactive()")
         cm.unregisterNetworkCallback(networkCallback)
     }
 

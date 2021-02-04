@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var reviewViewmodelFactory: DiViewModelFactory<ReviewViewModel>
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var connectionStatus: ConnectionLiveData
     private var navController: NavController? = null
     private var backPressedOnce = false
 
@@ -65,10 +64,7 @@ class MainActivity : AppCompatActivity() {
     private fun databaseSyncCheck() {
         //if database has been recently checked -> skip db sync
         initViewModel.isDbCheckNeeded().run {
-            if (this) {
-                monitorNetworkState()
-                dbInit()
-            }
+            if (this) dbInit()
         }
     }
 
@@ -101,18 +97,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun monitorNetworkState() {
-        connectionStatus = ConnectionLiveData(this)
-        connectionStatus.observe(this) {
-            initViewModel.isNetworkAvailable(it)
-        }
-    }
-
     private fun unSubscribe() {
-        connectionStatus.removeObservers(this)
         initViewModel.init().removeObservers(this)
     }
-
 
     private fun setupEdgeToEdge() {
         //set window to draw behind system bars
@@ -157,10 +144,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun composeMessage(stateResource: StateResource, snackColor: Int? = null) {
         val snackText: String
-        var snackBarDuration = BaseTransientBottomBar.LENGTH_LONG
         when (stateResource.message) {
             is Message.NoInternet -> {
-                snackBarDuration = BaseTransientBottomBar.LENGTH_INDEFINITE
                 snackText = getString(R.string.ma_snack_database_not_synced)
             }
             is Message.UpdatingDatabase ->
@@ -178,12 +163,13 @@ class MainActivity : AppCompatActivity() {
                 snackText = ""
         }
         if (snackText.isNotBlank()) {
-            showSnackBar(snackText, snackBarDuration, snackColor)
+            showSnackBar(snackText, snackColor)
         }
     }
 
-    private fun showSnackBar(text: String, snackBarDuration: Int, color: Int?) {
-        val mySnackbar = Snackbar.make(binding.activityMainLayout, text, snackBarDuration)
+    private fun showSnackBar(text: String, color: Int?) {
+        val mySnackbar = Snackbar
+                .make(binding.activityMainLayout, text, BaseTransientBottomBar.LENGTH_LONG)
         val snackBarView = mySnackbar.view
         color?.let {
             snackBarView.rootView.setBackgroundColor(it)
