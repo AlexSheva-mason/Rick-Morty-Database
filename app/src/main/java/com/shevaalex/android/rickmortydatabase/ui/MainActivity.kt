@@ -2,7 +2,6 @@ package com.shevaalex.android.rickmortydatabase.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -165,7 +164,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSnackBar(text: String, color: Int?) {
+    private fun showSnackBar(text: String, color: Int? = null) {
         val mySnackbar = Snackbar
                 .make(binding.activityMainLayout, text, BaseTransientBottomBar.LENGTH_LONG)
         val snackBarView = mySnackbar.view
@@ -193,11 +192,7 @@ class MainActivity : AppCompatActivity() {
                 return
             }
             backPressedOnce = true
-            Toast.makeText(
-                    this,
-                    resources.getString(R.string.toast_close_message),
-                    Toast.LENGTH_SHORT)
-                    .show()
+            showSnackBar(resources.getString(R.string.toast_close_message))
             Timer().schedule(2000) {
                 backPressedOnce = false
             }
