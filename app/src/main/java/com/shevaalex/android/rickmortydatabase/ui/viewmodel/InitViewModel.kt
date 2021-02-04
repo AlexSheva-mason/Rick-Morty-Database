@@ -1,6 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
-import android.content.Context
+import android.app.Application
 import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.google.firebase.analytics.ktx.analytics
@@ -23,7 +23,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 
-
 class InitViewModel
 @Inject
 constructor(
@@ -31,7 +30,7 @@ constructor(
         private val sharedPref: SharedPreferences,
         private val authManager: AuthManager,
         private val connectivityManager: ConnectivityManager,
-        private val appContext: Context
+        private val application: Application
 ) : ViewModel() {
 
     private val isNetworkAvailable: MutableLiveData<Boolean> = connectivityManager.isNetworkAvailable
@@ -177,12 +176,12 @@ constructor(
     }
 
     private fun logInstallerName() {
-        with(appContext.packageName) {
+        with(application.packageName) {
             val installerName = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                appContext.packageManager?.getInstallSourceInfo(this)?.installingPackageName
+                application.packageManager?.getInstallSourceInfo(this)?.installingPackageName
             } else {
                 @Suppress("DEPRECATION")
-                appContext.packageManager?.getInstallerPackageName(this)
+                application.packageManager?.getInstallerPackageName(this)
             }
             installerName?.let {
                 Firebase.analytics.logEvent("installer_name") {
