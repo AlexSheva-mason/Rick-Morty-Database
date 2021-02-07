@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -133,7 +132,7 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
 
     private fun navigateCharacterDetail(character: CharacterModel) {
         val action = EpisodeDetailFragmentDirections.actionGlobalCharacterDetailFragment2(character)
-        findNavController().safeNavigate<EpisodeDetailFragment>(action)
+        safeNavigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {

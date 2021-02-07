@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
@@ -34,9 +33,9 @@ fun View.hideKeyboard() {
 /**
  * shows a dialog with given text @param errorMessage
  */
-fun Activity.displayErrorDialog(errorMessage: String?){
+fun Activity.displayErrorDialog(errorMessage: String?) {
     MaterialDialog(this)
-            .show{
+            .show {
                 title(R.string.dialog_error_title)
                 message(text = errorMessage)
                 positiveButton(text = "OK")
@@ -128,21 +127,21 @@ fun View.setTopPaddingForStatusBar() {
  * Author: Abner Escócio
  * https://stackoverflow.com/a/65959445/11836178
  */
-inline fun <reified T : Fragment> NavController.safeNavigate(
+fun Fragment.safeNavigate(
         directions: NavDirections,
         extras: FragmentNavigator.Extras
 ) {
-    val destination = this.currentDestination as FragmentNavigator.Destination
-    if (T::class.java.name == destination.className) {
-        navigate(directions, extras)
+    val navController = findNavController()
+    val destination = navController.currentDestination as FragmentNavigator.Destination
+    if (javaClass.name == destination.className) {
+        navController.navigate(directions, extras)
     }
 }
 
-inline fun <reified T : Fragment> NavController.safeNavigate(
-        directions: NavDirections
-) {
-    val destination = this.currentDestination as FragmentNavigator.Destination
-    if (T::class.java.name == destination.className) {
-        navigate(directions)
+fun Fragment.safeNavigate(directions: NavDirections) {
+    val navController = findNavController()
+    val destination = navController.currentDestination as FragmentNavigator.Destination
+    if (javaClass.name == destination.className) {
+        navController.navigate(directions)
     }
 }
