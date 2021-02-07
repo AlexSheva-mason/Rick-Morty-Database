@@ -202,12 +202,12 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
 
     private fun navigateLocationDetail(location: LocationModel) {
         val action = CharacterDetailFragmentDirections.actionGlobalLocationDetailFragment(location)
-        findNavController().navigate(action)
+        findNavController().safeNavigate<CharacterDetailFragment>(action)
     }
 
     private fun navigateEpisodeDetail(episodeModel: EpisodeModel) {
         val action = CharacterDetailFragmentDirections.actionGlobalEpisodeDetailFragment(episodeModel)
-        findNavController().navigate(action)
+        findNavController().safeNavigate<CharacterDetailFragment>(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {

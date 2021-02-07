@@ -403,7 +403,7 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
                 characterCard to Constants.TRANSITION_CHARACTER.plus(character.id)
         )
         val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(character)
-        findNavController().navigate(action , extras)
+        findNavController().safeNavigate<CharactersListFragment>(action, extras)
     }
 
 }

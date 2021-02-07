@@ -267,7 +267,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
                 locationCard to Constants.TRANSITION_LOCATION.plus(location.id)
         )
         val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(location)
-        findNavController().navigate(action, extras)
+        findNavController().safeNavigate<LocationsListFragment>(action, extras)
     }
 
 }

@@ -222,7 +222,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
                 episodeCard to Constants.TRANSITION_EPISODE.plus(episode.id)
         )
         val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(episode)
-        findNavController().navigate(action, extras)
+        findNavController().safeNavigate<EpisodesListFragment>(action, extras)
     }
 
 }

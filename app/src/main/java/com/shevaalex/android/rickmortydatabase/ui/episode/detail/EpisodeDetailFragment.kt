@@ -23,6 +23,7 @@ import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter.Characte
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSITION_EPISODE
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.safeNavigate
 import com.shevaalex.android.rickmortydatabase.utils.setTopPaddingForStatusBar
 import javax.inject.Inject
 
@@ -132,7 +133,7 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
 
     private fun navigateCharacterDetail(character: CharacterModel) {
         val action = EpisodeDetailFragmentDirections.actionGlobalCharacterDetailFragment2(character)
-        findNavController().navigate(action)
+        findNavController().safeNavigate<EpisodeDetailFragment>(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {

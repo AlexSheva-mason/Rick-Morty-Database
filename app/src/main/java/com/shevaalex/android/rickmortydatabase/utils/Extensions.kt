@@ -11,6 +11,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -117,5 +120,29 @@ fun View.setTopPaddingForStatusBar() {
         )
         v.updatePadding(top = systemWindow.top)
         insets
+    }
+}
+
+/**
+ * extension function to fix navigation double-click crash
+ * Author: Abner Escócio
+ * https://stackoverflow.com/a/65959445/11836178
+ */
+inline fun <reified T : Fragment> NavController.safeNavigate(
+        directions: NavDirections,
+        extras: FragmentNavigator.Extras
+) {
+    val destination = this.currentDestination as FragmentNavigator.Destination
+    if (T::class.java.name == destination.className) {
+        navigate(directions, extras)
+    }
+}
+
+inline fun <reified T : Fragment> NavController.safeNavigate(
+        directions: NavDirections
+) {
+    val destination = this.currentDestination as FragmentNavigator.Destination
+    if (T::class.java.name == destination.className) {
+        navigate(directions)
     }
 }

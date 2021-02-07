@@ -21,6 +21,7 @@ import com.shevaalex.android.rickmortydatabase.ui.base.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.safeNavigate
 import com.shevaalex.android.rickmortydatabase.utils.setTopPaddingForStatusBar
 import javax.inject.Inject
 
@@ -129,7 +130,7 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
 
     private fun navigateCharacterDetail(character: CharacterModel) {
         val action = LocationDetailFragmentDirections.actionGlobalCharacterDetailFragment2(character)
-        findNavController().navigate(action)
+        findNavController().safeNavigate<LocationDetailFragment>(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {
