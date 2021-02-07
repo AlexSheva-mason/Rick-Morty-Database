@@ -248,10 +248,14 @@
             <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/location_residents_none">
+            <Layout
+                android:visibility="gone"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/location_residents" />
             <Transform
                 android:scaleX="0.8"
                 android:scaleY="0.8" />
-            <PropertySet android:alpha="0" />
         </Constraint>
         <Constraint android:id="@+id/recyclerview_location_detail">
             <Transform

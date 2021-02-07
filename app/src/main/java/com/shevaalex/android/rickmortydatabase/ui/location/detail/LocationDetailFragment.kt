@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -115,9 +114,10 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
                 adapter?.setCharacterList(it)
                 //explicilty reset the RV adapter, otherwise RV is invisible at the start of transition or landscape
                 binding.recyclerviewLocationDetail.adapter = adapter
-                binding.locationResidentsNone.visibility = if (characters.isEmpty()) {
-                    View.VISIBLE
-                } else View.GONE
+                //set the alpha, visibility doesn't work with MotionLayout
+                binding.locationResidentsNone.alpha = if (it.isEmpty()) {
+                    1F
+                } else 0F
             }
         })
     }
@@ -130,7 +130,7 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
 
     private fun navigateCharacterDetail(character: CharacterModel) {
         val action = LocationDetailFragmentDirections.actionGlobalCharacterDetailFragment2(character)
-        findNavController().safeNavigate<LocationDetailFragment>(action)
+        safeNavigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {
