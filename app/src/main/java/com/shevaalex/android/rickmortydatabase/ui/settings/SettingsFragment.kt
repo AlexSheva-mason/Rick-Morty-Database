@@ -12,10 +12,7 @@ import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
+import androidx.preference.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -25,7 +22,8 @@ import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 
-class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
+        PreferenceManager.OnPreferenceTreeClickListener {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -90,7 +88,7 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     "MODE_NIGHT_NO"
                 }
-                logPreferenceToFirebase(themeMode)
+                logThemeModeToFirebase(themeMode)
             }
             Constants.LIST_THEME_PREFERENCE_KEY -> {
                 val value: Int = (newValue as String).toInt()
@@ -101,10 +99,22 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
                     1 -> "MODE_NIGHT_NO"
                     else -> "default (unchanged)"
                 }
-                logPreferenceToFirebase(themeMode)
+                logThemeModeToFirebase(themeMode)
             }
         }
         return true
+    }
+
+    override fun onPreferenceTreeClick(preference: Preference?): Boolean {
+        val key = preference?.key
+        var prefClicked: String? = null
+        when (key) {
+            Constants.SWITCH_THEME_PREFERENCE_KEY -> prefClicked = Constants.SWITCH_THEME_PREFERENCE_KEY
+            Constants.LIST_THEME_PREFERENCE_KEY -> prefClicked = Constants.LIST_THEME_PREFERENCE_KEY
+            Constants.KEY_REVIEW -> prefClicked = Constants.KEY_REVIEW
+        }
+        prefClicked?.let { logPreferenceClickToFirebase(it) }
+        return super.onPreferenceTreeClick(preference)
     }
 
     private fun setupToolbarWithNav(toolbar: Toolbar) {
@@ -117,7 +127,7 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
         toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
-    private fun setupToolbarWithPadding(toolbar: Toolbar){
+    private fun setupToolbarWithPadding(toolbar: Toolbar) {
         //set the toolbar title
         val toolbarTextView = toolbar.findViewById<TextView>(R.id.toolbar_title)
         toolbarTextView.text = toolbar.title
@@ -126,7 +136,7 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
     }
 
     private fun setupEdgeToEdgePadding(toolbar: Toolbar) {
-        toolbar.setOnApplyWindowInsetsListener{ view, insets ->
+        toolbar.setOnApplyWindowInsetsListener { view, insets ->
             val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets)
             val systemWindow = insetsCompat.getInsets(
                     WindowInsetsCompat.Type.statusBars()
@@ -145,9 +155,15 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChang
         }
     }
 
-    private fun logPreferenceToFirebase(themeMode: String) {
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
-            param(FirebaseAnalytics.Param.ITEM_NAME, themeMode)
+    private fun logThemeModeToFirebase(themeMode: String) {
+        firebaseAnalytics.logEvent(Constants.SETTINGS_EVENT_THEME_SELECT) {
+            param(Constants.SETTINGS_KEY_THEME_MODE, themeMode)
+        }
+    }
+
+    private fun logPreferenceClickToFirebase(prefName: String) {
+        firebaseAnalytics.logEvent(Constants.SETTINGS_EVENT_PREFERENCE_CLICK) {
+            param(Constants.SETTINGS_KEY_PREFERENCE_NAME, prefName)
         }
     }
 

@@ -11,6 +11,12 @@ class Constants {
         const val KEY_VERSION = "version"
         const val KEY_REVIEW = "review"
 
+        //Firebase events and keys
+        const val SETTINGS_EVENT_THEME_SELECT = "settings_theme_selected"
+        const val SETTINGS_KEY_THEME_MODE = "theme_mode"
+        const val SETTINGS_EVENT_PREFERENCE_CLICK = "settings_preference_clicked"
+        const val SETTINGS_KEY_PREFERENCE_NAME = "preference_name"
+
         //Settings data
         const val DATA_REVIEW_LINK = "http://play.google.com/store/apps/details?id=com.shevaalex.android.rickmortydatabase"
 
