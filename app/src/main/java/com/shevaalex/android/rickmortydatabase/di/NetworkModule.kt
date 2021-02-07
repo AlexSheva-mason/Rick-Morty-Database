@@ -13,10 +13,8 @@ import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -31,16 +29,11 @@ object NetworkModule{
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        @Suppress("UNUSED_VARIABLE")
-        val interceptor = HttpLoggingInterceptor { message ->
-            Timber.d(message)
-        }.setLevel(HttpLoggingInterceptor.Level.BASIC)
         return OkHttpClient.Builder()
                 .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(false)
-                //not needed for now   .addInterceptor(interceptor)
                 .build()
     }
 
