@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +22,7 @@ import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter.Characte
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSITION_EPISODE
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
+import com.shevaalex.android.rickmortydatabase.utils.safeNavigate
 import com.shevaalex.android.rickmortydatabase.utils.setTopPaddingForStatusBar
 import javax.inject.Inject
 
@@ -132,7 +132,7 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
 
     private fun navigateCharacterDetail(character: CharacterModel) {
         val action = EpisodeDetailFragmentDirections.actionGlobalCharacterDetailFragment2(character)
-        findNavController().navigate(action)
+        safeNavigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -222,7 +221,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
                 episodeCard to Constants.TRANSITION_EPISODE.plus(episode.id)
         )
         val action = EpisodesListFragmentDirections.toEpisodeDetailFragmentAction(episode)
-        findNavController().navigate(action, extras)
+        safeNavigate(action, extras)
     }
 
 }

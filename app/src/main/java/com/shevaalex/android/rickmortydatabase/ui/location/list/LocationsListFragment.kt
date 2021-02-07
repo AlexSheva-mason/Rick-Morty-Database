@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -267,7 +266,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
                 locationCard to Constants.TRANSITION_LOCATION.plus(location.id)
         )
         val action = LocationsListFragmentDirections.toLocationDetailFragmentAction(location)
-        findNavController().navigate(action, extras)
+        safeNavigate(action, extras)
     }
 
 }

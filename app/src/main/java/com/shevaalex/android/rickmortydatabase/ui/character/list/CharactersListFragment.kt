@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Transition
 import com.afollestad.materialdialogs.MaterialDialog
@@ -403,7 +402,7 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
                 characterCard to Constants.TRANSITION_CHARACTER.plus(character.id)
         )
         val action = CharactersListFragmentDirections.toCharacterDetailFragmentAction(character)
-        findNavController().navigate(action , extras)
+        safeNavigate(action, extras)
     }
 
 }

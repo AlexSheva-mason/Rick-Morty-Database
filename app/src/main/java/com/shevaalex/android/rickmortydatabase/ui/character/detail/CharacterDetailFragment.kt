@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -202,12 +201,12 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
 
     private fun navigateLocationDetail(location: LocationModel) {
         val action = CharacterDetailFragmentDirections.actionGlobalLocationDetailFragment(location)
-        findNavController().navigate(action)
+        safeNavigate(action)
     }
 
     private fun navigateEpisodeDetail(episodeModel: EpisodeModel) {
         val action = CharacterDetailFragmentDirections.actionGlobalEpisodeDetailFragment(episodeModel)
-        findNavController().navigate(action)
+        safeNavigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {

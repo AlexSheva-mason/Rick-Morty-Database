@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -31,9 +33,9 @@ fun View.hideKeyboard() {
 /**
  * shows a dialog with given text @param errorMessage
  */
-fun Activity.displayErrorDialog(errorMessage: String?){
+fun Activity.displayErrorDialog(errorMessage: String?) {
     MaterialDialog(this)
-            .show{
+            .show {
                 title(R.string.dialog_error_title)
                 message(text = errorMessage)
                 positiveButton(text = "OK")
@@ -117,5 +119,29 @@ fun View.setTopPaddingForStatusBar() {
         )
         v.updatePadding(top = systemWindow.top)
         insets
+    }
+}
+
+/**
+ * extension function to fix navigation double-click crash
+ * Author: Abner Escócio
+ * https://stackoverflow.com/a/65959445/11836178
+ */
+fun Fragment.safeNavigate(
+        directions: NavDirections,
+        extras: FragmentNavigator.Extras
+) {
+    val navController = findNavController()
+    val destination = navController.currentDestination as FragmentNavigator.Destination
+    if (javaClass.name == destination.className) {
+        navController.navigate(directions, extras)
+    }
+}
+
+fun Fragment.safeNavigate(directions: NavDirections) {
+    val navController = findNavController()
+    val destination = navController.currentDestination as FragmentNavigator.Destination
+    if (javaClass.name == destination.className) {
+        navController.navigate(directions)
     }
 }

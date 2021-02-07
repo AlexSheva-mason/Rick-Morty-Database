@@ -178,9 +178,6 @@ dependencies {
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    //OkHTTP logging interceptor
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-
     //Glide
     def glide_version = "4.11.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
