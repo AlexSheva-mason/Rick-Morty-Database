@@ -19,13 +19,12 @@ interface InitManager<T : ApiObjectModel> {
      * Generic function to initialise and sync database table
      */
     suspend fun initTable(token: String,
-                                  objectIdentifier: String
+                          objectIdentifier: String
     ): StateResource {
         val dbObjectCount = getObjectCountDb()
         val networkCountApiResult = getNetworkCountApiResult(token)
         if (networkCountApiResult is ApiResult.Success) {
-            val objectCountNetwork =
-                    (getNetworkCountApiResult(token) as ApiResult.Success).data.size()
+            val objectCountNetwork = networkCountApiResult.data.size()
             return when {
                 //fetch objects if network list size > db list size
                 objectCountNetwork > dbObjectCount -> {
@@ -47,7 +46,7 @@ interface InitManager<T : ApiObjectModel> {
         } else return manageEmptyOrErrorResponse(networkCountApiResult)
     }
 
-    suspend fun fetchFromNetworkAndSaveDb(token: String, objectIdentifier: String): StateResource {
+    private suspend fun fetchFromNetworkAndSaveDb(token: String, objectIdentifier: String): StateResource {
         val networkListResult = getListFromNetwork(token)
         return if (networkListResult is ApiResult.Success) {
             val networkList = networkListResult.data.filterNotNull()

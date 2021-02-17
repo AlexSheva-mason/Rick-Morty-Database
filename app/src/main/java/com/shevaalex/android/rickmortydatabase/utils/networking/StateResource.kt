@@ -1,6 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.utils.networking
 
-data class StateResource (
+data class StateResource(
         val status: Status,
         val message: Message? = null
 )
@@ -34,7 +34,7 @@ sealed class Message {
 
     object DbIsUpToDate : Message()
 
-    class ServerError(val statusCode: Int): Message()
+    data class ServerError(val statusCode: Int) : Message()
 
     object NetworkError : Message()
 
