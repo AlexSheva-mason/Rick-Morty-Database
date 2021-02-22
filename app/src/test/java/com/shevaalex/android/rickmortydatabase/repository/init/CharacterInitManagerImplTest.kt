@@ -199,6 +199,10 @@ class CharacterInitManagerImplTest {
         verify(characterDao, times(50)).getCharacterByIdSuspend(any())
         //should never be called after
         verifyZeroInteractionMocks()
+        //verify arguments for characterDao.insertCharacters() to contain 6 objects
+        verify(characterDao).insertCharacters(check {
+            assertThat(it.size).isEqualTo(6)
+        })
         assertThat(result).isEqualTo(StateResource(Status.Success, Message.DbIsUpToDate))
     }
 
