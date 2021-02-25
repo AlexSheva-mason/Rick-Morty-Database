@@ -1,7 +1,8 @@
 package com.shevaalex.android.rickmortydatabase
 
+import com.google.gson.JsonObject
 import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
-import kotlin.random.Random
+import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
 
 
 abstract class DataFactory<out T : ApiObjectModel> {
@@ -16,6 +17,30 @@ abstract class DataFactory<out T : ApiObjectModel> {
             list.add(produceObjectModel(i))
         }
         return list
+    }
+
+    /**
+     * returns ApiResult.Success<JsonObject> with count 50
+     */
+    fun produceApiResultCountSuccess(): ApiResult<JsonObject> {
+        val jsonObject = JsonObject()
+        for (i in 1..50) {
+            jsonObject.addProperty(i.toString(), true)
+        }
+        return ApiResult.Success(jsonObject)
+    }
+
+    fun produceApiResultFailure(): ApiResult<Nothing> = ApiResult.Failure(null)
+
+    fun produceApiResultNetworkError(): ApiResult<Nothing> = ApiResult.NetworkError
+
+    fun produceApiResultEmpty(): ApiResult<Nothing> = ApiResult.Empty
+
+    /**
+     * returns ApiResult.Success<List<T>> with 50 objects
+     */
+    fun produceApiResultListSuccess(): ApiResult<List<T>> {
+        return ApiResult.Success(createFixedIdObjectList(50))
     }
 
     /**
