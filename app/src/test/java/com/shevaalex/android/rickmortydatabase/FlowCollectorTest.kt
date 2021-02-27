@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
  * Author: Daniele Segato (https://github.com/danielesegato)
  * https://gist.github.com/danielesegato/3d33b5272b7ce787d0e3dde1d74acc77
  */
-class TestFlowCollector<T> {
+class FlowCollectorTest<T> {
 
     private var job: Job? = null
     private val _values = mutableListOf<T>()
@@ -60,15 +60,15 @@ class TestFlowCollector<T> {
     }
 }
 
-fun <T> Flow<T>.test(scope: CoroutineScope): TestFlowCollector<T> {
-    val testCollector = TestFlowCollector<T>()
+fun <T> Flow<T>.testTest(scope: CoroutineScope): FlowCollectorTest<T> {
+    val testCollector = FlowCollectorTest<T>()
     testCollector.testOn(scope, this)
     return testCollector
 }
 
-fun <T> TestFlowCollector<T>.lastValue(): T? = values.lastOrNull()
+fun <T> FlowCollectorTest<T>.lastValue(): T? = values.lastOrNull()
 
-fun <T> TestFlowCollector<T>.assertEmittedCount(
+fun <T> FlowCollectorTest<T>.assertEmittedCount(
     count: Int,
     message: String = "Emission count does not match expected"
 ) {
@@ -76,18 +76,18 @@ fun <T> TestFlowCollector<T>.assertEmittedCount(
     assertEquals(message, count, values.size)
 }
 
-fun <T> TestFlowCollector<T>.assertNothingEmitted(message: String = "Expected nothing emitted") {
+fun <T> FlowCollectorTest<T>.assertNothingEmitted(message: String = "Expected nothing emitted") {
     assertEmittedCount(0, message)
 }
 
-fun <T> TestFlowCollector<T>.assertEmittedValuesEquals(
+fun <T> FlowCollectorTest<T>.assertEmittedValuesEquals(
     values: List<T>,
     message: String = "Emitted values expectation is not met"
 ) {
     assertEquals(message, values, this.values)
 }
 
-fun <T> TestFlowCollector<T>.assertEmittedValuesEquals(
+fun <T> FlowCollectorTest<T>.assertEmittedValuesEquals(
     first: T,
     vararg others: T,
     message: String = "Emitted values expectation is not met"
@@ -95,7 +95,7 @@ fun <T> TestFlowCollector<T>.assertEmittedValuesEquals(
     assertEquals(message, listOf(first, *others), values)
 }
 
-fun <T> TestFlowCollector<T>.assertEmittedValuesSame(
+fun <T> FlowCollectorTest<T>.assertEmittedValuesSame(
     values: List<T>,
     message: String = "Emitted values expectation is not met"
 ) {
@@ -105,7 +105,7 @@ fun <T> TestFlowCollector<T>.assertEmittedValuesSame(
         }
 }
 
-fun <T> TestFlowCollector<T>.assertEmittedValuesContains(
+fun <T> FlowCollectorTest<T>.assertEmittedValuesContains(
     value: T,
     message: String = "Value expected to be emitted was not"
 ) {
@@ -113,19 +113,19 @@ fun <T> TestFlowCollector<T>.assertEmittedValuesContains(
     assertEquals(message, value, found)
 }
 
-fun <T> TestFlowCollector<T>.assertCompleted(message: String = "Expected completed but was not") {
+fun <T> FlowCollectorTest<T>.assertCompleted(message: String = "Expected completed but was not") {
     assertTrue(message, completed)
 }
 
-fun <T> TestFlowCollector<T>.assertNotCompleted(message: String = "Expected not completed but was") {
+fun <T> FlowCollectorTest<T>.assertNotCompleted(message: String = "Expected not completed but was") {
     assertFalse(message, completed)
 }
 
-fun <T> TestFlowCollector<T>.assertNoError(message: String = "Expected no error but there was one") {
+fun <T> FlowCollectorTest<T>.assertNoError(message: String = "Expected no error but there was one") {
     assertNull(message, error)
 }
 
-fun <T, E : Throwable> TestFlowCollector<T>.assertErrorThrown(
+fun <T, E : Throwable> FlowCollectorTest<T>.assertErrorThrown(
     clazz: KClass<E>,
     message: String = "Error expectation was not met"
 ): E? {
@@ -137,7 +137,7 @@ fun <T, E : Throwable> TestFlowCollector<T>.assertErrorThrown(
     return e as? E
 }
 
-fun <T, E : Throwable> TestFlowCollector<T>.assertErrorThrown(
+fun <T, E : Throwable> FlowCollectorTest<T>.assertErrorThrown(
     clazz: Class<E>,
     message: String = "Error expectation was not met"
 ): E? {
@@ -149,7 +149,7 @@ fun <T, E : Throwable> TestFlowCollector<T>.assertErrorThrown(
     return e as? E
 }
 
-fun <T> TestFlowCollector<T>.assertLastEmittedValueEquals(
+fun <T> FlowCollectorTest<T>.assertLastEmittedValueEquals(
     v: T,
     message: String = "Last Emitted value did not met expectations"
 ) {
