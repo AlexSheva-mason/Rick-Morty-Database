@@ -7,13 +7,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocationDetailRepo
+class LocationDetailRepoImpl
 @Inject
 constructor(
         private val characterDao: CharacterModelDao
-) {
+) : LocationDetailRepository {
 
-    fun getCharacters(characterIds: List<Int>): LiveData<List<CharacterModel>> =
+    override fun getCharacters(characterIds: List<Int>): LiveData<List<CharacterModel>> =
             characterDao.getCharactersByIds(characterIds)
 
 }
