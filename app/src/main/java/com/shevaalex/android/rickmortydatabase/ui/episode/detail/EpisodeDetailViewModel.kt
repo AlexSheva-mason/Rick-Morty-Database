@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.switchMap
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepository
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepoImpl
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseDetailViewModel
 import javax.inject.Inject
 
 class EpisodeDetailViewModel
 @Inject
 constructor(
-        private val locationDetailRepo: LocationDetailRepository
+        private val locationDetailRepo: LocationDetailRepoImpl
 ): BaseDetailViewModel<EpisodeModel>() {
 
     val characters: LiveData<List<CharacterModel>> = _detailObject.switchMap {
