@@ -5,18 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.asLiveData
 import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepositoryImpl
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
 import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData
 import javax.inject.Inject
 
 class LocationListViewModel
 @Inject
 constructor(
-        private val locationRepository: LocationRepository
-): BaseListViewModel(){
+        private val locationRepository: LocationRepositoryImpl
+) : BaseListViewModel() {
 
     override val recentQueries: LiveData<List<String>> =
             locationRepository.getRecentQueries().asLiveData()
@@ -40,11 +42,12 @@ constructor(
     val locationList: LiveData<PagedList<LocationModel>> =
             Transformations.switchMap(mediatorLiveData) {
                 //if query is blank and filter == showAll -> show all results
-                if(it.first.isBlank() && showsAll()) {
-                    allLocations
+                if (it.first.isBlank() && showsAll()) {
+                    allLocations.toLiveData(ROOM_PAGE_SIZE)
                 }
                 // else -> perform search and/or filter the data
                 else locationRepository.searchAndFilterLocations(it.first, it.second, showsAll())
+                        .toLiveData(ROOM_PAGE_SIZE)
             }
 
     override suspend fun saveSearchQuery(query: String) {
