@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.repository.character.CharacterRepository
+import com.shevaalex.android.rickmortydatabase.repository.character.CharacterRepositoryImpl
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CharacterListViewModel
 @Inject
 constructor(
-        private val characterRepository: CharacterRepository
+        private val characterRepository: CharacterRepositoryImpl
 ) : BaseListViewModel() {
 
     override val recentQueries: LiveData<List<String>> = characterRepository.getRecentQueries().asLiveData()
