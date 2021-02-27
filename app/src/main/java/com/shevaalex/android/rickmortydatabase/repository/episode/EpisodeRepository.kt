@@ -1,19 +1,18 @@
 package com.shevaalex.android.rickmortydatabase.repository.episode
 
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
+import androidx.paging.DataSource
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import kotlinx.coroutines.flow.Flow
 
 interface EpisodeRepository {
 
-    fun getAllEpisodes(): LiveData<PagedList<EpisodeModel>>
+    fun getAllEpisodes(): DataSource.Factory<Int, EpisodeModel>
 
     fun searchAndFilterEpisodes(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): LiveData<PagedList<EpisodeModel>>
+    ): DataSource.Factory<Int, EpisodeModel>
 
     suspend fun saveSearchQuery(query: String)
 

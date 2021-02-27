@@ -1,14 +1,11 @@
 package com.shevaalex.android.rickmortydatabase.repository.episode
 
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
-import androidx.paging.toLiveData
+import androidx.paging.DataSource
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
 import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
 import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,14 +19,14 @@ constructor(
         private val recentQueryDao: RecentQueryDao
 ) : EpisodeRepository {
 
-    override fun getAllEpisodes(): LiveData<PagedList<EpisodeModel>> =
-            episodeDao.getAllEpisodes().toLiveData(ROOM_PAGE_SIZE)
+    override fun getAllEpisodes(): DataSource.Factory<Int, EpisodeModel> =
+            episodeDao.getAllEpisodes()
 
     override fun searchAndFilterEpisodes(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): LiveData<PagedList<EpisodeModel>> {
+    ): DataSource.Factory<Int, EpisodeModel> {
         // perform a search without filtering
         return if (query.isNotBlank() && showsAll) {
             searchEpisodes(query)
@@ -41,13 +38,13 @@ constructor(
         }
     }
 
-    private fun searchEpisodes(query: String): LiveData<PagedList<EpisodeModel>> =
-            episodeDao.searchEpisodes(query).toLiveData(50)
+    private fun searchEpisodes(query: String): DataSource.Factory<Int, EpisodeModel> =
+            episodeDao.searchEpisodes(query)
 
     private fun searchAndFilter(
             name: String?,
             filterMap: Map<String, Pair<Boolean, String?>>
-    ): LiveData<PagedList<EpisodeModel>> {
+    ): DataSource.Factory<Int, EpisodeModel> {
         val seasons = getSeasonsList(filterMap)
         Timber.i("seasons: %s", seasons)
         //put a placeholder if value is null -> due to Room query returning all results when
@@ -58,7 +55,7 @@ constructor(
                 seasonCode2 = seasons.getOrElse(1) { "placeholder" },
                 seasonCode3 = seasons.getOrElse(2) { "placeholder" },
                 seasonCode4 = seasons.getOrElse(3) { "placeholder" }
-        ).toLiveData(50)
+        )
     }
 
     override suspend fun saveSearchQuery(query: String) {

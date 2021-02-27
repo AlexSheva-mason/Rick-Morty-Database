@@ -2,8 +2,9 @@ package com.shevaalex.android.rickmortydatabase.ui.episode.list
 
 import androidx.lifecycle.*
 import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.repository.episode.EpisodeRepository
+import com.shevaalex.android.rickmortydatabase.repository.episode.EpisodeRepositoryImpl
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData
@@ -12,8 +13,8 @@ import javax.inject.Inject
 class EpisodeListViewModel
 @Inject
 constructor(
-        private val episodeRepository: EpisodeRepository
-): BaseListViewModel() {
+        private val episodeRepository: EpisodeRepositoryImpl
+) : BaseListViewModel() {
 
     override val recentQueries: LiveData<List<String>> =
             episodeRepository.getRecentQueries().asLiveData()
@@ -38,11 +39,13 @@ constructor(
     val episodeList: LiveData<PagedList<EpisodeModel>> =
             Transformations.switchMap(mediatorLiveData) {
                 //if query is blank and filter == showAll -> show all results
-                if(it.first.isBlank() && showsAll()) {
-                    allEpisodes
+                if (it.first.isBlank() && showsAll()) {
+                    allEpisodes.toLiveData(Constants.ROOM_PAGE_SIZE)
                 }
                 // else -> perform search and/or filter the data
-                else episodeRepository.searchAndFilterEpisodes(it.first, it.second, showsAll())
+                else episodeRepository
+                        .searchAndFilterEpisodes(it.first, it.second, showsAll())
+                        .toLiveData(Constants.ROOM_PAGE_SIZE)
             }
 
     override suspend fun saveSearchQuery(query: String) {
