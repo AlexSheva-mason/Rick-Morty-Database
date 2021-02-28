@@ -12,9 +12,9 @@ abstract class DataFactory<out T: ApiObjectModel> {
     fun createRandomIdObjectList(numberOfObjects: Int): List<T> {
         val list = mutableListOf<T>()
         for (i in 1..numberOfObjects) {
-            var randomObject = produceObjectModel(Random.nextInt(1, Integer.MAX_VALUE))
+            var randomObject = produceObjectModel(Random.nextInt(1, 1000))
             while (list.contains(randomObject)) {
-                randomObject = produceObjectModel(Random.nextInt(1, Integer.MAX_VALUE))
+                randomObject = produceObjectModel(Random.nextInt(1, 1000))
             }
             list.add(randomObject)
         }

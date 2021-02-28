@@ -12,10 +12,14 @@ class CharacterInitManagerDataFactory : DataFactory<CharacterModel>() {
                 status = "testStatus$id",
                 species = "testSpecies$id",
                 gender = "testGender$id",
-                originLocation = produceLinkedLocation(id),
-                lastLocation = produceLinkedLocation(id),
+                originLocation = produceLinkedLocation(id*2),
+                lastLocation = produceLinkedLocation(id*3),
                 imageUrl = "testImageUrl$id",
-                listOf()
+                listOf(
+                        (id*2).toString(),
+                        (id*3).toString(),
+                        (id*4).toString()
+                )
         )
     }
 
@@ -23,7 +27,7 @@ class CharacterInitManagerDataFactory : DataFactory<CharacterModel>() {
      * creates a single LinkedLocationModel with a given [id]
      */
     private fun produceLinkedLocation(id: Int): LinkedLocationModel {
-        return LinkedLocationModel("testName$id", "testUrl$id")
+        return LinkedLocationModel("testName$id", "testUrl/$id")
     }
 
     override fun produceObjectModel(id: Int) = produceCharacterModel(id)
