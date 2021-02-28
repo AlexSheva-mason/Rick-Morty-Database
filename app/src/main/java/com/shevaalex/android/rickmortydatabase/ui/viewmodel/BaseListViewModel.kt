@@ -12,8 +12,8 @@ abstract class BaseListViewModel: ViewModel() {
 
     abstract val recentQueries: LiveData<List<String>>
 
-    private val _rvListPosition = MutableLiveData<Parcelable>()
-    val rvListPosition: LiveData<Parcelable>
+    private val _rvListPosition = MutableLiveData<Parcelable?>()
+    val rvListPosition: LiveData<Parcelable?>
         get() = _rvListPosition
 
     private val loggedQueryList = MutableLiveData(mutableSetOf(" "))
