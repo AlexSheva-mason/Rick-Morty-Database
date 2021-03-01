@@ -8,6 +8,8 @@ import com.shevaalex.android.rickmortydatabase.repository.character.CharacterDet
 import com.shevaalex.android.rickmortydatabase.repository.character.CharacterRepository
 import com.shevaalex.android.rickmortydatabase.repository.character.CharacterRepositoryImpl
 import com.shevaalex.android.rickmortydatabase.repository.init.*
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepoImpl
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepository
 import dagger.Binds
 import dagger.Module
 
@@ -31,5 +33,8 @@ interface RepositoryDeclarations {
 
     @Binds
     fun bindCharacterRepository(cr: CharacterRepositoryImpl): CharacterRepository
+
+    @Binds
+    fun bindLocationDetailRepo(ldr: LocationDetailRepoImpl): LocationDetailRepository
 
 }

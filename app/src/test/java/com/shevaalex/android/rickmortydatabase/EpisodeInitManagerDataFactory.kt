@@ -20,7 +20,11 @@ class EpisodeInitManagerDataFactory : DataFactory<EpisodeModel>() {
                 airDate = "testAirDate$id",
                 code = "${episodeSeasonList.random()}E99",
                 description = "testDescription$id",
-                charactersList = listOf()
+                charactersList = listOf(
+                        (id*2).toString(),
+                        (id*3).toString(),
+                        (id*4).toString()
+                )
         )
     }
 
