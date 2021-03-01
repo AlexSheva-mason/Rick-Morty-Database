@@ -56,11 +56,21 @@ class CharacterDetailViewModelTest {
         assertThat(result.id).isEqualTo(testCharacter.originLocation.id)
     }
 
+    //base class  tests
     @Test
     fun callingSetMotionStateIdWithNullArgumentDoesNotUpdateValue() {
         viewModel.setMotionStateId(100)
         viewModel.setMotionStateId(null)
         assertThat(viewModel.motionStateId.value).isNotNull()
+    }
+
+    @Test
+    fun setDetailObjectSavesNewValue() {
+        val expectedValue = dataFactory.produceObjectModel(5)
+        viewModel.setDetailObject(dataFactory.produceObjectModel(2))
+        viewModel.setDetailObject(expectedValue)
+        val result = viewModel.detailObject.getOrAwaitValueTest()
+        assertThat(result).isEqualTo(expectedValue)
     }
 
 }
