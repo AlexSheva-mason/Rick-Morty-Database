@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.repository.episode.EpisodeRepositoryImpl
+import com.shevaalex.android.rickmortydatabase.repository.episode.EpisodeRepository
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.FilterMediatorLiveData
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class EpisodeListViewModel
 @Inject
 constructor(
-        private val episodeRepository: EpisodeRepositoryImpl
+        private val episodeRepository: EpisodeRepository
 ) : BaseListViewModel() {
 
     override val recentQueries: LiveData<List<String>> =
