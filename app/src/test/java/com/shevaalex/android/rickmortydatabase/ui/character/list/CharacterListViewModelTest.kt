@@ -52,7 +52,7 @@ class CharacterListViewModelTest {
 
     @Test
     fun suggestionsCallsGetSuggestionsNamesWithShowsAllTrue() {
-        val expectedValue = listOf("name1", "name2", "name3", "name4")
+        val expectedValue = characterRepository.suggestionNames
         val result = viewModel.suggestions.getOrAwaitValueTest()
         assertThat(result).isEqualTo(expectedValue)
     }
@@ -64,7 +64,7 @@ class CharacterListViewModelTest {
                         Constants.KEY_MAP_FILTER_STATUS_ALIVE_F to Pair(false, null)
                 )
         )
-        val expectedValue = listOf("name filtered 1", "name filtered 2")
+        val expectedValue = characterRepository.suggestionNamesFiltered
         val result = viewModel.suggestions.getOrAwaitValueTest()
         assertThat(result).isEqualTo(expectedValue)
     }
