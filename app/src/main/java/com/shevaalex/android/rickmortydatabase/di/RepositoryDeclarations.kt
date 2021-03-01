@@ -12,6 +12,8 @@ import com.shevaalex.android.rickmortydatabase.repository.episode.EpisodeReposit
 import com.shevaalex.android.rickmortydatabase.repository.init.*
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepoImpl
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepository
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepositoryImpl
 import dagger.Binds
 import dagger.Module
 
@@ -38,6 +40,9 @@ interface RepositoryDeclarations {
 
     @Binds
     fun bindLocationDetailRepo(ldr: LocationDetailRepoImpl): LocationDetailRepository
+
+    @Binds
+    fun bindLocationRepository (lr: LocationRepositoryImpl): LocationRepository
 
     @Binds
     fun bindEpisodeRepository(er: EpisodeRepositoryImpl): EpisodeRepository

@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepositoryImpl
+import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class LocationListViewModel
 @Inject
 constructor(
-        private val locationRepository: LocationRepositoryImpl
+        private val locationRepository: LocationRepository
 ) : BaseListViewModel() {
 
     override val recentQueries: LiveData<List<String>> =
