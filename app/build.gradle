@@ -12,7 +12,7 @@ apply plugin: "kotlin-parcelize"
 
 ext.versionMajor = 2
 ext.versionMinor = 0
-ext.versionPatch = 3
+ext.versionPatch = 4
 ext.versionClassifier = ""
 ext.minimumSdkVersion = 24
 
@@ -118,7 +118,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     //AndroidX
-    def androidx_version = "1.5.0-beta01"
+    def androidx_version = "1.5.0-beta02"
     //androidx.core:core non ktx needed here explicitly to remove greylisted API warning Landroid/graphics/FontFamily
     //noinspection KtxExtensionAvailable
     implementation "androidx.core:core:$androidx_version"
