@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
-import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.CharacterDao
 import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_INIT_VM_CHARACTERS_FETCHED_TIMESTAMP
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class CharacterInit
 @Inject
 constructor(
-        private val characterDao: CharacterModelDao,
+        private val characterDao: CharacterDao,
         private val characterApi: CharacterApi,
         private val sharedPref: SharedPreferences
 ) {

@@ -22,19 +22,19 @@ object DbModule{
 
     @Singleton
     @Provides
-    fun provideCharacterDao(db: RickMortyDatabase): CharacterModelDao {
+    fun provideCharacterDao(db: RickMortyDatabase): CharacterDao {
         return db.characterModelDao
     }
 
     @Singleton
     @Provides
-    fun provideLocationDao(db: RickMortyDatabase): LocationModelDao {
+    fun provideLocationDao(db: RickMortyDatabase): LocationDao {
         return db.locationModelDao
     }
 
     @Singleton
     @Provides
-    fun provideEpisodeDao(db: RickMortyDatabase): EpisodeModelDao {
+    fun provideEpisodeDao(db: RickMortyDatabase): EpisodeDao {
         return db.episodeModelDao
     }
 

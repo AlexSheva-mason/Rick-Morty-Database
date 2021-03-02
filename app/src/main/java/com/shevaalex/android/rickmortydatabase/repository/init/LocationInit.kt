@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
 import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
-import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.LocationDao
 import com.shevaalex.android.rickmortydatabase.source.remote.LocationApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class LocationInit
 @Inject
 constructor(
-        private val locationDao: LocationModelDao,
+        private val locationDao: LocationDao,
         private val locationApi: LocationApi,
         private val sharedPref: SharedPreferences
 ) {

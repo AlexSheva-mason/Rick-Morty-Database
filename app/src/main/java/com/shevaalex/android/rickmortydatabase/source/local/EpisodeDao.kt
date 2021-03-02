@@ -7,7 +7,7 @@ import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface EpisodeModelDao {
+interface EpisodeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEpisodes(episodes: List<EpisodeEntity?>?)

@@ -7,7 +7,7 @@ import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CharacterModelDao {
+interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<CharacterEntity?>?)

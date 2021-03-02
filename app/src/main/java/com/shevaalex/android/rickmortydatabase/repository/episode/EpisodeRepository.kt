@@ -5,7 +5,7 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
-import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 class EpisodeRepository
 @Inject
 constructor(
-        private val episodeDao: EpisodeModelDao,
+        private val episodeDao: EpisodeDao,
         private val recentQueryDao: RecentQueryDao
 ) {
 

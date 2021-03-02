@@ -5,7 +5,7 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
-import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.LocationDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.ROOM_PAGE_SIZE
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 class LocationRepository
 @Inject
 constructor(
-        private val locationDao: LocationModelDao,
+        private val locationDao: LocationDao,
         private val recentQueryDao: RecentQueryDao
 ){
 

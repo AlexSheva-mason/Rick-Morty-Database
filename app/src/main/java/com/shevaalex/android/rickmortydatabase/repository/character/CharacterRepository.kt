@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.character
 import androidx.paging.DataSource
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.CharacterDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class CharacterRepository
 @Inject
 constructor(
-        private val characterDao: CharacterModelDao,
+        private val characterDao: CharacterDao,
         private val recentQueryDao: RecentQueryDao,
 ) {
 

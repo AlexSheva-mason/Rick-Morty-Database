@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
-import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeDao
 import com.shevaalex.android.rickmortydatabase.source.remote.EpisodeApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class EpisodeInit
 @Inject
 constructor(
-        private val episodeDao: EpisodeModelDao,
+        private val episodeDao: EpisodeDao,
         private val episodeApi: EpisodeApi,
         private val sharedPref: SharedPreferences
 ) {

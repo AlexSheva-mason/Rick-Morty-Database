@@ -8,7 +8,7 @@ import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface LocationModelDao {
+interface LocationDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insertLocations(locations: List<LocationEntity?>?)
