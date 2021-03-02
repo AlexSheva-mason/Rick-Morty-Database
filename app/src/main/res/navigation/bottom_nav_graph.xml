@@ -39,7 +39,7 @@
         <argument
             android:name="character_object"
             android:defaultValue="@null"
-            app:argType="com.shevaalex.android.rickmortydatabase.models.character.CharacterModel"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -50,7 +50,7 @@
         <argument
             android:name="location_object"
             android:defaultValue="@null"
-            app:argType="com.shevaalex.android.rickmortydatabase.models.location.LocationModel"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.location.LocationEntity"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -61,7 +61,7 @@
         <argument
             android:name="episode_object"
             android:defaultValue="@null"
-            app:argType="com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel"
+            app:argType="com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity"
             app:nullable="true" />
     </fragment>
     <fragment

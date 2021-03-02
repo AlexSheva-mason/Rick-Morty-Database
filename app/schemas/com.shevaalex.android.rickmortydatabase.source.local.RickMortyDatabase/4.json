@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "9f39fd3d41a5363f638cb82303c03181",
+    "version": 4,
+    "identityHash": "79b8196764d66a7e148d2ef94656b007",
     "entities": [
       {
         "tableName": "CharacterEntity",
@@ -214,7 +214,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f39fd3d41a5363f638cb82303c03181')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79b8196764d66a7e148d2ef94656b007')"
     ]
   }
 }

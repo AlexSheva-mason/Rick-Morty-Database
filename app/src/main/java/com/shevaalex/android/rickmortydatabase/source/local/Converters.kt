@@ -21,13 +21,13 @@ object Converters {
 
     @JvmStatic
     @TypeConverter
-    fun linkedLocationModelToString(linkedLocation: LinkedLocation): String {
+    fun linkedLocationToString(linkedLocation: LinkedLocation): String {
         return Gson().toJson(linkedLocation)
     }
 
     @JvmStatic
     @TypeConverter
-    fun stringToLinkedLocationModel(string: String): LinkedLocation {
+    fun stringToLinkedLocation(string: String): LinkedLocation {
         return Gson().fromJson(string, LinkedLocation::class.java)
     }
 }
