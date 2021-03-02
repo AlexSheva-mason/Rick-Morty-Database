@@ -97,13 +97,13 @@
 
     <ImageView
         android:id="@+id/episode_icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/rm_grey_blue_900_alpha_45"
+        android:background="@drawable/circle_background_icons"
         android:elevation="4dp"
-        android:padding="2dp"
+        android:padding="3dp"
         android:src="@drawable/episodes_24dp"
         app:layout_constraintBottom_toBottomOf="@id/image_episode"
         app:layout_constraintStart_toStartOf="parent"
