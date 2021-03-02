@@ -38,7 +38,7 @@ class Constants {
         const val AUTH_TOKEN_REFRESH_TIME = 50
 
         //sets the required number of successful db sync events before google review dialog is shown
-        const val REVIEW_REQ_SUCCESS_SYNC_UPDATES = 4
+        const val REVIEW_REQ_SUCCESS_SYNC_UPDATES = 3
 
         //sets the amount of time to be elapsed between google review dialog can be shown again (days)
         const val REVIEW_REQ_SHOW_PERIOD = 60
