@@ -5,10 +5,16 @@
     <dimen name="item_character_name_padding_start">4dp</dimen>
     <dimen name="item_character_name_padding_end">2dp</dimen>
 
-    //domensions for grid layout
+    //dimensions for grid layout
     <dimen name="item_episode_location_width">230dp</dimen>
     <dimen name="item_episode_location_height">80dp</dimen>
     <dimen name="item_grid_spacing">6dp</dimen>
     <dimen name="status_bar_height_standard">24dp</dimen>
+
+    //detail fragments elements dimens
+    <dimen name="button_share_elevation">17dp</dimen>
+    <dimen name="background_button_share_elevation">16dp</dimen>
+    <dimen name="button_back_elevation">17dp</dimen>
+    <dimen name="background_button_back_elevation">16dp</dimen>
 
 </resources>
