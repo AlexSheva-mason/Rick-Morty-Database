@@ -16,7 +16,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationsListBinding
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.ui.base.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         locationAdapter = LocationAdapter(object: LocationAdapter.LocationListener{
-            override fun onLocationClick(location: LocationModel, locationCard: MaterialCardView) {
+            override fun onLocationClick(location: LocationEntity, locationCard: MaterialCardView) {
                 navigateLocationDetail(location, locationCard)
             }
         })
@@ -260,7 +260,7 @@ class LocationsListFragment : BaseListFragment<FragmentLocationsListBinding>() {
             Constants.KEY_MAP_FILTER_LOC_DIMENS_UNKNOWN to getString(R.string.character_gender_unknown)
     )
 
-    private fun navigateLocationDetail(location: LocationModel, locationCard: MaterialCardView) {
+    private fun navigateLocationDetail(location: LocationEntity, locationCard: MaterialCardView) {
         setExitAndReenterAnimation()
         val extras = FragmentNavigatorExtras(
                 locationCard to Constants.TRANSITION_LOCATION.plus(location.id)

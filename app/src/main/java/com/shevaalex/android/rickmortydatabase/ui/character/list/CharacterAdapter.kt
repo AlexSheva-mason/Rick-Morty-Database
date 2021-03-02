@@ -12,22 +12,22 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterBinding
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil
 
 class CharacterAdapter(
         private val characterListener: CharacterListener
-) : PagedListAdapter<CharacterModel, CharacterAdapter.CharacterViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<CharacterEntity, CharacterAdapter.CharacterViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object :
-                DiffUtil.ItemCallback<CharacterModel>() {
-            override fun areItemsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
+                DiffUtil.ItemCallback<CharacterEntity>() {
+            override fun areItemsTheSame(oldItem: CharacterEntity, newItem: CharacterEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
+            override fun areContentsTheSame(oldItem: CharacterEntity, newItem: CharacterEntity): Boolean {
                 return newItem == oldItem
             }
         }
@@ -53,7 +53,7 @@ class CharacterAdapter(
             private val itemBind: ItemCharacterBinding
     ) : RecyclerView.ViewHolder(itemBind.root) {
 
-        fun bind(character: CharacterModel, characterListener: CharacterListener) {
+        fun bind(character: CharacterEntity, characterListener: CharacterListener) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
                 characterListener.onCharacterClick(character, itemBind.characterItem)
@@ -94,7 +94,7 @@ class CharacterAdapter(
     }
 
     interface CharacterListener {
-        fun onCharacterClick(character: CharacterModel, characterCard: MaterialCardView)
+        fun onCharacterClick(character: CharacterEntity, characterCard: MaterialCardView)
     }
 
 }

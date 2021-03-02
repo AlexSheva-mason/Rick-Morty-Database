@@ -5,23 +5,23 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity;
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery;
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel;
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel;
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity;
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity;
 
 @Database(entities = {
-        CharacterModel.class,
-        LocationModel.class,
-        EpisodeModel.class,
+        CharacterEntity.class,
+        LocationEntity.class,
+        EpisodeEntity.class,
         RecentQuery.class
-}, version = 3)
+}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class RickMortyDatabase extends RoomDatabase {
 
-    public abstract CharacterModelDao getCharacterModelDao();
-    public abstract LocationModelDao getLocationModelDao();
-    public abstract EpisodeModelDao getEpisodeModelDao();
+    public abstract CharacterDao getCharacterDao();
+    public abstract LocationDao getLocationDao();
+    public abstract EpisodeDao getEpisodeDao();
     public abstract RecentQueryDao getRecentQueryDao();
 
 }

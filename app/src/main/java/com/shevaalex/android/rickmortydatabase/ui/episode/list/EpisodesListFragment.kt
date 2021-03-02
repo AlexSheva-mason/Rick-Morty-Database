@@ -16,7 +16,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodesListBinding
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.ui.base.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
@@ -44,7 +44,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
                 placeHolderString = getString(R.string.episode_name_placeholder),
                 episodeListener = object : EpisodeAdapter.EpisodeListener {
                     override fun onEpisodeClick(
-                            episode: EpisodeModel,
+                            episode: EpisodeEntity,
                             episodeCard: MaterialCardView
                     ) {
                         navigateEpisodeDetail(episode, episodeCard)
@@ -215,7 +215,7 @@ class EpisodesListFragment : BaseListFragment<FragmentEpisodesListBinding>() {
             Constants.KEY_MAP_FILTER_EPISODE_S_04 to Constants.VALUE_MAP_FILTER_EPISODE_S_04
     )
 
-    private fun navigateEpisodeDetail(episode: EpisodeModel, episodeCard: MaterialCardView) {
+    private fun navigateEpisodeDetail(episode: EpisodeEntity, episodeCard: MaterialCardView) {
         setExitAndReenterAnimation()
         val extras = FragmentNavigatorExtras(
                 episodeCard to Constants.TRANSITION_EPISODE.plus(episode.id)

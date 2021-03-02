@@ -3,19 +3,13 @@ package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.lifecycle.*
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
 import com.shevaalex.android.rickmortydatabase.auth.AuthManager
 import com.shevaalex.android.rickmortydatabase.models.AuthToken
 import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
-import com.shevaalex.android.rickmortydatabase.utils.Constants
+import com.shevaalex.android.rickmortydatabase.utils.*
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.AUTH_TOKEN_REFRESH_TIME
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_APP_FIRST_LAUCH
-import com.shevaalex.android.rickmortydatabase.utils.NetworkAndTokenMediatorLiveData
-import com.shevaalex.android.rickmortydatabase.utils.currentTimeHours
-import com.shevaalex.android.rickmortydatabase.utils.currentTimeMinutes
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -30,7 +24,8 @@ constructor(
         private val sharedPref: SharedPreferences,
         private val authManager: AuthManager,
         private val connectivityManager: ConnectivityManager,
-        private val application: Application
+        private val application: Application,
+        private val firebaseLogger: FirebaseLogger
 ) : ViewModel() {
 
     private val isNetworkAvailable: MutableLiveData<Boolean> = connectivityManager.isNetworkAvailable
@@ -184,9 +179,11 @@ constructor(
                 application.packageManager?.getInstallerPackageName(this)
             }
             installerName?.let {
-                Firebase.analytics.logEvent("installer_name") {
-                    param("installer_package_name", it)
-                }
+                firebaseLogger.logFirebaseEvent(
+                        eventName = "installer_name",
+                        paramKey = "installer_package_name",
+                        paramValue = it
+                )
             }
         }
     }

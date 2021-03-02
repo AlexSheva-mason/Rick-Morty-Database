@@ -7,16 +7,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 
 class CharacterDetailAdapter(
         private val placeHolderString: String,
         private val episodeListener: EpisodeListener
 ) : RecyclerView.Adapter<CharacterDetailAdapter.EpisodeViewHolder>() {
 
-    private var episodeList: List<EpisodeModel>? = null
+    private var episodeList: List<EpisodeEntity>? = null
 
-    fun setEpisodeList(episodeList: List<EpisodeModel>) {
+    fun setEpisodeList(episodeList: List<EpisodeEntity>) {
         this.episodeList = episodeList
     }
 
@@ -30,7 +30,7 @@ class CharacterDetailAdapter(
     }
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-        val episode: EpisodeModel? = episodeList?.get(position)
+        val episode: EpisodeEntity? = episodeList?.get(position)
         episode?.let {
             holder.bind(
                     episode = it,
@@ -48,7 +48,7 @@ class CharacterDetailAdapter(
             private val itemBind: ItemEpisodeBinding
     ) : RecyclerView.ViewHolder(itemBind.root) {
 
-        fun bind(episode: EpisodeModel, placeHolderString: String, episodeListener: EpisodeListener) {
+        fun bind(episode: EpisodeEntity, placeHolderString: String, episodeListener: EpisodeListener) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
                 episodeListener.onEpisodeClick(episode)
@@ -68,6 +68,6 @@ class CharacterDetailAdapter(
     }
 
     interface EpisodeListener {
-        fun onEpisodeClick(episode: EpisodeModel)
+        fun onEpisodeClick(episode: EpisodeEntity)
     }
 }

@@ -1,7 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.source.remote
 
 import com.google.gson.JsonObject
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -27,6 +27,6 @@ interface LocationApi {
     @GET(SUB_URL_LOCATION + FIREBASE_JSON_SUFFIX)
     suspend fun getLocationList(
             @Query(FIREBASE_AUTH_QUERY) idToken: String
-    ): ApiResult<List<LocationModel?>>
+    ): ApiResult<List<LocationEntity?>>
 
 }

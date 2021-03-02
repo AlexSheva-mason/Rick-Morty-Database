@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.ui.character.list
 import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.repository.character.CharacterRepository
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -51,7 +51,7 @@ constructor(
 
     override val mediatorLiveData = FilterMediatorLiveData(_searchQuery, filterData)
 
-    val characterList: LiveData<PagedList<CharacterModel>> =
+    val characterList: LiveData<PagedList<CharacterEntity>> =
             Transformations.switchMap(mediatorLiveData) { pair ->
                 //if query is blank and filter == showAll -> show all results
                 if (pair.first.isBlank() && showsAll()) {

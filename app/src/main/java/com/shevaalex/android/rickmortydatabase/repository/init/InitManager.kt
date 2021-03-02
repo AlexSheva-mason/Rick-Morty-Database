@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
-import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
+import com.shevaalex.android.rickmortydatabase.models.RmObject
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import com.shevaalex.android.rickmortydatabase.utils.currentTimeHours
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
@@ -11,7 +11,7 @@ import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import timber.log.Timber
 
-interface InitManager<T : ApiObjectModel> {
+interface InitManager<T : RmObject> {
 
     fun getSharedPrefsKey(): String
 

@@ -22,7 +22,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.shevaalex.android.rickmortydatabase.R
@@ -243,11 +242,12 @@ abstract class BaseListFragment<T: ViewBinding>: BaseFragment() {
     }
 
     private fun firebaseLogQuery(query: String) {
-        Timber.v("logging query to firebase: %s", query)
         val className = "_".plus(this.javaClass.simpleName).toLowerCase(Locale.ROOT)
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH.plus(className)) {
-            param(FirebaseAnalytics.Param.SEARCH_TERM, query)
-        }
+        firebaseLogger.logFirebaseEvent(
+                FirebaseAnalytics.Event.SEARCH.plus(className),
+                FirebaseAnalytics.Param.SEARCH_TERM,
+                query
+        )
     }
 
     /**

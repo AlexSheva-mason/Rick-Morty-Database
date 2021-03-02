@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.ui.settings
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,17 +16,23 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.preference.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
 import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
+import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.utils.Constants
+import com.shevaalex.android.rickmortydatabase.utils.FirebaseLogger
+import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
         PreferenceManager.OnPreferenceTreeClickListener {
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    @Inject
+    lateinit var firebaseLogger: FirebaseLogger
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        injectFragment()
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
@@ -56,11 +63,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             webLinkIntent.data = Uri.parse(Constants.DATA_REVIEW_LINK)
             it.intent = webLinkIntent
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        firebaseAnalytics = Firebase.analytics
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -150,21 +152,33 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         // fragment's class name for firebase logging
         val className = this.javaClass.simpleName
         //log screen view to firebase
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, className)
-        }
+        firebaseLogger.logFirebaseEvent(
+                FirebaseAnalytics.Event.SCREEN_VIEW,
+                FirebaseAnalytics.Param.SCREEN_CLASS,
+                className
+        )
     }
 
     private fun logThemeModeToFirebase(themeMode: String) {
-        firebaseAnalytics.logEvent(Constants.SETTINGS_EVENT_THEME_SELECT) {
-            param(Constants.SETTINGS_KEY_THEME_MODE, themeMode)
-        }
+        firebaseLogger.logFirebaseEvent(
+                Constants.SETTINGS_EVENT_THEME_SELECT,
+                Constants.SETTINGS_KEY_THEME_MODE,
+                themeMode
+        )
     }
 
     private fun logPreferenceClickToFirebase(prefName: String) {
-        firebaseAnalytics.logEvent(Constants.SETTINGS_EVENT_PREFERENCE_CLICK) {
-            param(Constants.SETTINGS_KEY_PREFERENCE_NAME, prefName)
-        }
+        firebaseLogger.logFirebaseEvent(
+                Constants.SETTINGS_EVENT_PREFERENCE_CLICK,
+                Constants.SETTINGS_KEY_PREFERENCE_NAME,
+                prefName
+        )
+    }
+
+    private fun injectFragment() {
+        activity?.run {
+            (application as RmApplication).appComponent
+        }?.inject(this)
     }
 
 }

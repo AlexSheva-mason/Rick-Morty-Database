@@ -4,33 +4,33 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface LocationModelDao {
+interface LocationDao {
 
     @Insert(onConflict = REPLACE)
-    suspend fun insertLocations(locations: List<LocationModel?>?)
+    suspend fun insertLocations(locations: List<LocationEntity?>?)
 
     /**
      * gets the entry count to compare databases
      */
-    @Query("SELECT COUNT(id) FROM LocationModel")
+    @Query("SELECT COUNT(id) FROM LocationEntity")
     suspend fun locationsCount(): Int
 
     /**
      * gets all names for search suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("SELECT name FROM LocationModel")
+    @Query("SELECT name FROM LocationEntity")
     fun getSuggestionsNames(): Flow<List<String>>
 
     /**
      * gets filtered (type and dimensions) names for search suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("""SELECT name FROM LocationModel
+    @Query("""SELECT name FROM LocationEntity
         WHERE type IN (:types)
         AND dimension IN (:dimensions)""")
     fun getSuggestionsNamesTypeAndDimensFiltered(
@@ -42,7 +42,7 @@ interface LocationModelDao {
      * gets filtered (by type only) names for search suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("""SELECT name FROM LocationModel
+    @Query("""SELECT name FROM LocationEntity
         WHERE type IN (:types)""")
     fun getSuggestionsNamesTypeFiltered(
             types: List<String>
@@ -52,7 +52,7 @@ interface LocationModelDao {
      * gets filtered (by dimension only) names for search suggestions
      */
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("""SELECT name FROM LocationModel
+    @Query("""SELECT name FROM LocationEntity
         WHERE dimension IN (:dimensions)""")
     fun getSuggestionsNamesDimensFiltered(
             dimensions: List<String>
@@ -61,24 +61,24 @@ interface LocationModelDao {
     /**
      * gets all locations
      */
-    @Query("""SELECT * FROM LocationModel
+    @Query("""SELECT * FROM LocationEntity
         ORDER BY name
         COLLATE LOCALIZED""")
-    fun getAllLocations(): DataSource.Factory<Int, LocationModel>
+    fun getAllLocations(): DataSource.Factory<Int, LocationEntity>
 
     /**
      * performs a search by location's name in the database, shows all results
      */
-    @Query("""SELECT * FROM LocationModel
+    @Query("""SELECT * FROM LocationEntity
         WHERE name LIKE '%' || :name || '%'
         ORDER BY name
         COLLATE LOCALIZED""")
-    fun searchLocations(name: String): DataSource.Factory<Int, LocationModel>
+    fun searchLocations(name: String): DataSource.Factory<Int, LocationEntity>
 
     /**
      * gets filtered TYPE and DIMENSION
      */
-    @Query("""SELECT * FROM LocationModel
+    @Query("""SELECT * FROM LocationEntity
         WHERE (:name IS NULL OR name LIKE '%' || :name || '%')
         AND type IN (:types)
         AND dimension IN (:dimensions)
@@ -88,12 +88,12 @@ interface LocationModelDao {
             name: String? = null,
             types: List<String>,
             dimensions: List<String>
-    ): DataSource.Factory<Int, LocationModel>
+    ): DataSource.Factory<Int, LocationEntity>
 
     /**
      * gets filtered TYPE only
      */
-    @Query("""SELECT * FROM LocationModel
+    @Query("""SELECT * FROM LocationEntity
         WHERE (:name IS NULL OR name LIKE '%' || :name || '%')
         AND type IN (:types)
         ORDER BY name
@@ -101,12 +101,12 @@ interface LocationModelDao {
     fun searchFilteredTypeLocations(
             name: String? = null,
             types: List<String>
-    ): DataSource.Factory<Int, LocationModel>
+    ): DataSource.Factory<Int, LocationEntity>
 
     /**
      * gets filtered DIMENSION only
      */
-    @Query("""SELECT * FROM LocationModel
+    @Query("""SELECT * FROM LocationEntity
         WHERE (:name IS NULL OR name LIKE '%' || :name || '%')
         AND dimension IN (:dimensions)
         ORDER BY name
@@ -114,21 +114,21 @@ interface LocationModelDao {
     fun searchFilteredDimensionLocations(
             name: String? = null,
             dimensions: List<String>
-    ): DataSource.Factory<Int, LocationModel>
+    ): DataSource.Factory<Int, LocationEntity>
 
     /**
      * gets a location by ID
      */
-    @Query("""SELECT * FROM LocationModel
+    @Query("""SELECT * FROM LocationEntity
         WHERE id = :id
         ORDER BY name
         COLLATE LOCALIZED""")
-    fun getLocationById(id: Int): LiveData<LocationModel>
+    fun getLocationById(id: Int): LiveData<LocationEntity>
 
     /**
      * gets a location with a provided id
      */
-    @Query("SELECT * FROM LocationModel WHERE id = :id")
-    suspend fun getLocationByIdSuspend(id: Int): LocationModel?
+    @Query("SELECT * FROM LocationEntity WHERE id = :id")
+    suspend fun getLocationByIdSuspend(id: Int): LocationEntity?
 
 }

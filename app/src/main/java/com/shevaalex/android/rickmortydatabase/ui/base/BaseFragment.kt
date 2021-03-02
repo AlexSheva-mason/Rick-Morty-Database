@@ -1,28 +1,24 @@
 package com.shevaalex.android.rickmortydatabase.ui.base
 
 import com.google.firebase.analytics.FirebaseAnalytics
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
+import com.shevaalex.android.rickmortydatabase.utils.FirebaseLogger
+import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 
-    protected lateinit var firebaseAnalytics: FirebaseAnalytics
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        firebaseAnalytics = Firebase.analytics
-    }
+    @Inject
+    lateinit var firebaseLogger: FirebaseLogger
 
     override fun onResume() {
         super.onResume()
         // fragment's class name for firebase logging
         val className = this.javaClass.simpleName
         //log screen view to firebase
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, className)
-        }
+        firebaseLogger.logFirebaseEvent(
+                FirebaseAnalytics.Event.SCREEN_VIEW,
+                FirebaseAnalytics.Param.SCREEN_CLASS,
+                className
+        )
     }
 }
