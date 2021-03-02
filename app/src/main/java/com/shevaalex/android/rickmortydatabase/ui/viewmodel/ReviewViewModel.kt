@@ -1,6 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
 import android.content.SharedPreferences
+import android.icu.text.SimpleDateFormat
 import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,13 +9,16 @@ import com.google.android.play.core.ktx.requestReview
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.testing.FakeReviewManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_REVIEW_ASKED_FOR_REVIEW_TIMESTAMP
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_REVIEW_SUCCESS_SYNC_UPDATES_NUMBER
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.REVIEW_REQ_SHOW_PERIOD
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.REVIEW_REQ_SUCCESS_SYNC_UPDATES
+import com.shevaalex.android.rickmortydatabase.utils.FirebaseLogger
 import kotlinx.coroutines.*
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class ReviewViewModel
@@ -22,7 +26,8 @@ class ReviewViewModel
 constructor(
         private val reviewManager: ReviewManager,
         private val fakeReviewManager: FakeReviewManager,
-        private val sharedPrefs: SharedPreferences
+        private val sharedPrefs: SharedPreferences,
+        private val firebaseLogger: FirebaseLogger
 ) : ViewModel() {
 
     private var reviewInfo: ReviewInfo? = null
@@ -77,6 +82,7 @@ constructor(
      * sets the timestamp of when review was showed
      */
     fun notifyReviewFlowLaunched() {
+        logReviewToFirebase()
         resetNumberOfSuccessDbSyncs()
         Timber.d("saving new timestampLastTimeShowedReview to sharedPrefs: old=%s / new=%s",
                 timestampLastTimeShowedReview,
@@ -130,6 +136,15 @@ constructor(
             Timber.d("resetting the numberOfSuccessDbSyncs to sharedPrefs: %s", numberOfSuccessDbSyncs)
             apply()
         }
+    }
+
+    private fun logReviewToFirebase() {
+        val curFormater = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        firebaseLogger.logFirebaseEvent(
+                eventName = "google_review_flow_launched",
+                paramKey = FirebaseAnalytics.Param.START_DATE,
+                paramValue = curFormater.format(Calendar.getInstance().time)
+        )
     }
 
 }
