@@ -8,6 +8,7 @@ import com.shevaalex.android.rickmortydatabase.ui.episode.detail.EpisodeDetailFr
 import com.shevaalex.android.rickmortydatabase.ui.episode.list.EpisodesListFragment
 import com.shevaalex.android.rickmortydatabase.ui.location.detail.LocationDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.location.list.LocationsListFragment
+import com.shevaalex.android.rickmortydatabase.ui.settings.SettingsFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -45,5 +46,8 @@ interface AppComponent {
 
     //inject into EpisodeDetailFragment
     fun inject(fragment: EpisodeDetailFragment)
+
+    //inject into SettingsFragment
+    fun inject(fragment: SettingsFragment)
 
 }
