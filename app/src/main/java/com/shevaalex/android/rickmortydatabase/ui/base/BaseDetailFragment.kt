@@ -26,7 +26,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.models.RmObject
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseDetailViewModel
@@ -168,10 +167,11 @@ abstract class BaseDetailFragment<T : ViewBinding, S : RmObject> : BaseFragment(
         val className = "_"
                 .plus(this.javaClass.simpleName)
                 .toLowerCase(Locale.ROOT)
-        firebaseAnalytics
-                .logEvent(FirebaseAnalytics.Event.SHARE.plus(className)) {
-                    param(FirebaseAnalytics.Param.ITEM_ID, detailObjectName)
-                }
+        firebaseLogger.logFirebaseEvent(
+                FirebaseAnalytics.Event.SHARE.plus(className),
+                FirebaseAnalytics.Param.ITEM_ID,
+                detailObjectName
+        )
     }
 
     private suspend fun showErrorToast() {
