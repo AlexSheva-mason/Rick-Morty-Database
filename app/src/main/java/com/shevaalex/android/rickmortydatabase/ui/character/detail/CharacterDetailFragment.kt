@@ -17,15 +17,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharacterDetailBinding
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.ui.base.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.utils.*
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 
-class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBinding, CharacterModel>() {
+class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBinding, CharacterEntity>() {
 
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<CharacterDetailViewModel>
@@ -87,7 +87,7 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         adapter = CharacterDetailAdapter(
                 placeHolderString = getString(R.string.episode_name_placeholder),
                 episodeListener = object : CharacterDetailAdapter.EpisodeListener {
-                    override fun onEpisodeClick(episode: EpisodeModel) {
+                    override fun onEpisodeClick(episode: EpisodeEntity) {
                         navigateEpisodeDetail(episode)
                     }
                 }
@@ -100,7 +100,7 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
     private fun setViews() {
         // retrieve data from the list fragment
         val args: CharacterDetailFragmentArgs by navArgs()
-        val character: CharacterModel? = args.characterObject
+        val character: CharacterEntity? = args.characterObject
         character?.let {
             setShareButton(it)
             viewModel.setDetailObject(it)
@@ -193,25 +193,25 @@ class CharacterDetailFragment : BaseDetailFragment<FragmentCharacterDetailBindin
         })
     }
 
-    private fun setShareButton(character: CharacterModel) {
+    private fun setShareButton(character: CharacterEntity) {
         binding.buttonShare?.setOnClickListener {
             shareImageWithGlide(character.name, character.imageUrl)
         }
     }
 
-    private fun navigateLocationDetail(location: LocationModel) {
+    private fun navigateLocationDetail(location: LocationEntity) {
         val action = CharacterDetailFragmentDirections.actionGlobalLocationDetailFragment(location)
         safeNavigate(action)
     }
 
-    private fun navigateEpisodeDetail(episodeModel: EpisodeModel) {
-        val action = CharacterDetailFragmentDirections.actionGlobalEpisodeDetailFragment(episodeModel)
+    private fun navigateEpisodeDetail(episode: EpisodeEntity) {
+        val action = CharacterDetailFragmentDirections.actionGlobalEpisodeDetailFragment(episode)
         safeNavigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {
         savedInstanceState?.let {
-            (it[keyDetailObject] as CharacterModel?)?.let { character ->
+            (it[keyDetailObject] as CharacterEntity?)?.let { character ->
                 viewModel.setDetailObject(character)
             }
         }

@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.remote.EpisodeApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -55,8 +55,8 @@ constructor(
      * @returns list of network objects that differ (were updated)
      */
     private suspend fun filterEpisodeLists(
-            episodeNetworkList: List<EpisodeModel>
-    ): List<EpisodeModel> {
+            episodeNetworkList: List<EpisodeEntity>
+    ): List<EpisodeEntity> {
         val filteredList = episodeNetworkList.filter {
             val episodeFromDb = episodeDao.getEpisodeByIdSuspend(it.id)
             it != episodeFromDb
@@ -68,12 +68,12 @@ constructor(
     /**
      * gets a list of Episodes from the api
      */
-    private suspend fun fetchEpisodesNetwork(token: String): ApiResult<List<EpisodeModel?>> {
+    private suspend fun fetchEpisodesNetwork(token: String): ApiResult<List<EpisodeEntity?>> {
         Timber.i("fetchEpisodesNetwork: getting new data...")
         return episodeApi.getEpisodeList(idToken = token)
     }
 
-    private suspend fun saveEpisodeListToDb(episodeNetworkList: List<EpisodeModel>) {
+    private suspend fun saveEpisodeListToDb(episodeNetworkList: List<EpisodeEntity>) {
         if (episodeNetworkList.isNotEmpty()) {
             Timber.i("saveEpisodeListToDb: first episode id=[%d], last episode id=[%d]",
                     episodeNetworkList[0].id,

@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentLocationDetailBinding
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.ui.base.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -24,7 +24,7 @@ import com.shevaalex.android.rickmortydatabase.utils.safeNavigate
 import com.shevaalex.android.rickmortydatabase.utils.setTopPaddingForStatusBar
 import javax.inject.Inject
 
-class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding, LocationModel>() {
+class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding, LocationEntity>() {
 
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<LocationDetailViewModel>
@@ -65,12 +65,12 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
     /**
      * gets passed data from list fragment
      */
-    private fun getArgs(): LocationModel? {
+    private fun getArgs(): LocationEntity? {
         val args: LocationDetailFragmentArgs by navArgs()
         return args.locationObject
     }
 
-    private fun setupViews(location: LocationModel) {
+    private fun setupViews(location: LocationEntity) {
         setShareButton(location)
         viewModel.setDetailObject(location)
         binding.layoutFragmentLocationDetail.transitionName =
@@ -99,7 +99,7 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
         binding.recyclerviewLocationDetail.setHasFixedSize(true)
         //get recyclerview Adapter and set data to it using ViewModel
         adapter = CharacterSmallAdapter(object : CharacterSmallAdapter.CharacterClickListener {
-            override fun onCharacterClick(character: CharacterModel) {
+            override fun onCharacterClick(character: CharacterEntity) {
                 navigateCharacterDetail(character)
             }
         })
@@ -122,20 +122,20 @@ class LocationDetailFragment : BaseDetailFragment<FragmentLocationDetailBinding,
         })
     }
 
-    private fun setShareButton(location: LocationModel) {
+    private fun setShareButton(location: LocationEntity) {
         binding.buttonShare?.setOnClickListener {
             shareImageWithGlide(location.name, location.imageUrl)
         }
     }
 
-    private fun navigateCharacterDetail(character: CharacterModel) {
+    private fun navigateCharacterDetail(character: CharacterEntity) {
         val action = LocationDetailFragmentDirections.actionGlobalCharacterDetailFragment2(character)
         safeNavigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {
         savedInstanceState?.let {
-            (it[keyDetailObject] as LocationModel?)?.let { location ->
+            (it[keyDetailObject] as LocationEntity?)?.let { location ->
                 viewModel.setDetailObject(location)
             }
         }

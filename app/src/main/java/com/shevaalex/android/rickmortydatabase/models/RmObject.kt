@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.Keep
 
 @Keep
-interface ApiObjectModel: Parcelable {
+interface RmObject: Parcelable {
 
     val id: Int
 

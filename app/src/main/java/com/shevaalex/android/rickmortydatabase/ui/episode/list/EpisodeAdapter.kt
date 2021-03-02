@@ -11,21 +11,21 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemEpisodeBinding
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSITION_EPISODE
 
 class EpisodeAdapter(
         private val placeHolderString: String,
         private val episodeListener: EpisodeListener
-) : PagedListAdapter<EpisodeModel, EpisodeAdapter.EpisodeViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<EpisodeEntity, EpisodeAdapter.EpisodeViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<EpisodeModel>() {
-            override fun areItemsTheSame(oldItem: EpisodeModel, newItem: EpisodeModel): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<EpisodeEntity>() {
+            override fun areItemsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: EpisodeModel, newItem: EpisodeModel): Boolean {
+            override fun areContentsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean {
                 return newItem == oldItem
             }
         }
@@ -51,7 +51,7 @@ class EpisodeAdapter(
             private val itemBind: ItemEpisodeBinding
     ) : RecyclerView.ViewHolder(itemBind.root) {
 
-        fun bind(episode: EpisodeModel, episodeListener: EpisodeListener, placeHolderString: String) {
+        fun bind(episode: EpisodeEntity, episodeListener: EpisodeListener, placeHolderString: String) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
                 episodeListener.onEpisodeClick(episode, itemBind.episodeItem)
@@ -75,7 +75,7 @@ class EpisodeAdapter(
     }
 
     interface EpisodeListener {
-        fun onEpisodeClick(episode: EpisodeModel, episodeCard: MaterialCardView)
+        fun onEpisodeClick(episode: EpisodeEntity, episodeCard: MaterialCardView)
     }
 
 }

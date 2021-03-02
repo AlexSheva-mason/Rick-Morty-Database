@@ -5,13 +5,13 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
+import com.shevaalex.android.rickmortydatabase.models.RmObject
 import kotlinx.parcelize.Parcelize
 
 @Entity
 @Keep
 @Parcelize
-data class CharacterModel(
+data class CharacterEntity(
 
         @PrimaryKey
         override val id: Int,
@@ -25,15 +25,15 @@ data class CharacterModel(
 
         val gender: String,
 
-        val originLocation: LinkedLocationModel,
+        val originLocation: LinkedLocation,
 
-        val lastLocation: LinkedLocationModel,
+        val lastLocation: LinkedLocation,
 
         override val imageUrl: String,
 
         val episodeList: List<String>
 
-): ApiObjectModel, Parcelable {
+): RmObject, Parcelable {
 
     val episodeIds: List<Int>
         get() {

@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentEpisodeDetailBinding
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.ui.base.BaseDetailFragment
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter
 import com.shevaalex.android.rickmortydatabase.ui.CharacterSmallAdapter.CharacterClickListener
@@ -26,7 +26,7 @@ import com.shevaalex.android.rickmortydatabase.utils.safeNavigate
 import com.shevaalex.android.rickmortydatabase.utils.setTopPaddingForStatusBar
 import javax.inject.Inject
 
-class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, EpisodeModel>() {
+class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, EpisodeEntity>() {
 
     @Inject
     lateinit var viewModelFactory: DiViewModelFactory<EpisodeDetailViewModel>
@@ -67,12 +67,12 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
     /**
      * gets passed data from list fragment
      */
-    private fun getArgs(): EpisodeModel? {
+    private fun getArgs(): EpisodeEntity? {
         val args: EpisodeDetailFragmentArgs by navArgs()
         return args.episodeObject
     }
 
-    private fun setupViews(episode: EpisodeModel) {
+    private fun setupViews(episode: EpisodeEntity) {
         setShareButton(episode)
         viewModel.setDetailObject(episode)
         binding.layoutFragmentEpisodeDetail.transitionName = TRANSITION_EPISODE.plus(episode.id)
@@ -105,7 +105,7 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
         binding.recyclerviewEpisodeDetail.setHasFixedSize(true)
         //get recyclerview Adapter and set data to it using ViewModel
         adapter = CharacterSmallAdapter(object : CharacterClickListener {
-            override fun onCharacterClick(character: CharacterModel) {
+            override fun onCharacterClick(character: CharacterEntity) {
                 navigateCharacterDetail(character)
             }
         })
@@ -124,20 +124,20 @@ class EpisodeDetailFragment: BaseDetailFragment<FragmentEpisodeDetailBinding, Ep
         })
     }
 
-    private fun setShareButton(episode: EpisodeModel) {
+    private fun setShareButton(episode: EpisodeEntity) {
         binding.buttonShare?.setOnClickListener {
             shareImageWithGlide(episode.name, episode.imageUrl)
         }
     }
 
-    private fun navigateCharacterDetail(character: CharacterModel) {
+    private fun navigateCharacterDetail(character: CharacterEntity) {
         val action = EpisodeDetailFragmentDirections.actionGlobalCharacterDetailFragment2(character)
         safeNavigate(action)
     }
 
     private fun restoreViewState(savedInstanceState: Bundle?) {
         savedInstanceState?.let {
-            (it[keyDetailObject] as EpisodeModel?)?.let { episode ->
+            (it[keyDetailObject] as EpisodeEntity?)?.let { episode ->
                 viewModel.setDetailObject(episode)
             }
         }

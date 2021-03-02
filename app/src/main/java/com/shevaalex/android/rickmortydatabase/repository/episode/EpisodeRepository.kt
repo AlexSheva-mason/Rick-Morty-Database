@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -22,14 +22,14 @@ constructor(
         private val recentQueryDao: RecentQueryDao
 ) {
 
-    fun getAllEpisodes(): LiveData<PagedList<EpisodeModel>> =
+    fun getAllEpisodes(): LiveData<PagedList<EpisodeEntity>> =
             episodeDao.getAllEpisodes().toLiveData(ROOM_PAGE_SIZE)
 
     fun searchAndFilterEpisodes(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): LiveData<PagedList<EpisodeModel>> {
+    ): LiveData<PagedList<EpisodeEntity>> {
         // perform a search without filtering
         return if (query.isNotBlank() && showsAll) {
             searchEpisodes(query)
@@ -41,13 +41,13 @@ constructor(
         }
     }
 
-    private fun searchEpisodes(query: String): LiveData<PagedList<EpisodeModel>> =
+    private fun searchEpisodes(query: String): LiveData<PagedList<EpisodeEntity>> =
             episodeDao.searchEpisodes(query).toLiveData(50)
 
     private fun searchAndFilter(
             name: String?,
             filterMap: Map<String, Pair<Boolean, String?>>
-    ): LiveData<PagedList<EpisodeModel>> {
+    ): LiveData<PagedList<EpisodeEntity>> {
         val seasons = getSeasonsList(filterMap)
         Timber.i("seasons: %s", seasons)
         //put a placeholder if value is null -> due to Room query returning all results when

@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.source.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocationModel
+import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocation
 
 object Converters {
     @JvmStatic
@@ -21,13 +21,13 @@ object Converters {
 
     @JvmStatic
     @TypeConverter
-    fun linkedLocationModelToString(locationModel: LinkedLocationModel): String {
-        return Gson().toJson(locationModel)
+    fun linkedLocationModelToString(linkedLocation: LinkedLocation): String {
+        return Gson().toJson(linkedLocation)
     }
 
     @JvmStatic
     @TypeConverter
-    fun stringToLinkedLocationModel(string: String): LinkedLocationModel {
-        return Gson().fromJson(string, LinkedLocationModel::class.java)
+    fun stringToLinkedLocationModel(string: String): LinkedLocation {
+        return Gson().fromJson(string, LinkedLocation::class.java)
     }
 }

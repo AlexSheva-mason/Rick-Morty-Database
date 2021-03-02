@@ -7,16 +7,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemCharacterSmallBinding
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.utils.TextColourUtil
 
 class CharacterSmallAdapter(
         private val characterListener: CharacterClickListener
 ) : RecyclerView.Adapter<CharacterSmallAdapter.CharacterSmallViewHolder>() {
 
-    private var characterList: List<CharacterModel>? = null
+    private var characterList: List<CharacterEntity>? = null
 
-    fun setCharacterList(characterList: List<CharacterModel>) {
+    fun setCharacterList(characterList: List<CharacterEntity>) {
         this.characterList = characterList
     }
 
@@ -30,7 +30,7 @@ class CharacterSmallAdapter(
     }
 
     override fun onBindViewHolder(holder: CharacterSmallViewHolder, position: Int) {
-        val character: CharacterModel? = characterList?.get(position)
+        val character: CharacterEntity? = characterList?.get(position)
         character?.let {
             holder.bind(
                     character = it,
@@ -47,7 +47,7 @@ class CharacterSmallAdapter(
             private val itemBind: ItemCharacterSmallBinding
     ) : RecyclerView.ViewHolder(itemBind.root) {
 
-        fun bind(character: CharacterModel, characterListener: CharacterClickListener) {
+        fun bind(character: CharacterEntity, characterListener: CharacterClickListener) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
                 characterListener.onCharacterClick(character)
@@ -75,6 +75,6 @@ class CharacterSmallAdapter(
     }
 
     interface CharacterClickListener {
-        fun onCharacterClick(character: CharacterModel)
+        fun onCharacterClick(character: CharacterEntity)
     }
 }

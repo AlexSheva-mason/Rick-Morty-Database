@@ -6,7 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
+import com.shevaalex.android.rickmortydatabase.models.RmObject
 import com.shevaalex.android.rickmortydatabase.utils.networking.EPISODE_CHARACTERS
 import com.shevaalex.android.rickmortydatabase.utils.networking.EPISODE_CODE
 import kotlinx.parcelize.Parcelize
@@ -14,7 +14,7 @@ import kotlinx.parcelize.Parcelize
 @Entity
 @Keep
 @Parcelize
-data class EpisodeModel(
+data class EpisodeEntity(
 
         @PrimaryKey
         override val id: Int,
@@ -34,7 +34,7 @@ data class EpisodeModel(
         @SerializedName(EPISODE_CHARACTERS)
         val charactersList: List<String>
 
-): ApiObjectModel, Parcelable {
+): RmObject, Parcelable {
 
     val characterIds: List<Int>
         get() {

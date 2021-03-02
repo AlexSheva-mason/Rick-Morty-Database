@@ -3,9 +3,9 @@
 package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
 import androidx.lifecycle.*
-import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
+import com.shevaalex.android.rickmortydatabase.models.RmObject
 
-abstract class BaseDetailViewModel<T: ApiObjectModel>: ViewModel() {
+abstract class BaseDetailViewModel<T: RmObject>: ViewModel() {
 
     protected val _detailObject = MutableLiveData<T>()
     val detailObject: LiveData<T> = _detailObject

@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
 import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_INIT_VM_CHARACTERS_FETCHED_TIMESTAMP
@@ -55,8 +55,8 @@ constructor(
      * @returns list of network objects that differ (were updated)
      */
     private suspend fun filterCharacterLists(
-            characterNetworkList: List<CharacterModel>
-    ): List<CharacterModel> {
+            characterNetworkList: List<CharacterEntity>
+    ): List<CharacterEntity> {
         val filteredList = characterNetworkList.filter {
             val characterFromDb = characterDao.getCharacterByIdSuspend(it.id)
             it != characterFromDb
@@ -68,12 +68,12 @@ constructor(
     /**
      * gets a list of Characters from the api
      */
-    private suspend fun fetchCharactersNetwork(token: String): ApiResult<List<CharacterModel?>> {
+    private suspend fun fetchCharactersNetwork(token: String): ApiResult<List<CharacterEntity?>> {
         Timber.i("fetchCharactersNetwork: getting new data...")
         return characterApi.getCharacterList(idToken = token)
     }
 
-    private suspend fun saveCharacterListToDb(characterNetworkList: List<CharacterModel>) {
+    private suspend fun saveCharacterListToDb(characterNetworkList: List<CharacterEntity>) {
         if (characterNetworkList.isNotEmpty()) {
             Timber.i("saveCharacterListToDb: first character id=[%d], last character id=[%d]",
                     characterNetworkList[0].id,

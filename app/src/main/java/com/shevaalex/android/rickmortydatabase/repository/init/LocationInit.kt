@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 
 import android.content.SharedPreferences
 import com.google.gson.JsonObject
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
 import com.shevaalex.android.rickmortydatabase.source.remote.LocationApi
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -55,8 +55,8 @@ constructor(
      * @returns list of network objects that differ (were updated)
      */
     private suspend fun filterLocationLists(
-            locationNetworkList: List<LocationModel>
-    ): List<LocationModel> {
+            locationNetworkList: List<LocationEntity>
+    ): List<LocationEntity> {
         val filteredList = locationNetworkList.filter {
             val locationFromDb = locationDao.getLocationByIdSuspend(it.id)
             it != locationFromDb
@@ -68,12 +68,12 @@ constructor(
     /**
      * gets a list of Locations from the api
      */
-    private suspend fun fetchLocationsNetwork(token: String): ApiResult<List<LocationModel?>> {
+    private suspend fun fetchLocationsNetwork(token: String): ApiResult<List<LocationEntity?>> {
         Timber.i("fetchLocationsNetwork: getting new data...")
         return locationApi.getLocationList(idToken = token)
     }
 
-    private suspend fun saveLocationListToDb(locationNetworkList: List<LocationModel>) {
+    private suspend fun saveLocationListToDb(locationNetworkList: List<LocationEntity>) {
         if (locationNetworkList.isNotEmpty()) {
             Timber.i("saveLocationListToDb: first location id=[%d], last location id=[%d]",
                     locationNetworkList[0].id,

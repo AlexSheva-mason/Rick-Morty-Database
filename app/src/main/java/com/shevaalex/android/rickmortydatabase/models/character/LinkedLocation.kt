@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Keep
 @Parcelize
-data class LinkedLocationModel(
+data class LinkedLocation(
         val name: String,
         val url: String,
 ): Parcelable {

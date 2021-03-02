@@ -11,20 +11,20 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.databinding.ItemLocationBinding
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.TRANSITION_LOCATION
 
 class LocationAdapter(
         private val locationListener: LocationListener
-) : PagedListAdapter<LocationModel, LocationAdapter.LocationViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<LocationEntity, LocationAdapter.LocationViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LocationModel>() {
-            override fun areItemsTheSame(oldItem: LocationModel, newItem: LocationModel): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LocationEntity>() {
+            override fun areItemsTheSame(oldItem: LocationEntity, newItem: LocationEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: LocationModel, newItem: LocationModel): Boolean {
+            override fun areContentsTheSame(oldItem: LocationEntity, newItem: LocationEntity): Boolean {
                 return newItem == oldItem
             }
         }
@@ -50,7 +50,7 @@ class LocationAdapter(
             private val itemBind: ItemLocationBinding
     ) : RecyclerView.ViewHolder(itemBind.root) {
 
-        fun bind(location: LocationModel, locationListener: LocationListener) {
+        fun bind(location: LocationEntity, locationListener: LocationListener) {
             val context = itemBind.root.context
             itemBind.root.setOnClickListener {
                 locationListener.onLocationClick(location, itemBind.locationItem)
@@ -76,7 +76,7 @@ class LocationAdapter(
     }
 
     interface LocationListener {
-        fun onLocationClick(location: LocationModel, locationCard: MaterialCardView)
+        fun onLocationClick(location: LocationEntity, locationCard: MaterialCardView)
     }
 
 }

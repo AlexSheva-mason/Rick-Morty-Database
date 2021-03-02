@@ -5,15 +5,15 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel;
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity;
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery;
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel;
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel;
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity;
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity;
 
 @Database(entities = {
-        CharacterModel.class,
-        LocationModel.class,
-        EpisodeModel.class,
+        CharacterEntity.class,
+        LocationEntity.class,
+        EpisodeEntity.class,
         RecentQuery.class
 }, version = 3)
 @TypeConverters({Converters.class})

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -22,14 +22,14 @@ constructor(
         private val recentQueryDao: RecentQueryDao
 ){
 
-    fun getAllLocations(): LiveData<PagedList<LocationModel>> =
+    fun getAllLocations(): LiveData<PagedList<LocationEntity>> =
             locationDao.getAllLocations().toLiveData(ROOM_PAGE_SIZE)
 
     fun searchAndFilterLocations(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): LiveData<PagedList<LocationModel>> {
+    ): LiveData<PagedList<LocationEntity>> {
         // perform a search without filtering
         return if (query.isNotBlank() && showsAll) {
             searchLocations(query)
@@ -41,13 +41,13 @@ constructor(
         }
     }
 
-    private fun searchLocations(query: String): LiveData<PagedList<LocationModel>> =
+    private fun searchLocations(query: String): LiveData<PagedList<LocationEntity>> =
             locationDao.searchLocations(query).toLiveData(50)
 
     private fun searchAndFilter(
             name: String?,
             filterMap: Map<String, Pair<Boolean, String?>>
-    ): LiveData<PagedList<LocationModel>> {
+    ): LiveData<PagedList<LocationEntity>> {
         val types = getTypeList(filterMap)
         val dimensions = getDimensionList(filterMap)
         Timber.i("types: %s \n dimensions: %s", types, dimensions)

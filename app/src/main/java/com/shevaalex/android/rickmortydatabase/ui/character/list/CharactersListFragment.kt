@@ -23,7 +23,7 @@ import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.FragmentCharactersListBinding
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.ui.base.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.ReviewViewModel
 import com.shevaalex.android.rickmortydatabase.utils.*
@@ -78,7 +78,7 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         //instantiate the adapter and set this fragment as a listener for onClick
         characterAdapter = CharacterAdapter(
                 object: CharacterAdapter.CharacterListener{
-                    override fun onCharacterClick(character: CharacterModel,
+                    override fun onCharacterClick(character: CharacterEntity,
                                                   characterCard: MaterialCardView
                     ) {
                         navigateCharacterDetail(character, characterCard)
@@ -386,7 +386,7 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         }
     }
 
-    private fun navigateCharacterDetail(character: CharacterModel, characterCard: MaterialCardView) {
+    private fun navigateCharacterDetail(character: CharacterEntity, characterCard: MaterialCardView) {
         //set reenter transition listener to attempt to show review dialog after navigating back to this fragment
         val transitionListener = object: Transition.TransitionListener {
             override fun onTransitionStart(transition: Transition) { }

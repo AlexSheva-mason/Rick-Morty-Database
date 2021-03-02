@@ -1,7 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.source.remote
 
 import com.google.gson.JsonObject
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -27,6 +27,6 @@ interface CharacterApi {
     @GET(SUB_URL_CHARACTER + FIREBASE_JSON_SUFFIX)
     suspend fun getCharacterList(
             @Query(FIREBASE_AUTH_QUERY) idToken: String
-    ): ApiResult<List<CharacterModel?>>
+    ): ApiResult<List<CharacterEntity?>>
 
 }

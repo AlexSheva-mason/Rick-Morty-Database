@@ -1,7 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.repository.character
 
 import androidx.paging.DataSource
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
 import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
@@ -19,14 +19,14 @@ constructor(
         private val recentQueryDao: RecentQueryDao,
 ) {
 
-    fun getAllCharacters(): DataSource.Factory<Int, CharacterModel> =
+    fun getAllCharacters(): DataSource.Factory<Int, CharacterEntity> =
             characterDao.getAllCharacters()
 
     fun searchOrFilterCharacters(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): DataSource.Factory<Int, CharacterModel> {
+    ): DataSource.Factory<Int, CharacterEntity> {
         // perform a search without filtering
         return if (query.isNotBlank() && showsAll) {
             searchCharacters(query)
@@ -37,7 +37,7 @@ constructor(
         }
     }
 
-    private fun searchCharacters(query: String): DataSource.Factory<Int, CharacterModel> {
+    private fun searchCharacters(query: String): DataSource.Factory<Int, CharacterEntity> {
         //if query contains more than 1 word -> rearrange the query
         if (query.isNotBlank() && query.contains(" ")) {
             val rearrangedQuery = query.substringAfter(" ").trim()
@@ -52,7 +52,7 @@ constructor(
     private fun searchAndFilter(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>
-    ): DataSource.Factory<Int, CharacterModel> {
+    ): DataSource.Factory<Int, CharacterEntity> {
         val statuses = getStatusList(filterMap)
         val genders = getGenderList(filterMap)
         val species = getSpeciesList(filterMap)

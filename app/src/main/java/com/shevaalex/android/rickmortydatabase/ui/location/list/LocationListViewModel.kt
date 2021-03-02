@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.asLiveData
 import androidx.paging.PagedList
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BaseListViewModel
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -37,7 +37,7 @@ constructor(
 
     override val mediatorLiveData = FilterMediatorLiveData(_searchQuery, filterData)
 
-    val locationList: LiveData<PagedList<LocationModel>> =
+    val locationList: LiveData<PagedList<LocationEntity>> =
             Transformations.switchMap(mediatorLiveData) {
                 //if query is blank and filter == showAll -> show all results
                 if(it.first.isBlank() && showsAll()) {
