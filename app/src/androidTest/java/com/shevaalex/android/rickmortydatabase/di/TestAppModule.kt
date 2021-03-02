@@ -1,5 +1,6 @@
 package com.shevaalex.android.rickmortydatabase.di
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.android.play.core.review.ReviewManager
@@ -11,7 +12,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [TestRepositoryDeclarations::class])
 object TestAppModule {
 
     @Singleton
@@ -30,6 +31,12 @@ object TestAppModule {
     @Provides
     fun provideSharedPreferences(app: TestRmApplication): SharedPreferences {
         return app.getSharedPreferences(SHARED_PREFS_FILE_NAME, Context.MODE_PRIVATE)
+    }
+
+    @Singleton
+    @Provides
+    fun provideApplication (app: TestRmApplication): Application {
+        return app
     }
 
 }

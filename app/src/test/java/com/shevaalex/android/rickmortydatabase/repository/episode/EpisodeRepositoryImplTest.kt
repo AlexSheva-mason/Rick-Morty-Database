@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.*
 import com.shevaalex.android.rickmortydatabase.assertEmittedValuesEquals
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.testTest
 import com.shevaalex.android.rickmortydatabase.utils.Constants
@@ -25,7 +25,7 @@ class EpisodeRepositoryImplTest {
     private lateinit var episodeRepository: EpisodeRepositoryImpl
 
     //Collaborators
-    private lateinit var episodeDao: EpisodeModelDao
+    private lateinit var episodeDao: EpisodeDao
     private lateinit var recentQueryDao: RecentQueryDao
 
     @Before

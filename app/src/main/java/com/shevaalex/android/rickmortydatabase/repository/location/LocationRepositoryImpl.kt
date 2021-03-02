@@ -2,8 +2,8 @@ package com.shevaalex.android.rickmortydatabase.repository.location
 
 import androidx.paging.DataSource
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
-import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
+import com.shevaalex.android.rickmortydatabase.source.local.LocationDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.flow.Flow
@@ -15,18 +15,18 @@ import javax.inject.Singleton
 class LocationRepositoryImpl
 @Inject
 constructor(
-        private val locationDao: LocationModelDao,
+        private val locationDao: LocationDao,
         private val recentQueryDao: RecentQueryDao
 ) : LocationRepository {
 
-    override fun getAllLocations(): DataSource.Factory<Int, LocationModel> =
+    override fun getAllLocations(): DataSource.Factory<Int, LocationEntity> =
             locationDao.getAllLocations()
 
     override fun searchAndFilterLocations(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): DataSource.Factory<Int, LocationModel> {
+    ): DataSource.Factory<Int, LocationEntity> {
         // perform a search without filtering
         return if (query.isNotBlank() && showsAll) {
             searchLocations(query)
@@ -38,13 +38,13 @@ constructor(
         }
     }
 
-    private fun searchLocations(query: String): DataSource.Factory<Int, LocationModel> =
+    private fun searchLocations(query: String): DataSource.Factory<Int, LocationEntity> =
             locationDao.searchLocations(query)
 
     private fun searchAndFilter(
             name: String?,
             filterMap: Map<String, Pair<Boolean, String?>>
-    ): DataSource.Factory<Int, LocationModel> {
+    ): DataSource.Factory<Int, LocationEntity> {
         val types = getTypeList(filterMap)
         val dimensions = getDimensionList(filterMap)
         Timber.i("types: %s \n dimensions: %s", types, dimensions)

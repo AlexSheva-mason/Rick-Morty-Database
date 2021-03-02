@@ -2,8 +2,8 @@ package com.shevaalex.android.rickmortydatabase.repository.episode
 
 import androidx.paging.DataSource
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDao
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.flow.*
@@ -15,18 +15,18 @@ import javax.inject.Singleton
 class EpisodeRepositoryImpl
 @Inject
 constructor(
-        private val episodeDao: EpisodeModelDao,
+        private val episodeDao: EpisodeDao,
         private val recentQueryDao: RecentQueryDao
 ) : EpisodeRepository {
 
-    override fun getAllEpisodes(): DataSource.Factory<Int, EpisodeModel> =
+    override fun getAllEpisodes(): DataSource.Factory<Int, EpisodeEntity> =
             episodeDao.getAllEpisodes()
 
     override fun searchAndFilterEpisodes(
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): DataSource.Factory<Int, EpisodeModel> {
+    ): DataSource.Factory<Int, EpisodeEntity> {
         // perform a search without filtering
         return if (query.isNotBlank() && showsAll) {
             searchEpisodes(query)
@@ -38,13 +38,13 @@ constructor(
         }
     }
 
-    private fun searchEpisodes(query: String): DataSource.Factory<Int, EpisodeModel> =
+    private fun searchEpisodes(query: String): DataSource.Factory<Int, EpisodeEntity> =
             episodeDao.searchEpisodes(query)
 
     private fun searchAndFilter(
             name: String?,
             filterMap: Map<String, Pair<Boolean, String?>>
-    ): DataSource.Factory<Int, EpisodeModel> {
+    ): DataSource.Factory<Int, EpisodeEntity> {
         val seasons = getSeasonsList(filterMap)
         Timber.i("seasons: %s", seasons)
         //put a placeholder if value is null -> due to Room query returning all results when

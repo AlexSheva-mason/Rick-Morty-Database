@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.*
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.CharacterDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,7 +23,7 @@ class CharacterRepositoryImplTest {
     private lateinit var characterRepository: CharacterRepositoryImpl
 
     //Collaborators
-    private lateinit var characterDao: CharacterModelDao
+    private lateinit var characterDao: CharacterDao
     private lateinit var recentQueryDao: RecentQueryDao
 
 

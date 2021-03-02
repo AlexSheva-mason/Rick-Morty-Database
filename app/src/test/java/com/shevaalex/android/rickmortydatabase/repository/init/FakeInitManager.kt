@@ -6,10 +6,10 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.shevaalex.android.rickmortydatabase.DataFactory
-import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
+import com.shevaalex.android.rickmortydatabase.models.RmObject
 import com.shevaalex.android.rickmortydatabase.utils.networking.ApiResult
 
-class FakeInitManager<T : ApiObjectModel>(
+class FakeInitManager<T : RmObject>(
         dataFactory: DataFactory<T>
 ) : InitManager<T> {
 

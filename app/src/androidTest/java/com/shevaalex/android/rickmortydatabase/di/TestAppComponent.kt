@@ -1,9 +1,9 @@
 package com.shevaalex.android.rickmortydatabase.di
 
 import com.shevaalex.android.rickmortydatabase.TestRmApplication
-import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDaoTest
-import com.shevaalex.android.rickmortydatabase.source.local.EpisodeModelDaoTest
-import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDaoTest
+import com.shevaalex.android.rickmortydatabase.source.local.CharacterDaoTest
+import com.shevaalex.android.rickmortydatabase.source.local.EpisodeDaoTest
+import com.shevaalex.android.rickmortydatabase.source.local.LocationDaoTest
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDaoTest
 import dagger.BindsInstance
 import dagger.Component
@@ -25,11 +25,11 @@ interface TestAppComponent : AppComponent {
         fun create(@BindsInstance app: TestRmApplication): TestAppComponent
     }
 
-    fun inject(characterDaoTest: CharacterModelDaoTest)
+    fun inject(characterDaoTest: CharacterDaoTest)
 
-    fun inject(locationDaoTest: LocationModelDaoTest)
+    fun inject(locationDaoTest: LocationDaoTest)
 
-    fun inject(episodeDaoTest: EpisodeModelDaoTest)
+    fun inject(episodeDaoTest: EpisodeDaoTest)
 
     fun inject(recentQueryDaoTest: RecentQueryDaoTest)
 

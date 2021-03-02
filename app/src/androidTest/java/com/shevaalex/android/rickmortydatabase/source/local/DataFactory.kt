@@ -1,10 +1,10 @@
 package com.shevaalex.android.rickmortydatabase.source.local
 
-import com.shevaalex.android.rickmortydatabase.models.ApiObjectModel
+import com.shevaalex.android.rickmortydatabase.models.RmObject
 import kotlin.random.Random
 
 
-abstract class DataFactory<out T: ApiObjectModel> {
+abstract class DataFactory<out T: RmObject> {
 
     /**
      * creates a list with [numberOfObjects] T objects and random ids
@@ -34,7 +34,7 @@ abstract class DataFactory<out T: ApiObjectModel> {
     }
 
     /**
-     * creates a single object T: ApiObjectModel with a given [id]
+     * creates a single object T: RmObject with a given [id]
      */
     abstract fun produceObjectModel(id: Int): T
 

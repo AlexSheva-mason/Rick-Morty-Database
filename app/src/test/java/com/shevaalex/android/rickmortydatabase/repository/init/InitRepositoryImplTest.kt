@@ -5,9 +5,9 @@ import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.*
 import com.shevaalex.android.rickmortydatabase.*
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
@@ -30,9 +30,9 @@ class InitRepositoryImplTest {
     private lateinit var initRepository: InitRepository
 
     //Collaborators
-    private lateinit var characterInit: InitManager<CharacterModel>
-    private lateinit var locationInit: InitManager<LocationModel>
-    private lateinit var episodeInit: InitManager<EpisodeModel>
+    private lateinit var characterInit: InitManager<CharacterEntity>
+    private lateinit var locationInit: InitManager<LocationEntity>
+    private lateinit var episodeInit: InitManager<EpisodeEntity>
 
     //Utilities
     private lateinit var observerState: Observer<StateResource>

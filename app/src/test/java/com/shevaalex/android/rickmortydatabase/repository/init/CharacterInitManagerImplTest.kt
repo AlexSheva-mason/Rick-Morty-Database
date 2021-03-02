@@ -5,8 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.*
 import com.shevaalex.android.rickmortydatabase.CharacterInitManagerDataFactory
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.source.local.CharacterModelDao
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
+import com.shevaalex.android.rickmortydatabase.source.local.CharacterDao
 import com.shevaalex.android.rickmortydatabase.source.remote.CharacterApi
 import com.shevaalex.android.rickmortydatabase.utils.currentTimeHours
 import com.shevaalex.android.rickmortydatabase.utils.networking.Message
@@ -26,10 +26,10 @@ class CharacterInitManagerImplTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     //Test subject
-    private lateinit var characterInitManager: InitManager<CharacterModel>
+    private lateinit var characterInitManager: InitManager<CharacterEntity>
 
     //Collaborators
-    private lateinit var characterDao: CharacterModelDao
+    private lateinit var characterDao: CharacterDao
     private lateinit var characterApi: CharacterApi
     private lateinit var sharedPref: SharedPreferences
     private lateinit var sharedPrefEditor: SharedPreferences.Editor
@@ -50,7 +50,7 @@ class CharacterInitManagerImplTest {
         //mocking CharacterDao
         characterDao = mock()
         whenever(characterDao.getCharacterByIdSuspend(anyInt())).thenAnswer {
-            dataFactory.produceCharacterModel(it.getArgument(0) as Int)
+            dataFactory.produceCharacterEntity(it.getArgument(0) as Int)
         }
         whenever(characterDao.charactersCount()).thenReturn(characterCount)
         //mocking CharacterApi
@@ -82,8 +82,8 @@ class CharacterInitManagerImplTest {
         val networkList = dataFactory.createFixedIdObjectList(55)
         val result = characterInitManager.filterNetworkList(networkList)
         assertThat(result).containsExactly(
-                dataFactory.produceCharacterModel(51),
-                dataFactory.produceCharacterModel(55)
+                dataFactory.produceCharacterEntity(51),
+                dataFactory.produceCharacterEntity(55)
         )
     }
 
@@ -172,7 +172,7 @@ class CharacterInitManagerImplTest {
      * overrides [db count]
      * [network count] characterApi.getCharacterList(shallow = true) returns success result of 50
      * [network list] characterApi.getCharacterList returns success result of 50
-     * [db object]characterDao.getCharacterByIdSuspend(anyInt()) returns CharacterModel(id = anyInt())
+     * [db object]characterDao.getCharacterByIdSuspend(anyInt()) returns CharacterEntity(id = anyInt())
      * overrides [db object]
      *
      * objectCountNetwork > dbObjectCount
@@ -211,7 +211,7 @@ class CharacterInitManagerImplTest {
      * [db count] characterDao.charactersCount() returns [characterCount] number
      * [network count] characterApi.getCharacterList(shallow = true) returns success result of 50
      * [network list] characterApi.getCharacterList returns success result of 50
-     * [db object]characterDao.getCharacterByIdSuspend(anyInt()) returns CharacterModel(id = anyInt())
+     * [db object]characterDao.getCharacterByIdSuspend(anyInt()) returns CharacterEntity(id = anyInt())
      * [refetch needed] sharedPref.getInt() returns 0
      *
      * objectCountNetwork <= dbObjectCount
@@ -238,7 +238,7 @@ class CharacterInitManagerImplTest {
      * [db count] characterDao.charactersCount() returns [characterCount] number
      * [network count] characterApi.getCharacterList(shallow = true) returns success result of 50
      * [network list] characterApi.getCharacterList returns success result of 50
-     * [db object]characterDao.getCharacterByIdSuspend(anyInt()) returns CharacterModel(id = anyInt())
+     * [db object]characterDao.getCharacterByIdSuspend(anyInt()) returns CharacterEntity(id = anyInt())
      * overrides [refetch needed]
      *
      * objectCountNetwork <= dbObjectCount

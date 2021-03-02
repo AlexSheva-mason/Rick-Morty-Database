@@ -7,7 +7,7 @@ import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.shevaalex.android.rickmortydatabase.*
 import com.shevaalex.android.rickmortydatabase.di.TestAppComponent
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
@@ -20,7 +20,7 @@ import kotlin.random.Random
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class CharacterModelDaoTest : BaseTest() {
+class CharacterDaoTest : BaseTest() {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -29,7 +29,7 @@ class CharacterModelDaoTest : BaseTest() {
     lateinit var characterDataFactory: CharacterDataFactory
 
     @Inject
-    lateinit var characterDao: CharacterModelDao
+    lateinit var characterDao: CharacterDao
 
     init {
         injectTest()
@@ -38,7 +38,7 @@ class CharacterModelDaoTest : BaseTest() {
     @Test
     fun insertCharacter() = runBlockingTest {
         val testID = 0
-        val testCharacter = characterDataFactory.produceCharacterModel(testID)
+        val testCharacter = characterDataFactory.produceCharacterEntity(testID)
         characterDao.insertCharacters(listOf(testCharacter))
         val retreivedCharacter = characterDao.getCharacterByIdSuspend(testID)
         assertThat(retreivedCharacter).isEqualTo(testCharacter)
@@ -135,7 +135,7 @@ class CharacterModelDaoTest : BaseTest() {
         val randomId = Random.nextInt(1, numberOfCharacters)
         val randomName = "testName$randomId"
         //create an object with a randomName for cross-reference
-        val checkCharacter = characterDataFactory.produceCharacterModel(id = randomId)
+        val checkCharacter = characterDataFactory.produceCharacterEntity(id = randomId)
         val fetchedList = characterDao
                 .searchCharacters(randomName, randomName)
                 .toLiveData(10)
@@ -154,10 +154,10 @@ class CharacterModelDaoTest : BaseTest() {
         val filterGender = listOf("testGender10", "testGender20", "testGender30", "testGender40")
         val filterSpecies = listOf("testSpecies10", "testSpecies20", "testSpecies30", "testSpecies40")
         //expected objects for cross-reference
-        val checkCharacterA = characterDataFactory.produceCharacterModel(id = 10)
-        val checkCharacterB = characterDataFactory.produceCharacterModel(id = 20)
-        val checkCharacterC = characterDataFactory.produceCharacterModel(id = 30)
-        val checkCharacterD = characterDataFactory.produceCharacterModel(id = 40)
+        val checkCharacterA = characterDataFactory.produceCharacterEntity(id = 10)
+        val checkCharacterB = characterDataFactory.produceCharacterEntity(id = 20)
+        val checkCharacterC = characterDataFactory.produceCharacterEntity(id = 30)
+        val checkCharacterD = characterDataFactory.produceCharacterEntity(id = 40)
         val fetchedList = characterDao.getFilteredCharacters(
                 filterStatus,
                 filterGender,
@@ -179,10 +179,10 @@ class CharacterModelDaoTest : BaseTest() {
         val filterStatus = listOf("testStatus15", "testStatus25", "testStatus35", "testStatus45")
         val filterGender = listOf("testGender15", "testGender25", "testGender35", "testGender45")
         //expected objects for cross-reference
-        val checkCharacterA = characterDataFactory.produceCharacterModel(id = 15)
-        val checkCharacterB = characterDataFactory.produceCharacterModel(id = 25)
-        val checkCharacterC = characterDataFactory.produceCharacterModel(id = 35)
-        val checkCharacterD = characterDataFactory.produceCharacterModel(id = 45)
+        val checkCharacterA = characterDataFactory.produceCharacterEntity(id = 15)
+        val checkCharacterB = characterDataFactory.produceCharacterEntity(id = 25)
+        val checkCharacterC = characterDataFactory.produceCharacterEntity(id = 35)
+        val checkCharacterD = characterDataFactory.produceCharacterEntity(id = 45)
         val fetchedList = characterDao.getFilteredNoSpeciesCharacters(
                 statuses = filterStatus,
                 genders = filterGender
@@ -206,9 +206,9 @@ class CharacterModelDaoTest : BaseTest() {
         //query
         val nameQuery = "testName"
         //expected objects for cross-reference
-        val checkCharacterA = characterDataFactory.produceCharacterModel(id = 10)
-        val checkCharacterB = characterDataFactory.produceCharacterModel(id = 20)
-        val checkCharacterC = characterDataFactory.produceCharacterModel(id = 30)
+        val checkCharacterA = characterDataFactory.produceCharacterEntity(id = 10)
+        val checkCharacterB = characterDataFactory.produceCharacterEntity(id = 20)
+        val checkCharacterC = characterDataFactory.produceCharacterEntity(id = 30)
         val fetchedList = characterDao.searchAndFilterCharacters(
                 name = nameQuery,
                 statuses = filterStatus,
@@ -233,9 +233,9 @@ class CharacterModelDaoTest : BaseTest() {
         //query
         val nameQuery = "testName"
         //expected objects for cross-reference
-        val checkCharacterA = characterDataFactory.produceCharacterModel(id = 10)
-        val checkCharacterB = characterDataFactory.produceCharacterModel(id = 20)
-        val checkCharacterC = characterDataFactory.produceCharacterModel(id = 30)
+        val checkCharacterA = characterDataFactory.produceCharacterEntity(id = 10)
+        val checkCharacterB = characterDataFactory.produceCharacterEntity(id = 20)
+        val checkCharacterC = characterDataFactory.produceCharacterEntity(id = 30)
         val fetchedList = characterDao.searchAndFilterNoSpeciesCharacters(
                 name = nameQuery,
                 statuses = filterStatus,
@@ -256,11 +256,11 @@ class CharacterModelDaoTest : BaseTest() {
         val listOfIds = listOf(12, 35, 59, 73, 99)
         //expected objects for cross-reference
         val expectedCharacterList = listOf(
-                characterDataFactory.produceCharacterModel(listOfIds[0]),
-                characterDataFactory.produceCharacterModel(listOfIds[1]),
-                characterDataFactory.produceCharacterModel(listOfIds[2]),
-                characterDataFactory.produceCharacterModel(listOfIds[3]),
-                characterDataFactory.produceCharacterModel(listOfIds[4])
+                characterDataFactory.produceCharacterEntity(listOfIds[0]),
+                characterDataFactory.produceCharacterEntity(listOfIds[1]),
+                characterDataFactory.produceCharacterEntity(listOfIds[2]),
+                characterDataFactory.produceCharacterEntity(listOfIds[3]),
+                characterDataFactory.produceCharacterEntity(listOfIds[4])
         )
         val fetchedList = characterDao.getCharactersByIds(listOfIds).getOrAwaitValue()
         //assert that returned list contains expected objects
@@ -298,13 +298,13 @@ class CharacterModelDaoTest : BaseTest() {
     }
 
     /**
-     * inserts fixed [number] or random number of CharacterModels
+     * inserts fixed [number] or random number of CharacterEntitys
      * [isRandom] specifies if list should contain objects with random or fixed IDs
      */
     private suspend fun insertCharacterList(
             number: Int = Random.nextInt(50, 100),
             isRandom: Boolean = true
-    ): List<CharacterModel> {
+    ): List<CharacterEntity> {
         val testList = if (isRandom) {
             characterDataFactory.createRandomIdObjectList(number)
         } else characterDataFactory.createFixedIdObjectList(number)

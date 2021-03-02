@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.location
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.*
 import com.shevaalex.android.rickmortydatabase.models.RecentQuery
-import com.shevaalex.android.rickmortydatabase.source.local.LocationModelDao
+import com.shevaalex.android.rickmortydatabase.source.local.LocationDao
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDao
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,7 +23,7 @@ class LocationRepositoryImplTest {
     private lateinit var locationRepository: LocationRepositoryImpl
 
     //Collaborators
-    private lateinit var locationDao: LocationModelDao
+    private lateinit var locationDao: LocationDao
     private lateinit var recentQueryDao: RecentQueryDao
 
     @Before

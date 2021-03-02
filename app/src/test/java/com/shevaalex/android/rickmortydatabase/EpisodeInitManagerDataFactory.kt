@@ -1,9 +1,9 @@
 package com.shevaalex.android.rickmortydatabase
 
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 
-class EpisodeInitManagerDataFactory : DataFactory<EpisodeModel>() {
+class EpisodeInitManagerDataFactory : DataFactory<EpisodeEntity>() {
 
     private val episodeSeasonList = listOf(
             Constants.VALUE_MAP_FILTER_EPISODE_S_01,
@@ -12,8 +12,8 @@ class EpisodeInitManagerDataFactory : DataFactory<EpisodeModel>() {
             Constants.VALUE_MAP_FILTER_EPISODE_S_04
     )
 
-    override fun produceObjectModel(id: Int): EpisodeModel {
-        return EpisodeModel(
+    override fun produceObjectModel(id: Int): EpisodeEntity {
+        return EpisodeEntity(
                 id = id,
                 name = "testName$id",
                 imageUrl = "testImageUrl$id",

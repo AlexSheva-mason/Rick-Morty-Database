@@ -7,7 +7,7 @@ import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.shevaalex.android.rickmortydatabase.*
 import com.shevaalex.android.rickmortydatabase.di.TestAppComponent
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
@@ -20,7 +20,7 @@ import kotlin.random.Random
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class LocationModelDaoTest : BaseTest() {
+class LocationDaoTest : BaseTest() {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -29,7 +29,7 @@ class LocationModelDaoTest : BaseTest() {
     lateinit var locationDataFactory: LocationDataFactory
 
     @Inject
-    lateinit var locationDao: LocationModelDao
+    lateinit var locationDao: LocationDao
 
     init {
         injectTest()
@@ -312,7 +312,7 @@ class LocationModelDaoTest : BaseTest() {
     private suspend fun insertLocationList(
             number: Int = Random.nextInt(50, 100),
             isRandom: Boolean = true
-    ): List<LocationModel> {
+    ): List<LocationEntity> {
         val testList = if (isRandom) {
             locationDataFactory.createRandomIdObjectList(number)
         } else locationDataFactory.createFixedIdObjectList(number)

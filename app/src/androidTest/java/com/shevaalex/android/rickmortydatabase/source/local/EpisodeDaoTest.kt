@@ -7,7 +7,7 @@ import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.shevaalex.android.rickmortydatabase.*
 import com.shevaalex.android.rickmortydatabase.di.TestAppComponent
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -21,7 +21,7 @@ import kotlin.random.Random
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class EpisodeModelDaoTest : BaseTest() {
+class EpisodeDaoTest : BaseTest() {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -30,7 +30,7 @@ class EpisodeModelDaoTest : BaseTest() {
     lateinit var episodeDataFactory: EpisodeDataFactory
 
     @Inject
-    lateinit var episodeDao: EpisodeModelDao
+    lateinit var episodeDao: EpisodeDao
 
     init {
         injectTest()
@@ -216,7 +216,7 @@ class EpisodeModelDaoTest : BaseTest() {
     private suspend fun insertEpisodeList(
             number: Int = Random.nextInt(50, 100),
             isRandom: Boolean = true
-    ): List<EpisodeModel> {
+    ): List<EpisodeEntity> {
         val testList = if (isRandom) {
             episodeDataFactory.createRandomIdObjectList(number)
         } else episodeDataFactory.createFixedIdObjectList(number)

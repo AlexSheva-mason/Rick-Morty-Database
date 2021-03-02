@@ -24,20 +24,20 @@ object TestDbModule{
 
     @Singleton
     @Provides
-    fun provideCharacterDao(db: RickMortyDatabase): CharacterModelDao {
-        return db.characterModelDao
+    fun provideCharacterDao(db: RickMortyDatabase): CharacterDao {
+        return db.characterDao
     }
 
     @Singleton
     @Provides
-    fun provideLocationDao(db: RickMortyDatabase): LocationModelDao {
-        return db.locationModelDao
+    fun provideLocationDao(db: RickMortyDatabase): LocationDao {
+        return db.locationDao
     }
 
     @Singleton
     @Provides
-    fun provideEpisodeDao(db: RickMortyDatabase): EpisodeModelDao {
-        return db.episodeModelDao
+    fun provideEpisodeDao(db: RickMortyDatabase): EpisodeDao {
+        return db.episodeDao
     }
 
     @Singleton

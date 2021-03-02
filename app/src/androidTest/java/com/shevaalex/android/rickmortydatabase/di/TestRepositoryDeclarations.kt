@@ -18,7 +18,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface RepositoryDeclarations {
+interface TestRepositoryDeclarations {
 
     @Binds
     fun bindCharacterInitManager(cim: CharacterInitManagerImpl): InitManager<CharacterEntity>

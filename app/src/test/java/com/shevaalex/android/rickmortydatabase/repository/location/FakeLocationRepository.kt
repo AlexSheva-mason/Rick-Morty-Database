@@ -3,7 +3,7 @@ package com.shevaalex.android.rickmortydatabase.repository.location
 import androidx.paging.DataSource
 import com.shevaalex.android.rickmortydatabase.LocationInitManagerDataFactory
 import com.shevaalex.android.rickmortydatabase.createMockDataSourceFactory
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.repository.BaseListRepository
 
 
@@ -14,7 +14,7 @@ class FakeLocationRepository : BaseListRepository(), LocationRepository {
     val allLocations = dataFactory.createFixedIdObjectList(100)
     val filteredLocations = dataFactory.createFixedIdObjectList(50)
 
-    override fun getAllLocations(): DataSource.Factory<Int, LocationModel> {
+    override fun getAllLocations(): DataSource.Factory<Int, LocationEntity> {
         return createMockDataSourceFactory(allLocations)
     }
 
@@ -22,7 +22,7 @@ class FakeLocationRepository : BaseListRepository(), LocationRepository {
             query: String,
             filterMap: Map<String, Pair<Boolean, String?>>,
             showsAll: Boolean
-    ): DataSource.Factory<Int, LocationModel> {
+    ): DataSource.Factory<Int, LocationEntity> {
         return createMockDataSourceFactory(filteredLocations)
     }
 

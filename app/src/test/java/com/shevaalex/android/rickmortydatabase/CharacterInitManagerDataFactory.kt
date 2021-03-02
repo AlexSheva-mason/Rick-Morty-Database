@@ -1,12 +1,12 @@
 package com.shevaalex.android.rickmortydatabase
 
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocationModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
+import com.shevaalex.android.rickmortydatabase.models.character.LinkedLocation
 
-class CharacterInitManagerDataFactory : DataFactory<CharacterModel>() {
+class CharacterInitManagerDataFactory : DataFactory<CharacterEntity>() {
 
-    fun produceCharacterModel(id: Int): CharacterModel {
-        return CharacterModel(
+    fun produceCharacterEntity(id: Int): CharacterEntity {
+        return CharacterEntity(
                 id = id,
                 name = "testName$id",
                 status = "testStatus$id",
@@ -24,12 +24,12 @@ class CharacterInitManagerDataFactory : DataFactory<CharacterModel>() {
     }
 
     /**
-     * creates a single LinkedLocationModel with a given [id]
+     * creates a single LinkedLocation with a given [id]
      */
-    private fun produceLinkedLocation(id: Int): LinkedLocationModel {
-        return LinkedLocationModel("testName$id", "testUrl/$id")
+    private fun produceLinkedLocation(id: Int): LinkedLocation {
+        return LinkedLocation("testName$id", "testUrl/$id")
     }
 
-    override fun produceObjectModel(id: Int) = produceCharacterModel(id)
+    override fun produceObjectModel(id: Int) = produceCharacterEntity(id)
 
 }

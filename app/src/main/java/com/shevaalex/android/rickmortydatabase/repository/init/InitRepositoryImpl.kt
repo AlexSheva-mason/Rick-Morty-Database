@@ -2,9 +2,9 @@ package com.shevaalex.android.rickmortydatabase.repository.init
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.shevaalex.android.rickmortydatabase.models.character.CharacterModel
-import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeModel
-import com.shevaalex.android.rickmortydatabase.models.location.LocationModel
+import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
+import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
+import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
 import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
 import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import timber.log.Timber
@@ -15,9 +15,9 @@ import javax.inject.Singleton
 class InitRepositoryImpl
 @Inject
 constructor(
-        private val characterInit: InitManager<CharacterModel>,
-        private val locationInit: InitManager<LocationModel>,
-        private val episodeInit: InitManager<EpisodeModel>
+        private val characterInit: InitManager<CharacterEntity>,
+        private val locationInit: InitManager<LocationEntity>,
+        private val episodeInit: InitManager<EpisodeEntity>
 ): InitRepository {
 
     override fun getDbStateResource(token: String): LiveData<StateResource> = liveData {
