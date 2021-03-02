@@ -15,13 +15,13 @@ import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity;
         LocationEntity.class,
         EpisodeEntity.class,
         RecentQuery.class
-}, version = 3)
+}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class RickMortyDatabase extends RoomDatabase {
 
-    public abstract CharacterDao getCharacterModelDao();
-    public abstract LocationDao getLocationModelDao();
-    public abstract EpisodeDao getEpisodeModelDao();
+    public abstract CharacterDao getCharacterDao();
+    public abstract LocationDao getLocationDao();
+    public abstract EpisodeDao getEpisodeDao();
     public abstract RecentQueryDao getRecentQueryDao();
 
 }
