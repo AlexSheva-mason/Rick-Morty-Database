@@ -45,8 +45,8 @@ Project uses third-party libraries (in no particular order):
 - [Timber](https://github.com/JakeWharton/timber) logging
 - [Dagger2](https://github.com/google/dagger) dependency injection
 - [Glide](https://github.com/bumptech/glide) image loading library
-- [Mockito-Kotlin] (https://github.com/mockito/mockito-kotlin) kotlin helper functions for Mockito
-- [Truth] (https://github.com/google/truth) assertions library for unit testing
+- [Mockito-Kotlin](https://github.com/mockito/mockito-kotlin) kotlin helper functions for Mockito
+- [Truth](https://github.com/google/truth) assertions library for unit testing
 
 
 
