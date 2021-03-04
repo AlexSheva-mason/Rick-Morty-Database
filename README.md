@@ -10,9 +10,8 @@ This project originally was created in Java, but now it has been heavily refacto
 
 
 ## App design and architecture
-Project is based on MVVM architecture, mostly written in Kotlin using Android Jetpack library (AndroidX).
+Project is based on MVVM architecture, mostly written in Kotlin using Android Jetpack components and libraries.
 App utilises offline first approach and implements "Single Activity - multiple Fragments" navigation pattern.
-Project uses dependency injection with Dagger2.
 
 Android Jetpack Architecture Components used:
 - ViewModel
@@ -22,9 +21,15 @@ Android Jetpack Architecture Components used:
 - Navigation component
 - Paging v2
 
+Dependency injection:
+- Dagger2
+
 Kotlin libraries:
-- Coroutines (with Flows)
+- Kotlin Coroutines (with Flows)
 - various ktx extensions
+
+Testing:
+- Unit tests, instrumented tests (JUnit, Mockito)
 
 UI is utilising a dual-theme approach, allowing users to choose from light or dark theme. Components from Material Design library (MaterialCardview, MaterialToolbar, BottomNavigationView etc.) have been used due to their ability to switch between colour Primary and colour Surface.
 Detail Fragments are designed in a way that allows the user to drag and move contents - this behaviour is implemented by using MotionLayout.
@@ -40,6 +45,8 @@ Project uses third-party libraries (in no particular order):
 - [Timber](https://github.com/JakeWharton/timber) logging
 - [Dagger2](https://github.com/google/dagger) dependency injection
 - [Glide](https://github.com/bumptech/glide) image loading library
+- [Mockito-Kotlin] (https://github.com/mockito/mockito-kotlin) kotlin helper functions for Mockito
+- [Truth] (https://github.com/google/truth) assertions library for unit testing
 
 
 
