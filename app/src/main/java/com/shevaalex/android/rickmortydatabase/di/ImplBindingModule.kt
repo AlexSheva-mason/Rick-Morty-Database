@@ -16,6 +16,8 @@ import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepos
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepositoryImpl
 import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
 import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLoggerImpl
+import com.shevaalex.android.rickmortydatabase.utils.networking.connectivity.ConnectivityManager
+import com.shevaalex.android.rickmortydatabase.utils.networking.connectivity.ConnectivityManagerImpl
 import dagger.Binds
 import dagger.Module
 
@@ -51,5 +53,8 @@ interface ImplBindingModule {
 
     @Binds
     fun bindFirebaseLogger(firebaseLoggerImpl: FirebaseLoggerImpl): FirebaseLogger
+
+    @Binds
+    fun bindConnectivityManager(connectivityManagerImpl: ConnectivityManagerImpl): ConnectivityManager
 
 }

@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.utils.networking
+package com.shevaalex.android.rickmortydatabase.utils.networking.connectivity
 
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE
