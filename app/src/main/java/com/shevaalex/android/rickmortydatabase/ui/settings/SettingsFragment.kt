@@ -20,7 +20,7 @@ import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.utils.Constants
-import com.shevaalex.android.rickmortydatabase.utils.FirebaseLogger
+import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,

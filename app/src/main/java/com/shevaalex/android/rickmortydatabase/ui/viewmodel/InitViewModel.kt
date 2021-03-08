@@ -9,6 +9,7 @@ import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
 import com.shevaalex.android.rickmortydatabase.utils.*
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.AUTH_TOKEN_REFRESH_TIME
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_APP_FIRST_LAUCH
+import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

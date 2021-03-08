@@ -2,7 +2,7 @@ package com.shevaalex.android.rickmortydatabase.ui.base
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import androidx.fragment.app.Fragment
-import com.shevaalex.android.rickmortydatabase.utils.FirebaseLogger
+import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {

@@ -14,11 +14,13 @@ import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetai
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepository
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepositoryImpl
+import com.shevaalex.android.rickmortydatabase.utils.firebase.FakeFirebaseLogger
+import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
 import dagger.Binds
 import dagger.Module
 
 @Module
-interface TestRepositoryDeclarations {
+interface TestImplBindingModule {
 
     @Binds
     fun bindCharacterInitManager(cim: CharacterInitManagerImpl): InitManager<CharacterEntity>
@@ -46,5 +48,8 @@ interface TestRepositoryDeclarations {
 
     @Binds
     fun bindEpisodeRepository(er: EpisodeRepositoryImpl): EpisodeRepository
+
+    @Binds
+    fun bindFirebaseLogger(firebaseLogger: FakeFirebaseLogger): FirebaseLogger
 
 }

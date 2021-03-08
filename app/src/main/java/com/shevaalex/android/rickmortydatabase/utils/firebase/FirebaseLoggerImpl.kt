@@ -1,4 +1,4 @@
-package com.shevaalex.android.rickmortydatabase.utils
+package com.shevaalex.android.rickmortydatabase.utils.firebase
 
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -7,13 +7,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FirebaseLogger
+class FirebaseLoggerImpl
 @Inject
-constructor() {
+constructor(): FirebaseLogger {
 
     private val firebaseAnalytics = Firebase.analytics
 
-    fun logFirebaseEvent(
+    override fun logFirebaseEvent(
             eventName: String,
             paramKey: String,
             paramValue: String
