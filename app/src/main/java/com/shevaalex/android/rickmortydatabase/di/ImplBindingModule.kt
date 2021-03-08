@@ -1,5 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.di
 
+import com.shevaalex.android.rickmortydatabase.auth.AuthManager
+import com.shevaalex.android.rickmortydatabase.auth.AuthManagerImpl
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
@@ -60,5 +62,8 @@ interface ImplBindingModule {
 
     @Binds
     fun bindInitPackageManager(initRepositoryImpl: InitRepositoryImpl): InitPackageManager
+
+    @Binds
+    fun bindAuthManager(authManagerImpl: AuthManagerImpl): AuthManager
 
 }
