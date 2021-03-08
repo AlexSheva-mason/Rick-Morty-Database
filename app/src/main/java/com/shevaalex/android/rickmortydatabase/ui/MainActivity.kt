@@ -54,17 +54,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        databaseSyncCheck()
         setupNavController()
         registerObservers()
         setupEdgeToEdge()
     }
 
-    private fun databaseSyncCheck() {
-        //if database has been recently checked -> skip db sync
-        initViewModel.isDbCheckNeeded().run {
-            if (this) dbInit()
-        }
+    private fun registerObservers() {
+        //initialise or update the local database
+        dbInit()
+        //observe and set BottomNavigationView state
+        botNavViewModel.bottomNavVisibility.observe(this,
+                { integer: Int -> binding.bottomPanel.visibility = integer })
+        botNavViewModel.bottomNavLabelVisibility.observe(this,
+                { integer: Int -> binding.bottomPanel.labelVisibilityMode = integer })
     }
 
     private fun dbInit() {
@@ -87,8 +89,6 @@ class MainActivity : AppCompatActivity() {
                         binding.progressBar.progressBar.visibility = View.GONE
                         //notify viewmodel Db sync success
                         initViewModel.notifyDbAllSuccess()
-                        //notify reviewViewModel to increment the number of successful db sync events
-                        reviewViewModel.notifyDbSyncSuccessful()
                         unSubscribe()
                     }
                 }
@@ -112,14 +112,6 @@ class MainActivity : AppCompatActivity() {
             view.updatePadding(bottom = systemWindow.bottom)
             insets
         }
-    }
-
-    private fun registerObservers() {
-        //observe and set BottomNavigationView state
-        botNavViewModel.bottomNavVisibility.observe(this,
-                { integer: Int -> binding.bottomPanel.visibility = integer })
-        botNavViewModel.bottomNavLabelVisibility.observe(this,
-                { integer: Int -> binding.bottomPanel.labelVisibilityMode = integer })
     }
 
     private fun setupNavController() {

@@ -8,7 +8,6 @@ import com.shevaalex.android.rickmortydatabase.models.AuthToken
 import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
 import com.shevaalex.android.rickmortydatabase.utils.*
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.AUTH_TOKEN_REFRESH_TIME
-import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_APP_FIRST_LAUCH
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
 import kotlinx.coroutines.delay
@@ -114,36 +113,7 @@ constructor(
      * is called when observer receives db sync success status
      */
     fun notifyDbAllSuccess() {
-        saveTimestampToSharedPrefs()
         connectivityManager.unregisterConnectionObserver()
-    }
-
-    /**
-     * @return true if currentTimeHrs - lastSynced is more than Const.DB_CHECK_PERIOD (hours)
-     */
-    fun isDbCheckNeeded(): Boolean {
-        val lastSynced = sharedPref.getInt(KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, 0)
-        val currentTimeHrs = currentTimeHours().toInt()
-        Timber.d(
-                "getLastTimeSynced, lastSync: %s, currentTimeHrs: %s, diff: %s, isDbCheckNeeded:%s",
-                lastSynced,
-                currentTimeHrs,
-                currentTimeHrs - lastSynced,
-                currentTimeHrs - lastSynced >= Constants.DB_CHECK_PERIOD
-        )
-        return currentTimeHrs - lastSynced >= Constants.DB_CHECK_PERIOD
-    }
-
-    /**
-     * save the timestamp with the time when database was synced successfuly (only list size check)
-     */
-    private fun saveTimestampToSharedPrefs() {
-        with(sharedPref.edit()) {
-            val currentTimeHrs = currentTimeHours().toInt()
-            Timber.d("saving to share prefs timestamp: %s", currentTimeHrs)
-            putInt(KEY_ACTIVITY_MAIN_DB_SYNCED_TIMESTAMP, currentTimeHrs)
-            apply()
-        }
     }
 
     private fun hasTokenExpired(authToken: AuthToken): Boolean {

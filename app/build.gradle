@@ -12,7 +12,7 @@ apply plugin: "kotlin-parcelize"
 
 ext.versionMajor = 2
 ext.versionMinor = 0
-ext.versionPatch = 4
+ext.versionPatch = 5
 ext.versionClassifier = ""
 ext.minimumSdkVersion = 24
 
@@ -226,7 +226,7 @@ dependencies {
     implementation "com.afollestad.material-dialogs:lifecycle:$material_afollestad_version"
 
     //Google Play Core Api
-    def google_play_core_version = "1.9.1"
+    def google_play_core_version = "1.10.0"
     def google_play_core_ktx_version = "1.8.1"
     implementation "com.google.android.play:core:$google_play_core_version"
     implementation "com.google.android.play:core-ktx:$google_play_core_ktx_version"
