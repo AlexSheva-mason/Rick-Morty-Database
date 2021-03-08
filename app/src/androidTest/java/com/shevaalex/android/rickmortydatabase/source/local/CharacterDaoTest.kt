@@ -68,7 +68,7 @@ class CharacterDaoTest : BaseTest() {
     fun getSuggestionsNamesFilteredAll() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //filter it by 3 parameters to return 3 object
         val filterStatus = listOf("testStatus10", "testStatus20", "testStatus30")
         val filterGender = listOf("testGender10", "testGender20", "testGender30")
@@ -87,7 +87,7 @@ class CharacterDaoTest : BaseTest() {
     fun getSuggestionsNamesFilteredStatusGender() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //filter it by 2 parameters to return 4 objects
         val filterStatus = listOf("testStatus10", "testStatus20", "testStatus30", "testStatus40")
         val filterGender = listOf("testGender10", "testGender20", "testGender30", "testGender40")
@@ -115,7 +115,7 @@ class CharacterDaoTest : BaseTest() {
     fun searchCharactersSingle() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //make a query within bounds of inserted list
         val randomNameQuery = "testName${Random.nextInt(1, numberOfCharacters)}"
         val fetchedList = characterDao
@@ -130,7 +130,7 @@ class CharacterDaoTest : BaseTest() {
     fun searchCharactersDouble() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //make a query within bounds of inserted list
         val randomId = Random.nextInt(1, numberOfCharacters)
         val randomName = "testName$randomId"
@@ -148,7 +148,7 @@ class CharacterDaoTest : BaseTest() {
     fun getFilteredCharacters() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //filter it by 3 parameters to return 4 objects
         val filterStatus = listOf("testStatus10", "testStatus20", "testStatus30", "testStatus40")
         val filterGender = listOf("testGender10", "testGender20", "testGender30", "testGender40")
@@ -174,7 +174,7 @@ class CharacterDaoTest : BaseTest() {
     fun getFilteredNoSpeciesCharacters() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //filter it by 2 parameters to return 4 objects
         val filterStatus = listOf("testStatus15", "testStatus25", "testStatus35", "testStatus45")
         val filterGender = listOf("testGender15", "testGender25", "testGender35", "testGender45")
@@ -198,7 +198,7 @@ class CharacterDaoTest : BaseTest() {
     fun searchAndFilterCharacters() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //filter it by 3 parameters to return 3 objects
         val filterStatus = listOf("testStatus10", "testStatus20", "testStatus30")
         val filterGender = listOf("testGender10", "testGender20", "testGender30")
@@ -226,7 +226,7 @@ class CharacterDaoTest : BaseTest() {
     fun searchAndFilterNoSpeciesCharacters() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //filter it by 2 parameters to return 3 objects
         val filterStatus = listOf("testStatus10", "testStatus20", "testStatus30")
         val filterGender = listOf("testGender10", "testGender20", "testGender30")
@@ -252,7 +252,7 @@ class CharacterDaoTest : BaseTest() {
     fun getCharactersByIds() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         val listOfIds = listOf(12, 35, 59, 73, 99)
         //expected objects for cross-reference
         val expectedCharacterList = listOf(
@@ -277,7 +277,7 @@ class CharacterDaoTest : BaseTest() {
     fun getCharacterByIdInRange() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //generate a random id
         val randomId = Random.nextInt(1, numberOfCharacters)
         val fetchedCharacter = characterDao.getCharacterByIdSuspend(randomId)
@@ -289,7 +289,7 @@ class CharacterDaoTest : BaseTest() {
     fun getCharacterByIdOutOfRange() = runBlockingTest {
         //insert a dummy list of Characters
         val numberOfCharacters = 100
-        insertCharacterList(numberOfCharacters, false)
+        insertCharacterList(numberOfCharacters)
         //use id that is out of range
         val randomId = Random.nextInt(1, numberOfCharacters).plus(numberOfCharacters)
         val fetchedCharacter = characterDao.getCharacterByIdSuspend(randomId)
@@ -299,15 +299,11 @@ class CharacterDaoTest : BaseTest() {
 
     /**
      * inserts fixed [number] or random number of CharacterEntitys
-     * [isRandom] specifies if list should contain objects with random or fixed IDs
      */
     private suspend fun insertCharacterList(
-            number: Int = Random.nextInt(50, 100),
-            isRandom: Boolean = true
+            number: Int = Random.nextInt(50, 100)
     ): List<CharacterEntity> {
-        val testList = if (isRandom) {
-            characterDataFactory.createRandomIdObjectList(number)
-        } else characterDataFactory.createFixedIdObjectList(number)
+        val testList = characterDataFactory.createFixedIdObjectList(number)
         characterDao.insertCharacters(testList)
         return testList
     }

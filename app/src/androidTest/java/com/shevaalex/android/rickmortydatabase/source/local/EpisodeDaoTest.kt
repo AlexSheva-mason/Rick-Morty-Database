@@ -211,15 +211,11 @@ class EpisodeDaoTest : BaseTest() {
 
     /**
      * inserts fixed [number] or random number of EpisodeModels
-     * [isRandom] specifies if list should contain objects with random or fixed IDs
      */
     private suspend fun insertEpisodeList(
-            number: Int = Random.nextInt(50, 100),
-            isRandom: Boolean = true
+            number: Int = Random.nextInt(50, 100)
     ): List<EpisodeEntity> {
-        val testList = if (isRandom) {
-            episodeDataFactory.createRandomIdObjectList(number)
-        } else episodeDataFactory.createFixedIdObjectList(number)
+        val testList = episodeDataFactory.createFixedIdObjectList(number)
         episodeDao.insertEpisodes(testList)
         return testList
     }
