@@ -5,25 +5,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.review.testing.FakeReviewManager
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.SHARED_PREFS_FILE_NAME
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = [RepositoryDeclarations::class])
+@Module(includes = [ImplBindingModule::class])
 object AppModule {
 
     @Singleton
     @Provides
     fun provideReviewManager(app: Application): ReviewManager {
         return ReviewManagerFactory.create(app)
-    }
-
-    @Singleton
-    @Provides
-    fun provideFakeReviewManager(app: Application): FakeReviewManager {
-        return FakeReviewManager(app)
     }
 
     @Singleton

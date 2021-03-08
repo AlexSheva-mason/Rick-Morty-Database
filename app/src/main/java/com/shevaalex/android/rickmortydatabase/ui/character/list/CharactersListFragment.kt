@@ -18,7 +18,6 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.play.core.ktx.launchReview
 import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.testing.FakeReviewManager
 import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
@@ -27,11 +26,12 @@ import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.ui.base.BaseListFragment
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.ReviewViewModel
 import com.shevaalex.android.rickmortydatabase.utils.*
-import timber.log.Timber
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion as Const
 
 
+@ExperimentalCoroutinesApi
 class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>() {
 
     @Inject
@@ -42,9 +42,6 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
 
     @Inject
     lateinit var reviewManager: ReviewManager
-
-    @Inject
-    lateinit var fakeReviewManager: FakeReviewManager
 
     override val viewModel: CharacterListViewModel by activityViewModels {
         viewModelFactory
@@ -114,19 +111,7 @@ class CharactersListFragment : BaseListFragment<FragmentCharactersListBinding>()
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             val reviewInfo = reviewViewModel.obtainReviewInfo()
             reviewInfo?.let {
-                if (BuildConfig.DEBUG) {
-                    Timber.w("starting launch review flow")
-                    val flow = fakeReviewManager.launchReviewFlow(requireActivity(), it)
-                    reviewViewModel.notifyReviewFlowLaunched()
-                    flow.addOnCompleteListener {
-                        if (flow.isSuccessful) {
-                            //show "fake review dialog"
-                            activity?.displayErrorDialog(
-                                    "fakeReviewManager.launchReviewFlow == SUCCESS"
-                            )
-                        }
-                    }
-                } else {
+                if (!BuildConfig.DEBUG) {
                     reviewManager.launchReview(requireActivity(), it)
                     reviewViewModel.notifyReviewFlowLaunched()
                 }

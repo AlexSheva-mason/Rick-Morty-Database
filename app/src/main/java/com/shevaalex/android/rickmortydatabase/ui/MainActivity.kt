@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding
@@ -23,10 +24,12 @@ import com.shevaalex.android.rickmortydatabase.ui.viewmodel.InitViewModel
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.ReviewViewModel
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
 
+@ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
 
     @Inject
@@ -169,7 +172,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestReviewInfo() {
-        reviewViewModel.preWarmReview()
+        if (!BuildConfig.DEBUG) {
+            reviewViewModel.preWarmReview()
+        }
     }
 
     override fun onBackPressed() {

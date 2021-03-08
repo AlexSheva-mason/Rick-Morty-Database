@@ -5,6 +5,7 @@ import com.shevaalex.android.rickmortydatabase.source.local.CharacterDaoTest
 import com.shevaalex.android.rickmortydatabase.source.local.EpisodeDaoTest
 import com.shevaalex.android.rickmortydatabase.source.local.LocationDaoTest
 import com.shevaalex.android.rickmortydatabase.source.local.RecentQueryDaoTest
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.ReviewViewModelTest
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,5 +33,7 @@ interface TestAppComponent : AppComponent {
     fun inject(episodeDaoTest: EpisodeDaoTest)
 
     fun inject(recentQueryDaoTest: RecentQueryDaoTest)
+
+    fun inject(reviewViewModelTest: ReviewViewModelTest)
 
 }
