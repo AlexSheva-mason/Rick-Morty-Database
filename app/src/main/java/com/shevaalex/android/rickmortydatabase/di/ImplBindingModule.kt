@@ -17,6 +17,7 @@ import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetai
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepositoryImpl
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.InitPackageManager
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.InitPackageManagerImpl
 import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
 import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLoggerImpl
 import com.shevaalex.android.rickmortydatabase.utils.networking.connectivity.ConnectivityManager
@@ -61,7 +62,7 @@ interface ImplBindingModule {
     fun bindConnectivityManager(connectivityManagerImpl: ConnectivityManagerImpl): ConnectivityManager
 
     @Binds
-    fun bindInitPackageManager(initRepositoryImpl: InitRepositoryImpl): InitPackageManager
+    fun bindInitPackageManager(initPackageManagerImpl: InitPackageManagerImpl): InitPackageManager
 
     @Binds
     fun bindAuthManager(authManagerImpl: AuthManagerImpl): AuthManager
