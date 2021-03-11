@@ -16,6 +16,8 @@ class Constants {
         const val SETTINGS_KEY_THEME_MODE = "theme_mode"
         const val SETTINGS_EVENT_PREFERENCE_CLICK = "settings_preference_clicked"
         const val SETTINGS_KEY_PREFERENCE_NAME = "preference_name"
+        const val INIT_INSTALLER_NAME = "installer_name"
+        const val INIT_INSTALLER_NAME_PARAM_KEY = "installer_package_name"
 
         //Settings data
         const val DATA_REVIEW_LINK = "http://play.google.com/store/apps/details?id=com.shevaalex.android.rickmortydatabase"

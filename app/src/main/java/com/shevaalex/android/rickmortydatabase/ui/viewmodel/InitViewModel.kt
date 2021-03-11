@@ -1,6 +1,5 @@
 package com.shevaalex.android.rickmortydatabase.ui.viewmodel
 
-import android.app.Application
 import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.shevaalex.android.rickmortydatabase.auth.AuthManager
@@ -8,9 +7,12 @@ import com.shevaalex.android.rickmortydatabase.models.AuthToken
 import com.shevaalex.android.rickmortydatabase.repository.init.InitRepository
 import com.shevaalex.android.rickmortydatabase.utils.*
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.AUTH_TOKEN_REFRESH_TIME
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.INIT_INSTALLER_NAME
+import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.INIT_INSTALLER_NAME_PARAM_KEY
 import com.shevaalex.android.rickmortydatabase.utils.Constants.Companion.KEY_APP_FIRST_LAUCH
 import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
 import com.shevaalex.android.rickmortydatabase.utils.networking.*
+import com.shevaalex.android.rickmortydatabase.utils.networking.connectivity.ConnectivityManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -24,7 +26,7 @@ constructor(
         private val sharedPref: SharedPreferences,
         private val authManager: AuthManager,
         private val connectivityManager: ConnectivityManager,
-        private val application: Application,
+        private val initPackageManager: InitPackageManager,
         private val firebaseLogger: FirebaseLogger
 ) : ViewModel() {
 
@@ -142,20 +144,12 @@ constructor(
     }
 
     private fun logInstallerName() {
-        with(application.packageName) {
-            val installerName = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                application.packageManager?.getInstallSourceInfo(this)?.installingPackageName
-            } else {
-                @Suppress("DEPRECATION")
-                application.packageManager?.getInstallerPackageName(this)
-            }
-            installerName?.let {
-                firebaseLogger.logFirebaseEvent(
-                        eventName = "installer_name",
-                        paramKey = "installer_package_name",
-                        paramValue = it
-                )
-            }
+        initPackageManager.getInstallingPackageName()?.let {
+            firebaseLogger.logFirebaseEvent(
+                    eventName = INIT_INSTALLER_NAME,
+                    paramKey = INIT_INSTALLER_NAME_PARAM_KEY,
+                    paramValue = it
+            )
         }
     }
 

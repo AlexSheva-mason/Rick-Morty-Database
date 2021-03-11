@@ -1,5 +1,7 @@
 package com.shevaalex.android.rickmortydatabase.di
 
+import com.shevaalex.android.rickmortydatabase.auth.AuthManager
+import com.shevaalex.android.rickmortydatabase.auth.AuthManagerImpl
 import com.shevaalex.android.rickmortydatabase.models.character.CharacterEntity
 import com.shevaalex.android.rickmortydatabase.models.episode.EpisodeEntity
 import com.shevaalex.android.rickmortydatabase.models.location.LocationEntity
@@ -14,8 +16,12 @@ import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetai
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationDetailRepository
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepository
 import com.shevaalex.android.rickmortydatabase.repository.location.LocationRepositoryImpl
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.InitPackageManager
+import com.shevaalex.android.rickmortydatabase.ui.viewmodel.InitPackageManagerImpl
 import com.shevaalex.android.rickmortydatabase.utils.firebase.FakeFirebaseLogger
 import com.shevaalex.android.rickmortydatabase.utils.firebase.FirebaseLogger
+import com.shevaalex.android.rickmortydatabase.utils.networking.connectivity.ConnectivityManager
+import com.shevaalex.android.rickmortydatabase.utils.networking.connectivity.ConnectivityManagerImpl
 import dagger.Binds
 import dagger.Module
 
@@ -51,5 +57,14 @@ interface TestImplBindingModule {
 
     @Binds
     fun bindFirebaseLogger(firebaseLogger: FakeFirebaseLogger): FirebaseLogger
+
+    @Binds
+    fun bindConnectivityManager(connectivityManagerImpl: ConnectivityManagerImpl): ConnectivityManager
+
+    @Binds
+    fun bindInitPackageManager(initPackageManagerImpl: InitPackageManagerImpl): InitPackageManager
+
+    @Binds
+    fun bindAuthManager(authManagerImpl: AuthManagerImpl): AuthManager
 
 }
