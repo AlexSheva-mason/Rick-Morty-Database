@@ -35,6 +35,9 @@ UI is utilising a dual-theme approach, allowing users to choose from light or da
 Detail Fragments are designed in a way that allows the user to drag and move contents - this behaviour is implemented by using MotionLayout.
 MaterialContainerTransform (shared element transitions), MaterialFadeThrough and MaterialElevationScale from Material Design library have been used to animate transitions between list and detail fragments.
 
+## MAD Score
+<img src="screenshots/mad_summary.png" width="400" hspace="10"><img src="screenshots/mad_kotlin.png" width="400">
+
 ## Credits
 [Rick and Morty RESTful API](https://rickandmortyapi.com/), [rick-and-morty-api](https://github.com/afuh/rick-and-morty-api) by Axel Fuhrmann is being used as a data source for this project.
 
