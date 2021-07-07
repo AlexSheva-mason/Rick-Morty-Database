@@ -37,7 +37,7 @@ class Constants {
         const val AUTH_TOKEN_REFRESH_TIME = 50
 
         //sets the required number of app launched events between google review dialogs
-        const val REVIEW_REQUIRED_NUMBER_APP_LAUNCHED = 3
+        const val REVIEW_REQUIRED_NUMBER_APP_LAUNCHED = 6
 
         //sets the amount of time to be elapsed between google review dialog can be shown again (days)
         const val REVIEW_REQ_SHOW_PERIOD = 60
