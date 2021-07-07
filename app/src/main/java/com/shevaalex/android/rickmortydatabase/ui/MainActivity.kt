@@ -15,7 +15,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import com.shevaalex.android.rickmortydatabase.BuildConfig
 import com.shevaalex.android.rickmortydatabase.R
 import com.shevaalex.android.rickmortydatabase.RmApplication
 import com.shevaalex.android.rickmortydatabase.databinding.ActivityMainBinding
@@ -23,7 +22,9 @@ import com.shevaalex.android.rickmortydatabase.ui.viewmodel.BottomNavViewModel
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.InitViewModel
 import com.shevaalex.android.rickmortydatabase.ui.viewmodel.ReviewViewModel
 import com.shevaalex.android.rickmortydatabase.utils.DiViewModelFactory
-import com.shevaalex.android.rickmortydatabase.utils.networking.*
+import com.shevaalex.android.rickmortydatabase.utils.networking.Message
+import com.shevaalex.android.rickmortydatabase.utils.networking.StateResource
+import com.shevaalex.android.rickmortydatabase.utils.networking.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 import javax.inject.Inject
@@ -46,14 +47,10 @@ class MainActivity : AppCompatActivity() {
     private val initViewModel: InitViewModel by viewModels {
         viewModelFactory
     }
-    private val reviewViewModel: ReviewViewModel by viewModels {
-        reviewViewmodelFactory
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as RmApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        requestReviewInfo()
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -67,9 +64,9 @@ class MainActivity : AppCompatActivity() {
         dbInit()
         //observe and set BottomNavigationView state
         botNavViewModel.bottomNavVisibility.observe(this,
-                { integer: Int -> binding.bottomPanel.visibility = integer })
+            { integer: Int -> binding.bottomPanel.visibility = integer })
         botNavViewModel.bottomNavLabelVisibility.observe(this,
-                { integer: Int -> binding.bottomPanel.labelVisibilityMode = integer })
+            { integer: Int -> binding.bottomPanel.labelVisibilityMode = integer })
     }
 
     private fun dbInit() {
@@ -110,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomPanel.setOnApplyWindowInsetsListener { view, insets ->
             val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets)
             val systemWindow = insetsCompat.getInsets(
-                    WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.ime()
+                WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.ime()
             )
             view.updatePadding(bottom = systemWindow.bottom)
             insets
@@ -125,8 +122,9 @@ class MainActivity : AppCompatActivity() {
             if (destination.id == R.id.settingsFragment) {
                 botNavViewModel.hideBottomNav()
             } else if (destination.id == R.id.characterDetailFragment2
-                    || destination.id == R.id.locationDetailFragment
-                    || destination.id == R.id.episodeDetailFragment) {
+                || destination.id == R.id.locationDetailFragment
+                || destination.id == R.id.episodeDetailFragment
+            ) {
                 botNavViewModel.showBottomNav()
                 botNavViewModel.setUnlabeled()
             } else {
@@ -146,7 +144,7 @@ class MainActivity : AppCompatActivity() {
                 snackText = getString(R.string.ma_snack_database_up_to_date)
             is Message.ServerError ->
                 snackText = getString(R.string.ma_snack_error_server_error)
-                        .plus(stateResource.message.statusCode)
+                    .plus(stateResource.message.statusCode)
             is Message.NetworkError ->
                 snackText = getString(R.string.ma_snack_error_network_error)
             is Message.EmptyResponse ->
@@ -161,7 +159,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSnackBar(text: String, color: Int? = null) {
         val mySnackbar = Snackbar
-                .make(binding.activityMainLayout, text, BaseTransientBottomBar.LENGTH_LONG)
+            .make(binding.activityMainLayout, text, BaseTransientBottomBar.LENGTH_LONG)
         val snackBarView = mySnackbar.view
         color?.let {
             snackBarView.rootView.setBackgroundColor(it)
@@ -171,19 +169,14 @@ class MainActivity : AppCompatActivity() {
         mySnackbar.show()
     }
 
-    private fun requestReviewInfo() {
-        if (!BuildConfig.DEBUG) {
-            reviewViewModel.preWarmReview()
-        }
-    }
-
     override fun onBackPressed() {
         if (navController == null) {
             navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         }
         // Check if the current destination is actually the start destination (Home screen)
         if (navController?.currentDestination != null
-                && navController?.graph?.startDestination == navController?.currentDestination?.id) {
+            && navController?.graph?.startDestination == navController?.currentDestination?.id
+        ) {
             if (backPressedOnce) {
                 super.onBackPressed()
                 return
