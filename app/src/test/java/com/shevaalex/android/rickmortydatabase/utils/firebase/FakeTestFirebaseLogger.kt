@@ -8,4 +8,6 @@ class FakeTestFirebaseLogger : FirebaseLogger {
         loggedEvent = eventName
     }
 
+    override fun logException(exception: Exception) {}
+
 }

@@ -7,7 +7,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeFirebaseLogger
 @Inject
-constructor(): FirebaseLogger {
+constructor() : FirebaseLogger {
 
     var loggedEvent: String? = null
 
@@ -15,5 +15,7 @@ constructor(): FirebaseLogger {
         loggedEvent = eventName
         Timber.i("Firebase unit test log: $eventName")
     }
+
+    override fun logException(exception: Exception) {}
 
 }
