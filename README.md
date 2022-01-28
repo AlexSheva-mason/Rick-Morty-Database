@@ -1,5 +1,4 @@
 # Characters for Rick and Morty
-<a href='https://play.google.com/store/apps/details?id=com.shevaalex.android.rickmortydatabase&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/static/images/badges/en_badge_web_generic.png' height="50"/></a>
 
 This project is an android app created for fans of "Rick And Morty" series and provides some valuable information about characters, locations and episodes, allows to search and filter data.
 This project originally was created in Java, but now it has been heavily refactored and rewritten in Kotlin.
